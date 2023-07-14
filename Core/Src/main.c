@@ -252,6 +252,7 @@ static void MX_GPIO_Init(void);
 static void MX_CAN_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
 void mainTask(void *pvParameters);
@@ -2189,6 +2190,7 @@ int main(void)
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_TIM1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
@@ -3751,53 +3753,124 @@ void mainTask(void *pvParameters) {
 }
 
 void wifiTask(void *pvParameters) {
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(500);
+	char *agAdi = "ONDERLIFT_PERSONEL";
+	char *agSifresi = "PersonelOt2022*-";
+	char *ip = "yst.com.tr";
 
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n", strlen("AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(500);
+	// ESP8266 UART pini tanımlamaları
+	GPIO_InitTypeDef GPIO_InitStruct;
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	GPIO_InitStruct.Pin = GPIO_PIN_9;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+	// ESP8266 başlatma
+	char *atCommand = "AT\r\n";
+	HAL_UART_Transmit(&huart1, (uint8_t *)atCommand, strlen(atCommand), HAL_MAX_DELAY);
+	HAL_Delay(1000);
 
-
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n", strlen("AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(500);
-
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-	HAL_Delay(100);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSEND=0,43\r\n", strlen("AT+CIPSEND=0,43\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(500);
-
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-	HAL_Delay(100);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-
-	HAL_UART_Transmit(&huart1, (uint8_t *)"GET /api/api.php HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n", strlen("GET /api/api.php HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(500);
-
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-	HAL_Delay(100);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-
-	char responseBuffer[256];
-	memset(responseBuffer, 0, sizeof(responseBuffer));
-	//HAL_UART_Receive(&huart1, (uint8_t *)responseBuffer, sizeof(responseBuffer) - 1, HAL_MAX_DELAY);
-
-	uint16_t responseLength = 0;
-	while (responseLength < sizeof(responseBuffer) - 1) {
-		uint16_t bytesRead = HAL_UART_Receive(&huart1, (uint8_t *)(responseBuffer + responseLength), sizeof(responseBuffer) - responseLength - 1, HAL_MAX_DELAY);
-		responseLength += bytesRead;
-
-		if (strstr(responseBuffer, "\r\n\r\n") != NULL) {
-		    break;
+	char response[32];
+	memset(response, 0, sizeof(response));
+	HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+	if (strstr(response, "OK") == NULL){
+		// ESP8266 Bulunamadı.
+		while(1) {
+			//TODO
 		}
 	}
 
-	if (strstr(responseBuffer, "\"greenLed\":\"1\"") != NULL) {
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-	} else {
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	char *cwModeCommand = "AT+CWMODE=1\r\n";
+	HAL_UART_Transmit(&huart1, (uint8_t *)cwModeCommand, strlen(cwModeCommand), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+
+	memset(response, 0, sizeof(response));
+	HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+	if (strstr(response, "OK") == NULL) {
+		// Ayar Yapılırken Hata Oluştu.
+		while(1) {
+
+		}
+	}
+
+	char *cwJapCommand = "AT+CWJAP=\"";
+	char *cwJapCommandEnd = "\"\r\n";
+	char cwJapFullCommand[64];
+	sprintf(cwJapFullCommand, "%s%s%s", cwJapCommand, agAdi, cwJapCommandEnd);
+	HAL_UART_Transmit(&huart1, (uint8_t *)cwJapFullCommand, strlen(cwJapFullCommand), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+
+	memset(response, 0, sizeof(response));
+	HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+	if (strstr(response, "OK") == NULL) {
+		// Aga Baglanılamadı.
+		while(1) {
+
+		}
+	}
+
+	while(1) {
+		char *cipStartCommand = "AT+CIPSTART=\"TCP\",\"";
+		char *cipStartCommandEnd = "\",80\r\n";
+		char cipStartFullCommand[64];
+		sprintf(cipStartFullCommand, "%s%s%s", cipStartCommand, ip, cipStartCommandEnd);
+		HAL_UART_Transmit(&huart1, (uint8_t *)cipStartFullCommand, strlen(cipStartFullCommand), HAL_MAX_DELAY);
+		HAL_Delay(1000);
+
+		memset(response, 0, sizeof(response));
+		HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+		if (strstr(response, "Error") != NULL) {
+			// AT+CIPSTART Error
+			continue;
+		}
+
+		char *veri = "GET /api/updateMachineData2.php?MachineID=12345678&acilStop1=12345678 HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n";
+
+		char *cipSendCommand = "AT+CIPSEND=";
+		char cipSendFullCommand[16];
+		sprintf(cipSendFullCommand, "%s%d\r\n", cipSendCommand, strlen(veri));
+		HAL_UART_Transmit(&huart1, (uint8_t *)cipSendFullCommand, strlen(cipSendFullCommand), HAL_MAX_DELAY);
+		HAL_Delay(2000);
+
+		memset(response, 0, sizeof(response));
+		HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+		if (strstr(response, ">") != NULL) {
+
+		    HAL_UART_Transmit(&huart1, (uint8_t *)veri, strlen(veri), HAL_MAX_DELAY);
+		    HAL_Delay(1000);
+		}
+
+		HAL_Delay(1000);
+
+		char buffer[128];
+		memset(buffer, 0, sizeof(buffer));
+		int index = 0;
+		while(1) {
+			memset(response, 0, sizeof(response));
+			HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+			for (int i = 0; i < strlen(response); i++) {
+				buffer[index++] = response[i];
+				if (index >= sizeof(buffer)) {
+					break;
+				}
+			}
+			if (strstr(response, "OK") != NULL) {
+				break;
+			}
+		}
+
+		if (strstr(buffer, "Kayıt eklendi.") != NULL) {
+			// Kayıt eklendi.
+		} else {
+			// Kayıt eklenemedi.
+		}
+
+		memset(response, 0, sizeof(response));
+		HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+
+		char *cipCloseCommand = "AT+CIPCLOSE\r\n";
+		HAL_UART_Transmit(&huart1, (uint8_t *)cipCloseCommand, strlen(cipCloseCommand), HAL_MAX_DELAY);
+		HAL_Delay(1000);
 	}
 }
 
