@@ -238,9 +238,9 @@ CAN_HandleTypeDef hcan;
 
 I2C_HandleTypeDef hi2c1;
 
-TIM_HandleTypeDef htim1;
-
 UART_HandleTypeDef huart1;
+
+TIM_HandleTypeDef htim1;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
@@ -252,10 +252,10 @@ static void MX_GPIO_Init(void);
 static void MX_CAN_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
+
+void mainTask(void *pvParameters);
 void wifiTask(void *pvParameters);
-void ledTask(void *pvParameters);
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
 
@@ -266,7 +266,7 @@ void menu(void)     //--------------------------------------------------------me
 {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==1)&&(butonKontrol==0)){
 		menuSayac=menuSayac+1;
-		if (menuSayac==32){    //MENÜ BÜYÜDÜKÇE DE ?İ ?TİR
+		if (menuSayac==32){    //MENÜ BÜYÜDÜKÇE DE�?İ�?TİR
 			menuSayac=1;
 		}
 
@@ -308,7 +308,7 @@ void menu(void)     //--------------------------------------------------------me
 
 	if ((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==1)&&(butonKontrol==0)){
 		if (menuSayac<=1){
-			menuSayac=32;     //MENÜ BÜYÜDÜKÇE DE ?İ ?TİR
+			menuSayac=32;     //MENÜ BÜYÜDÜKÇE DE�?İ�?TİR
 		}
 
 		menuSayac=menuSayac-1;
@@ -2189,7 +2189,6 @@ int main(void)
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_TIM1_Init();
-  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
@@ -2245,8 +2244,10 @@ int main(void)
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-  xTaskCreate(ledTask, "ledTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+
+  //xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
   xTaskCreate(wifiTask, "wifiTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  vTaskStartScheduler();
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -2257,11 +2258,9 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	  while (1)
-	   {
+  while (1) {
 
-
-	   }
+  }
   /* USER CODE END 3 */
 }
 
@@ -3730,85 +3729,78 @@ void mainTask(void *pvParameters) {
 						  mesajYazildi=1;
 					  }
 				  }
-    /* USER CODE END WHILE */
+		    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
-}
+		    /* USER CODE BEGIN 3 */
 
-void ledTask(void *pvParameters) {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-	HAL_Delay(500);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+				  else if(demoMode==1 || menuGiris==1)
+				  {
+					  HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(motorIkinciHizOut_GPIO_Port, motorIkinciHizOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(asagiValfOut_GPIO_Port, asagiValfOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(yavaslamaValfOut_GPIO_Port, yavaslamaValfOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(devirmeYukariIleriOut_GPIO_Port, devirmeYukariIleriOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(devirmeAsagiGeriOut_GPIO_Port, devirmeAsagiGeriOut_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(kapi1Out_GPIO_Port, kapi1Out_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(kapi2Out_GPIO_Port, kapi2Out_Pin, GPIO_PIN_RESET);
+					  HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
+					  //HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
+				  }
+	}
 }
 
 void wifiTask(void *pvParameters) {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"), HAL_MAX_DELAY);
-    HAL_Delay(500);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(500);
 
-    HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n", strlen("AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n"), HAL_MAX_DELAY);
-    //HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWJAP=\"3Oda1Salon\",\"ucsalonbiroda\"\r\n", strlen("AT+CWJAP=\"3Oda1Salon\",\"ucsalonbiroda\"\r\n"), HAL_MAX_DELAY);
-    HAL_Delay(2000);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n", strlen("AT+CWJAP=\"iPhone SE (2nd generation)\",\"asdasd00991\"\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(500);
 
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-    HAL_Delay(500);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
 
-    HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n", strlen("AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n"), HAL_MAX_DELAY);
-    HAL_Delay(500);
 
-    char requestBuffer[512];
-    sprintf(requestBuffer, "GET /api/updateMachine2.php?MachineID=%s&acilStop1=%s HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n",
-            "12345", "12345");
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n", strlen("AT+CIPSTART=0,\"TCP\",\"yst.com.tr\",80\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(500);
 
-    char requestLength[8];
-    sprintf(requestLength, "%d", strlen(requestBuffer));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 
-    HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSEND=0,", strlen("AT+CIPSEND=0,"), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)requestLength, strlen(requestLength), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"\r\n", strlen("\r\n"), HAL_MAX_DELAY);
-    HAL_Delay(500);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSEND=0,43\r\n", strlen("AT+CIPSEND=0,43\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(500);
 
-    HAL_UART_Transmit(&huart1, (uint8_t *)requestBuffer, strlen(requestBuffer), HAL_MAX_DELAY);
-    HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 
-    char responseBuffer[256];
-    memset(responseBuffer, 0, sizeof(responseBuffer));
-    uint16_t responseLength = 0;
-    while (responseLength < sizeof(responseBuffer) - 1)
-    {
-        uint16_t bytesRead = HAL_UART_Receive(&huart1, (uint8_t *)(responseBuffer + responseLength), sizeof(responseBuffer) - responseLength - 1, HAL_MAX_DELAY);
-        responseLength += bytesRead;
+	HAL_UART_Transmit(&huart1, (uint8_t *)"GET /api/api.php HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n", strlen("GET /api/api.php HTTP/1.1\r\nHost: yst.com.tr\r\n\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(500);
 
-        if (strstr(responseBuffer, "\r\n\r\n") != NULL)
-        {
-            break;
-        }
-    }
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 
-    if (strstr(responseBuffer, "Kayıt güncellendi.") != NULL)
-    {
-        // İşlem başarıyla tamamlandı
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-    }
-    else if (strstr(responseBuffer, "Kayıt eklendi.") != NULL)
-    {
-        // İşlem başarıyla tamamlandı
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-    }
-    else
-    {
-        // İşlem başarısız oldu, tekrar denemek için uygun bir if bloğu ekleyebilirsiniz
+	char responseBuffer[256];
+	memset(responseBuffer, 0, sizeof(responseBuffer));
+	//HAL_UART_Receive(&huart1, (uint8_t *)responseBuffer, sizeof(responseBuffer) - 1, HAL_MAX_DELAY);
 
-    }
+	uint16_t responseLength = 0;
+	while (responseLength < sizeof(responseBuffer) - 1) {
+		uint16_t bytesRead = HAL_UART_Receive(&huart1, (uint8_t *)(responseBuffer + responseLength), sizeof(responseBuffer) - responseLength - 1, HAL_MAX_DELAY);
+		responseLength += bytesRead;
 
-    HAL_Delay(500);
+		if (strstr(responseBuffer, "\r\n\r\n") != NULL) {
+		    break;
+		}
+	}
 
-    HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPCLOSE=0\r\n", strlen("AT+CIPCLOSE=0\r\n"), HAL_MAX_DELAY);
-    HAL_Delay(500);
+	if (strstr(responseBuffer, "\"greenLed\":\"1\"") != NULL) {
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	} else {
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	}
 }
+
 /**
   * @brief System Clock Configuration
   * @retval None
