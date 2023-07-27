@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -64,8 +64,8 @@ all: main-build
 main-build: ESP_Version_3_3.elf secondary-outputs
 
 # Tool invocations
-ESP_Version_3_3.elf ESP_Version_3_3.map: $(OBJS) $(USER_OBJS) C:\Users\hidir\STM32CubeIDE\workspace_1.12.1\ESP_Version_3_3\STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "ESP_Version_3_3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\hidir\STM32CubeIDE\workspace_1.12.1\ESP_Version_3_3\STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ESP_Version_3_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+ESP_Version_3_3.elf ESP_Version_3_3.map: $(OBJS) $(USER_OBJS) C:\Users\hidir\STM32CubeIDE\workspace_1.13.0\ESP_Version_3_3\STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "ESP_Version_3_3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\hidir\STM32CubeIDE\workspace_1.13.0\ESP_Version_3_3\STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ESP_Version_3_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
