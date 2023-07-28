@@ -9,6 +9,7 @@
 #include "ESPDataLogger.h"
 #include "stdio.h"
 #include "string.h"
+#include "main.h"
 
 
 void bufclr (char *buf)
@@ -25,13 +26,18 @@ void ESP_Init (char *SSID, char *PASSWD)
 	Ringbuf_init();
 
 	Uart_sendstring("AT+RST\r\n");
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_SET);
 	HAL_Delay(1000);
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 
 	Uart_flush();
 
 	/********* AT **********/
 	Uart_sendstring("AT\r\n");
 	while(!(Wait_for("OK\r\n")));
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(1000);
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 
 	Uart_flush();
 
@@ -39,6 +45,9 @@ void ESP_Init (char *SSID, char *PASSWD)
 	/********* AT+CWMODE=1 **********/
 	Uart_sendstring("AT+CWMODE=1\r\n");
 	while (!(Wait_for("OK\r\n")));
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(1000);
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 
 	Uart_flush();
 
@@ -47,12 +56,18 @@ void ESP_Init (char *SSID, char *PASSWD)
 	sprintf (data, "AT+CWJAP=\"%s\",\"%s\"\r\n", SSID, PASSWD);
 	Uart_sendstring(data);
 	while (!(Wait_for("GOT IP\r\n")));
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(1000);
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 
 	Uart_flush();
 
 	/********* AT+CIPMUX=0 **********/
 	Uart_sendstring("AT+CIPMUX=0\r\n");
 	while (!(Wait_for("OK\r\n")));
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(1000);
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 
 	Uart_flush();
 

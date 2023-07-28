@@ -209,9 +209,9 @@ int main(void)
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  //xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
   //xTaskCreate(wifiTask, "wifiTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-  xTaskCreate(wifiTaskTest, "wifiTaskTest", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  //xTaskCreate(wifiTaskTest, "wifiTaskTest", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
   vTaskStartScheduler();
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -1649,6 +1649,7 @@ void wifiTask(void *pvParameters) {
 
 void wifiTaskTest(void *pvParameters) {
 	//connectWifi();
+	HAL_GPIO_WritePin(testLed_GPIO_Port, testLed_Pin, GPIO_PIN_RESET);
 	ESP_Init("iPhone SE (2nd generation)", "asdasd009912");
 }
 
