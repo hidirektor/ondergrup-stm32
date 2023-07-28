@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         0000bcd0  080001f0  080001f0  000101f0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000da0  0800bec0  0800bec0  0001bec0  2**2
+  2 .rodata       00000dc4  0800bec0  0800bec0  0001bec0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  0800cc60  0800cc60  00020974  2**0
+  3 .ARM.extab    00000000  0800cc84  0800cc84  00020974  2**0
                   CONTENTS
-  4 .ARM          00000000  0800cc60  0800cc60  00020974  2**0
+  4 .ARM          00000000  0800cc84  0800cc84  00020974  2**0
                   CONTENTS
-  5 .preinit_array 00000000  0800cc60  0800cc60  00020974  2**0
+  5 .preinit_array 00000000  0800cc84  0800cc84  00020974  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0800cc60  0800cc60  0001cc60  2**2
+  6 .init_array   00000004  0800cc84  0800cc84  0001cc84  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  0800cc64  0800cc64  0001cc64  2**2
+  7 .fini_array   00000004  0800cc88  0800cc88  0001cc88  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000974  20000000  0800cc68  00020000  2**2
+  8 .data         00000974  20000000  0800cc8c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00001414  20000974  0800d5dc  00020974  2**2
+  9 .bss          00001414  20000974  0800d600  00020974  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20001d88  0800d5dc  00021d88  2**0
+ 10 ._user_heap_stack 00000600  20001d88  0800d600  00021d88  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020974  2**0
                   CONTENTS, READONLY
@@ -2313,7 +2313,7 @@ void menu(void) {
  8001174:	781b      	ldrb	r3, [r3, #0]
  8001176:	2b00      	cmp	r3, #0
  8001178:	d105      	bne.n	8001186 <menu+0xbbe>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  800117a:	4a60      	ldr	r2, [pc, #384]	; (80012fc <menu+0xd34>)
  800117c:	2101      	movs	r1, #1
  800117e:	2002      	movs	r0, #2
@@ -2475,7 +2475,7 @@ void menu(void) {
  8001284:	781b      	ldrb	r3, [r3, #0]
  8001286:	2b00      	cmp	r3, #0
  8001288:	d105      	bne.n	8001296 <menu+0xcce>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  800128a:	4a1c      	ldr	r2, [pc, #112]	; (80012fc <menu+0xd34>)
  800128c:	2101      	movs	r1, #1
  800128e:	2002      	movs	r0, #2
@@ -2503,7 +2503,7 @@ void menu(void) {
  80012b4:	781b      	ldrb	r3, [r3, #0]
  80012b6:	2b00      	cmp	r3, #0
  80012b8:	d12e      	bne.n	8001318 <menu+0xd50>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  80012ba:	4a16      	ldr	r2, [pc, #88]	; (8001314 <menu+0xd4c>)
  80012bc:	2101      	movs	r1, #1
  80012be:	2002      	movs	r0, #2
@@ -2524,12 +2524,12 @@ void menu(void) {
  80012f4:	0800c150 	.word	0x0800c150
  80012f8:	20000c50 	.word	0x20000c50
  80012fc:	0800c164 	.word	0x0800c164
- 8001300:	0800c174 	.word	0x0800c174
- 8001304:	0800c188 	.word	0x0800c188
- 8001308:	0800c198 	.word	0x0800c198
- 800130c:	0800c1ac 	.word	0x0800c1ac
+ 8001300:	0800c178 	.word	0x0800c178
+ 8001304:	0800c18c 	.word	0x0800c18c
+ 8001308:	0800c19c 	.word	0x0800c19c
+ 800130c:	0800c1b0 	.word	0x0800c1b0
  8001310:	20000c51 	.word	0x20000c51
- 8001314:	0800c1c0 	.word	0x0800c1c0
+ 8001314:	0800c1c4 	.word	0x0800c1c4
 			} else if(dilSecim == 1) {
  8001318:	4b92      	ldr	r3, [pc, #584]	; (8001564 <menu+0xf9c>)
  800131a:	781b      	ldrb	r3, [r3, #0]
@@ -2676,7 +2676,7 @@ void menu(void) {
  8001402:	781b      	ldrb	r3, [r3, #0]
  8001404:	2b00      	cmp	r3, #0
  8001406:	d105      	bne.n	8001414 <menu+0xe4c>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8001408:	4a61      	ldr	r2, [pc, #388]	; (8001590 <menu+0xfc8>)
  800140a:	2101      	movs	r1, #1
  800140c:	2002      	movs	r0, #2
@@ -2704,7 +2704,7 @@ void menu(void) {
  8001432:	781b      	ldrb	r3, [r3, #0]
  8001434:	2b00      	cmp	r3, #0
  8001436:	d105      	bne.n	8001444 <menu+0xe7c>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  8001438:	4a57      	ldr	r2, [pc, #348]	; (8001598 <menu+0xfd0>)
  800143a:	2101      	movs	r1, #1
  800143c:	2002      	movs	r0, #2
@@ -2884,23 +2884,23 @@ void menu(void) {
  8001560:	e02d      	b.n	80015be <menu+0xff6>
  8001562:	bf00      	nop
  8001564:	20000c6c 	.word	0x20000c6c
- 8001568:	0800c1d0 	.word	0x0800c1d0
+ 8001568:	0800c1d8 	.word	0x0800c1d8
  800156c:	40010800 	.word	0x40010800
  8001570:	20000c7a 	.word	0x20000c7a
  8001574:	20000c51 	.word	0x20000c51
  8001578:	20000be4 	.word	0x20000be4
  800157c:	20000c77 	.word	0x20000c77
  8001580:	20000c4c 	.word	0x20000c4c
- 8001584:	0800c1e4 	.word	0x0800c1e4
- 8001588:	0800c1f8 	.word	0x0800c1f8
+ 8001584:	0800c1ec 	.word	0x0800c1ec
+ 8001588:	0800c200 	.word	0x0800c200
  800158c:	20000c52 	.word	0x20000c52
  8001590:	0800c164 	.word	0x0800c164
- 8001594:	0800c174 	.word	0x0800c174
- 8001598:	0800c1c0 	.word	0x0800c1c0
+ 8001594:	0800c178 	.word	0x0800c178
+ 8001598:	0800c1c4 	.word	0x0800c1c4
  800159c:	20000c4d 	.word	0x20000c4d
  80015a0:	20000c59 	.word	0x20000c59
  80015a4:	20000c5f 	.word	0x20000c5f
- 80015a8:	0800c20c 	.word	0x0800c20c
+ 80015a8:	0800c214 	.word	0x0800c214
 		} else if(dilSecim == 1){
  80015ac:	4b7a      	ldr	r3, [pc, #488]	; (8001798 <menu+0x11d0>)
  80015ae:	781b      	ldrb	r3, [r3, #0]
@@ -2922,7 +2922,7 @@ void menu(void) {
  80015c8:	781b      	ldrb	r3, [r3, #0]
  80015ca:	2b00      	cmp	r3, #0
  80015cc:	d105      	bne.n	80015da <menu+0x1012>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  80015ce:	4a75      	ldr	r2, [pc, #468]	; (80017a4 <menu+0x11dc>)
  80015d0:	2101      	movs	r1, #1
  80015d2:	2002      	movs	r0, #2
@@ -2950,7 +2950,7 @@ void menu(void) {
  80015f8:	781b      	ldrb	r3, [r3, #0]
  80015fa:	2b00      	cmp	r3, #0
  80015fc:	d105      	bne.n	800160a <menu+0x1042>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  80015fe:	4a6b      	ldr	r2, [pc, #428]	; (80017ac <menu+0x11e4>)
  8001600:	2101      	movs	r1, #1
  8001602:	2002      	movs	r0, #2
@@ -3102,7 +3102,7 @@ void menu(void) {
  80016f4:	781b      	ldrb	r3, [r3, #0]
  80016f6:	2b00      	cmp	r3, #0
  80016f8:	d105      	bne.n	8001706 <menu+0x113e>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  80016fa:	4a2a      	ldr	r2, [pc, #168]	; (80017a4 <menu+0x11dc>)
  80016fc:	2101      	movs	r1, #1
  80016fe:	2002      	movs	r0, #2
@@ -3194,25 +3194,25 @@ void menu(void) {
  8001794:	e031      	b.n	80017fa <menu+0x1232>
  8001796:	bf00      	nop
  8001798:	20000c6c 	.word	0x20000c6c
- 800179c:	0800c21c 	.word	0x0800c21c
+ 800179c:	0800c224 	.word	0x0800c224
  80017a0:	20000c53 	.word	0x20000c53
  80017a4:	0800c164 	.word	0x0800c164
- 80017a8:	0800c174 	.word	0x0800c174
- 80017ac:	0800c1c0 	.word	0x0800c1c0
- 80017b0:	0800c1d0 	.word	0x0800c1d0
+ 80017a8:	0800c178 	.word	0x0800c178
+ 80017ac:	0800c1c4 	.word	0x0800c1c4
+ 80017b0:	0800c1d8 	.word	0x0800c1d8
  80017b4:	40010800 	.word	0x40010800
  80017b8:	20000c7a 	.word	0x20000c7a
  80017bc:	20000be4 	.word	0x20000be4
  80017c0:	20000c77 	.word	0x20000c77
  80017c4:	20000c4c 	.word	0x20000c4c
- 80017c8:	0800c22c 	.word	0x0800c22c
- 80017cc:	0800c240 	.word	0x0800c240
+ 80017c8:	0800c234 	.word	0x0800c234
+ 80017cc:	0800c248 	.word	0x0800c248
  80017d0:	20000c54 	.word	0x20000c54
- 80017d4:	0800c254 	.word	0x0800c254
- 80017d8:	0800c268 	.word	0x0800c268
- 80017dc:	0800c27c 	.word	0x0800c27c
- 80017e0:	0800c290 	.word	0x0800c290
- 80017e4:	0800c2a4 	.word	0x0800c2a4
+ 80017d4:	0800c25c 	.word	0x0800c25c
+ 80017d8:	0800c270 	.word	0x0800c270
+ 80017dc:	0800c284 	.word	0x0800c284
+ 80017e0:	0800c298 	.word	0x0800c298
+ 80017e4:	0800c2ac 	.word	0x0800c2ac
 			} else if(dilSecim == 1){
  80017e8:	4b99      	ldr	r3, [pc, #612]	; (8001a50 <menu+0x1488>)
  80017ea:	781b      	ldrb	r3, [r3, #0]
@@ -3358,7 +3358,7 @@ void menu(void) {
  80018ce:	781b      	ldrb	r3, [r3, #0]
  80018d0:	2b01      	cmp	r3, #1
  80018d2:	d104      	bne.n	80018de <menu+0x1316>
-			lcd_print(1, 1, "OPEN DOOR TYPE");
+			lcd_print(1, 1, "OPEN DOOR TYPE  ");
  80018d4:	4a68      	ldr	r2, [pc, #416]	; (8001a78 <menu+0x14b0>)
  80018d6:	2101      	movs	r1, #1
  80018d8:	2001      	movs	r0, #1
@@ -3584,7 +3584,7 @@ void menu(void) {
  8001a4a:	f7fe fcd1 	bl	80003f0 <lcd_print>
  8001a4e:	e034      	b.n	8001aba <menu+0x14f2>
  8001a50:	20000c6c 	.word	0x20000c6c
- 8001a54:	0800c2b8 	.word	0x0800c2b8
+ 8001a54:	0800c2c0 	.word	0x0800c2c0
  8001a58:	40010800 	.word	0x40010800
  8001a5c:	20000c7a 	.word	0x20000c7a
  8001a60:	20000c54 	.word	0x20000c54
@@ -3592,19 +3592,19 @@ void menu(void) {
  8001a68:	20000c52 	.word	0x20000c52
  8001a6c:	20000c77 	.word	0x20000c77
  8001a70:	20000c4c 	.word	0x20000c4c
- 8001a74:	0800c2cc 	.word	0x0800c2cc
- 8001a78:	0800c2e0 	.word	0x0800c2e0
+ 8001a74:	0800c2d4 	.word	0x0800c2d4
+ 8001a78:	0800c2e8 	.word	0x0800c2e8
  8001a7c:	20000c58 	.word	0x20000c58
- 8001a80:	0800c2f0 	.word	0x0800c2f0
- 8001a84:	0800c300 	.word	0x0800c300
- 8001a88:	0800c310 	.word	0x0800c310
- 8001a8c:	0800c324 	.word	0x0800c324
- 8001a90:	0800c338 	.word	0x0800c338
- 8001a94:	0800c34c 	.word	0x0800c34c
+ 8001a80:	0800c2fc 	.word	0x0800c2fc
+ 8001a84:	0800c30c 	.word	0x0800c30c
+ 8001a88:	0800c31c 	.word	0x0800c31c
+ 8001a8c:	0800c330 	.word	0x0800c330
+ 8001a90:	0800c344 	.word	0x0800c344
+ 8001a94:	0800c358 	.word	0x0800c358
  8001a98:	20000c55 	.word	0x20000c55
- 8001a9c:	0800c360 	.word	0x0800c360
- 8001aa0:	0800c374 	.word	0x0800c374
- 8001aa4:	0800c384 	.word	0x0800c384
+ 8001a9c:	0800c36c 	.word	0x0800c36c
+ 8001aa0:	0800c380 	.word	0x0800c380
+ 8001aa4:	0800c390 	.word	0x0800c390
 			}
 		} else if(kapi1Tip == 2) {
  8001aa8:	4b8a      	ldr	r3, [pc, #552]	; (8001cd4 <menu+0x170c>)
@@ -3933,25 +3933,25 @@ void menu(void) {
  8001cce:	f7fe fb8f 	bl	80003f0 <lcd_print>
  8001cd2:	e030      	b.n	8001d36 <menu+0x176e>
  8001cd4:	20000c55 	.word	0x20000c55
- 8001cd8:	0800c398 	.word	0x0800c398
+ 8001cd8:	0800c3a4 	.word	0x0800c3a4
  8001cdc:	40010800 	.word	0x40010800
  8001ce0:	20000c7a 	.word	0x20000c7a
  8001ce4:	20000be4 	.word	0x20000be4
  8001ce8:	20000c77 	.word	0x20000c77
  8001cec:	20000c4c 	.word	0x20000c4c
  8001cf0:	20000c6c 	.word	0x20000c6c
- 8001cf4:	0800c3a8 	.word	0x0800c3a8
- 8001cf8:	0800c3bc 	.word	0x0800c3bc
- 8001cfc:	0800c3cc 	.word	0x0800c3cc
- 8001d00:	0800c3e0 	.word	0x0800c3e0
+ 8001cf4:	0800c3b4 	.word	0x0800c3b4
+ 8001cf8:	0800c3c8 	.word	0x0800c3c8
+ 8001cfc:	0800c3d8 	.word	0x0800c3d8
+ 8001d00:	0800c3ec 	.word	0x0800c3ec
  8001d04:	20000c65 	.word	0x20000c65
  8001d08:	20000c24 	.word	0x20000c24
- 8001d0c:	0800c3f0 	.word	0x0800c3f0
- 8001d10:	0800c404 	.word	0x0800c404
+ 8001d0c:	0800c3fc 	.word	0x0800c3fc
+ 8001d10:	0800c410 	.word	0x0800c410
  8001d14:	20000c56 	.word	0x20000c56
- 8001d18:	0800c360 	.word	0x0800c360
- 8001d1c:	0800c374 	.word	0x0800c374
- 8001d20:	0800c384 	.word	0x0800c384
+ 8001d18:	0800c36c 	.word	0x0800c36c
+ 8001d1c:	0800c380 	.word	0x0800c380
+ 8001d20:	0800c390 	.word	0x0800c390
 			}
 		} else if(kapi2Tip == 2) {
  8001d24:	4b8a      	ldr	r3, [pc, #552]	; (8001f50 <menu+0x1988>)
@@ -4136,7 +4136,7 @@ void menu(void) {
  8001e5a:	4b49      	ldr	r3, [pc, #292]	; (8001f80 <menu+0x19b8>)
  8001e5c:	701a      	strb	r2, [r3, #0]
 
-			if(kapi2AcSure > 5){
+			if(kapi2AcSure > 5) {
  8001e5e:	4b48      	ldr	r3, [pc, #288]	; (8001f80 <menu+0x19b8>)
  8001e60:	781b      	ldrb	r3, [r3, #0]
  8001e62:	2b05      	cmp	r3, #5
@@ -4175,7 +4175,7 @@ void menu(void) {
  8001e9c:	4b38      	ldr	r3, [pc, #224]	; (8001f80 <menu+0x19b8>)
  8001e9e:	701a      	strb	r2, [r3, #0]
 
-		   	if(kapi2AcSure > 6){
+		   	if(kapi2AcSure > 6) {
  8001ea0:	4b37      	ldr	r3, [pc, #220]	; (8001f80 <menu+0x19b8>)
  8001ea2:	781b      	ldrb	r3, [r3, #0]
  8001ea4:	2b06      	cmp	r3, #6
@@ -4280,25 +4280,25 @@ void menu(void) {
  8001f4a:	f7fe fa51 	bl	80003f0 <lcd_print>
  8001f4e:	e030      	b.n	8001fb2 <menu+0x19ea>
  8001f50:	20000c56 	.word	0x20000c56
- 8001f54:	0800c398 	.word	0x0800c398
+ 8001f54:	0800c3a4 	.word	0x0800c3a4
  8001f58:	40010800 	.word	0x40010800
  8001f5c:	20000c7a 	.word	0x20000c7a
  8001f60:	20000be4 	.word	0x20000be4
  8001f64:	20000c77 	.word	0x20000c77
  8001f68:	20000c4c 	.word	0x20000c4c
  8001f6c:	20000c6c 	.word	0x20000c6c
- 8001f70:	0800c418 	.word	0x0800c418
- 8001f74:	0800c3bc 	.word	0x0800c3bc
- 8001f78:	0800c42c 	.word	0x0800c42c
- 8001f7c:	0800c3e0 	.word	0x0800c3e0
+ 8001f70:	0800c424 	.word	0x0800c424
+ 8001f74:	0800c3c8 	.word	0x0800c3c8
+ 8001f78:	0800c438 	.word	0x0800c438
+ 8001f7c:	0800c3ec 	.word	0x0800c3ec
  8001f80:	20000c66 	.word	0x20000c66
  8001f84:	20000c24 	.word	0x20000c24
- 8001f88:	0800c440 	.word	0x0800c440
- 8001f8c:	0800c454 	.word	0x0800c454
+ 8001f88:	0800c44c 	.word	0x0800c44c
+ 8001f8c:	0800c460 	.word	0x0800c460
  8001f90:	20000c57 	.word	0x20000c57
- 8001f94:	0800c360 	.word	0x0800c360
- 8001f98:	0800c374 	.word	0x0800c374
- 8001f9c:	0800c384 	.word	0x0800c384
+ 8001f94:	0800c36c 	.word	0x0800c36c
+ 8001f98:	0800c380 	.word	0x0800c380
+ 8001f9c:	0800c390 	.word	0x0800c390
 			}
 		} else if(kapitablaTip == 2) {
  8001fa0:	4b5b      	ldr	r3, [pc, #364]	; (8002110 <menu+0x1b48>)
@@ -4501,7 +4501,7 @@ void menu(void) {
  80020e8:	781b      	ldrb	r3, [r3, #0]
  80020ea:	2b00      	cmp	r3, #0
  80020ec:	d105      	bne.n	80020fa <menu+0x1b32>
-				lcd_print(2, 1, "1.+2. Katta ac ");
+				lcd_print(2, 1, "1.+2. Katta ac  ");
  80020ee:	4a17      	ldr	r2, [pc, #92]	; (800214c <menu+0x1b84>)
  80020f0:	2101      	movs	r1, #1
  80020f2:	2002      	movs	r0, #2
@@ -4520,22 +4520,22 @@ void menu(void) {
  800210c:	e038      	b.n	8002180 <menu+0x1bb8>
  800210e:	bf00      	nop
  8002110:	20000c57 	.word	0x20000c57
- 8002114:	0800c398 	.word	0x0800c398
+ 8002114:	0800c3a4 	.word	0x0800c3a4
  8002118:	40010800 	.word	0x40010800
  800211c:	20000c7a 	.word	0x20000c7a
  8002120:	20000be4 	.word	0x20000be4
  8002124:	20000c77 	.word	0x20000c77
  8002128:	20000c4c 	.word	0x20000c4c
  800212c:	20000c6c 	.word	0x20000c6c
- 8002130:	0800c468 	.word	0x0800c468
- 8002134:	0800c47c 	.word	0x0800c47c
+ 8002130:	0800c474 	.word	0x0800c474
+ 8002134:	0800c488 	.word	0x0800c488
  8002138:	20000c59 	.word	0x20000c59
- 800213c:	0800c490 	.word	0x0800c490
- 8002140:	0800c4a0 	.word	0x0800c4a0
- 8002144:	0800c4b0 	.word	0x0800c4b0
- 8002148:	0800c4c0 	.word	0x0800c4c0
- 800214c:	0800c4d0 	.word	0x0800c4d0
- 8002150:	0800c4e0 	.word	0x0800c4e0
+ 800213c:	0800c49c 	.word	0x0800c49c
+ 8002140:	0800c4ac 	.word	0x0800c4ac
+ 8002144:	0800c4bc 	.word	0x0800c4bc
+ 8002148:	0800c4cc 	.word	0x0800c4cc
+ 800214c:	0800c4dc 	.word	0x0800c4dc
+ 8002150:	0800c4f0 	.word	0x0800c4f0
 			}
 		} else if(kapiTablaAcKonum == 3) {
  8002154:	4b9b      	ldr	r3, [pc, #620]	; (80023c4 <menu+0x1dfc>)
@@ -4547,7 +4547,7 @@ void menu(void) {
  800215e:	781b      	ldrb	r3, [r3, #0]
  8002160:	2b00      	cmp	r3, #0
  8002162:	d104      	bne.n	800216e <menu+0x1ba6>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8002164:	4a99      	ldr	r2, [pc, #612]	; (80023cc <menu+0x1e04>)
  8002166:	2101      	movs	r1, #1
  8002168:	2002      	movs	r0, #2
@@ -4875,7 +4875,7 @@ void menu(void) {
  8002380:	781b      	ldrb	r3, [r3, #0]
  8002382:	2b00      	cmp	r3, #0
  8002384:	d105      	bne.n	8002392 <menu+0x1dca>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8002386:	4a11      	ldr	r2, [pc, #68]	; (80023cc <menu+0x1e04>)
  8002388:	2101      	movs	r1, #1
  800238a:	2002      	movs	r0, #2
@@ -4903,7 +4903,7 @@ void menu(void) {
  80023b0:	781b      	ldrb	r3, [r3, #0]
  80023b2:	2b00      	cmp	r3, #0
  80023b4:	d130      	bne.n	8002418 <menu+0x1e50>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  80023b6:	4a17      	ldr	r2, [pc, #92]	; (8002414 <menu+0x1e4c>)
  80023b8:	2101      	movs	r1, #1
  80023ba:	2002      	movs	r0, #2
@@ -4913,24 +4913,24 @@ void menu(void) {
  80023c4:	20000c59 	.word	0x20000c59
  80023c8:	20000c6c 	.word	0x20000c6c
  80023cc:	0800c164 	.word	0x0800c164
- 80023d0:	0800c174 	.word	0x0800c174
+ 80023d0:	0800c178 	.word	0x0800c178
  80023d4:	40010800 	.word	0x40010800
  80023d8:	20000c7a 	.word	0x20000c7a
  80023dc:	20000be4 	.word	0x20000be4
  80023e0:	20000c52 	.word	0x20000c52
  80023e4:	20000c77 	.word	0x20000c77
  80023e8:	20000c4c 	.word	0x20000c4c
- 80023ec:	0800c4f4 	.word	0x0800c4f4
- 80023f0:	0800c3bc 	.word	0x0800c3bc
- 80023f4:	0800c508 	.word	0x0800c508
- 80023f8:	0800c3e0 	.word	0x0800c3e0
+ 80023ec:	0800c504 	.word	0x0800c504
+ 80023f0:	0800c3c8 	.word	0x0800c3c8
+ 80023f4:	0800c518 	.word	0x0800c518
+ 80023f8:	0800c3ec 	.word	0x0800c3ec
  80023fc:	20000c67 	.word	0x20000c67
  8002400:	20000c24 	.word	0x20000c24
  8002404:	20000c57 	.word	0x20000c57
- 8002408:	0800c51c 	.word	0x0800c51c
- 800240c:	0800c530 	.word	0x0800c530
+ 8002408:	0800c52c 	.word	0x0800c52c
+ 800240c:	0800c540 	.word	0x0800c540
  8002410:	20000c5a 	.word	0x20000c5a
- 8002414:	0800c1c0 	.word	0x0800c1c0
+ 8002414:	0800c1c4 	.word	0x0800c1c4
 			} else if(dilSecim == 1) {
  8002418:	4b99      	ldr	r3, [pc, #612]	; (8002680 <menu+0x20b8>)
  800241a:	781b      	ldrb	r3, [r3, #0]
@@ -5133,7 +5133,7 @@ void menu(void) {
  8002562:	781b      	ldrb	r3, [r3, #0]
  8002564:	2b00      	cmp	r3, #0
  8002566:	d105      	bne.n	8002574 <menu+0x1fac>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8002568:	4a54      	ldr	r2, [pc, #336]	; (80026bc <menu+0x20f4>)
  800256a:	2101      	movs	r1, #1
  800256c:	2002      	movs	r0, #2
@@ -5306,25 +5306,25 @@ void menu(void) {
  800267c:	e048      	b.n	8002710 <menu+0x2148>
  800267e:	bf00      	nop
  8002680:	20000c6c 	.word	0x20000c6c
- 8002684:	0800c1d0 	.word	0x0800c1d0
+ 8002684:	0800c1d8 	.word	0x0800c1d8
  8002688:	40010800 	.word	0x40010800
  800268c:	20000c7a 	.word	0x20000c7a
  8002690:	20000c5a 	.word	0x20000c5a
  8002694:	20000be4 	.word	0x20000be4
  8002698:	20000c77 	.word	0x20000c77
  800269c:	20000c4c 	.word	0x20000c4c
- 80026a0:	0800c544 	.word	0x0800c544
- 80026a4:	0800c558 	.word	0x0800c558
+ 80026a0:	0800c554 	.word	0x0800c554
+ 80026a4:	0800c568 	.word	0x0800c568
  80026a8:	20000c5b 	.word	0x20000c5b
- 80026ac:	0800c56c 	.word	0x0800c56c
- 80026b0:	0800c57c 	.word	0x0800c57c
- 80026b4:	0800c58c 	.word	0x0800c58c
- 80026b8:	0800c59c 	.word	0x0800c59c
+ 80026ac:	0800c57c 	.word	0x0800c57c
+ 80026b0:	0800c58c 	.word	0x0800c58c
+ 80026b4:	0800c59c 	.word	0x0800c59c
+ 80026b8:	0800c5ac 	.word	0x0800c5ac
  80026bc:	0800c164 	.word	0x0800c164
- 80026c0:	0800c174 	.word	0x0800c174
+ 80026c0:	0800c178 	.word	0x0800c178
  80026c4:	20000c4d 	.word	0x20000c4d
  80026c8:	20000c5e 	.word	0x20000c5e
- 80026cc:	0800c5ac 	.word	0x0800c5ac
+ 80026cc:	0800c5bc 	.word	0x0800c5bc
 			} else if(dilSecim == 1) {
  80026d0:	4b7b      	ldr	r3, [pc, #492]	; (80028c0 <menu+0x22f8>)
  80026d2:	781b      	ldrb	r3, [r3, #0]
@@ -5376,7 +5376,7 @@ void menu(void) {
  800271a:	781b      	ldrb	r3, [r3, #0]
  800271c:	2b00      	cmp	r3, #0
  800271e:	d105      	bne.n	800272c <menu+0x2164>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8002720:	4a6d      	ldr	r2, [pc, #436]	; (80028d8 <menu+0x2310>)
  8002722:	2101      	movs	r1, #1
  8002724:	2002      	movs	r0, #2
@@ -5404,7 +5404,7 @@ void menu(void) {
  800274a:	781b      	ldrb	r3, [r3, #0]
  800274c:	2b00      	cmp	r3, #0
  800274e:	d105      	bne.n	800275c <menu+0x2194>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  8002750:	4a63      	ldr	r2, [pc, #396]	; (80028e0 <menu+0x2318>)
  8002752:	2101      	movs	r1, #1
  8002754:	2002      	movs	r0, #2
@@ -5590,7 +5590,7 @@ void menu(void) {
  800287c:	781b      	ldrb	r3, [r3, #0]
  800287e:	2b00      	cmp	r3, #0
  8002880:	d105      	bne.n	800288e <menu+0x22c6>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8002882:	4a15      	ldr	r2, [pc, #84]	; (80028d8 <menu+0x2310>)
  8002884:	2101      	movs	r1, #1
  8002886:	2002      	movs	r0, #2
@@ -5618,7 +5618,7 @@ void menu(void) {
  80028ac:	781b      	ldrb	r3, [r3, #0]
  80028ae:	2b00      	cmp	r3, #0
  80028b0:	d12e      	bne.n	8002910 <menu+0x2348>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  80028b2:	4a0b      	ldr	r2, [pc, #44]	; (80028e0 <menu+0x2318>)
  80028b4:	2101      	movs	r1, #1
  80028b6:	2002      	movs	r0, #2
@@ -5626,24 +5626,24 @@ void menu(void) {
  80028bc:	e031      	b.n	8002922 <menu+0x235a>
  80028be:	bf00      	nop
  80028c0:	20000c6c 	.word	0x20000c6c
- 80028c4:	0800c5c0 	.word	0x0800c5c0
+ 80028c4:	0800c5d0 	.word	0x0800c5d0
  80028c8:	20000c5b 	.word	0x20000c5b
- 80028cc:	0800c5d0 	.word	0x0800c5d0
- 80028d0:	0800c5e4 	.word	0x0800c5e4
+ 80028cc:	0800c5e0 	.word	0x0800c5e0
+ 80028d0:	0800c5f4 	.word	0x0800c5f4
  80028d4:	20000c5c 	.word	0x20000c5c
  80028d8:	0800c164 	.word	0x0800c164
- 80028dc:	0800c174 	.word	0x0800c174
- 80028e0:	0800c1c0 	.word	0x0800c1c0
- 80028e4:	0800c1d0 	.word	0x0800c1d0
+ 80028dc:	0800c178 	.word	0x0800c178
+ 80028e0:	0800c1c4 	.word	0x0800c1c4
+ 80028e4:	0800c1d8 	.word	0x0800c1d8
  80028e8:	40010800 	.word	0x40010800
  80028ec:	20000c7a 	.word	0x20000c7a
  80028f0:	20000be4 	.word	0x20000be4
  80028f4:	20000c77 	.word	0x20000c77
  80028f8:	20000c4c 	.word	0x20000c4c
- 80028fc:	0800c5f8 	.word	0x0800c5f8
- 8002900:	0800c60c 	.word	0x0800c60c
- 8002904:	0800c620 	.word	0x0800c620
- 8002908:	0800c634 	.word	0x0800c634
+ 80028fc:	0800c608 	.word	0x0800c608
+ 8002900:	0800c61c 	.word	0x0800c61c
+ 8002904:	0800c630 	.word	0x0800c630
+ 8002908:	0800c644 	.word	0x0800c644
  800290c:	20000c5d 	.word	0x20000c5d
 			} else if(dilSecim == 1) {
  8002910:	4b90      	ldr	r3, [pc, #576]	; (8002b54 <menu+0x258c>)
@@ -5825,7 +5825,7 @@ void menu(void) {
  8002a32:	781b      	ldrb	r3, [r3, #0]
  8002a34:	2b00      	cmp	r3, #0
  8002a36:	d105      	bne.n	8002a44 <menu+0x247c>
-				lcd_print(2, 1, "Tek tesir      ");
+				lcd_print(2, 1, "Tek tesir       ");
  8002a38:	4a54      	ldr	r2, [pc, #336]	; (8002b8c <menu+0x25c4>)
  8002a3a:	2101      	movs	r1, #1
  8002a3c:	2002      	movs	r0, #2
@@ -5853,7 +5853,7 @@ void menu(void) {
  8002a62:	781b      	ldrb	r3, [r3, #0]
  8002a64:	2b00      	cmp	r3, #0
  8002a66:	d105      	bne.n	8002a74 <menu+0x24ac>
-				lcd_print(2, 1, "Cift tesir     ");
+				lcd_print(2, 1, "Cift tesir      ");
  8002a68:	4a4a      	ldr	r2, [pc, #296]	; (8002b94 <menu+0x25cc>)
  8002a6a:	2101      	movs	r1, #1
  8002a6c:	2002      	movs	r0, #2
@@ -5993,7 +5993,7 @@ void menu(void) {
  8002b50:	e02f      	b.n	8002bb2 <menu+0x25ea>
  8002b52:	bf00      	nop
  8002b54:	20000c6c 	.word	0x20000c6c
- 8002b58:	0800c1d0 	.word	0x0800c1d0
+ 8002b58:	0800c1d8 	.word	0x0800c1d8
  8002b5c:	40010800 	.word	0x40010800
  8002b60:	20000c7a 	.word	0x20000c7a
  8002b64:	20000c5d 	.word	0x20000c5d
@@ -6001,16 +6001,16 @@ void menu(void) {
  8002b6c:	20000c77 	.word	0x20000c77
  8002b70:	20000c4c 	.word	0x20000c4c
  8002b74:	20000c5b 	.word	0x20000c5b
- 8002b78:	0800c648 	.word	0x0800c648
- 8002b7c:	0800c65c 	.word	0x0800c65c
- 8002b80:	0800c670 	.word	0x0800c670
- 8002b84:	0800c684 	.word	0x0800c684
+ 8002b78:	0800c658 	.word	0x0800c658
+ 8002b7c:	0800c66c 	.word	0x0800c66c
+ 8002b80:	0800c680 	.word	0x0800c680
+ 8002b84:	0800c694 	.word	0x0800c694
  8002b88:	20000c5e 	.word	0x20000c5e
- 8002b8c:	0800c698 	.word	0x0800c698
- 8002b90:	0800c6a8 	.word	0x0800c6a8
- 8002b94:	0800c6b8 	.word	0x0800c6b8
- 8002b98:	0800c6c8 	.word	0x0800c6c8
- 8002b9c:	0800c6d8 	.word	0x0800c6d8
+ 8002b8c:	0800c6a8 	.word	0x0800c6a8
+ 8002b90:	0800c6bc 	.word	0x0800c6bc
+ 8002b94:	0800c6cc 	.word	0x0800c6cc
+ 8002b98:	0800c6e0 	.word	0x0800c6e0
+ 8002b9c:	0800c6f0 	.word	0x0800c6f0
 		} else if(dilSecim == 1) {
  8002ba0:	4b9c      	ldr	r3, [pc, #624]	; (8002e14 <menu+0x284c>)
  8002ba2:	781b      	ldrb	r3, [r3, #0]
@@ -6033,7 +6033,7 @@ void menu(void) {
  8002bbc:	781b      	ldrb	r3, [r3, #0]
  8002bbe:	2b00      	cmp	r3, #0
  8002bc0:	d104      	bne.n	8002bcc <menu+0x2604>
-				lcd_print(2, 1, "Tek tesir      ");
+				lcd_print(2, 1, "Tek tesir       ");
  8002bc2:	4a97      	ldr	r2, [pc, #604]	; (8002e20 <menu+0x2858>)
  8002bc4:	2101      	movs	r1, #1
  8002bc6:	2002      	movs	r0, #2
@@ -6061,7 +6061,7 @@ void menu(void) {
  8002bea:	781b      	ldrb	r3, [r3, #0]
  8002bec:	2b00      	cmp	r3, #0
  8002bee:	d105      	bne.n	8002bfc <menu+0x2634>
-				lcd_print(2, 1, "Cift tesir     ");
+				lcd_print(2, 1, "Cift tesir      ");
  8002bf0:	4a8d      	ldr	r2, [pc, #564]	; (8002e28 <menu+0x2860>)
  8002bf2:	2101      	movs	r1, #1
  8002bf4:	2002      	movs	r0, #2
@@ -6394,26 +6394,26 @@ void menu(void) {
  8002e10:	e033      	b.n	8002e7a <menu+0x28b2>
  8002e12:	bf00      	nop
  8002e14:	20000c6c 	.word	0x20000c6c
- 8002e18:	0800c6ec 	.word	0x0800c6ec
+ 8002e18:	0800c704 	.word	0x0800c704
  8002e1c:	20000c5f 	.word	0x20000c5f
- 8002e20:	0800c698 	.word	0x0800c698
- 8002e24:	0800c6a8 	.word	0x0800c6a8
- 8002e28:	0800c6b8 	.word	0x0800c6b8
- 8002e2c:	0800c6c8 	.word	0x0800c6c8
+ 8002e20:	0800c6a8 	.word	0x0800c6a8
+ 8002e24:	0800c6bc 	.word	0x0800c6bc
+ 8002e28:	0800c6cc 	.word	0x0800c6cc
+ 8002e2c:	0800c6e0 	.word	0x0800c6e0
  8002e30:	40010800 	.word	0x40010800
  8002e34:	20000c7a 	.word	0x20000c7a
  8002e38:	20000be4 	.word	0x20000be4
  8002e3c:	20000c52 	.word	0x20000c52
  8002e40:	20000c77 	.word	0x20000c77
  8002e44:	20000c4c 	.word	0x20000c4c
- 8002e48:	0800c6fc 	.word	0x0800c6fc
- 8002e4c:	0800c710 	.word	0x0800c710
- 8002e50:	0800c3bc 	.word	0x0800c3bc
- 8002e54:	0800c724 	.word	0x0800c724
+ 8002e48:	0800c714 	.word	0x0800c714
+ 8002e4c:	0800c728 	.word	0x0800c728
+ 8002e50:	0800c3c8 	.word	0x0800c3c8
+ 8002e54:	0800c73c 	.word	0x0800c73c
  8002e58:	20000c60 	.word	0x20000c60
  8002e5c:	20000c24 	.word	0x20000c24
- 8002e60:	0800c734 	.word	0x0800c734
- 8002e64:	0800c748 	.word	0x0800c748
+ 8002e60:	0800c74c 	.word	0x0800c74c
+ 8002e64:	0800c760 	.word	0x0800c760
 			} else if(dilSecim == 1) {
  8002e68:	4b98      	ldr	r3, [pc, #608]	; (80030cc <menu+0x2b04>)
  8002e6a:	781b      	ldrb	r3, [r3, #0]
@@ -6781,7 +6781,7 @@ void menu(void) {
  80030c8:	e02f      	b.n	800312a <menu+0x2b62>
  80030ca:	bf00      	nop
  80030cc:	20000c6c 	.word	0x20000c6c
- 80030d0:	0800c724 	.word	0x0800c724
+ 80030d0:	0800c73c 	.word	0x0800c73c
  80030d4:	20000c61 	.word	0x20000c61
  80030d8:	20000c24 	.word	0x20000c24
  80030dc:	40010800 	.word	0x40010800
@@ -6790,15 +6790,15 @@ void menu(void) {
  80030e8:	20000c77 	.word	0x20000c77
  80030ec:	20000c4c 	.word	0x20000c4c
  80030f0:	20000c5b 	.word	0x20000c5b
- 80030f4:	0800c75c 	.word	0x0800c75c
- 80030f8:	0800c770 	.word	0x0800c770
- 80030fc:	0800c784 	.word	0x0800c784
- 8003100:	0800c798 	.word	0x0800c798
- 8003104:	0800c3bc 	.word	0x0800c3bc
+ 80030f4:	0800c774 	.word	0x0800c774
+ 80030f8:	0800c788 	.word	0x0800c788
+ 80030fc:	0800c79c 	.word	0x0800c79c
+ 8003100:	0800c7b0 	.word	0x0800c7b0
+ 8003104:	0800c3c8 	.word	0x0800c3c8
  8003108:	20000c62 	.word	0x20000c62
- 800310c:	0800c7ac 	.word	0x0800c7ac
- 8003110:	0800c7c0 	.word	0x0800c7c0
- 8003114:	0800c7d4 	.word	0x0800c7d4
+ 800310c:	0800c7c4 	.word	0x0800c7c4
+ 8003110:	0800c7d8 	.word	0x0800c7d8
+ 8003114:	0800c7ec 	.word	0x0800c7ec
 			} else if(dilSecim == 1) {
  8003118:	4b73      	ldr	r3, [pc, #460]	; (80032e8 <menu+0x2d20>)
  800311a:	781b      	ldrb	r3, [r3, #0]
@@ -6966,7 +6966,7 @@ void menu(void) {
  8003226:	781b      	ldrb	r3, [r3, #0]
  8003228:	2b01      	cmp	r3, #1
  800322a:	d104      	bne.n	8003236 <menu+0x2c6e>
-			lcd_print(1, 1, "WORKING TIME  ");
+			lcd_print(1, 1, "WORKING TIME    ");
  800322c:	4a3a      	ldr	r2, [pc, #232]	; (8003318 <menu+0x2d50>)
  800322e:	2101      	movs	r1, #1
  8003230:	2001      	movs	r0, #1
@@ -7078,9 +7078,9 @@ void menu(void) {
  80032e2:	f7fd f885 	bl	80003f0 <lcd_print>
  80032e6:	e024      	b.n	8003332 <menu+0x2d6a>
  80032e8:	20000c6c 	.word	0x20000c6c
- 80032ec:	0800c7e8 	.word	0x0800c7e8
- 80032f0:	0800c3bc 	.word	0x0800c3bc
- 80032f4:	0800c724 	.word	0x0800c724
+ 80032ec:	0800c800 	.word	0x0800c800
+ 80032f0:	0800c3c8 	.word	0x0800c3c8
+ 80032f4:	0800c73c 	.word	0x0800c73c
  80032f8:	20000c63 	.word	0x20000c63
  80032fc:	20000c24 	.word	0x20000c24
  8003300:	40010800 	.word	0x40010800
@@ -7088,8 +7088,8 @@ void menu(void) {
  8003308:	20000be4 	.word	0x20000be4
  800330c:	20000c77 	.word	0x20000c77
  8003310:	20000c4c 	.word	0x20000c4c
- 8003314:	0800c7fc 	.word	0x0800c7fc
- 8003318:	0800c810 	.word	0x0800c810
+ 8003314:	0800c814 	.word	0x0800c814
+ 8003318:	0800c828 	.word	0x0800c828
  800331c:	20000c64 	.word	0x20000c64
 			} else if(dilSecim == 1) {
  8003320:	4b8f      	ldr	r3, [pc, #572]	; (8003560 <menu+0x2f98>)
@@ -7233,7 +7233,7 @@ void menu(void) {
  8003406:	781b      	ldrb	r3, [r3, #0]
  8003408:	2b00      	cmp	r3, #0
  800340a:	d105      	bne.n	8003418 <menu+0x2e50>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  800340c:	4a5f      	ldr	r2, [pc, #380]	; (800358c <menu+0x2fc4>)
  800340e:	2101      	movs	r1, #1
  8003410:	2002      	movs	r0, #2
@@ -7261,7 +7261,7 @@ void menu(void) {
  8003436:	781b      	ldrb	r3, [r3, #0]
  8003438:	2b00      	cmp	r3, #0
  800343a:	d105      	bne.n	8003448 <menu+0x2e80>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  800343c:	4a55      	ldr	r2, [pc, #340]	; (8003594 <menu+0x2fcc>)
  800343e:	2101      	movs	r1, #1
  8003440:	2002      	movs	r0, #2
@@ -7399,7 +7399,7 @@ void menu(void) {
  800351c:	781b      	ldrb	r3, [r3, #0]
  800351e:	2b00      	cmp	r3, #0
  8003520:	d105      	bne.n	800352e <menu+0x2f66>
-				lcd_print(2, 1, "Pasif          ");
+				lcd_print(2, 1, "Pasif           ");
  8003522:	4a1a      	ldr	r2, [pc, #104]	; (800358c <menu+0x2fc4>)
  8003524:	2101      	movs	r1, #1
  8003526:	2002      	movs	r0, #2
@@ -7427,7 +7427,7 @@ void menu(void) {
  800354c:	781b      	ldrb	r3, [r3, #0]
  800354e:	2b00      	cmp	r3, #0
  8003550:	d12a      	bne.n	80035a8 <menu+0x2fe0>
-				lcd_print(2, 1, "Aktif          ");
+				lcd_print(2, 1, "Aktif           ");
  8003552:	4a10      	ldr	r2, [pc, #64]	; (8003594 <menu+0x2fcc>)
  8003554:	2101      	movs	r1, #1
  8003556:	2002      	movs	r0, #2
@@ -7435,7 +7435,7 @@ void menu(void) {
  800355c:	e02d      	b.n	80035ba <menu+0x2ff2>
  800355e:	bf00      	nop
  8003560:	20000c6c 	.word	0x20000c6c
- 8003564:	0800c724 	.word	0x0800c724
+ 8003564:	0800c73c 	.word	0x0800c73c
  8003568:	20000c64 	.word	0x20000c64
  800356c:	20000c24 	.word	0x20000c24
  8003570:	40010800 	.word	0x40010800
@@ -7443,14 +7443,14 @@ void menu(void) {
  8003578:	20000be4 	.word	0x20000be4
  800357c:	20000c77 	.word	0x20000c77
  8003580:	20000c4c 	.word	0x20000c4c
- 8003584:	0800c820 	.word	0x0800c820
+ 8003584:	0800c83c 	.word	0x0800c83c
  8003588:	20000c68 	.word	0x20000c68
  800358c:	0800c164 	.word	0x0800c164
- 8003590:	0800c174 	.word	0x0800c174
- 8003594:	0800c1c0 	.word	0x0800c1c0
- 8003598:	0800c1d0 	.word	0x0800c1d0
+ 8003590:	0800c178 	.word	0x0800c178
+ 8003594:	0800c1c4 	.word	0x0800c1c4
+ 8003598:	0800c1d8 	.word	0x0800c1d8
  800359c:	20000c6b 	.word	0x20000c6b
- 80035a0:	0800c834 	.word	0x0800c834
+ 80035a0:	0800c850 	.word	0x0800c850
  80035a4:	20000c6a 	.word	0x20000c6a
 			} else if(dilSecim == 1) {
  80035a8:	4b71      	ldr	r3, [pc, #452]	; (8003770 <menu+0x31a8>)
@@ -7719,7 +7719,7 @@ void menu(void) {
  800376a:	f7fc fe41 	bl	80003f0 <lcd_print>
  800376e:	e035      	b.n	80037dc <menu+0x3214>
  8003770:	20000c6c 	.word	0x20000c6c
- 8003774:	0800c1d0 	.word	0x0800c1d0
+ 8003774:	0800c1d8 	.word	0x0800c1d8
  8003778:	40010800 	.word	0x40010800
  800377c:	20000c7a 	.word	0x20000c7a
  8003780:	20000c6a 	.word	0x20000c6a
@@ -7733,11 +7733,11 @@ void menu(void) {
  80037a0:	20000c4b 	.word	0x20000c4b
  80037a4:	20000c8c 	.word	0x20000c8c
  80037a8:	20000c6b 	.word	0x20000c6b
- 80037ac:	0800c844 	.word	0x0800c844
- 80037b0:	0800c858 	.word	0x0800c858
+ 80037ac:	0800c860 	.word	0x0800c860
+ 80037b0:	0800c874 	.word	0x0800c874
  80037b4:	20000c24 	.word	0x20000c24
- 80037b8:	0800c86c 	.word	0x0800c86c
- 80037bc:	0800c878 	.word	0x0800c878
+ 80037b8:	0800c888 	.word	0x0800c888
+ 80037bc:	0800c894 	.word	0x0800c894
 			} else if(dilSecim == 1) {
  80037c0:	4b95      	ldr	r3, [pc, #596]	; (8003a18 <menu+0x3450>)
  80037c2:	781b      	ldrb	r3, [r3, #0]
@@ -7918,7 +7918,7 @@ void menu(void) {
  80038de:	2101      	movs	r1, #1
  80038e0:	2001      	movs	r0, #1
  80038e2:	f7fc fd85 	bl	80003f0 <lcd_print>
-			lcd_print(2, 1, "TURKCE         ");
+			lcd_print(2, 1, "TURKCE          ");
  80038e6:	4a5c      	ldr	r2, [pc, #368]	; (8003a58 <menu+0x3490>)
  80038e8:	2101      	movs	r1, #1
  80038ea:	2002      	movs	r0, #2
@@ -7934,7 +7934,7 @@ void menu(void) {
  80038fc:	2101      	movs	r1, #1
  80038fe:	2001      	movs	r0, #1
  8003900:	f7fc fd76 	bl	80003f0 <lcd_print>
-			lcd_print(2, 1, "INGILIZCE      ");
+			lcd_print(2, 1, "ENGLISH         ");
  8003904:	4a56      	ldr	r2, [pc, #344]	; (8003a60 <menu+0x3498>)
  8003906:	2101      	movs	r1, #1
  8003908:	2002      	movs	r0, #2
@@ -8101,8 +8101,8 @@ void menu(void) {
  8003a14:	bf00      	nop
  8003a16:	bd80      	pop	{r7, pc}
  8003a18:	20000c6c 	.word	0x20000c6c
- 8003a1c:	0800c858 	.word	0x0800c858
- 8003a20:	0800c88c 	.word	0x0800c88c
+ 8003a1c:	0800c874 	.word	0x0800c874
+ 8003a20:	0800c8a8 	.word	0x0800c8a8
  8003a24:	40010800 	.word	0x40010800
  8003a28:	20000c7a 	.word	0x20000c7a
  8003a2c:	20000c8c 	.word	0x20000c8c
@@ -8115,14 +8115,14 @@ void menu(void) {
  8003a48:	20000c49 	.word	0x20000c49
  8003a4c:	20000c77 	.word	0x20000c77
  8003a50:	20000c4c 	.word	0x20000c4c
- 8003a54:	0800c8a0 	.word	0x0800c8a0
- 8003a58:	0800c8b4 	.word	0x0800c8b4
- 8003a5c:	0800c8c4 	.word	0x0800c8c4
- 8003a60:	0800c8d8 	.word	0x0800c8d8
- 8003a64:	0800c8e8 	.word	0x0800c8e8
- 8003a68:	0800c8fc 	.word	0x0800c8fc
- 8003a6c:	0800c910 	.word	0x0800c910
- 8003a70:	0800c924 	.word	0x0800c924
+ 8003a54:	0800c8bc 	.word	0x0800c8bc
+ 8003a58:	0800c8d0 	.word	0x0800c8d0
+ 8003a5c:	0800c8e4 	.word	0x0800c8e4
+ 8003a60:	0800c8f8 	.word	0x0800c8f8
+ 8003a64:	0800c90c 	.word	0x0800c90c
+ 8003a68:	0800c920 	.word	0x0800c920
+ 8003a6c:	0800c934 	.word	0x0800c934
+ 8003a70:	0800c948 	.word	0x0800c948
  8003a74:	20000c69 	.word	0x20000c69
 
 08003a78 <loadMenuTexts>:
@@ -9553,15 +9553,15 @@ void hataKoduLcdGoster(uint8_t x) {
  800477c:	46bd      	mov	sp, r7
  800477e:	bd80      	pop	{r7, pc}
  8004780:	20000c6c 	.word	0x20000c6c
- 8004784:	0800c938 	.word	0x0800c938
- 8004788:	0800c94c 	.word	0x0800c94c
- 800478c:	0800c960 	.word	0x0800c960
- 8004790:	0800c964 	.word	0x0800c964
- 8004794:	0800c970 	.word	0x0800c970
- 8004798:	0800c974 	.word	0x0800c974
- 800479c:	0800c978 	.word	0x0800c978
- 80047a0:	0800c97c 	.word	0x0800c97c
- 80047a4:	0800c980 	.word	0x0800c980
+ 8004784:	0800c95c 	.word	0x0800c95c
+ 8004788:	0800c970 	.word	0x0800c970
+ 800478c:	0800c984 	.word	0x0800c984
+ 8004790:	0800c988 	.word	0x0800c988
+ 8004794:	0800c994 	.word	0x0800c994
+ 8004798:	0800c998 	.word	0x0800c998
+ 800479c:	0800c99c 	.word	0x0800c99c
+ 80047a0:	0800c9a0 	.word	0x0800c9a0
+ 80047a4:	0800c9a4 	.word	0x0800c9a4
 
 080047a8 <HAL_TIM_PeriodElapsedCallback>:
 
@@ -9798,11 +9798,11 @@ int main(void)
  8004920:	20000e08 	.word	0x20000e08
  8004924:	40011000 	.word	0x40011000
  8004928:	40010800 	.word	0x40010800
- 800492c:	0800c984 	.word	0x0800c984
- 8004930:	0800c998 	.word	0x0800c998
- 8004934:	0800c9c4 	.word	0x0800c9c4
+ 800492c:	0800c9a8 	.word	0x0800c9a8
+ 8004930:	0800c9bc 	.word	0x0800c9bc
+ 8004934:	0800c9e8 	.word	0x0800c9e8
  8004938:	20000ee8 	.word	0x20000ee8
- 800493c:	0800c9ac 	.word	0x0800c9ac
+ 800493c:	0800c9d0 	.word	0x0800c9d0
  8004940:	08005011 	.word	0x08005011
 
 08004944 <i2cTest>:
@@ -11218,17 +11218,17 @@ void mainTask(void *pvParameters) {
  80052b0:	20000e08 	.word	0x20000e08
  80052b4:	20000be4 	.word	0x20000be4
  80052b8:	20000c6c 	.word	0x20000c6c
- 80052bc:	0800c9e0 	.word	0x0800c9e0
- 80052c0:	0800c9f4 	.word	0x0800c9f4
+ 80052bc:	0800ca04 	.word	0x0800ca04
+ 80052c0:	0800ca18 	.word	0x0800ca18
  80052c4:	20000c78 	.word	0x20000c78
  80052c8:	20000c79 	.word	0x20000c79
- 80052cc:	0800ca08 	.word	0x0800ca08
- 80052d0:	0800ca1c 	.word	0x0800ca1c
- 80052d4:	0800ca30 	.word	0x0800ca30
- 80052d8:	0800ca44 	.word	0x0800ca44
- 80052dc:	0800ca58 	.word	0x0800ca58
- 80052e0:	0800ca6c 	.word	0x0800ca6c
- 80052e4:	0800ca80 	.word	0x0800ca80
+ 80052cc:	0800ca2c 	.word	0x0800ca2c
+ 80052d0:	0800ca40 	.word	0x0800ca40
+ 80052d4:	0800ca54 	.word	0x0800ca54
+ 80052d8:	0800ca68 	.word	0x0800ca68
+ 80052dc:	0800ca7c 	.word	0x0800ca7c
+ 80052e0:	0800ca90 	.word	0x0800ca90
+ 80052e4:	0800caa4 	.word	0x0800caa4
  80052e8:	20000c69 	.word	0x20000c69
  80052ec:	20000c7f 	.word	0x20000c7f
  80052f0:	20000c6a 	.word	0x20000c6a
@@ -15179,8 +15179,8 @@ void mainTask(void *pvParameters) {
  8006f90:	20000be4 	.word	0x20000be4
  8006f94:	20000c77 	.word	0x20000c77
  8006f98:	20000c69 	.word	0x20000c69
- 8006f9c:	0800ca94 	.word	0x0800ca94
- 8006fa0:	0800caa0 	.word	0x0800caa0
+ 8006f9c:	0800cab8 	.word	0x0800cab8
+ 8006fa0:	0800cac4 	.word	0x0800cac4
  8006fa4:	20000c24 	.word	0x20000c24
  8006fa8:	20000c7f 	.word	0x20000c7f
 				  }
@@ -16738,7 +16738,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  80077ac:	20000974 	.word	0x20000974
   ldr r2, =_sidata
- 80077b0:	0800cc68 	.word	0x0800cc68
+ 80077b0:	0800cc8c 	.word	0x0800cc8c
   ldr r2, =_sbss
  80077b4:	20000974 	.word	0x20000974
   ldr r4, =_ebss
@@ -23178,7 +23178,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  8009c82:	bf00      	nop
  8009c84:	40022000 	.word	0x40022000
  8009c88:	40021000 	.word	0x40021000
- 8009c8c:	0800cc20 	.word	0x0800cc20
+ 8009c8c:	0800cc44 	.word	0x0800cc44
  8009c90:	20000914 	.word	0x20000914
  8009c94:	20000918 	.word	0x20000918
 
@@ -23326,7 +23326,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8009d3e:	bc90      	pop	{r4, r7}
  8009d40:	4770      	bx	lr
  8009d42:	bf00      	nop
- 8009d44:	0800cc08 	.word	0x0800cc08
+ 8009d44:	0800cc2c 	.word	0x0800cc2c
  8009d48:	40021000 	.word	0x40021000
  8009d4c:	007a1200 	.word	0x007a1200
  8009d50:	003d0900 	.word	0x003d0900
@@ -23374,7 +23374,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8009d84:	4618      	mov	r0, r3
  8009d86:	bd80      	pop	{r7, pc}
  8009d88:	40021000 	.word	0x40021000
- 8009d8c:	0800cc30 	.word	0x0800cc30
+ 8009d8c:	0800cc54 	.word	0x0800cc54
 
 08009d90 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -23400,7 +23400,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8009dac:	4618      	mov	r0, r3
  8009dae:	bd80      	pop	{r7, pc}
  8009db0:	40021000 	.word	0x40021000
- 8009db4:	0800cc30 	.word	0x0800cc30
+ 8009db4:	0800cc54 	.word	0x0800cc54
 
 08009db8 <RCC_Delay>:
   * @brief  This function provides delay (in milliseconds) based on CPU cycles method.
@@ -26614,7 +26614,7 @@ BaseType_t xReturn;
  800ae82:	3718      	adds	r7, #24
  800ae84:	46bd      	mov	sp, r7
  800ae86:	bd80      	pop	{r7, pc}
- 800ae88:	0800cc18 	.word	0x0800cc18
+ 800ae88:	0800cc3c 	.word	0x0800cc3c
  800ae8c:	0800b225 	.word	0x0800b225
  800ae90:	20001018 	.word	0x20001018
  800ae94:	20001014 	.word	0x20001014
@@ -29347,7 +29347,7 @@ uint8_t *puc;
  800be04:	f801 5901 	strb.w	r5, [r1], #-1
  800be08:	e7f4      	b.n	800bdf4 <__utoa+0x68>
  800be0a:	bf00      	nop
- 800be0c:	0800cc38 	.word	0x0800cc38
+ 800be0c:	0800cc5c 	.word	0x0800cc5c
 
 0800be10 <memset>:
  800be10:	4603      	mov	r3, r0
@@ -29407,10 +29407,10 @@ uint8_t *puc;
  800be7e:	4798      	blx	r3
  800be80:	3601      	adds	r6, #1
  800be82:	e7f2      	b.n	800be6a <__libc_init_array+0x1e>
- 800be84:	0800cc60 	.word	0x0800cc60
- 800be88:	0800cc60 	.word	0x0800cc60
- 800be8c:	0800cc60 	.word	0x0800cc60
- 800be90:	0800cc64 	.word	0x0800cc64
+ 800be84:	0800cc84 	.word	0x0800cc84
+ 800be88:	0800cc84 	.word	0x0800cc84
+ 800be8c:	0800cc84 	.word	0x0800cc84
+ 800be90:	0800cc88 	.word	0x0800cc88
 
 0800be94 <__retarget_lock_acquire_recursive>:
  800be94:	4770      	bx	lr
