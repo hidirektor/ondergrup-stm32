@@ -7,9 +7,17 @@
 #ifndef INC_DATA_H_
 #define INC_DATA_H_
 
-#include "main.h"
 #include "Translate.h"
+#include <stdint.h>
 #include <stdbool.h>
+
+char* copyText(const char* text);
+
+char* copyTextNormal(const char* text);
+
+void menu(void);
+
+void loadMenuTexts(uint8_t dilSecim);
 
 uint8_t eepromData[63];
 uint8_t kaydedilenDeger=0;
@@ -231,42 +239,6 @@ char* copyTextNormal(const char* text) {
     return result;
 }
 
-void bekle(void) {
-	timer1=millis;
-    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-}
-
 void menu(void) {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
 		menuSayac = menuSayac+1;
@@ -373,142 +345,119 @@ void menu(void) {
 
 		if(hataGostermeSirasi == 0) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "1.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit1, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "1.Hata Kodu: ");
+
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "1.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit1, snum, 10);
-				lcd_print(2,14,snum);
 			}
+			lcd_print(2, 15, "   ");
+			itoa(hataKayit1, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 1) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "2.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit2, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "2.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "2.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit2, snum, 10);
-				lcd_print(2,14,snum);
+
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit2, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 2){
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "3.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit3, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "3.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "3.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit3, snum, 10);
-				lcd_print(2,14,snum);
+
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit3, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 3) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "4.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit4, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "4.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "4.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit4, snum, 10);
-				lcd_print(2,14,snum);
+
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit4, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 4) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "5.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit5, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "5.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "5.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit5, snum, 10);
-				lcd_print(2,14,snum);
+
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit5, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 5) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "6.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit6, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "6.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "6.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit6, snum, 10);
-				lcd_print(2,14,snum);
+
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit6, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 6) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "7.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit7, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "7.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "7.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit7, snum, 10);
-				lcd_print(2,14,snum);
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit7, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 7) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "8.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit8, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "8.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "8.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit8, snum, 10);
-				lcd_print(2,14,snum);
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit8, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 8) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "9.Hata Kodu:");
-				lcd_print(2,14,"   ");
-				itoa(hataKayit9, snum, 10);
-				lcd_print(2,13,snum);
+				lcd_print(2, 1, "9.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "9.Error Code:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit9, snum, 10);
-				lcd_print(2,14,snum);
 			}
+			lcd_print(2, 15, "  ");
+			itoa(hataKayit9, snum, 10);
+			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 9) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "10.Hata Kodu:");
-				lcd_print(2,15,"  ");
-				itoa(hataKayit1, snum, 10);
-				lcd_print(2,14,snum);
+				lcd_print(2, 1, "10.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "10.Error Code:");
-				lcd_print(2,16," ");
-				itoa(hataKayit1, snum, 10);
-				lcd_print(2,15,snum);
+
 			}
+			lcd_print(2, 16, " ");
+			itoa(hataKayit10, snum, 10);
+			lcd_print(2, 15, snum);
 		}
 
 		if(hataGostermeSirasi == 10) {
