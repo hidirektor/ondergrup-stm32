@@ -19,11 +19,10 @@ volatile uint8_t RxComplete;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define SSID "iPhone SE (2nd generation)"
-#define PASSWORD "asdasd009912"
+#define SSID "ONDERLIFT_PERSONEL"
+#define PASSWORD "PersonelOt2022*-"
 
 char machineID[] = "123";
-char projectCode[] = "sdasd-23-sdaasd";
 char machineData[] = "12134210110212101010012100001020";
 /* USER CODE END PTD */
 
@@ -75,7 +74,7 @@ void lcdUpdate(uint8_t);
 void hataKoduLcdGoster(uint8_t);
 void eepromKontrol(void);
 void hata2EEPROM(uint8_t);
-void hataSifirla(void);
+void eepromDataFillWithEmpty(void);
 /* USER CODE BEGIN PFP */
 void bekle(void) {
 	timer1=millis;
@@ -128,63 +127,57 @@ void lcdUpdate(uint8_t y) {
 		lcd_print(2, 6, " ");
 	} else if (y==7) {
 		lcd_clear();
-		lcd_print(1, 1, mainText);
-		lcd_print(2, 1, mainText2);
+		lcd_print(1, 1, "    ESP-RMK     ");
+		lcd_print(2, 1, "      RUN       ");
 	}
 }
 
 void hataKoduLcdGoster(uint8_t x) {
 	if(x==1) {
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+		if(dilSecim==0) {
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 1, "1");
 		lcd_print(2, 7, "          ");
 	} else if(x==2){
 		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 2, "2");
 		lcd_print(2, 7, "          ");
-	} else if(x==3){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+	} else if(x==3) {
+		if(dilSecim==0) {
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 3, "3");
 		lcd_print(2, 7, "          ");
 	} else if(x==4){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+		if(dilSecim==0) {
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 4, "4");
 		lcd_print(2, 7, "          ");
-	} else if(x==5){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+	} else if(x==5) {
+		if(dilSecim==0) {
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 5, "5");
 		lcd_print(2, 7, "          ");
-	} else if(x==6){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
+	} else if(x==6) {
+		if(dilSecim==0) {
+			lcd_print(1, 1, "   HATA KODU    ");
+		} else if(dilSecim==1) {
+			lcd_print(1, 1, "   ERROR CODE   ");
 		}
 		lcd_print(2, 6, "6");
 		lcd_print(2, 7, "          ");
@@ -388,42 +381,25 @@ void eepromKontrol(void) {
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
-	int checkVal = 0;
-	for(int i=0; i<indeksSayisi; i++) {
-		if(eepromData[eepromVal[i]] == 0) {
-			eepromData[eepromVal[i]] = hataKodu;
-			eepromFull[eepromVal[i]] = 2;
-			break;
-		}
-		if(eepromData[indeksSayisi-1] != 0) {
-			checkVal = 1;
-			break;
-		}
-	}
-
-	if(checkVal == 1) {
-		for(int j = 0; j<indeksSayisi; j++) {
-			if(eepromFull[eepromVal[j]] == 2) {
-				eepromData[eepromVal[j]] = hataKodu;
-				eepromFull[eepromVal[j]] = 0;
+	if(eepromData[eepromHataBaslangic+(indeksSayisi-1)] != 0) {
+		eepromDataFillWithEmpty();
+		goto veriEkleme;
+	} else {
+		veriEkleme:
+			for(int i=0; i<indeksSayisi; i++) {
+				if(eepromData[eepromHataBaslangic+i] == 0) {
+					eepromData[eepromHataBaslangic+i] = hataKodu;
+					break;
+				}
 			}
-			break;
-		}
 	}
 
-	//char str[16];
-	//sprintf(str, "%d", eepromData[37]);
-	//uint8_t okunanVeri;
 	HAL_I2C_Mem_Write(&hi2c1,0xA0,eepromHataBaslangic,indeksSayisi,&eepromData[eepromHataBaslangic],indeksSayisi,3000);
-	HAL_Delay(5);
-	//HAL_I2C_Mem_Read(&hi2c1, 0xA0, eepromHataBaslangic, 1, &okunanVeri, 1, 3000);
-	//sprintf(str, "%d", okunanVeri);
-	//lcd_print(1, 1, "ANA SAYFA       ");
-	//lcd_print(2, 1, str);
-
+	HAL_Delay(500);
+	eepromKontrol();
 }
 
-void hataSifirla(void) {
+void eepromDataFillWithEmpty(void) {
 	for(int i=0; i<indeksSayisi; i++) {
 		eepromData[eepromVal[i]] = 0;
 	}
@@ -487,7 +463,7 @@ void Send_HTTP_Request(void) {
   vTaskDelay(500 / portTICK_PERIOD_MS);
 
   char jsonBody[256];
-  snprintf(jsonBody, sizeof(jsonBody), "{ \"machineID\": \"%s\", \"projectCode\": \"%s\", \"machineData\": \"%s\" }", machineID, projectCode, machineData);
+  snprintf(jsonBody, sizeof(jsonBody), "{ \"machineID\": \"%s\", \"machineData\": \"%s\" }", machineID, machineData);
 
   char httpRequest[512];
   snprintf(httpRequest, sizeof(httpRequest), "POST /insertMachineData HTTP/1.1\r\nHost: 85.95.231.92:3000\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n%s", strlen(jsonBody), jsonBody);
@@ -687,7 +663,7 @@ void i2cTest(void) {
 
 void mainTask(void *pvParameters) {
 	while(1) {
-		WiFi_Connect();
+		//WiFi_Connect();
 		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1))
 				   {
 					   butonKontrol=0;
@@ -750,8 +726,8 @@ void mainTask(void *pvParameters) {
 				  if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)){
 					  lcd_clear();
 					  HAL_Delay(10);
-					  lcd_print(1, 1, mainText);
-					  lcd_print(2, 1, mainText2);
+					  lcd_print(1, 1, "    ESP-RMK     ");
+					  lcd_print(2, 1, "      RUN       ");
 					  mesajYazildi=1;
 				  }
 
@@ -763,6 +739,7 @@ void mainTask(void *pvParameters) {
 				  if(menuGiris==1){
 					  menu();
 				  }
+
 				  HAL_GPIO_TogglePin(cycleLed_GPIO_Port, cycleLed_Pin);
 
 		/* GİRİLEN PARAMETRELERE GÖRE AYARLARIN YAPILMASI*/
@@ -1368,6 +1345,7 @@ void mainTask(void *pvParameters) {
 				  	{
 				  		hataVar=1;
 				  		hataKoduLcdGoster(1);
+				  		hata2EEPROM(1);
 				  		acilstophatasi=1;
 				  	}
 
@@ -1383,6 +1361,7 @@ void mainTask(void *pvParameters) {
 				   {
 				  		hataVar=1;
 				  		hataKoduLcdGoster(2);
+				  		hata2EEPROM(2);
 				  		emniyetCercevesihatasi=1;
 				  	}
 				  	else if(emniyetCercevesihatasi && cerceveVar==1 && asagivalfcalisiyor==0){
@@ -1397,6 +1376,7 @@ void mainTask(void *pvParameters) {
 				  	{
 				  		hataVar=1;
 				  		hataKoduLcdGoster(3);
+				  		hata2EEPROM(3);
 				  		basinchatasi=1;
 				  	}
 				  	else if(basinchatasi && basincVar==1 && HAL_GPIO_ReadPin(yukariStartIn_GPIO_Port, yukariStartIn_Pin)==1){
@@ -1409,6 +1389,7 @@ void mainTask(void *pvParameters) {
 				  {
 					  hataVar=1;
 					  hataKoduLcdGoster(4);
+					  hata2EEPROM(4);
 					  katkapisivicihatasi=1;
 				  }
 				  else if (katkapisivicihatasi && makineStop && startBasili==0 && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==0)
@@ -1424,6 +1405,7 @@ void mainTask(void *pvParameters) {
 				  {
 					  hataVar=1;
 					  hataKoduLcdGoster(5);
+					  hata2EEPROM(5);
 					  tablakapisivicihatasi=1;
 				  }
 				  else if (tablakapisivicihatasi && makineStop && startBasili==0 && HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==0 && makineStop==1)
@@ -1443,6 +1425,7 @@ void mainTask(void *pvParameters) {
 				  	  {
 				  		hataVar=1;
 				  		hataKoduLcdGoster(6);
+				  		hata2EEPROM(6);
 				  		maksimumcalismahatasi=1;
 				  	  }
 				    }
