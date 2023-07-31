@@ -69,7 +69,6 @@ static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
 void mainTask(void *pvParameters);
-void WiFi_Task(void *pvParameters);
 
 void bekle(void);
 void lcdUpdate(uint8_t);
@@ -78,6 +77,429 @@ void eepromKontrol(void);
 void hata2EEPROM(uint8_t);
 void hataSifirla(void);
 /* USER CODE BEGIN PFP */
+void bekle(void) {
+	timer1=millis;
+    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+}
+
+void lcdUpdate(uint8_t y) {
+	if(y==1) {
+		lcd_print(2, 1, " ");
+	} else if(y==2) {
+		lcd_print(2, 2, " ");
+	} else if(y==3) {
+		lcd_print(2, 3, " ");
+	} else if(y==4) {
+		lcd_print(2, 4, " ");
+	} else if(y==5) {
+		lcd_print(2, 5, " ");
+	} else if(y==6) {
+		lcd_print(2, 6, " ");
+	} else if (y==7) {
+		lcd_clear();
+		lcd_print(1, 1, mainText);
+		lcd_print(2, 1, mainText2);
+	}
+}
+
+void hataKoduLcdGoster(uint8_t x) {
+	if(x==1) {
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 1, "1");
+		lcd_print(2, 7, "          ");
+	} else if(x==2){
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 2, "2");
+		lcd_print(2, 7, "          ");
+	} else if(x==3){
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 3, "3");
+		lcd_print(2, 7, "          ");
+	} else if(x==4){
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 4, "4");
+		lcd_print(2, 7, "          ");
+	} else if(x==5){
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 5, "5");
+		lcd_print(2, 7, "          ");
+	} else if(x==6){
+		if(dilSecim==0){
+		lcd_print(1, 1, "   HATA KODU    ");
+		}
+		if(dilSecim==1){
+		lcd_print(1, 1, "   ERROR CODE   ");
+		}
+		lcd_print(2, 6, "6");
+		lcd_print(2, 7, "          ");
+	}
+}
+
+void eepromKontrol(void) {
+	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,63,eepromData,63,3000);
+	HAL_Delay(1000);
+
+	kaydedilenDeger = eepromData[3];
+	calismaSekli = eepromData[1];
+	emniyetCercevesi = eepromData[2];
+	yavaslamaLimit = eepromData[4];
+	altLimit = eepromData[5];
+	basincSalteri = eepromData[6];
+	kapiSecimleri = eepromData[7];
+	kapi1Tip = eepromData[8];
+	kapi1AcSure = eepromData[9];
+	kapi2Tip = eepromData[10];
+	kapi2AcSure = eepromData[11];
+	kapitablaTip = eepromData[12];
+	kapiTablaAcSure = eepromData[13];
+	yukariYavasLimit = eepromData[14];
+	devirmeYuruyusSecim = eepromData[15];
+	devirmeYukariIleriLimit = eepromData[16];
+	devirmeAsagiGeriLimit = eepromData[17];
+	devirmeSilindirTipi = eepromData[18];
+	platformSilindirTipi = eepromData[19];
+	yukariValfTmr = eepromData[20];
+	asagiValfTmr = eepromData[21];
+	devirmeYukariIleriTmr = eepromData[22];
+	devirmeAsagiGeriTmr = eepromData[23];
+	makineCalismaTmr = eepromData[24];
+	buzzer = eepromData[25];
+	demoMode = eepromData[26];
+	calismaSayisi = eepromData[27];
+	calismaSayisi1 = eepromData[28];
+	calismaSayisi10 = eepromData[29];
+	calismaSayisi100 = eepromData[30];
+	calismaSayisi1000 = eepromData[31];
+	calismaSayisi10000 = eepromData[32];
+	dilSecim = eepromData[33];
+	kapiTablaAcKonum = eepromData[34];
+	calismaSayModu = eepromData[35];
+	kapiAcTipi = eepromData[36];
+	hataKayit1 = eepromData[37];
+	hataKayit2 = eepromData[38];
+	hataKayit3 = eepromData[39];
+	hataKayit4 = eepromData[40];
+	hataKayit5 = eepromData[41];
+	hataKayit6 = eepromData[42];
+	hataKayit7 = eepromData[43];
+	hataKayit8 = eepromData[44];
+	hataKayit9 = eepromData[45];
+	hataKayit10 = eepromData[46];
+
+	loadMenuTexts(dilSecim);
+
+	if(calismaSayisi10000>9) {
+	    calismaSayisi10000=0;
+	}
+
+	if(calismaSayisi1000>9) {
+	    calismaSayisi1000=0;
+	}
+
+	if(calismaSayisi100>9) {
+	    calismaSayisi100=0;
+	}
+
+	if(calismaSayisi10>9) {
+	    calismaSayisi10=0;
+	}
+
+	if(calismaSayisi1>9) {
+	    calismaSayisi1=0;
+	}
+
+	/*if(acilStop1>0) {
+		acilStop1=0;
+	}*/
+
+	if(calismaSekli>1) {
+	    calismaSekli=0;
+	}
+
+	if(emniyetCercevesi>1) {
+	    emniyetCercevesi=1;
+	}
+
+	if(yavaslamaLimit>1) {
+	    yavaslamaLimit=0;
+	}
+
+	if(altLimit>1) {
+	    altLimit=1;
+	}
+
+	if(basincSalteri>1) {
+	    basincSalteri=1;
+	}
+
+	if(kapiSecimleri>3) {
+	    kapiSecimleri=3;
+	}
+
+	if(kapiAcTipi>1) {
+	    kapiAcTipi=0;
+	}
+
+	if(kapi1Tip>2) {
+	    kapi1Tip=1;
+	}
+
+	if(kapi1AcSure>5) {
+	    kapi1AcSure=5;
+	}
+
+	if(kapi2Tip>2) {
+	    kapi2Tip=1;
+	}
+
+	if(kapi2AcSure>5) {
+	    kapi2AcSure=5;
+	}
+
+	if(kapitablaTip>2) {
+	    kapitablaTip=1;
+	}
+
+	if(kapiTablaAcKonum>2) {
+	    kapiTablaAcKonum=2;
+	}
+
+	if(kapiTablaAcSure>5) {
+	    kapiTablaAcSure=5;
+	}
+
+	if(yukariYavasLimit>1) {
+	    yukariYavasLimit=0;
+	}
+
+	if(devirmeYuruyusSecim>2) {
+	    devirmeYuruyusSecim=0;
+	}
+
+	if(devirmeYukariIleriLimit>1) {
+	    devirmeYukariIleriLimit=1;
+	}
+
+	if(devirmeAsagiGeriLimit>1) {
+	    devirmeAsagiGeriLimit=1;
+	}
+
+	if(devirmeSilindirTipi>1) {
+	    devirmeSilindirTipi=0;
+	}
+
+	if(platformSilindirTipi>1) {
+	    platformSilindirTipi=0;
+	}
+
+	if(yukariValfTmr>5) {
+	    yukariValfTmr=0;
+	}
+
+	if(asagiValfTmr>5) {
+	    asagiValfTmr=0;
+	}
+
+	if(devirmeYukariIleriTmr>5) {
+	    devirmeYukariIleriTmr=0;
+	}
+
+	if(devirmeAsagiGeriTmr>5) {
+	    devirmeAsagiGeriTmr=0;
+	}
+
+	if(makineCalismaTmr>180) {
+	    makineCalismaTmr=60;
+	}
+
+	if(buzzer>1) {
+	    buzzer=0;
+	}
+
+	if(demoMode>1) {
+	    demoMode=0;
+	}
+
+	if(calismaSayModu>1) {
+	    calismaSayModu=0;
+	}
+
+	if(dilSecim>1) {
+	    dilSecim=0;
+	}
+
+	HAL_Delay(1000);
+}
+
+void hata2EEPROM(uint8_t hataKodu) {
+	int checkVal = 0;
+	for(int i=0; i<indeksSayisi; i++) {
+		if(eepromData[eepromVal[i]] == 0) {
+			eepromData[eepromVal[i]] = hataKodu;
+			eepromFull[eepromVal[i]] = 2;
+			break;
+		}
+		if(eepromData[indeksSayisi-1] != 0) {
+			checkVal = 1;
+			break;
+		}
+	}
+
+	if(checkVal == 1) {
+		for(int j = 0; j<indeksSayisi; j++) {
+			if(eepromFull[eepromVal[j]] == 2) {
+				eepromData[eepromVal[j]] = hataKodu;
+				eepromFull[eepromVal[j]] = 0;
+			}
+			break;
+		}
+	}
+
+	//char str[16];
+	//sprintf(str, "%d", eepromData[37]);
+	//uint8_t okunanVeri;
+	HAL_I2C_Mem_Write(&hi2c1,0xA0,eepromHataBaslangic,indeksSayisi,&eepromData[eepromHataBaslangic],indeksSayisi,3000);
+	HAL_Delay(5);
+	//HAL_I2C_Mem_Read(&hi2c1, 0xA0, eepromHataBaslangic, 1, &okunanVeri, 1, 3000);
+	//sprintf(str, "%d", okunanVeri);
+	//lcd_print(1, 1, "ANA SAYFA       ");
+	//lcd_print(2, 1, str);
+
+}
+
+void hataSifirla(void) {
+	for(int i=0; i<indeksSayisi; i++) {
+		eepromData[eepromVal[i]] = 0;
+	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  if (huart->Instance == USART1) {
+    if (RxByte == '\n') {
+      RxBuffer[RxBufferIndex] = '\0';
+      RxBufferIndex = 0;
+      RxComplete = 1;
+    } else {
+      RxBuffer[RxBufferIndex++] = RxByte;
+      if (RxBufferIndex >= RX_BUFFER_SIZE) {
+        RxBufferIndex = 0;
+      }
+    }
+    HAL_UART_Receive_IT(&huart1, &RxByte, 1);
+  }
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+  if (huart->Instance == USART1) {
+    xSemaphoreGiveFromISR(uartMutex, NULL);
+  }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+  // Handle UART errors
+}
+
+void WiFi_SendCommand(const char *command) {
+  xSemaphoreTake(uartMutex, portMAX_DELAY);
+
+  snprintf((char *)TxBuffer, TX_BUFFER_SIZE, "%s\r\n", command);
+  HAL_UART_Transmit_IT(&huart1, (uint8_t *)TxBuffer, strlen((char *)TxBuffer));
+}
+
+void WiFi_Connect(void) {
+  WiFi_SendCommand("AT+CWMODE=1");
+  HAL_Delay(200);
+  WiFi_SendCommand("AT+CWJAP=\"" SSID "\",\"" PASSWORD "\"");
+
+  while (!RxComplete) {
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
+
+  if (strstr((const char *)RxBuffer, "OK") != NULL) {
+    printf("WiFi connected successfully!\n");
+    lcd_print(1, 1, "Connected");
+  } else {
+    printf("WiFi connection failed!\n");
+    lcd_print(2, 1, "Failed");
+  }
+
+  RxComplete = 0;
+}
+
+void Send_HTTP_Request(void) {
+  WiFi_SendCommand("AT+CIPSTART=\"TCP\",\"85.95.231.92\",3000");
+  vTaskDelay(500 / portTICK_PERIOD_MS);
+
+  char jsonBody[256];
+  snprintf(jsonBody, sizeof(jsonBody), "{ \"machineID\": \"%s\", \"projectCode\": \"%s\", \"machineData\": \"%s\" }", machineID, projectCode, machineData);
+
+  char httpRequest[512];
+  snprintf(httpRequest, sizeof(httpRequest), "POST /insertMachineData HTTP/1.1\r\nHost: 85.95.231.92:3000\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n%s", strlen(jsonBody), jsonBody);
+
+  WiFi_SendCommand("AT+CIPSEND");
+  vTaskDelay(500 / portTICK_PERIOD_MS);
+  WiFi_SendCommand(httpRequest);
+  vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+  WiFi_SendCommand("AT+CIPCLOSE");
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -141,6 +563,8 @@ int main(void) {
   HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
 
+  HAL_UART_Receive_IT(&huart1, &RxByte, 1);
+
   i2cTest();
   HAL_Delay(100);
   lcd_print(1,1,"     RMK-V1     ");
@@ -174,10 +598,8 @@ int main(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   uartMutex = xSemaphoreCreateMutex();
-  xTaskCreate(WiFi_Task, "WiFi_Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, &wifiTaskHandle);
-  //xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-  //xTaskCreate(wifiTask, "wifiTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-  //xTaskCreate(wifiTaskTest, "wifiTaskTest", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+
   vTaskStartScheduler();
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -265,6 +687,7 @@ void i2cTest(void) {
 
 void mainTask(void *pvParameters) {
 	while(1) {
+		WiFi_Connect();
 		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1))
 				   {
 					   butonKontrol=0;
@@ -1232,442 +1655,6 @@ void mainTask(void *pvParameters) {
 				  }
 	}
 }
-
-void WiFi_Task(void *pvParameters) {
-  // WiFi task
-
-  HAL_UART_Receive_IT(&huart1, &RxByte, 1); // Start UART reception
-
-  for (;;) {
-    WiFi_Connect(); // Connect to WiFi network
-
-    // Your WiFi operations here
-
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-  }
-}
-
-void bekle(void) {
-	timer1=millis;
-    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-}
-
-void lcdUpdate(uint8_t y) {
-	if(y==1) {
-		lcd_print(2, 1, " ");
-	} else if(y==2) {
-		lcd_print(2, 2, " ");
-	} else if(y==3) {
-		lcd_print(2, 3, " ");
-	} else if(y==4) {
-		lcd_print(2, 4, " ");
-	} else if(y==5) {
-		lcd_print(2, 5, " ");
-	} else if(y==6) {
-		lcd_print(2, 6, " ");
-	} else if (y==7) {
-		lcd_clear();
-		lcd_print(1, 1, mainText);
-		lcd_print(2, 1, mainText2);
-	}
-}
-
-void hataKoduLcdGoster(uint8_t x) {
-	if(x==1) {
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 1, "1");
-		lcd_print(2, 7, "          ");
-	} else if(x==2){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 2, "2");
-		lcd_print(2, 7, "          ");
-	} else if(x==3){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 3, "3");
-		lcd_print(2, 7, "          ");
-	} else if(x==4){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 4, "4");
-		lcd_print(2, 7, "          ");
-	} else if(x==5){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 5, "5");
-		lcd_print(2, 7, "          ");
-	} else if(x==6){
-		if(dilSecim==0){
-		lcd_print(1, 1, "   HATA KODU    ");
-		}
-		if(dilSecim==1){
-		lcd_print(1, 1, "   ERROR CODE   ");
-		}
-		lcd_print(2, 6, "6");
-		lcd_print(2, 7, "          ");
-	}
-}
-
-void eepromKontrol(void) {
-	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,63,eepromData,63,3000);
-	HAL_Delay(1000);
-
-	kaydedilenDeger = eepromData[3];
-	calismaSekli = eepromData[1];
-	emniyetCercevesi = eepromData[2];
-	yavaslamaLimit = eepromData[4];
-	altLimit = eepromData[5];
-	basincSalteri = eepromData[6];
-	kapiSecimleri = eepromData[7];
-	kapi1Tip = eepromData[8];
-	kapi1AcSure = eepromData[9];
-	kapi2Tip = eepromData[10];
-	kapi2AcSure = eepromData[11];
-	kapitablaTip = eepromData[12];
-	kapiTablaAcSure = eepromData[13];
-	yukariYavasLimit = eepromData[14];
-	devirmeYuruyusSecim = eepromData[15];
-	devirmeYukariIleriLimit = eepromData[16];
-	devirmeAsagiGeriLimit = eepromData[17];
-	devirmeSilindirTipi = eepromData[18];
-	platformSilindirTipi = eepromData[19];
-	yukariValfTmr = eepromData[20];
-	asagiValfTmr = eepromData[21];
-	devirmeYukariIleriTmr = eepromData[22];
-	devirmeAsagiGeriTmr = eepromData[23];
-	makineCalismaTmr = eepromData[24];
-	buzzer = eepromData[25];
-	demoMode = eepromData[26];
-	calismaSayisi = eepromData[27];
-	calismaSayisi1 = eepromData[28];
-	calismaSayisi10 = eepromData[29];
-	calismaSayisi100 = eepromData[30];
-	calismaSayisi1000 = eepromData[31];
-	calismaSayisi10000 = eepromData[32];
-	dilSecim = eepromData[33];
-	kapiTablaAcKonum = eepromData[34];
-	calismaSayModu = eepromData[35];
-	kapiAcTipi = eepromData[36];
-	hataKayit1 = eepromData[37];
-	hataKayit2 = eepromData[38];
-	hataKayit3 = eepromData[39];
-	hataKayit4 = eepromData[40];
-	hataKayit5 = eepromData[41];
-	hataKayit6 = eepromData[42];
-	hataKayit7 = eepromData[43];
-	hataKayit8 = eepromData[44];
-	hataKayit9 = eepromData[45];
-	hataKayit10 = eepromData[46];
-
-	loadMenuTexts(dilSecim);
-
-	if(calismaSayisi10000>9) {
-	    calismaSayisi10000=0;
-	}
-
-	if(calismaSayisi1000>9) {
-	    calismaSayisi1000=0;
-	}
-
-	if(calismaSayisi100>9) {
-	    calismaSayisi100=0;
-	}
-
-	if(calismaSayisi10>9) {
-	    calismaSayisi10=0;
-	}
-
-	if(calismaSayisi1>9) {
-	    calismaSayisi1=0;
-	}
-
-	/*if(acilStop1>0) {
-		acilStop1=0;
-	}*/
-
-	if(calismaSekli>1) {
-	    calismaSekli=0;
-	}
-
-	if(emniyetCercevesi>1) {
-	    emniyetCercevesi=1;
-	}
-
-	if(yavaslamaLimit>1) {
-	    yavaslamaLimit=0;
-	}
-
-	if(altLimit>1) {
-	    altLimit=1;
-	}
-
-	if(basincSalteri>1) {
-	    basincSalteri=1;
-	}
-
-	if(kapiSecimleri>3) {
-	    kapiSecimleri=3;
-	}
-
-	if(kapiAcTipi>1) {
-	    kapiAcTipi=0;
-	}
-
-	if(kapi1Tip>2) {
-	    kapi1Tip=1;
-	}
-
-	if(kapi1AcSure>5) {
-	    kapi1AcSure=5;
-	}
-
-	if(kapi2Tip>2) {
-	    kapi2Tip=1;
-	}
-
-	if(kapi2AcSure>5) {
-	    kapi2AcSure=5;
-	}
-
-	if(kapitablaTip>2) {
-	    kapitablaTip=1;
-	}
-
-	if(kapiTablaAcKonum>2) {
-	    kapiTablaAcKonum=2;
-	}
-
-	if(kapiTablaAcSure>5) {
-	    kapiTablaAcSure=5;
-	}
-
-	if(yukariYavasLimit>1) {
-	    yukariYavasLimit=0;
-	}
-
-	if(devirmeYuruyusSecim>2) {
-	    devirmeYuruyusSecim=0;
-	}
-
-	if(devirmeYukariIleriLimit>1) {
-	    devirmeYukariIleriLimit=1;
-	}
-
-	if(devirmeAsagiGeriLimit>1) {
-	    devirmeAsagiGeriLimit=1;
-	}
-
-	if(devirmeSilindirTipi>1) {
-	    devirmeSilindirTipi=0;
-	}
-
-	if(platformSilindirTipi>1) {
-	    platformSilindirTipi=0;
-	}
-
-	if(yukariValfTmr>5) {
-	    yukariValfTmr=0;
-	}
-
-	if(asagiValfTmr>5) {
-	    asagiValfTmr=0;
-	}
-
-	if(devirmeYukariIleriTmr>5) {
-	    devirmeYukariIleriTmr=0;
-	}
-
-	if(devirmeAsagiGeriTmr>5) {
-	    devirmeAsagiGeriTmr=0;
-	}
-
-	if(makineCalismaTmr>180) {
-	    makineCalismaTmr=60;
-	}
-
-	if(buzzer>1) {
-	    buzzer=0;
-	}
-
-	if(demoMode>1) {
-	    demoMode=0;
-	}
-
-	if(calismaSayModu>1) {
-	    calismaSayModu=0;
-	}
-
-	if(dilSecim>1) {
-	    dilSecim=0;
-	}
-
-	HAL_Delay(1000);
-}
-
-void hata2EEPROM(uint8_t hataKodu) {
-	int checkVal = 0;
-	for(int i=0; i<indeksSayisi; i++) {
-		if(eepromData[eepromVal[i]] == 0) {
-			eepromData[eepromVal[i]] = hataKodu;
-			eepromFull[eepromVal[i]] = 2;
-			break;
-		}
-		if(eepromData[indeksSayisi-1] != 0) {
-			checkVal = 1;
-			break;
-		}
-	}
-
-	if(checkVal == 1) {
-		for(int j = 0; j<indeksSayisi; j++) {
-			if(eepromFull[eepromVal[j]] == 2) {
-				eepromData[eepromVal[j]] = hataKodu;
-				eepromFull[eepromVal[j]] = 0;
-			}
-			break;
-		}
-	}
-
-	//char str[16];
-	//sprintf(str, "%d", eepromData[37]);
-	//uint8_t okunanVeri;
-	HAL_I2C_Mem_Write(&hi2c1,0xA0,eepromHataBaslangic,indeksSayisi,&eepromData[eepromHataBaslangic],indeksSayisi,3000);
-	HAL_Delay(5);
-	//HAL_I2C_Mem_Read(&hi2c1, 0xA0, eepromHataBaslangic, 1, &okunanVeri, 1, 3000);
-	//sprintf(str, "%d", okunanVeri);
-	//lcd_print(1, 1, "ANA SAYFA       ");
-	//lcd_print(2, 1, str);
-
-}
-
-void hataSifirla(void) {
-	for(int i=0; i<indeksSayisi; i++) {
-		eepromData[eepromVal[i]] = 0;
-	}
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  if (huart->Instance == USART1) {
-    if (RxByte == '\n') {
-      RxBuffer[RxBufferIndex] = '\0';
-      RxBufferIndex = 0;
-      RxComplete = 1;
-    } else {
-      RxBuffer[RxBufferIndex++] = RxByte;
-      if (RxBufferIndex >= RX_BUFFER_SIZE) {
-        RxBufferIndex = 0;
-      }
-    }
-    HAL_UART_Receive_IT(&huart1, &RxByte, 1);
-  }
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-  if (huart->Instance == USART1) {
-    xSemaphoreGiveFromISR(uartMutex, NULL);
-  }
-}
-
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
-  // Handle UART errors
-}
-
-void WiFi_SendCommand(const char *command) {
-  xSemaphoreTake(uartMutex, portMAX_DELAY);
-
-  snprintf((char *)TxBuffer, TX_BUFFER_SIZE, "%s\r\n", command);
-  HAL_UART_Transmit_IT(&huart1, (uint8_t *)TxBuffer, strlen((char *)TxBuffer));
-}
-
-void WiFi_Connect(void) {
-  WiFi_SendCommand("AT+CWMODE=1");
-  HAL_Delay(200);
-  WiFi_SendCommand("AT+CWJAP=\"" SSID "\",\"" PASSWORD "\"");
-
-  while (!RxComplete) {
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-  }
-
-  if (strstr((const char *)RxBuffer, "OK") != NULL) {
-    printf("WiFi connected successfully!\n");
-  } else {
-    printf("WiFi connection failed!\n");
-  }
-
-  RxComplete = 0;
-}
-
-void Send_HTTP_Request(void) {
-  WiFi_SendCommand("AT+CIPSTART=\"TCP\",\"85.95.231.92\",3000");
-  vTaskDelay(500 / portTICK_PERIOD_MS);
-
-  char jsonBody[256];
-  snprintf(jsonBody, sizeof(jsonBody), "{ \"machineID\": \"%s\", \"projectCode\": \"%s\", \"machineData\": \"%s\" }", machineID, projectCode, machineData);
-
-  char httpRequest[512];
-  snprintf(httpRequest, sizeof(httpRequest), "POST /insertMachineData HTTP/1.1\r\nHost: 85.95.231.92:3000\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n%s", strlen(jsonBody), jsonBody);
-
-  WiFi_SendCommand("AT+CIPSEND");
-  vTaskDelay(500 / portTICK_PERIOD_MS);
-  WiFi_SendCommand(httpRequest);
-  vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-  WiFi_SendCommand("AT+CIPCLOSE");
-}
-
 
 /**
   * @brief System Clock Configuration
