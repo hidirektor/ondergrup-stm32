@@ -19,8 +19,12 @@ volatile uint8_t RxComplete;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define SSID "ONDERLIFT_PERSONEL"
-#define PASSWORD "PersonelOt2022*-"
+#define SSID2 "ONDERLIFT_PERSONEL"
+#define PASSWORD2 "PersonelOt2022*-"
+#define SSID3 "iPhone SE (2nd generation)"
+#define PASSWORD3 "asdasd009912"
+#define SSID "L0V3"
+#define PASSWORD "12k55W3%"
 
 char machineID[] = "123";
 char machineData[] = "12134210110212101010012100001020";
@@ -28,13 +32,7 @@ char machineData[] = "12134210110212101010012100001020";
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart);
 
-void WiFi_SendCommand(const char *command);
-void WiFi_Connect(void);
-void Send_HTTP_Request(void);
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -406,77 +404,6 @@ void eepromDataFillWithEmpty(void) {
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  if (huart->Instance == USART1) {
-    if (RxByte == '\n') {
-      RxBuffer[RxBufferIndex] = '\0';
-      RxBufferIndex = 0;
-      RxComplete = 1;
-    } else {
-      RxBuffer[RxBufferIndex++] = RxByte;
-      if (RxBufferIndex >= RX_BUFFER_SIZE) {
-        RxBufferIndex = 0;
-      }
-    }
-    HAL_UART_Receive_IT(&huart1, &RxByte, 1);
-  }
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-  if (huart->Instance == USART1) {
-    xSemaphoreGiveFromISR(uartMutex, NULL);
-  }
-}
-
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
-  // Handle UART errors
-}
-
-void WiFi_SendCommand(const char *command) {
-  xSemaphoreTake(uartMutex, portMAX_DELAY);
-
-  snprintf((char *)TxBuffer, TX_BUFFER_SIZE, "%s\r\n", command);
-  HAL_UART_Transmit_IT(&huart1, (uint8_t *)TxBuffer, strlen((char *)TxBuffer));
-}
-
-void WiFi_Connect(void) {
-  WiFi_SendCommand("AT+CWMODE=1");
-  HAL_Delay(200);
-  WiFi_SendCommand("AT+CWJAP=\"" SSID "\",\"" PASSWORD "\"");
-
-  while (!RxComplete) {
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-  }
-
-  if (strstr((const char *)RxBuffer, "OK") != NULL) {
-    printf("WiFi connected successfully!\n");
-    lcd_print(1, 1, "Connected");
-  } else {
-    printf("WiFi connection failed!\n");
-    lcd_print(2, 1, "Failed");
-  }
-
-  RxComplete = 0;
-}
-
-void Send_HTTP_Request(void) {
-  WiFi_SendCommand("AT+CIPSTART=\"TCP\",\"85.95.231.92\",3000");
-  vTaskDelay(500 / portTICK_PERIOD_MS);
-
-  char jsonBody[256];
-  snprintf(jsonBody, sizeof(jsonBody), "{ \"machineID\": \"%s\", \"machineData\": \"%s\" }", machineID, machineData);
-
-  char httpRequest[512];
-  snprintf(httpRequest, sizeof(httpRequest), "POST /insertMachineData HTTP/1.1\r\nHost: 85.95.231.92:3000\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n%s", strlen(jsonBody), jsonBody);
-
-  WiFi_SendCommand("AT+CIPSEND");
-  vTaskDelay(500 / portTICK_PERIOD_MS);
-  WiFi_SendCommand(httpRequest);
-  vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-  WiFi_SendCommand("AT+CIPCLOSE");
-}
-
 uint8_t buttonCheck(void) {
 	if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1)
 			|| (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1)
@@ -523,10 +450,10 @@ int main(void) {
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_TIM1_Init();
-  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
@@ -550,7 +477,7 @@ int main(void) {
   HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
 
-  HAL_UART_Receive_IT(&huart1, &RxByte, 1);
+  //HAL_UART_Receive_IT(&huart1, &RxByte, 1);
 
   i2cTest();
   HAL_Delay(100);

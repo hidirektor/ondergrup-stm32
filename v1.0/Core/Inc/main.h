@@ -127,9 +127,6 @@ void Error_Handler(void);
 #define devirmeAsagiLimitIn_GPIO_Port GPIOC
 #define cycleLed_Pin GPIO_PIN_12
 #define cycleLed_GPIO_Port GPIOC
-
-#define testLed_Pin GPIO_PIN_4
-#define testLed_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
