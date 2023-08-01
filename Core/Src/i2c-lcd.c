@@ -99,7 +99,7 @@ void lcd_line2(void) {
 	lcd_send_cmd(0xC0);
 }
 
-void lcd_backlight (char state) {
+void lcd_backlight(char state) {
 	LCD_BACKLIGHT = state;
 	lcd_send_cmd(0x00);
 }

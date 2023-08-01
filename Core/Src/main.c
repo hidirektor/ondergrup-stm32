@@ -75,6 +75,7 @@ void hataKoduLcdGoster(uint8_t);
 void eepromKontrol(void);
 void hata2EEPROM(uint8_t);
 void eepromDataFillWithEmpty(void);
+uint8_t buttonCheck(void);
 /* USER CODE BEGIN PFP */
 void bekle(void) {
 	timer1=millis;
@@ -476,14 +477,24 @@ void Send_HTTP_Request(void) {
   WiFi_SendCommand("AT+CIPCLOSE");
 }
 
+uint8_t buttonCheck(void) {
+	if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1)) {
+		backLightTimer = 0;
+		return 1;
+	}
+	return 0;
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) //------timer kesmesinde islem yapmak için
-{
-	  millis=millis+1;
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesmesinde islem yapmak için */
+	millis=millis+1;
 }
 /* USER CODE END 0 */
 
@@ -549,6 +560,8 @@ int main(void) {
   lcd_clear();
 
   eepromKontrol();
+
+  backLightTimer = millis;
 
   /* USER CODE END 2 */
 
@@ -664,9 +677,16 @@ void i2cTest(void) {
 void mainTask(void *pvParameters) {
 	while(1) {
 		//WiFi_Connect();
+		if(millis - backLightTimer >= lcdBacklightSure) {
+			lcd_backlight(0);
+		} else {
+			lcd_backlight(1);
+		}
 
 		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1)) {
 			butonKontrol=0;
+		} else {
+			backLightTimer = millis;
 		}
 
 		if(hafizaYaz==1) {

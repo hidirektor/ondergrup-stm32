@@ -36,6 +36,8 @@ int eepromFull[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int indeksSayisi = sizeof(eepromVal)/sizeof(eepromVal[0]);
 int eepromHataBaslangic = 37;
 
+uint8_t lcdBacklightSure = 10;
+
 uint8_t x = 0;
 uint8_t y = 0;
 uint8_t calismaSayisi = 0;
