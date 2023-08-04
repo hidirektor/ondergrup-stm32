@@ -1,0 +1,10 @@
+../Core/Src/i2c-lcd.c:8:6:lcd_send_cmd	6
+../Core/Src/i2c-lcd.c:34:6:lcd_send_data	6
+../Core/Src/i2c-lcd.c:61:6:lcd_send_string	2
+../Core/Src/i2c-lcd.c:67:6:lcd_init	1
+../Core/Src/i2c-lcd.c:75:6:lcd_gotoxy	3
+../Core/Src/i2c-lcd.c:83:6:lcd_print	1
+../Core/Src/i2c-lcd.c:88:6:lcd_clear	1
+../Core/Src/i2c-lcd.c:94:6:lcd_line1	1
+../Core/Src/i2c-lcd.c:98:6:lcd_line2	1
+../Core/Src/i2c-lcd.c:102:6:lcd_backlight	1
