@@ -4,6 +4,9 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "Data.h"
+#include "task.h"
+#include "semphr.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -19,16 +22,22 @@ volatile uint8_t RxComplete;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+#define HTTP_TASK_STACK_SIZE configMINIMAL_STACK_SIZE
+#define HTTP_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+
+TaskHandle_t sendHttpRequestTaskHandle = NULL;
+
 char machineID[] = "123";
 char machineData[] = "12134210110212101010012100001020";
+#define HTTP_BODY "{\"Username\":\"hidirektor\",\"Password\":\"asdasd\"}"
+
+#define ESP8266_IP_ADDRESS "85.95.231.92"
+#define ESP8266_PORT 3000
+#define HTTP_URL "/api/users/login"
 
 #define Wifi_name "L0V3"
 #define Wifi_pass "12k55W3%"
 #define Server "85.95.231.92:3000"
-char Tx_buffer[250];
-char Rx_buffer[500];
-int Rx_indx;
-char *read;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -76,12 +85,12 @@ void hata2EEPROM(uint8_t);
 void eepromDataFillWithEmpty(void);
 uint8_t buttonCheck(void);
 
-void ESP8266_INIT();
-void Send_data(int32_t value);
-void clear_Rxbuffer();
-void sendToESP8266(const char* command);
-void readFromESP8266(char* buffer, uint16_t bufferLen); //Boş doldurulması gerek:
-char* getWifiStats(char* wifiIsim, char* wifiSifre); //Boş doldurulması gerek:
+//Wifi kısımları:
+SemaphoreHandle_t httpSemaphore;
+void USART_Transmit(char *data);
+void connectToWifi(void);
+void sendHttpRequestTask(void *pvParameters);
+
 /* USER CODE BEGIN PFP */
 void bekle(void) {
 	timer1=millis;
@@ -424,88 +433,54 @@ uint8_t buttonCheck(void) {
 	return 0;
 }
 
-void clear_Rxbuffer() {
-	for (int i = 0; i < 500; i++)
-		Rx_buffer[i] = 0;
-	Rx_indx = 0;
+//Wifi Kısımları:
+void USART_Transmit(char *data) {
+    HAL_UART_Transmit(&huart1, (uint8_t *)data, strlen(data), HAL_MAX_DELAY);
 }
 
-void ESP8266_INIT() {
-	sprintf(Tx_buffer, "AT+RST\r\n");
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-	HAL_Delay(3000);
-	clear_Rxbuffer();
-	do {
-		sprintf(Tx_buffer, "AT\r\n");
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(500);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
+void connectToWifi() {
+    char wifiCommand[100];
 
-	do {
-		sprintf(Tx_buffer, "AT+CWMODE=1\r\n");
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(500);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
+    // Wi-Fi ağına bağlanma komutunu oluştur
+    sprintf(wifiCommand, "AT+CWJAP=\"lorem\",\"123123\"\r\n");
 
-	char str[100];
-	do {
-		strcpy(str, "AT+CWJAP=\"");
-		strcat(str, Wifi_name);
-		strcat(str, "\",\"");
-		strcat(str, Wifi_pass);
-		strcat(str, "\"\r\n");
-		sprintf(Tx_buffer, "%s", str);
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(6000);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
+    // USART üzerinden komutu gönder
+    USART_Transmit(wifiCommand);
+
+    // Yanıt beklemesi için bir süre bekle
+    HAL_Delay(5000); // Uygun bir bekleme süresi ayarlayabilirsiniz
 }
 
-void Send_data(int32_t value) {
-	char local_txA[300];
-	int len;
+void sendHttpRequestTask(void *pvParameters) {
+    char httpRequest[500];
+    char httpResponse[500];
 
-	// JSON
-	sprintf(local_txA, "{\"machineID\":\"%s\",\"machineData\":\"%s\"}", machineID, machineData);
+    // HTTP isteği oluştur
+    sprintf(httpRequest, "POST %s HTTP/1.1\r\n", HTTP_URL);
+    strcat(httpRequest, "Host: ");
+    strcat(httpRequest, ESP8266_IP_ADDRESS);
+    strcat(httpRequest, "\r\n");
+    strcat(httpRequest, "Content-Type: application/json\r\n");
+    sprintf(httpRequest + strlen(httpRequest), "Content-Length: %d\r\n\r\n", strlen(HTTP_BODY));
+    strcat(httpRequest, HTTP_BODY);
 
-	clear_Rxbuffer();
-	// TCP
-	do {
-	    sprintf(Tx_buffer, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
-	    HAL_UART_Transmit_IT(&huart1, (uint8_t*)Tx_buffer, strlen(Tx_buffer));
-	    HAL_Delay(100);
-	    read = strstr(Rx_buffer, "CONNECT");
-	} while (read == NULL);
-	clear_Rxbuffer();
+    // USART üzerinden HTTP isteği gönder
+    USART_Transmit(httpRequest);
 
-	// JSON
-	sprintf(local_txA, "POST /api/insertMachineData HTTP/1.0\r\nHost: %s\r\nContent-Length: %d\r\n\r\n%s",
-	        Server, strlen(local_txA), local_txA);
-	len = strlen(local_txA);
+    // ESP8266'den HTTP yanıtını al
+    HAL_Delay(1000); // Yanıtın tamamının alınması için bir süre bekle (ayarlayabilirsiniz)
 
-	// Veri
-	sprintf(Tx_buffer, "AT+CIPSEND=%d\r\n", len);
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)Tx_buffer, strlen(Tx_buffer));
-	HAL_Delay(100);
-	read = strstr(Rx_buffer, ">");
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)local_txA, strlen(local_txA));
-}
+    // Yanıtı oku
+    HAL_UART_Receive(&huart1, (uint8_t *)httpResponse, sizeof(httpResponse), HAL_MAX_DELAY);
 
-void sendToESP8266(const char* command) {
-    HAL_UART_Transmit(&huart1, (uint8_t*)command, strlen(command), HAL_MAX_DELAY);
-}
-
-void readFromESP8266(char* buffer, uint16_t bufferLen) {
-
-}
-
-char* getWifiStats(char* wifiIsim, char* wifiSifre) {
-
+    // HTTP yanıtını analiz et ve işle
+    if (strstr(httpResponse, "HTTP/1.1 200 OK")) {
+        // Başarılı yanıt
+        // Burada gerekli işlemleri yapabilirsiniz
+    } else {
+        // Başarısız yanıt
+        // Burada gerekli hata işlemlerini yapabilirsiniz
+    }
 }
 
 /* USER CODE END PFP */
@@ -699,8 +674,8 @@ void i2cTest(void) {
 }
 
 void mainTask(void *pvParameters) {
+	connectToWifi();
 	while(1) {
-		//WiFi_Connect();
 		if(millis - backLightTimer >= lcdBacklightSure) {
 			lcd_backlight(0);
 		} else {
@@ -730,6 +705,8 @@ void mainTask(void *pvParameters) {
 		  HAL_Delay(1000);
 		  lcd_clear();
 		}
+
+		xTaskCreate(sendHttpRequestTask, "sendHttpRequestTask", HTTP_TASK_STACK_SIZE, NULL, HTTP_TASK_PRIORITY, &sendHttpRequestTaskHandle);
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
 		  if(ilkOkuma==0) {
