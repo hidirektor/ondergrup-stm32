@@ -6,38 +6,31 @@
 #include "Data.h"
 #include "task.h"
 #include "semphr.h"
+#include "String.h"
 
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define TX_BUFFER_SIZE 128
-#define RX_BUFFER_SIZE 128
 
-volatile uint8_t RxBuffer[RX_BUFFER_SIZE];
-volatile uint8_t TxBuffer[TX_BUFFER_SIZE];
-volatile uint8_t RxByte;
-volatile uint8_t RxBufferIndex;
-volatile uint8_t RxComplete;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define HTTP_TASK_STACK_SIZE configMINIMAL_STACK_SIZE
-#define HTTP_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define mainWifiName "LoremIpsum"
+#define mainWifiPass "LEqksGLqN10"
+#define BASE_URL "http://85.95.231.92:3000/api/machine"
+#define setupEndpoint "/setup"
+#define firstDataEndpoint "/insertMachineData"
+#define updateDataEndpoint "/updateMachineData"
 
-TaskHandle_t sendHttpRequestTaskHandle = NULL;
+char machineID[100] = "";
 
-char machineID[] = "123";
-char machineData[] = "12134210110212101010012100001020";
-#define HTTP_BODY "{\"Username\":\"hidirektor\",\"Password\":\"asdasd\"}"
+char takenWifiName[100] = "";
+char takenWifiPass[100] = "";
 
-#define ESP8266_IP_ADDRESS "85.95.231.92"
-#define ESP8266_PORT 3000
-#define HTTP_URL "/api/users/login"
+char* mergedData;
 
-#define Wifi_name "L0V3"
-#define Wifi_pass "12k55W3%"
-#define Server "85.95.231.92:3000"
+uint8_t wifiConnected = 0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -77,6 +70,7 @@ void StartDefaultTask(void const * argument);
 
 void mainTask(void *pvParameters);
 
+void i2cTest(void);
 void bekle(void);
 void lcdUpdate(uint8_t);
 void hataKoduLcdGoster(uint8_t);
@@ -92,47 +86,14 @@ void checkBasGonder(void);
 void checkKapiSecimleri(void);
 void checkAktifCalisma(void);
 void checkDemoModCalisma(void);
+char* mergeData(void);
 
 //Wifi kısımları:
 SemaphoreHandle_t httpSemaphore;
 
+void checkAPandConnect(void);
+
 /* USER CODE BEGIN PFP */
-void bekle() {
-	timer1=millis;
-    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
-    	butonKontrol = 1;
-    }
-
-}
-
 void lcdUpdate(uint8_t y) {
 	if(y==1) {
 		lcd_print(2, 1, " ");
@@ -561,7 +522,43 @@ int main(void) {
   /* USER CODE END 3 */
 }
 
-void i2cTest(void) {
+void bekle() {
+	timer1=millis;
+    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+}
+
+void i2cTest() {
 	GPIO_InitTypeDef strutturaGPIO = {0};
 
 	hi2c1.Instance->CR1 &= ~(1 << 0);
@@ -632,6 +629,8 @@ void i2cTest(void) {
 void mainTask(void *pvParameters) {
 	while(1) {
 		checkLCDBacklight();
+
+		createAPandConnect();
 
 		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1)) {
 			butonKontrol=0;
@@ -745,6 +744,36 @@ void mainTask(void *pvParameters) {
 	}
 }
 
+
+void createAPandConnect() {
+	char received_data[100];
+	char wifiSetupCommand[150];
+	char wifiConnectCommand[150];
+	sprintf(wifiSetupCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", mainWifiName, mainWifiPass);
+
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=2\r\n", strlen("AT+CWMODE=2\r\n"), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, (uint8_t *)wifiSetupCommand, strlen(wifiSetupCommand), HAL_MAX_DELAY);
+
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWLIF\r\n", strlen("AT+CWLIF\r\n"), HAL_MAX_DELAY);
+
+	while(1) {
+		if (strstr(received_data, "+CWJAP:")) {
+			sscanf(received_data, "+CWJAP:\"%[^\"]\",\"%[^\"]\"", takenWifiName, takenWifiPass);
+
+			HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWQAP\r\n", strlen("AT+CWQAP\r\n"), HAL_MAX_DELAY);
+
+			sprintf(wifiConnectCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", takenWifiName, takenWifiPass);
+			HAL_UART_Transmit(&huart1, (uint8_t *)wifiConnectCommand, strlen(wifiConnectCommand), HAL_MAX_DELAY);
+
+			if(HAL_OK) {
+				connectedWifi = 1;
+				break;
+			}
+		}
+	}
+}
+
 void checkLCDBacklight() {
 	if(millis - backLightTimer >= lcdBacklightSure) {
 				lcd_backlight(0);
@@ -813,7 +842,6 @@ void checkKapiSecimleri() {
 				}
 			}
 }
-
 void checkAktifCalisma() {
 	if(demoMode==0 && menuGiris==0) {
 				if(((yukarimotorcalisiyor)||(devmotoryukaricalisiyor)||((asagivalfcalisiyor)&&(butonKontrol2==0)&&(platformSilindirTipi==1))||((devmotorasagicalisiyor)&&(devirmeSilindirTipi)==1))&&(stopVar)&&(kapiSivicVar)) {
@@ -1528,6 +1556,68 @@ void checkDemoModCalisma() {
 				HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
 				//HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
 			}
+}
+
+char* mergeData() {
+	char combinedString[1000];
+	char temp[100];
+
+	uint8_t uintVariables[] = {
+			devirmeYuruyusSecim,
+			calismaSekli,
+			emniyetCercevesi,
+			yavaslamaLimit,
+			altLimit,
+			kapiTablaAcKonum,
+			basincSalteri,
+			kapiSecimleri,
+			kapiAcTipi,
+			kapi1Tip,
+			kapi1AcSure,
+			kapi2Tip,
+			kapi2AcSure,
+			kapitablaTip,
+			kapiTablaAcSure,
+			yukariYavasLimit,
+			devirmeYukariIleriLimit,
+			devirmeAsagiGeriLimit,
+			devirmeSilindirTipi,
+			platformSilindirTipi,
+			yukariValfTmr,
+			asagiValfTmr,
+			devirmeYukariIleriTmr,
+			devirmeAsagiGeriTmr,
+			makineCalismaTmr,
+			buzzer,
+			demoMode,
+			calismaSayisi1,
+			calismaSayisi10,
+			calismaSayisi100,
+			calismaSayisi1000,
+			calismaSayisi10000,
+			dilSecim,
+			eepromData[37],
+			eepromData[38],
+			eepromData[39],
+			eepromData[40],
+			eepromData[41],
+			eepromData[42],
+			eepromData[43],
+			eepromData[44],
+			eepromData[45],
+			eepromData[46],
+			eepromData[47],
+			lcdBacklightSure
+	};
+
+	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
+	    sprintf(temp, "%u", uintVariables[i]);
+	    strcat(combinedString, temp);
+	}
+
+	char* result = malloc(strlen(combinedString) + 1);
+	strcpy(result, combinedString);
+	return result;
 }
 /**
   * @brief System Clock Configuration
