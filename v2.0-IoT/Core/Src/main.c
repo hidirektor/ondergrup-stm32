@@ -3,15 +3,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "Data.h"
 #include "task.h"
 #include "semphr.h"
 #include "String.h"
-
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,6 +29,20 @@ char takenWifiPass[100] = "";
 char* mergedData;
 
 uint8_t wifiConnected = 0;
+
+#define WIFI_SSID3 "ONDERLIFT_PERSONEL"  // Wi-Fi ağı adı
+#define WIFI_PASSWORD3 "PersonelOt2022*-"  // Wi-Fi şifresi
+#define WIFI_SSID "iPhone SE (2nd generation)"  // Wi-Fi ağı adı
+#define WIFI_PASSWORD "asdasd009912"  // Wi-Fi şifresi
+#define WIFI_SSID2 "L0V3"
+#define WIFI_PASSWORD2 "12k55W3%"
+#define SERVER_IP "85.95.231.92"  // Sunucu IP adresi
+#define SERVER_PORT 3000  // Sunucu port numarası
+#define MACHINE_ID "12345"  // Makine ID'si
+#define MACHINE_DATA "111001011021210101001210000102012345678923456"  // Makine verisi
+
+
+char Rxbuffer[125] = {0};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -47,13 +59,9 @@ CAN_HandleTypeDef hcan;
 
 I2C_HandleTypeDef hi2c1;
 
-UART_HandleTypeDef huart1;
-
-SemaphoreHandle_t uartMutex;
-
-TaskHandle_t wifiTaskHandle;
-
 TIM_HandleTypeDef htim1;
+
+UART_HandleTypeDef huart1;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
@@ -68,9 +76,12 @@ static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
+/* USER CODE BEGIN PFP */
 void mainTask(void *pvParameters);
+void sendHttpRequestTaskFunc(void *pvParameters);
 
 void i2cTest(void);
+void resetUSART(void);
 void bekle(void);
 void lcdUpdate(uint8_t);
 void hataKoduLcdGoster(uint8_t);
@@ -87,13 +98,10 @@ void checkKapiSecimleri(void);
 void checkAktifCalisma(void);
 void checkDemoModCalisma(void);
 char* mergeData(void);
-
-//Wifi kısımları:
-SemaphoreHandle_t httpSemaphore;
-
 void checkAPandConnect(void);
 
-/* USER CODE BEGIN PFP */
+//Tüm fonksiyonlar:
+
 void lcdUpdate(uint8_t y) {
 	if(y==1) {
 		lcd_print(2, 1, " ");
@@ -399,129 +407,6 @@ uint8_t buttonCheck(void) {
 	return 0;
 }
 
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesmesinde islem yapmak için */
-	millis=millis+1;
-}
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void) {
-  /* USER CODE BEGIN 1 */
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-
-  /* USER CODE BEGIN Init */
-  HAL_Delay(500);
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
-  SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_USART1_UART_Init();
-  MX_CAN_Init();
-  MX_I2C1_Init();
-  MX_TIM1_Init();
-  /* USER CODE BEGIN 2 */
-
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
-  HAL_Delay(10);
-  lcd_init();
-  HAL_Delay(10);
-  HAL_TIM_Base_Start_IT(&htim1);
-  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
-  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
-
-  HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(motorIkinciHizOut_GPIO_Port, motorIkinciHizOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(asagiValfOut_GPIO_Port, asagiValfOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(yavaslamaValfOut_GPIO_Port, yavaslamaValfOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(devirmeYukariIleriOut_GPIO_Port, devirmeYukariIleriOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(devirmeAsagiGeriOut_GPIO_Port, devirmeAsagiGeriOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(kapi1Out_GPIO_Port, kapi1Out_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(kapi2Out_GPIO_Port, kapi2Out_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
-
-  //HAL_UART_Receive_IT(&huart1, &RxByte, 1);
-
-  i2cTest();
-  HAL_Delay(100);
-  lcd_print(1,1,"     RMK-V1     ");
-  lcd_print(2,1,"ONDTECH ESP CONT");
-  HAL_Delay(1000);
-  lcd_clear();
-
-  eepromKontrol();
-
-  backLightTimer = millis;
-
-  //ESP8266_INIT();
-
-  //Send_data(12);
-
-  /* USER CODE END 2 */
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  uartMutex = xSemaphoreCreateMutex();
-  xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-
-  vTaskStartScheduler();
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
-  /* Start scheduler */
-  osKernelStart();
-
-  /* We should never get here as control is now taken by the scheduler */
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1) {
-
-  }
-  /* USER CODE END 3 */
-}
-
 void bekle() {
 	timer1=millis;
     while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
@@ -626,11 +511,80 @@ void i2cTest() {
 	HAL_I2C_Init(&hi2c1);
 }
 
+void resetUSART() {
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT\r\n", strlen("AT\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+}
+
+void sendHttpRequestTaskFunc(void *pvParameters) {
+	connectWifi();
+	lcd_print(2, 1, "seperator");
+	sendHTTPRequest();
+}
+
+void connectWifi() {
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT\r\n", strlen("AT\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"), HAL_MAX_DELAY);
+	HAL_Delay(1000);
+
+	char wifiCommand[50];
+	sprintf(wifiCommand, "AT+CWJAP=\"%s\",\"%s\"\r\n", WIFI_SSID, WIFI_PASSWORD);
+	HAL_UART_Transmit(&huart1, (uint8_t *)wifiCommand, strlen(wifiCommand), HAL_MAX_DELAY);
+	HAL_Delay(2000);
+
+	char response[100];
+	HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
+
+	lcd_print(1, 1, "asd");
+}
+
+void sendHTTPRequest() {
+    char tcpCommand[50];
+    sprintf(tcpCommand, "AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", SERVER_IP, SERVER_PORT);
+    HAL_UART_Transmit(&huart1, (uint8_t *)tcpCommand, strlen(tcpCommand), HAL_MAX_DELAY);
+    HAL_Delay(1000);
+
+    char httpCommand[200];
+    char postData[200];
+    sprintf(postData, "{\"machineID\":\"%s\",\"machineData\":\"%s\"}", MACHINE_ID, MACHINE_DATA);
+    sprintf(httpCommand, "AT+CIPSEND=%d\r\n", strlen(postData) + 94);
+    HAL_UART_Transmit(&huart1, (uint8_t *)httpCommand, strlen(httpCommand), HAL_MAX_DELAY);
+    HAL_Delay(1000);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"POST /api/machine/updateMachineData HTTP/1.1\r\n",
+                     strlen("POST /api/machine/updateMachineData HTTP/1.1\r\n"), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"Host: x.x.x.x:3000\r\n", strlen("Host: x.x.x.x:3000\r\n"), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"Content-Type: application/json\r\n",
+                     strlen("Content-Type: application/json\r\n"), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"Content-Length: ", strlen("Content-Length: "), HAL_MAX_DELAY);
+    char contentLength[4];
+    sprintf(contentLength, "%d\r\n", strlen(postData));
+    HAL_UART_Transmit(&huart1, (uint8_t *)contentLength, strlen(contentLength), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"\r\n", strlen("\r\n"), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)postData, strlen(postData), HAL_MAX_DELAY);
+    HAL_Delay(2000);
+
+    char responseBuffer[20];
+    memset(responseBuffer, 0, sizeof(responseBuffer));
+
+    HAL_UART_Receive(&huart1, (uint8_t *)responseBuffer, sizeof(responseBuffer) - 1, HAL_MAX_DELAY);
+    if (strncmp(responseBuffer, "HTTP/1.1 200 OK", 15) == 0) {
+        lcd_print(2, 1, "İşlem Başarılı");
+    } else {
+        lcd_print(2, 1, "Hata Oluştu");
+    }
+}
+
 void mainTask(void *pvParameters) {
+	xTaskCreate(sendHttpRequestTaskFunc, "sendHttpRequestTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 	while(1) {
 		checkLCDBacklight();
 
-		createAPandConnect();
+		//createAPandConnect();
 
 		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1)) {
 			butonKontrol=0;
@@ -655,8 +609,6 @@ void mainTask(void *pvParameters) {
 		  HAL_Delay(1000);
 		  lcd_clear();
 		}
-
-		//xTaskCreate(sendHttpRequestTask, "sendHttpRequestTask", HTTP_TASK_STACK_SIZE, NULL, HTTP_TASK_PRIORITY, &sendHttpRequestTaskHandle);
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
 		  if(ilkOkuma==0) {
@@ -767,7 +719,7 @@ void createAPandConnect() {
 			HAL_UART_Transmit(&huart1, (uint8_t *)wifiConnectCommand, strlen(wifiConnectCommand), HAL_MAX_DELAY);
 
 			if(HAL_OK) {
-				connectedWifi = 1;
+				wifiConnected = 1;
 				break;
 			}
 		}
@@ -842,6 +794,7 @@ void checkKapiSecimleri() {
 				}
 			}
 }
+
 void checkAktifCalisma() {
 	if(demoMode==0 && menuGiris==0) {
 				if(((yukarimotorcalisiyor)||(devmotoryukaricalisiyor)||((asagivalfcalisiyor)&&(butonKontrol2==0)&&(platformSilindirTipi==1))||((devmotorasagicalisiyor)&&(devirmeSilindirTipi)==1))&&(stopVar)&&(kapiSivicVar)) {
@@ -1619,6 +1572,126 @@ char* mergeData() {
 	strcpy(result, combinedString);
 	return result;
 }
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesmesinde islem yapmak için */
+	millis=millis+1;
+}
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+  HAL_Delay(500);
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_CAN_Init();
+  MX_I2C1_Init();
+  MX_TIM1_Init();
+  MX_USART1_UART_Init();
+  /* USER CODE BEGIN 2 */
+
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+  HAL_Delay(10);
+  lcd_init();
+  HAL_Delay(10);
+  HAL_TIM_Base_Start_IT(&htim1);
+  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
+
+  HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(motorIkinciHizOut_GPIO_Port, motorIkinciHizOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(asagiValfOut_GPIO_Port, asagiValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(yavaslamaValfOut_GPIO_Port, yavaslamaValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(devirmeYukariIleriOut_GPIO_Port, devirmeYukariIleriOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(devirmeAsagiGeriOut_GPIO_Port, devirmeAsagiGeriOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(kapi1Out_GPIO_Port, kapi1Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(kapi2Out_GPIO_Port, kapi2Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
+
+  i2cTest();
+  HAL_Delay(100);
+  lcd_print(1,1,"     RMK-V1     ");
+  lcd_print(2,1,"ONDTECH ESP CONT");
+  HAL_Delay(1000);
+  lcd_clear();
+
+  eepromKontrol();
+
+  resetUSART();
+  lcd_clear();
+
+  backLightTimer = millis;
+
+  /* USER CODE END 2 */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  /* USER CODE END RTOS_THREADS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
+}
+
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -1810,6 +1883,8 @@ static void MX_USART1_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -1876,6 +1951,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
