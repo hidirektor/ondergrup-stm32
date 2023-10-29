@@ -8,6 +8,7 @@
 #define INC_DATA_H_
 
 #include "Translate.h"
+#include "i2c-lcd.h"
 #include <stdint.h>
 #include <stdbool.h>
 
