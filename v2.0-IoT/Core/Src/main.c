@@ -2,47 +2,15 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Data.h"
-#include "task.h"
-#include "semphr.h"
-#include "String.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define mainWifiName "LoremIpsum"
-#define mainWifiPass "LEqksGLqN10"
-#define BASE_URL "http://85.95.231.92:3000/api/machine"
-#define setupEndpoint "/setup"
-#define firstDataEndpoint "/insertMachineData"
-#define updateDataEndpoint "/updateMachineData"
-
-char machineID[100] = "";
-
-char takenWifiName[100] = "";
-char takenWifiPass[100] = "";
-
-char* mergedData;
-
-uint8_t wifiConnected = 0;
-
-#define WIFI_SSID3 "ONDERLIFT_PERSONEL"  // Wi-Fi ağı adı
-#define WIFI_PASSWORD3 "PersonelOt2022*-"  // Wi-Fi şifresi
-#define WIFI_SSID "iPhone SE (2nd generation)"  // Wi-Fi ağı adı
-#define WIFI_PASSWORD "asdasd009912"  // Wi-Fi şifresi
-#define WIFI_SSID2 "L0V3"
-#define WIFI_PASSWORD2 "12k55W3%"
-#define SERVER_IP "85.95.231.92"  // Sunucu IP adresi
-#define SERVER_PORT 3000  // Sunucu port numarası
-#define MACHINE_ID "12345"  // Makine ID'si
-#define MACHINE_DATA "111001011021210101001210000102012345678923456"  // Makine verisi
-
-
-char Rxbuffer[125] = {0};
+char buffer[20];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -63,7 +31,6 @@ TIM_HandleTypeDef htim1;
 
 UART_HandleTypeDef huart1;
 
-osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 /* USER CODE END PV */
 
@@ -74,31 +41,7 @@ static void MX_CAN_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
-void StartDefaultTask(void const * argument);
-
 /* USER CODE BEGIN PFP */
-void mainTask(void *pvParameters);
-void sendHttpRequestTaskFunc(void *pvParameters);
-
-void i2cTest(void);
-void resetUSART(void);
-void bekle(void);
-void lcdUpdate(uint8_t);
-void hataKoduLcdGoster(uint8_t);
-void eepromKontrol(void);
-void hata2EEPROM(uint8_t);
-void eepromDataFillWithEmpty(void);
-uint8_t buttonCheck(void);
-
-//ana fonksiyonlar:
-void checkLCDBacklight(void);
-void checkBasincSalteri(void);
-void checkBasGonder(void);
-void checkKapiSecimleri(void);
-void checkAktifCalisma(void);
-void checkDemoModCalisma(void);
-char* mergeData(void);
-void checkAPandConnect(void);
 
 //Tüm fonksiyonlar:
 
@@ -509,221 +452,6 @@ void i2cTest() {
 	hi2c1.Instance->CR1 |= 1 << 0;
 
 	HAL_I2C_Init(&hi2c1);
-}
-
-void resetUSART() {
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT\r\n", strlen("AT\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(1000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(1000);
-}
-
-void sendHttpRequestTaskFunc(void *pvParameters) {
-	connectWifi();
-	lcd_print(2, 1, "seperator");
-	sendHTTPRequest();
-}
-
-void connectWifi() {
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT\r\n", strlen("AT\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(1000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(1000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(1000);
-
-	char wifiCommand[50];
-	sprintf(wifiCommand, "AT+CWJAP=\"%s\",\"%s\"\r\n", WIFI_SSID, WIFI_PASSWORD);
-	HAL_UART_Transmit(&huart1, (uint8_t *)wifiCommand, strlen(wifiCommand), HAL_MAX_DELAY);
-	HAL_Delay(2000);
-
-	char response[100];
-	HAL_UART_Receive(&huart1, (uint8_t *)response, sizeof(response), HAL_MAX_DELAY);
-
-	lcd_print(1, 1, "asd");
-}
-
-void sendHTTPRequest() {
-    char tcpCommand[50];
-    sprintf(tcpCommand, "AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", SERVER_IP, SERVER_PORT);
-    HAL_UART_Transmit(&huart1, (uint8_t *)tcpCommand, strlen(tcpCommand), HAL_MAX_DELAY);
-    HAL_Delay(1000);
-
-    char httpCommand[200];
-    char postData[200];
-    sprintf(postData, "{\"machineID\":\"%s\",\"machineData\":\"%s\"}", MACHINE_ID, MACHINE_DATA);
-    sprintf(httpCommand, "AT+CIPSEND=%d\r\n", strlen(postData) + 94);
-    HAL_UART_Transmit(&huart1, (uint8_t *)httpCommand, strlen(httpCommand), HAL_MAX_DELAY);
-    HAL_Delay(1000);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"POST /api/machine/updateMachineData HTTP/1.1\r\n",
-                     strlen("POST /api/machine/updateMachineData HTTP/1.1\r\n"), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"Host: x.x.x.x:3000\r\n", strlen("Host: x.x.x.x:3000\r\n"), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"Content-Type: application/json\r\n",
-                     strlen("Content-Type: application/json\r\n"), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"Content-Length: ", strlen("Content-Length: "), HAL_MAX_DELAY);
-    char contentLength[4];
-    sprintf(contentLength, "%d\r\n", strlen(postData));
-    HAL_UART_Transmit(&huart1, (uint8_t *)contentLength, strlen(contentLength), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)"\r\n", strlen("\r\n"), HAL_MAX_DELAY);
-    HAL_UART_Transmit(&huart1, (uint8_t *)postData, strlen(postData), HAL_MAX_DELAY);
-    HAL_Delay(2000);
-
-    char responseBuffer[20];
-    memset(responseBuffer, 0, sizeof(responseBuffer));
-
-    HAL_UART_Receive(&huart1, (uint8_t *)responseBuffer, sizeof(responseBuffer) - 1, HAL_MAX_DELAY);
-    if (strncmp(responseBuffer, "HTTP/1.1 200 OK", 15) == 0) {
-        lcd_print(2, 1, "İşlem Başarılı");
-    } else {
-        lcd_print(2, 1, "Hata Oluştu");
-    }
-}
-
-void mainTask(void *pvParameters) {
-	xTaskCreate(sendHttpRequestTaskFunc, "sendHttpRequestTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-	while(1) {
-		checkLCDBacklight();
-
-		//createAPandConnect();
-
-		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1)) {
-			butonKontrol=0;
-		} else {
-			backLightTimer = millis;
-		}
-
-		if(hafizaYaz==1) {
-		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
-		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
-
-		  HAL_I2C_Mem_Write(&hi2c1,0xA0,0,63,eepromData,63,3000);
-		  HAL_Delay(5);
-
-		  hafizaYaz=0;
-		  if(dilSecim==0) {
-			  lcd_print(2,1,"Data yazildi    ");
-		  } else if(dilSecim==1) {
-			  lcd_print(2,1,"Data Wrote      ");
-		  }
-
-		  HAL_Delay(1000);
-		  lcd_clear();
-		}
-
-		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
-		  if(ilkOkuma==0) {
-			  lcd_print(1,1,"   **EEPROM**   ");
-			  if(dilSecim==0) {
-				  lcd_print(2,1,"Data Okunuyor...");
-			  } else if(dilSecim==1) {
-				  lcd_print(2,1,"Data Reading... ");
-			  }
-			  HAL_Delay(1000);
-
-			  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
-			  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY) {
-				  HAL_Delay(1000);
-			  }
-
-			  if(dilSecim==0) {
-				  lcd_print(2,1,"Data Okundu.    ");
-			  } else if(dilSecim==1) {
-				  lcd_print(2,1,"Data Read.      ");
-			  }
-
-			  ilkOkuma=1;
-		  } else {
-			  if(dilSecim==0) {
-				  lcd_print(2,1,"Deger Kaydedildi");
-			  } else if(dilSecim==1) {
-				  lcd_print(2,1,"Value Saved     ");
-			  }
-			  lcd_clear();
-		  }
-
-		  eepromKontrol();
-		  hafizaOku=1;
-		}
-
-		if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)) {
-			lcd_clear();
-			HAL_Delay(10);
-			lcd_print(1, 1, "    ESP-RMK     ");
-			lcd_print(2, 1, "      RUN       ");
-			mesajYazildi=1;
-		}
-
-		if ((menuGiris==0) && (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==1)) {
-			menuGiris=1;
-			lcd_clear();
-		}
-
-		if(menuGiris==1) {
-			menu();
-		}
-
-		HAL_GPIO_TogglePin(cycleLed_GPIO_Port, cycleLed_Pin);
-
-		/* GİRİLEN PARAMETRELERE GÖRE AYARLARIN YAPILMASI*/
-
-		if(HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==0 && hataVar==0) {
-			stopVar=1;
-		} else {
-			stopVar=0;
-		}
-
-		/****************************************  BASINC SALTERI ********************************************/
-		checkBasincSalteri();
-
-		/******** Bas gönder ***********/
-		checkBasGonder();
-
-		/******** Kapı Secimleri ***********/
-
-		checkKapiSecimleri();
-
-		/* PARAMETRELERE GÖRE ÇIKISLARIN AYARLANMASI*/
-
-		/*MOTOR CALISIYOR*/
-
-		checkAktifCalisma();
-
-		// DEMO MOD BASLIYOR
-
-		// DEMO YUKARI CALISMA
-
-		checkDemoModCalisma();
-	}
-}
-
-
-void createAPandConnect() {
-	char received_data[100];
-	char wifiSetupCommand[150];
-	char wifiConnectCommand[150];
-	sprintf(wifiSetupCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", mainWifiName, mainWifiPass);
-
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"), HAL_MAX_DELAY);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWMODE=2\r\n", strlen("AT+CWMODE=2\r\n"), HAL_MAX_DELAY);
-	HAL_UART_Transmit(&huart1, (uint8_t *)wifiSetupCommand, strlen(wifiSetupCommand), HAL_MAX_DELAY);
-
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWLIF\r\n", strlen("AT+CWLIF\r\n"), HAL_MAX_DELAY);
-
-	while(1) {
-		if (strstr(received_data, "+CWJAP:")) {
-			sscanf(received_data, "+CWJAP:\"%[^\"]\",\"%[^\"]\"", takenWifiName, takenWifiPass);
-
-			HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWQAP\r\n", strlen("AT+CWQAP\r\n"), HAL_MAX_DELAY);
-
-			sprintf(wifiConnectCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", takenWifiName, takenWifiPass);
-			HAL_UART_Transmit(&huart1, (uint8_t *)wifiConnectCommand, strlen(wifiConnectCommand), HAL_MAX_DELAY);
-
-			if(HAL_OK) {
-				wifiConnected = 1;
-				break;
-			}
-		}
-	}
 }
 
 void checkLCDBacklight() {
@@ -1573,6 +1301,162 @@ char* mergeData() {
 	return result;
 }
 
+void mainLoop() {
+	while(1) {
+		checkLCDBacklight();
+
+
+		if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==0)&&(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin)==0)&&(HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==1)&&(HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==1)) {
+			butonKontrol=0;
+		} else {
+			backLightTimer = millis;
+		}
+
+		if(hafizaYaz==1) {
+		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
+
+		  HAL_I2C_Mem_Write(&hi2c1,0xA0,0,63,eepromData,63,3000);
+		  HAL_Delay(5);
+
+		  hafizaYaz=0;
+		  if(dilSecim==0) {
+			  lcd_print(2,1,"Data yazildi    ");
+		  } else if(dilSecim==1) {
+			  lcd_print(2,1,"Data Wrote      ");
+		  }
+
+		  HAL_Delay(1000);
+		  lcd_clear();
+		}
+
+		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
+		  if(ilkOkuma==0) {
+			  lcd_print(1,1,"   **EEPROM**   ");
+			  if(dilSecim==0) {
+				  lcd_print(2,1,"Data Okunuyor...");
+			  } else if(dilSecim==1) {
+				  lcd_print(2,1,"Data Reading... ");
+			  }
+			  HAL_Delay(1000);
+
+			  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+			  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY) {
+				  HAL_Delay(1000);
+			  }
+
+			  if(dilSecim==0) {
+				  lcd_print(2,1,"Data Okundu.    ");
+			  } else if(dilSecim==1) {
+				  lcd_print(2,1,"Data Read.      ");
+			  }
+
+			  ilkOkuma=1;
+		  } else {
+			  if(dilSecim==0) {
+				  lcd_print(2,1,"Deger Kaydedildi");
+			  } else if(dilSecim==1) {
+				  lcd_print(2,1,"Value Saved     ");
+			  }
+			  lcd_clear();
+		  }
+
+		  eepromKontrol();
+		  hafizaOku=1;
+		}
+
+		if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)) {
+			lcd_clear();
+			HAL_Delay(10);
+			lcd_print(1, 1, "    ESP-RMK     ");
+			lcd_print(2, 1, "      RUN       ");
+			mesajYazildi=1;
+		}
+
+		if ((menuGiris==0) && (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==1)) {
+			menuGiris=1;
+			lcd_clear();
+		}
+
+		if(menuGiris==1) {
+			menu();
+		}
+
+		HAL_GPIO_TogglePin(cycleLed_GPIO_Port, cycleLed_Pin);
+
+		/* GİRİLEN PARAMETRELERE GÖRE AYARLARIN YAPILMASI*/
+
+		if(HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==0 && hataVar==0) {
+			stopVar=1;
+		} else {
+			stopVar=0;
+		}
+
+		/****************************************  BASINC SALTERI ********************************************/
+		checkBasincSalteri();
+
+		/******** Bas gönder ***********/
+		checkBasGonder();
+
+		/******** Kapı Secimleri ***********/
+
+		checkKapiSecimleri();
+
+		/* PARAMETRELERE GÖRE ÇIKISLARIN AYARLANMASI*/
+
+		/*MOTOR CALISIYOR*/
+
+		checkAktifCalisma();
+
+		// DEMO MOD BASLIYOR
+
+		// DEMO YUKARI CALISMA
+
+		checkDemoModCalisma();
+	}
+}
+
+void ESP_Init (char *SSID, char *PASSWD) {
+	char data[80];
+
+	Ringbuf_init();
+
+	Uart_sendstring("AT+RST\r\n", &huart1);
+
+	/********* AT **********/
+	Uart_sendstring("AT\r\n", &huart1);
+	while(!(Wait_for("AT\r\r\n\r\nOK\r\n", &huart1)));
+
+
+	/********* AT+CWMODE=1 **********/
+	Uart_sendstring("AT+CWMODE=1\r\n", &huart1);
+	while (!(Wait_for("AT+CWMODE=1\r\r\n\r\nOK\r\n", &huart1)));
+
+
+	/********* AT+CWJAP="SSID","PASSWD" **********/
+	sprintf (data, "AT+CWJAP=\"%s\",\"%s\"\r\n", SSID, PASSWD);
+	Uart_sendstring(data, &huart1);
+	while (!(Wait_for("WIFI GOT IP\r\n\r\nOK\r\n", &huart1)));
+	sprintf (data, "Connected to,\"%s\"\n\n", SSID);
+
+
+	/********* AT+CIFSR **********/
+	Uart_sendstring("AT+CIFSR\r\n", &huart1);
+	while (!(Wait_for("CIFSR:STAIP,\"", &huart1)));
+	while (!(Copy_upto("\"",buffer, &huart1)));
+	while (!(Wait_for("OK\r\n", &huart1)));
+	int len = strlen (buffer);
+	buffer[len-1] = '\0';
+	sprintf (data, "IP ADDR: %s\n\n", buffer);
+
+
+	Uart_sendstring("AT+CIPMUX=1\r\n", &huart1);
+	while (!(Wait_for("AT+CIPMUX=1\r\r\n\r\nOK\r\n", &huart1)));
+
+	Uart_sendstring("AT+CIPSERVER=1,80\r\n", &huart1);
+	while (!(Wait_for("OK\r\n", &huart1)));
+
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1645,48 +1529,20 @@ int main(void)
 
   eepromKontrol();
 
-  resetUSART();
   lcd_clear();
 
   backLightTimer = millis;
 
+  ESP_Init("", "");
+
   /* USER CODE END 2 */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  xTaskCreate(mainTask, "mainTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-  /* USER CODE END RTOS_THREADS */
-
-  /* Start scheduler */
-  osKernelStart();
-
-  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -1957,24 +1813,6 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 /* USER CODE END 4 */
-
-/* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
-}
 
 /**
   * @brief  This function is executed in case of error occurrence.

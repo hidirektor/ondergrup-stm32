@@ -31,7 +31,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -41,7 +43,23 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+void i2cTest(void);
+void bekle(void);
+void lcdUpdate(uint8_t);
+void hataKoduLcdGoster(uint8_t);
+void eepromKontrol(void);
+void hata2EEPROM(uint8_t);
+void eepromDataFillWithEmpty(void);
+uint8_t buttonCheck(void);
 
+//ana fonksiyonlar:
+void checkLCDBacklight(void);
+void checkBasincSalteri(void);
+void checkBasGonder(void);
+void checkKapiSecimleri(void);
+void checkAktifCalisma(void);
+void checkDemoModCalisma(void);
+char* mergeData(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
