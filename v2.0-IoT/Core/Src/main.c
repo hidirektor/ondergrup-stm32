@@ -6,23 +6,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Data.h"
+#include "ESP8266.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define Wifi_name "Turna"
-#define Wifi_pass "!?azxx!?1962edib1962"
-#define Server "85.95.231.92"
-char Tx_buffer[250];
-char Rx_buffer[500];
-int Rx_indx;
-char *read;
-
-
-const char* ssid = "Turna";
-const char* password = "!?azxx!?1962edib1962";
-const char* host = "85.95.231.92";
-char buf[256];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -1422,133 +1410,6 @@ void mainLoop() {
 	}
 }
 
-void clear_Rxbuffer() {
-	for (int i = 0; i < 500; i++) {
-		Rx_buffer[i] = 0;
-	}
-	Rx_indx = 0;
-}
-
-void ESP8266_INIT_Temp() {
-	sprintf(Tx_buffer, "AT+RST\r\n");
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-	HAL_Delay(3000);
-	clear_Rxbuffer();
-	do {
-		sprintf(Tx_buffer, "AT\r\n");
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(500);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
-
-	do {
-		sprintf(Tx_buffer, "AT+CWMODE=1\r\n");
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(500);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
-
-	char str[100];
-	do {
-		strcpy(str, "AT+CWJAP=\"");
-		strcat(str, Wifi_name);
-		strcat(str, "\",\"");
-		strcat(str, Wifi_pass);
-		strcat(str, "\"\r\n");
-		sprintf(Tx_buffer, "%s", str);
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(6000);
-		read = strstr(Rx_buffer, "OK");
-	} while (read == NULL);
-	clear_Rxbuffer();
-}
-
-void ESP8266_INIT3() {
-	sprintf(Tx_buffer, "AT+RST\r\n");
-	HAL_UART_Transmit(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer), HAL_MAX_DELAY);
-	HAL_Delay(3000);
-	clear_Rxbuffer();
-	lcd_print(1, 1, "A");
-
-	sprintf(Tx_buffer, "AT\r\n");
-	HAL_UART_Transmit(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer), HAL_MAX_DELAY);
-	HAL_Delay(500);
-	clear_Rxbuffer();
-	lcd_print(1, 2, "B");
-
-	sprintf(Tx_buffer, "AT+CWMODE=1\r\n");
-	HAL_UART_Transmit(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer), HAL_MAX_DELAY);
-	HAL_Delay(500);
-	clear_Rxbuffer();
-	lcd_print(1, 3, "C");
-
-	sprintf(Tx_buffer, "AT+CWJAP=\"Turna\",\"!?azxx!?1962edib1962\"\r\n");
-	HAL_UART_Transmit(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer), HAL_MAX_DELAY);
-	HAL_Delay(6000);
-	clear_Rxbuffer();
-	lcd_print(1, 4, "D");
-}
-
-void ESP8266_INIT() {
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)"AT+RST\r\n", strlen("AT+RST\r\n"));
-	HAL_Delay(3000);
-	lcd_print(1, 1, "A");
-
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)"AT\r\n", strlen("AT\r\n"));
-	HAL_Delay(500);
-	lcd_print(1, 2, "B");
-
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)"AT+CWMODE=1\r\n", strlen("AT+CWMODE=1\r\n"));
-	HAL_Delay(500);
-	lcd_print(1, 3, "C");
-
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*)"AT+CWJAP=\"Turna\",\"!?azxx!?1962edib1962\"\r\n", strlen("AT+CWJAP=\"Turna\",\"!?azxx!?1962edib1962\"\r\n"));
-	HAL_Delay(6000);
-	lcd_print(1, 4, "D");
-}
-
-void Send_data(int32_t value) {
-	char local_txA[200];
-	char local_txB[50];
-	int len;
-
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-	clear_Rxbuffer();
-	do {
-		sprintf(Tx_buffer, "AT+CIPSTART=\"TCP\",\"%s\",80\r\n", Server);
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
-		HAL_Delay(100);
-		read = strstr(Rx_buffer, "CONNECT");
-	} while (read == NULL);
-	clear_Rxbuffer();
-	do {
-		sprintf(local_txA,
-				"GET /valua.php?value=%ld HTTP/1.0\r\nHost: %s\r\n\r\n", value,
-				Server);
-		len = strlen(local_txA);
-		sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) local_txB, strlen(local_txB));
-		HAL_Delay(100);
-		read = strstr(Rx_buffer, ">");
-	} while (read == NULL);
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*) local_txA, strlen(local_txA));
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
-}
-
-void espTest() {
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT\r\n", 4, HAL_MAX_DELAY);
-	HAL_Delay(2000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CWJAP=\"Turna\",\"!?azxx!?1962edib1962\"\r\n", 36, HAL_MAX_DELAY);
-	HAL_Delay(2000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSTART=\"TCP\",\"85.95.231.92\",3000\r\n", 38, HAL_MAX_DELAY);
-	HAL_Delay(2000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"AT+CIPSEND=250\r\n", 16, HAL_MAX_DELAY);
-	HAL_Delay(2000);
-	HAL_UART_Transmit(&huart1, (uint8_t *)"GET /api/machine/updateMachineDataRaw?machineID=12345&machineData=111001011021210101001210000102012345678923456 HTTP/1.1\r\nHost: 85.95.231.92\r\nConnection: close\r\n\r\n", strlen("GET /api/machine/updateMachineDataRaw?machineID=12345&machineData=111001011021210101001210000102012345678923456 HTTP/1.1\r\nHost: 85.95.231.92\r\nConnection: close\r\n\r\n"), HAL_MAX_DELAY);
-	HAL_Delay(2000);
-}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1623,10 +1484,16 @@ int main(void)
 
   lcd_clear();
 
+  ESP8266_Init(&huart1);
+  lcd_print(1, 1, "Test1");
+  SendMachineData(&huart1);
+  lcd_print(2, 1, "Test2");
+  HAL_Delay(500);
+  lcd_clear();
+
   backLightTimer = millis;
 
   //ESP8266_INIT();
-  espTest();
 
   /* USER CODE END 2 */
 

@@ -365,19 +365,17 @@ void menu(void) {
 				lcd_print(2, 1, "2.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "2.Error Code:");
-
 			}
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit2, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
-		if(hataGostermeSirasi == 2){
+		if(hataGostermeSirasi == 2) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "3.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "3.Error Code:");
-
 			}
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit3, snum, 10);
@@ -389,7 +387,6 @@ void menu(void) {
 				lcd_print(2, 1, "4.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "4.Error Code:");
-
 			}
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit4, snum, 10);
@@ -401,7 +398,6 @@ void menu(void) {
 				lcd_print(2, 1, "5.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "5.Error Code:");
-
 			}
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit5, snum, 10);
@@ -413,7 +409,6 @@ void menu(void) {
 				lcd_print(2, 1, "6.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "6.Error Code:");
-
 			}
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit6, snum, 10);
@@ -458,7 +453,6 @@ void menu(void) {
 				lcd_print(2, 1, "10.Hata Kodu: ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "10.Error Code:");
-
 			}
 			lcd_print(2, 16, " ");
 			itoa(hataKayit10, snum, 10);
