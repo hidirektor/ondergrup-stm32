@@ -1240,8 +1240,8 @@ void checkDemoModCalisma() {
 }
 
 char* mergeData() {
-	char combinedString[1000];
-	char temp[100];
+	char combinedString[46] = "";
+	char temp[10];
 
 	uint8_t uintVariables[] = {
 			devirmeYuruyusSecim,
@@ -1492,8 +1492,6 @@ int main(void)
   lcd_clear();
 
   backLightTimer = millis;
-
-  //ESP8266_INIT();
 
   /* USER CODE END 2 */
 

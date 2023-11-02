@@ -3,6 +3,10 @@
 
 
 void ESP8266_Init(UART_HandleTypeDef *huart1) {
+	sprintf(Tx_buffer, "AT+RESTORE\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	HAL_Delay(3000);
+
 	sprintf(Tx_buffer, "AT+RST\r\n");
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
 	HAL_Delay(3000);
@@ -27,7 +31,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1) {
 }
 
 void SendMachineData(UART_HandleTypeDef *huart1) {
-	char local_txA[200];
+	char local_txA[250];
 	char local_txB[50];
 	int len;
 
