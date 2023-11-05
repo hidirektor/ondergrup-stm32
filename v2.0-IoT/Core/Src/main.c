@@ -165,19 +165,20 @@ void eepromKontrol(int type) {
 	calismaSayisi1000 = eepromData[31];
 	calismaSayisi10000 = eepromData[32];
 	dilSecim = eepromData[33];
+	iotMode = eepromData[37];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
 	kapiAcTipi = eepromData[36];
-	hataKayit1 = eepromData[37];
-	hataKayit2 = eepromData[38];
-	hataKayit3 = eepromData[39];
-	hataKayit4 = eepromData[40];
-	hataKayit5 = eepromData[41];
-	hataKayit6 = eepromData[42];
-	hataKayit7 = eepromData[43];
-	hataKayit8 = eepromData[44];
-	hataKayit9 = eepromData[45];
-	hataKayit10 = eepromData[46];
+	hataKayit1 = eepromData[38];
+	hataKayit2 = eepromData[39];
+	hataKayit3 = eepromData[40];
+	hataKayit4 = eepromData[41];
+	hataKayit5 = eepromData[42];
+	hataKayit6 = eepromData[43];
+	hataKayit7 = eepromData[44];
+	hataKayit8 = eepromData[45];
+	hataKayit9 = eepromData[46];
+	hataKayit10 = eepromData[47];
 
 	loadMenuTexts(dilSecim);
 
@@ -321,9 +322,13 @@ void eepromKontrol(int type) {
 	    dilSecim=0;
 	}
 
+	if(iotMode>1) {
+		iotMode=0;
+	}
+
 	HAL_Delay(1000);
 
-	if(type == 1) {
+	if(iotMode == 1 && type == 1) {
 		convertAndSendData();
 	}
 }
@@ -471,10 +476,10 @@ void i2cTest() {
 
 void checkLCDBacklight() {
 	if(millis - backLightTimer >= lcdBacklightSure*10) {
-				lcd_backlight(0);
-			} else {
-				lcd_backlight(1);
-			}
+		lcd_backlight(0);
+	} else {
+		lcd_backlight(1);
+	}
 }
 
 void checkBasincSalteri() {
@@ -540,7 +545,6 @@ void checkKapiSecimleri() {
 
 void checkAktifCalisma() {
 	if(demoMode==0 && menuGiris==0) {
-
 		if(((yukarimotorcalisiyor)||(devmotoryukaricalisiyor)||((asagivalfcalisiyor)&&(butonKontrol2==0)&&(platformSilindirTipi==1))||((devmotorasagicalisiyor)&&(devirmeSilindirTipi)==1))&&(stopVar)&&(kapiSivicVar)) {
 			HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_SET);
 			motorcalisiyor=1;
@@ -1476,13 +1480,15 @@ int main(void)
   HAL_Delay(1000);
   lcd_clear();
 
-  lcd_print(1, 1, "Wifi Ayarlaniyor");
-  lcd_print(2, 1, "Lutfen Bekleyin");
-  ESP8266_Init(&huart1);
-  HAL_Delay(500);
-
-  lcd_clear();
   eepromKontrol(0);
+
+  if(iotMode == 1) {
+	  lcd_print(1, 1, "Wifi Ayarlaniyor");
+	  lcd_print(2, 1, "Lutfen Bekleyin");
+	  ESP8266_Init(&huart1);
+	  HAL_Delay(500);
+  }
+
   lcd_clear();
 
   backLightTimer = millis;

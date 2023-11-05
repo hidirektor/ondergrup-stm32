@@ -32,10 +32,10 @@ unsigned long timer4 = 0;				// maksimum calisma kayit suresi
 unsigned long timer5 = 0;				// basinc kayit suresi
 unsigned long timer6 = 0;				// lcd update suresi
 unsigned long backLightTimer = 0;
-int eepromVal[] = {37, 38, 39, 40, 41, 42, 43, 44, 45, 46};
+int eepromVal[] = {38, 39, 40, 41, 42, 43, 44, 45, 46, 47};
 int eepromFull[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int indeksSayisi = sizeof(eepromVal)/sizeof(eepromVal[0]);
-int eepromHataBaslangic = 37;
+int eepromHataBaslangic = 38;
 
 char machineID[] = "12345";
 
@@ -83,6 +83,7 @@ uint8_t kapiTablaAcSure = 0;
 uint8_t buzzer = 0;
 uint8_t menuGiris = 0;
 uint8_t demoMode = 0;
+uint8_t iotMode = 0;
 uint8_t calismaSayModu = 0;
 uint8_t dilSecim = 0;
 uint8_t hataKayit1 = 0;
@@ -249,7 +250,7 @@ char* copyTextNormal(const char* text) {
 void menu(void) {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
 		menuSayac = menuSayac+1;
-		if (menuSayac == 32) {    //MENÜ BÜYÜDÜKÇE DUZENLE
+		if (menuSayac == 33) {    //MENÜ BÜYÜDÜKÇE DUZENLE
 			menuSayac = 1;
 		}
 
@@ -293,7 +294,7 @@ void menu(void) {
 
 	if ((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (butonKontrol == 0)) {
 		if (menuSayac <= 1) {
-			menuSayac = 32;     //MENÜ BÜYÜDÜKÇE DUZENLE
+			menuSayac = 33;     //MENÜ BÜYÜDÜKÇE DUZENLE
 		}
 
 		menuSayac = menuSayac - 1;
@@ -1911,6 +1912,50 @@ void menu(void) {
 	}
 
 	if (menuSayac == 31) {
+		calismaSayModu = 0;
+		lcd_print(1, 1, "IoT MODE        ");
+
+		if(iotMode == 0) {
+			if(dilSecim == 0) {
+				lcd_print(2, 1, "Pasif           ");
+			} else if(dilSecim == 1) {
+				lcd_print(2, 1, "Passive         ");
+			}
+		} else if(iotMode == 1) {
+			if(dilSecim == 0){
+				lcd_print(2, 1, "Aktif           ");
+			} else if(dilSecim == 1) {
+				lcd_print(2, 1, "Active          ");
+			}
+		}
+
+		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0)) {
+			iotMode = iotMode + 1;
+
+			if(iotMode > 1) {
+				iotMode = 0;
+			}
+
+			bekle();
+		}
+
+		if ((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
+			iotMode = iotMode - 1;
+
+		   	if(iotMode > 0) {
+		   		iotMode = 1;
+		   	}
+
+			bekle();
+		}
+
+		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)) {
+			eepromData[37] = iotMode;
+			hafizaYaz = 1;
+		}
+	}
+
+	if (menuSayac == 32) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, " MENUDEN CIKIS  ");
 			lcd_print(2, 1, "ENTER'A BASINIZ ");

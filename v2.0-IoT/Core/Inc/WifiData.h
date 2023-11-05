@@ -14,6 +14,6 @@
 #define Server "85.95.231.92"
 #define Server2 "85.95.231.92:3000"
 
-char Tx_buffer[250];
+char bufferTX[250];
 
 #endif /* INC_WIFIDATA_H_ */

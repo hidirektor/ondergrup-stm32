@@ -3,20 +3,20 @@
 
 
 void ESP8266_Init(UART_HandleTypeDef *huart1) {
-	sprintf(Tx_buffer, "AT+RESTORE\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "AT+RESTORE\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(3000);
 
-	sprintf(Tx_buffer, "AT+RST\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "AT+RST\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(4000);
 
-	sprintf(Tx_buffer, "AT\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "AT\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(5000);
 
-	sprintf(Tx_buffer, "AT+CWMODE=1\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "AT+CWMODE=1\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(5000);
 
 	char str[100];
@@ -25,8 +25,8 @@ void ESP8266_Init(UART_HandleTypeDef *huart1) {
 	strcat(str, "\",\"");
 	strcat(str, Wifi_pass);
 	strcat(str, "\"\r\n");
-	sprintf(Tx_buffer, "%s", str);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "%s", str);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(6000);
 }
 
@@ -35,8 +35,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	char local_txB[50];
 	int len;
 
-	sprintf(Tx_buffer, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) Tx_buffer, strlen(Tx_buffer));
+	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(6000);
 
 	sprintf(local_txA,
