@@ -117,7 +117,18 @@ void hataKoduLcdGoster(uint8_t x) {
 	}
 }
 
-void eepromKontrol(void) {
+void convertAndSendData() {
+	lcd_print(1, 1, "Veri Esleme");
+	lcd_print(2, 1, "Baslatildi...");
+	for(int i=0; i<2; i++) {
+		sendMachineData(&huart1, machineID, mergeData());
+	}
+	HAL_Delay(500);
+	lcd_clear();
+	HAL_Delay(500);
+}
+
+void eepromKontrol(int type) {
 	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,63,eepromData,63,3000);
 	HAL_Delay(1000);
 
@@ -311,6 +322,10 @@ void eepromKontrol(void) {
 	}
 
 	HAL_Delay(1000);
+
+	if(type == 1) {
+		convertAndSendData();
+	}
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -329,7 +344,7 @@ void hata2EEPROM(uint8_t hataKodu) {
 
 	HAL_I2C_Mem_Write(&hi2c1,0xA0,eepromHataBaslangic,indeksSayisi,&eepromData[eepromHataBaslangic],indeksSayisi,3000);
 	HAL_Delay(500);
-	eepromKontrol();
+	eepromKontrol(1);
 }
 
 void eepromDataFillWithEmpty(void) {
@@ -455,7 +470,7 @@ void i2cTest() {
 }
 
 void checkLCDBacklight() {
-	if(millis - backLightTimer >= lcdBacklightSure) {
+	if(millis - backLightTimer >= lcdBacklightSure*10) {
 				lcd_backlight(0);
 			} else {
 				lcd_backlight(1);
@@ -1219,7 +1234,7 @@ void checkDemoModCalisma() {
 }
 
 char* mergeData() {
-	char combinedString[46] = "";
+	char combinedString[45] = "";
 	char temp[10];
 
 	uint8_t uintVariables[] = {
@@ -1339,7 +1354,9 @@ void mainLoop() {
 			  lcd_clear();
 		  }
 
-		  eepromKontrol();
+		  lcd_clear();
+
+		  eepromKontrol(1);
 		  hafizaOku=1;
 		}
 
@@ -1459,15 +1476,13 @@ int main(void)
   HAL_Delay(1000);
   lcd_clear();
 
-  eepromKontrol();
+  lcd_print(1, 1, "Wifi Ayarlaniyor");
+  lcd_print(2, 1, "Lutfen Bekleyin");
+  ESP8266_Init(&huart1);
+  HAL_Delay(500);
 
   lcd_clear();
-
-  ESP8266_Init(&huart1);
-  lcd_print(1, 1, "Test1");
-  SendMachineData(&huart1);
-  lcd_print(2, 1, "Test2");
-  HAL_Delay(500);
+  eepromKontrol(0);
   lcd_clear();
 
   backLightTimer = millis;

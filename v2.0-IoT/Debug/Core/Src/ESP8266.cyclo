@@ -1,2 +1,2 @@
 ../Core/Src/ESP8266.c:5:6:ESP8266_Init	1
-../Core/Src/ESP8266.c:33:6:SendMachineData	1
+../Core/Src/ESP8266.c:33:6:sendMachineData	1

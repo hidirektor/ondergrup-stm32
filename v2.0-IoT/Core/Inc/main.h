@@ -47,7 +47,7 @@ void i2cTest(void);
 void bekle(void);
 void lcdUpdate(uint8_t);
 void hataKoduLcdGoster(uint8_t);
-void eepromKontrol(void);
+void eepromKontrol(int);
 void hata2EEPROM(uint8_t);
 void eepromDataFillWithEmpty(void);
 uint8_t buttonCheck(void);
