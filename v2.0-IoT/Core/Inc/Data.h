@@ -39,7 +39,7 @@ int eepromHataBaslangic = 37;
 
 char machineID[] = "12345";
 
-uint8_t lcdBacklightSure = 6;
+uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 uint8_t x = 0;
 uint8_t y = 0;
