@@ -50,3 +50,31 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
 	HAL_Delay(10000);
 }
+
+void createAPandConnect(UART_HandleTypeDef *huart1) {
+	sprintf(bufferTX, "AT+RESTORE\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	HAL_Delay(3000);
+
+	char received_data[100];
+	char wifiSetupCommand[150];
+	char wifiConnectCommand[150];
+	sprintf(wifiSetupCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", mainWifiName, mainWifiPass);
+
+	HAL_UART_Transmit_IT(&huart1, (uint8_t *)"AT+RST\r\n", strlen("AT+RST\r\n"));
+	HAL_UART_Transmit_IT(&huart1, (uint8_t *)"AT+CWMODE=2\r\n", strlen("AT+CWMODE=2\r\n"));
+	HAL_UART_Transmit_IT(&huart1, (uint8_t *)wifiSetupCommand, strlen(wifiSetupCommand));
+
+	HAL_UART_Transmit_IT(&huart1, (uint8_t *)"AT+CWLIF\r\n", strlen("AT+CWLIF\r\n"));
+
+	while(1) {
+		if (strstr(received_data, "+CWJAP:")) {
+			sscanf(received_data, "+CWJAP:\"%[^\"]\",\"%[^\"]\"", takenWifiName, takenWifiPass);
+
+			HAL_UART_Transmit_IT(&huart1, (uint8_t *)"AT+CWQAP\r\n", strlen("AT+CWQAP\r\n"));
+
+			sprintf(wifiConnectCommand, "AT+CWSAP=\"%s\",\"%s\",1,0\r\n", takenWifiName, takenWifiPass);
+			HAL_UART_Transmit_IT(&huart1, (uint8_t *)wifiConnectCommand, strlen(wifiConnectCommand));
+		}
+	}
+}
