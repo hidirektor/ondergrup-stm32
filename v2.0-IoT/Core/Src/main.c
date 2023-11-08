@@ -33,6 +33,9 @@ TIM_HandleTypeDef htim1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
+uint8_t machineIDTemp[12];
+uint8_t wifiSSIDTemp[33];
+uint8_t wifiPassTemp[33];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -1411,6 +1414,18 @@ void mainLoop() {
 	}
 }
 
+void takeWifiDataFromEEPROM(int type) {
+	if(type == 1) {
+		HAL_I2C_Mem_Read(&hi2c1,0xA0,60,12,machineIDTemp,12,3000);
+		HAL_Delay(1000);
+	} else if(type == 2) {
+		HAL_I2C_Mem_Read(&hi2c1,0xA0,73,33,wifiSSIDTemp,33,3000);
+		HAL_Delay(1000);
+	} else if(type == 3) {
+		HAL_I2C_Mem_Read(&hi2c1,0xA0,107,33,wifiPassTemp,33,3000);
+		HAL_Delay(1000);
+	}
+}
 
 /* USER CODE END PFP */
 
@@ -1484,24 +1499,61 @@ int main(void)
 
   eepromKontrol(0);
 
+  takeWifiDataFromEEPROM(1);
+  takeWifiDataFromEEPROM(2);
+  takeWifiDataFromEEPROM(3);
+
   if(strlen(machineID) == 0) {
-	  takeMachineID();
+	  if(sizeof(machineIDTemp) / sizeof(machineIDTemp[0]) > 0) {
+		  //machineIDTempten orijinal hale çevir
+		  int machineIDCount = sizeof(machineIDTemp)/sizeof(machineIDTemp[0]);
+		  for(int i=0; i<machineIDCount; i++) {
+			  machineID[i] = numbers[i];
+		  }
+	  } else {
+		  takeMachineID();
+	  }
   }
+
+  HAL_I2C_Mem_Write(&hi2c1, 0xA0, machineIDEEPROMBaslangic, 12, &eepromData[machineIDEEPROMBaslangic], 12, 3000);
+  HAL_Delay(500);
 
   lcd_clear();
   HAL_Delay(500);
 
   if(iotMode == 1) {
 	  if(strlen(wifiSSID) == 0) {
-	  	  takeWifiSSID();
+		  if(sizeof(wifiSSIDTemp) / sizeof(wifiSSIDTemp[0]) > 0) {
+			  //wifiSSIDTemp'ten orijinale çevir
+			  int wifiSSIDCount = sizeof(wifiSSIDTemp)/sizeof(wifiSSIDTemp[0]);
+			  for(int i=0; i<wifiSSIDCount; i++) {
+				  wifiSSID[i] = characters[i];
+			  }
+		  } else {
+			  takeWifiSSID();
+		  }
 	  }
+
+	  HAL_I2C_Mem_Write(&hi2c1, 0xA0, wifiSSIDEEPROMBaslangic, 33, &eepromData[wifiSSIDEEPROMBaslangic], 33, 3000);
+	  HAL_Delay(500);
 
 	  lcd_clear();
 	  HAL_Delay(500);
 
 	  if(strlen(wifiPass) == 0) {
-		  takeWifiPass();
+		  if(sizeof(wifiPassTemp) / sizeof(wifiPassTemp[0]) > 0) {
+			  //wifiPassTemp'ten orijinale çevir
+			  int wifiPassCount = sizeof(wifiPassTemp)/sizeof(wifiPassTemp[0]);
+			  for(int i=0; i<wifiPassCount; i++) {
+				  wifiPass[i] = characters[i];
+			  }
+		  } else {
+			  takeWifiPass();
+		  }
 	  }
+
+	  HAL_I2C_Mem_Write(&hi2c1, 0xA0, wifiPassEEPROMBaslangic, 33, &eepromData[wifiPassEEPROMBaslangic], 33, 3000);
+	  HAL_Delay(500);
 
 	  lcd_print(1, 1, "Wifi Ayarlaniyor");
 	  lcd_print(2, 1, "Lutfen Bekleyin ");
@@ -1509,10 +1561,26 @@ int main(void)
 	  HAL_Delay(500);
   }
 
+  if(checkMachineID(&huart1, machineID) == 1) {
+	  HAL_I2C_Mem_Write(&hi2c1, 0xA0, 58, 1, &eepromData[58], 1, 3000);
+	  HAL_Delay(500);
+  } else {
+	  lcd_print(1, 1, "ID HATASI       ");
+	  lcd_print(1, 1, "YENI ID GIRIN   ");
+	  HAL_Delay(1000);
+	  takeMachineID();
+  }
+
   lcd_clear();
 
   backLightTimer = millis;
+  char testArr[12];
 
+  for(int k=0; k<12; k++) {
+	  testArr[k] = eepromData[60+k];
+  }
+
+  lcd_print(1, 1, testArr);
   /* USER CODE END 2 */
 
   /* Infinite loop */
