@@ -7,7 +7,8 @@
 ../Core/Src/i2c-lcd.c:109:6:lcd_print	1
 ../Core/Src/i2c-lcd.c:114:6:lcd_print_char	1
 ../Core/Src/i2c-lcd.c:119:6:lcd_clear	1
-../Core/Src/i2c-lcd.c:125:6:lcd_line1	1
-../Core/Src/i2c-lcd.c:129:6:lcd_line2	1
-../Core/Src/i2c-lcd.c:133:6:lcd_backlight	1
-../Core/Src/i2c-lcd.c:138:6:lcd_cursor	2
+../Core/Src/i2c-lcd.c:125:6:lcd_delete_char	1
+../Core/Src/i2c-lcd.c:131:6:lcd_line1	1
+../Core/Src/i2c-lcd.c:135:6:lcd_line2	1
+../Core/Src/i2c-lcd.c:139:6:lcd_backlight	1
+../Core/Src/i2c-lcd.c:144:6:lcd_cursor	2

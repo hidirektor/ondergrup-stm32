@@ -1,7 +1,7 @@
 #include "ESP8266.h"
 #include "WifiData.h"
 
-void ESP8266_Init(UART_HandleTypeDef *huart1) {
+void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
 	sprintf(bufferTX, "AT+RESTORE\r\n");
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(1000);
@@ -20,9 +20,9 @@ void ESP8266_Init(UART_HandleTypeDef *huart1) {
 
 	char str[100];
 	strcpy(str, "AT+CWJAP=\"");
-	strcat(str, Wifi_name);
+	strcat(str, wifiSS);
 	strcat(str, "\",\"");
-	strcat(str, Wifi_pass);
+	strcat(str, wifiPA);
 	strcat(str, "\"\r\n");
 	sprintf(bufferTX, "%s", str);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));

@@ -6,7 +6,7 @@
 #include "stdio.h"
 #include "string.h"
 
-void ESP8266_Init(UART_HandleTypeDef *huart);
+void ESP8266_Init(UART_HandleTypeDef *huart, const char *wifiSS, const char *wifiPA);
 void sendMachineData(UART_HandleTypeDef *huart, const char *machineID, const char *machineData);
 
 #endif /* INC_ESPDATALOGGER_H_ */

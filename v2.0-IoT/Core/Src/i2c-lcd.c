@@ -122,6 +122,12 @@ void lcd_clear(void) {
 
 }
 
+void lcd_delete_char(unsigned char row, unsigned char column) {
+    lcd_gotoxy(row, column);
+
+    lcd_send_char(' ');
+}
+
 void lcd_line1(void) {
 	lcd_send_cmd(0x80);
 }
