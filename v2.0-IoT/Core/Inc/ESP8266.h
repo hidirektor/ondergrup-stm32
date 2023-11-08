@@ -8,6 +8,5 @@
 
 void ESP8266_Init(UART_HandleTypeDef *huart);
 void sendMachineData(UART_HandleTypeDef *huart, const char *machineID, const char *machineData);
-void createAPandConnect(UART_HandleTypeDef *huart);
 
 #endif /* INC_ESPDATALOGGER_H_ */

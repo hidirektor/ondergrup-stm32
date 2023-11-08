@@ -37,8 +37,6 @@ int eepromFull[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int indeksSayisi = sizeof(eepromVal)/sizeof(eepromVal[0]);
 int eepromHataBaslangic = 38;
 
-char machineID[] = "12345";
-
 uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 uint8_t x = 0;

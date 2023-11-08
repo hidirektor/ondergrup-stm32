@@ -12,6 +12,10 @@ void lcd_send_data (char data);  // send data to the lcd
 
 void lcd_send_string (char *str);  // send string to the lcd
 
+void lcd_send_char(char ch);
+
+void lcd_cursor(int state);
+
 void lcd_clear(void);
 
 void lcd_line1(void);
@@ -19,6 +23,8 @@ void lcd_line1(void);
 void lcd_line2(void);
 
 void lcd_print(unsigned char row, unsigned char column, char *str);
+
+void lcd_print_char(unsigned char row, unsigned char column, char ch);
 
 void lcd_gotoxy(unsigned char row, unsigned char column);
 
