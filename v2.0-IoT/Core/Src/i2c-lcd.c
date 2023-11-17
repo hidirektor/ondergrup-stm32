@@ -119,7 +119,16 @@ void lcd_print_char(unsigned char row, unsigned char column, char ch) {
 void lcd_clear(void) {
 	lcd_send_cmd(_CLEAR);
     HAL_Delay(2);
+}
 
+void lcd_clear_line(int line) {
+	if(line == 1) {
+		lcd_line1();
+		lcd_send_cmd(0x01);
+	}  else {
+		lcd_line2();
+		lcd_send_cmd(0x01);
+	}
 }
 
 void lcd_delete_char(unsigned char row, unsigned char column) {

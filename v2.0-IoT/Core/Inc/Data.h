@@ -16,7 +16,7 @@ char* copyText(const char* text);
 
 char* copyTextNormal(const char* text);
 
-void menu(void);
+void menu(I2C_HandleTypeDef *hi2c1);
 
 void loadMenuTexts(uint8_t dilSecim);
 
@@ -52,6 +52,10 @@ char numbers[] = "0123456789";
 int machineIDEEPROMBaslangic = 60;
 int wifiSSIDEEPROMBaslangic = 73;
 int wifiPassEEPROMBaslangic = 107;
+
+uint8_t machineIDTemp[12];
+uint8_t wifiSSIDTemp[33];
+uint8_t wifiPassTemp[33];
 
 uint8_t x = 0;
 uint8_t y = 0;
@@ -281,31 +285,51 @@ void printTemplate(int type, int page) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
+			if(strlen(wifiSSID <= 10)) {
+				lcd_print(1, 7, wifiSSID);
+			} else {
+				slideText(wifiSSID, 7, 1);
+			}
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
+			if(strlen(wifiSSID) <= 10) {
+				lcd_print(1, 7, wifiSSID);
+			} else {
+				slideText(wifiSSID, 7, 1);
+			}
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
+			if(strlen(wifiSSID) <= 10) {
+				lcd_print(1, 7, wifiSSID);
+			} else {
+				slideText(wifiSSID, 7, 1);
+			}
 			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
 		} else if(page == 4) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
+			if(strlen(wifiSSID) <= 10) {
+				lcd_print(1, 7, wifiSSID);
+			} else {
+				slideText(wifiSSID, 7, 1);
+			}
 			lcd_print(2, 1, "WXYZ0123456789!@");
 		} else if(page == 5) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
+			if(strlen(wifiSSID) <= 10) {
+				lcd_print(1, 7, wifiSSID);
+			} else {
+				slideText(wifiSSID, 7, 1);
+			}
 			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
 		}
 	} else if(type == 3) {
@@ -313,31 +337,51 @@ void printTemplate(int type, int page) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
+			if(strlen(wifiPass) <= 10) {
+				lcd_print(1, 7, wifiPass);
+			} else {
+				slideText(wifiPass, 7, 1);
+			}
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
+			if(strlen(wifiPass) <= 10) {
+				lcd_print(1, 7, wifiPass);
+			} else {
+				slideText(wifiPass, 7, 1);
+			}
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
+			if(strlen(wifiPass) <= 10) {
+				lcd_print(1, 7, wifiPass);
+			} else {
+				slideText(wifiPass, 7, 1);
+			}
 			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
 		} else if(page == 4) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
+			if(strlen(wifiPass) <= 10) {
+				lcd_print(1, 7, wifiPass);
+			} else {
+				slideText(wifiPass, 7, 1);
+			}
 			lcd_print(2, 1, "WXYZ0123456789!@");
 		} else if(page == 5) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
+			if(strlen(wifiPass) <= 10) {
+				lcd_print(1, 7, wifiPass);
+			} else {
+				slideText(wifiPass, 7, 1);
+			}
 			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
 		}
 	}
@@ -347,8 +391,68 @@ char getCharFromCursorPosition(int cursorPosition) {
     return characters[cursorPosition];
 }
 
-void takeMachineID() {
+void convertMachineID() {
+	int uzunluk = strlen(machineID);
+
+	for(int i=0; i<uzunluk; i++) {
+		if(machineID[i] == '0') {
+			machineIDTemp[i] = 0;
+		} else if(machineID[i] == '1') {
+			machineIDTemp[i] = 1;
+		} else if(machineID[i] == '2') {
+			machineIDTemp[i] = 2;
+		} else if(machineID[i] == '3') {
+			machineIDTemp[i] = 3;
+		} else if(machineID[i] == '4') {
+			machineIDTemp[i] = 4;
+		} else if(machineID[i] == '5') {
+			machineIDTemp[i] = 5;
+		} else if(machineID[i] == '6') {
+			machineIDTemp[i] = 6;
+		} else if(machineID[i] == '7') {
+			machineIDTemp[i] = 7;
+		} else if(machineID[i] == '8') {
+			machineIDTemp[i] = 8;
+		} else if(machineID[i] == '9') {
+			machineIDTemp[i] = 9;
+		}
+	}
+}
+
+void realDataFromMachineID() {
+	int uzunluk = sizeof(machineIDTemp)/sizeof(machineIDTemp[0]);
+
+	for(int i=0; i<uzunluk; i++) {
+		if(machineIDTemp[i] == 0) {
+			machineID[i] = '0';
+		} else if(machineIDTemp[i] == 1) {
+			machineID[i] = '1';
+		} else if(machineIDTemp[i] == 2) {
+			machineID[i] = '2';
+		} else if(machineIDTemp[i] == 3) {
+			machineID[i] = '3';
+		} else if(machineIDTemp[i] == 4) {
+			machineID[i] = '4';
+		} else if(machineIDTemp[i] == 5) {
+			machineID[i] = '5';
+		} else if(machineIDTemp[i] == 6) {
+			machineID[i] = '6';
+		} else if(machineIDTemp[i] == 7) {
+			machineID[i] = '7';
+		} else if(machineIDTemp[i] == 8) {
+			machineID[i] = '8';
+		} else if(machineIDTemp[i] == 9) {
+			machineID[i] = '9';
+		}
+	}
+}
+
+void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
 	lcd_cursor(1);
+
+	if(state == 0) {
+	    memset(machineID, 0, sizeof(machineID));
+	}
 
     int cursorPosition = 3;
     int machineIDLoc = 0;
@@ -359,11 +463,6 @@ void takeMachineID() {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
-        	int uzunluk = strlen(machineID);
-
-        	for(int i=0; i<uzunluk; i++) {
-        		eepromData[60+i] = machineID[i];
-        	}
 
             break;
         }
@@ -451,8 +550,12 @@ void takeMachineID() {
     }
 }
 
-void takeWifiSSID() {
+void takeWifiSSID(int state) {
     lcd_cursor(1);
+
+    if(state == 0) {
+    	memset(wifiSSID, 0, sizeof(wifiSSID));
+    }
 
     int realCharPos = 1;
     cursorPosition = 1;
@@ -466,13 +569,6 @@ void takeWifiSSID() {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
-            lcd_clear();
-
-            int uzunluk = strlen(wifiSSID);
-
-            for(int i=0; i<uzunluk; i++) {
-            	eepromData[wifiSSIDEEPROMBaslangic] = realCharPosLoc[i];
-            }
 
             break;
         }
@@ -584,8 +680,12 @@ void takeWifiSSID() {
     }
 }
 
-void takeWifiPass() {
+void takeWifiPass(int state) {
     lcd_cursor(1);
+
+    if(state == 0) {
+    	memset(wifiPass, 0, sizeof(wifiPass));
+    }
 
     int realCharPos = 1;
     cursorPosition = 1;
@@ -599,12 +699,6 @@ void takeWifiPass() {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
-
-            int uzunluk = strlen(wifiPass);
-
-            for(int i=0; i<uzunluk; i++) {
-              	eepromData[wifiPassEEPROMBaslangic] = realCharPosLoc[i];
-            }
 
             break;
         }
@@ -717,7 +811,26 @@ void takeWifiPass() {
     }
 }
 
-void menu(void) {
+void slideText(const char* text, int startPos, int startLine) {
+	int startPoint = startPos;
+
+	lcd_gotoxy(startLine, startPos);
+
+	while(text[startPoint] != '\0') {
+		lcd_print_char(startLine, startPoint, text[startPoint]);
+
+		if(startPoint >= 14) {
+			lcd_send_cmd(0x18);
+		}
+
+		HAL_Delay(50);
+		startPoint++;
+	}
+
+	lcd_clear_line(2);
+}
+
+void menu(I2C_HandleTypeDef *hi2c1) {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
 		menuSayac = menuSayac+1;
 		if (menuSayac == 36) {    //MENÜ BÜYÜDÜKÇE DUZENLE
@@ -2434,7 +2547,10 @@ void menu(void) {
 		lcd_print(2, 1+strlen(machineID), emptyArray);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeMachineID();
+			takeMachineID(0, &hi2c1);
+
+			lcd_print(2, 1, machineID);
+			lcd_print(2, 1+strlen(machineID), emptyArray);
 
 			bekle();
 		}
@@ -2445,11 +2561,18 @@ void menu(void) {
 
 		lcd_print(1, 1, "WIFI SSID       ");
 
-		lcd_print(2, 1, wifiSSID);
-		lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+		if(strlen(wifiSSID) <=16) {
+			lcd_print(2, 1, wifiSSID);
+			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+		} else {
+			slideText(wifiSSID, 1, 2);
+		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiSSID();
+			takeWifiSSID(0);
+
+			lcd_print(2, 1, wifiSSID);
+			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 
 			bekle();
 		}
@@ -2460,11 +2583,18 @@ void menu(void) {
 
 		lcd_print(1, 1, "WIFI PASS       ");
 
-		lcd_print(2, 1, wifiPass);
-		lcd_print(2, 1+strlen(wifiPass), emptyArray);
+		if(strlen(wifiPass) <= 16) {
+			lcd_print(2, 1, wifiPass);
+			lcd_print(2, 1+strlen(wifiPass), emptyArray);
+		} else {
+			slideText(wifiPass, 1, 2);
+		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiPass();
+			takeWifiPass(0);
+
+			lcd_print(2, 1, wifiPass);
+			lcd_print(2, 1+strlen(wifiPass), emptyArray);
 
 			bekle();
 		}

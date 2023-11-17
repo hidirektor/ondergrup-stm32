@@ -18,6 +18,8 @@ void lcd_cursor(int state);
 
 void lcd_clear(void);
 
+void lcd_clear_line(int line);
+
 void lcd_delete_char(unsigned char row, unsigned char column);
 
 void lcd_line1(void);
