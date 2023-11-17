@@ -18,6 +18,8 @@ char* copyTextNormal(const char* text);
 
 void menu(I2C_HandleTypeDef *hi2c1);
 
+void slideText(const char* text, int startPos, int startLine);
+
 void loadMenuTexts(uint8_t dilSecim);
 
 uint8_t eepromData[145];
@@ -285,7 +287,7 @@ void printTemplate(int type, int page) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			if(strlen(wifiSSID <= 10)) {
+			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
 				slideText(wifiSSID, 7, 1);
@@ -812,22 +814,16 @@ void takeWifiPass(int state) {
 }
 
 void slideText(const char* text, int startPos, int startLine) {
-	int startPoint = startPos;
-
 	lcd_gotoxy(startLine, startPos);
 
-	while(text[startPoint] != '\0') {
-		lcd_print_char(startLine, startPoint, text[startPoint]);
+	//lcd_clear_line(startLine);
 
-		if(startPoint >= 14) {
-			lcd_send_cmd(0x18);
+	for(int z=0; z < strlen(text); z++) {
+		for(int i=startPos + z; i < strlen(text); i++) {
+			lcd_print_char(startLine, i-z, text[i]);
+			HAL_Delay(50);
 		}
-
-		HAL_Delay(50);
-		startPoint++;
 	}
-
-	lcd_clear_line(2);
 }
 
 void menu(I2C_HandleTypeDef *hi2c1) {
