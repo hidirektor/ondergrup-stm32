@@ -9,7 +9,7 @@
 ../Core/Inc/Data.h:555:6:takeWifiSSID	26
 ../Core/Inc/Data.h:685:6:takeWifiPass	26
 ../Core/Inc/Data.h:816:6:slideText	3
-../Core/Inc/Data.h:829:6:menu	648
+../Core/Inc/Data.h:831:6:menu	648
 ../Core/Inc/Data.h:2618:6:loadMenuTexts	2
 ../Core/Src/main.c:50:6:lcdUpdate	8
 ../Core/Src/main.c:70:6:hataKoduLcdGoster	19
