@@ -1497,7 +1497,7 @@ int main(void)
 
   eepromKontrol(0);
 
-  if(strlen(machineID) == 0) {
+  /*if(strlen(machineID) == 0) {
 	  takeMachineID(1, &hi2c1);
   }
 
@@ -1520,7 +1520,7 @@ int main(void)
 	  lcd_print(2, 1, "Lutfen Bekleyin ");
 	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
 	  HAL_Delay(500);
-  }
+  }*/
 
   /*while(idKontrol != 1) {
 	  lcd_clear();
@@ -1545,7 +1545,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  mainLoop();
+	  lcd_print(1, 1, "ONDERGRUP");
+	  slideText("qwertyuasf1234dghjvbxcz", 2, 2);
+	  lcd_clear_line(2);
+	  //mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
