@@ -11,7 +11,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-int idKontrol = 0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -1494,43 +1493,7 @@ int main(void)
   lcd_clear();
 
   eepromKontrol(0);
-  eepromKontrol4IoT();
-
-  if(strlen(machineID) == 0) {
-	  takeMachineID(1, &hi2c1);
-  }
-
-  lcd_clear();
-  HAL_Delay(500);
-
-  if(iotMode == 1) {
-	  if(strlen(wifiSSID) == 0) {
-		  takeWifiSSID(1, &hi2c1);
-	  }
-
-	  lcd_clear();
-	  HAL_Delay(500);
-
-	  if(strlen(wifiPass) == 0) {
-		  takeWifiPass(1, &hi2c1);
-	  }
-
-	  lcd_print(1, 1, "Wifi Ayarlaniyor");
-	  lcd_print(2, 1, "Lutfen Bekleyin ");
-	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	  HAL_Delay(500);
-  }
-
-  while(idKontrol != 1) {
-	  lcd_clear();
-	  HAL_Delay(100);
-	  lcd_print(1, 1, "ID HATASI       ");
-	  lcd_print(2, 1, "YENI ID GIRIN...");
-	  HAL_Delay(2000);
-	  takeMachineID(0);
-	  HAL_Delay(300);
-	  idKontrol = checkMachineID(&huart1, machineID);
-  }
+  iotModeStartup(&hi2c1, &huart1);
 
   lcd_clear();
   HAL_Delay(200);
