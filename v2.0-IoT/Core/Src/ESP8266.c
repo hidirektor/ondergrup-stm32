@@ -76,8 +76,21 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	HAL_Delay(4000);
 
 	if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL) {
-	    return 1; // Yanıt başarılı
-	} else {
+	        char *jsonStart = strstr(bufferRX, "{");
+	        char *jsonEnd = strstr(bufferRX, "}");
+
+	        if (jsonStart != NULL && jsonEnd != NULL) {
+	            int jsonLength = jsonEnd - jsonStart + 1;
+	            char jsonResponse[jsonLength + 1];
+	            strncpy(jsonResponse, jsonStart, jsonLength);
+	            jsonResponse[jsonLength] = '\0';
+
+	            if (strstr(jsonResponse, "\"msg\": \"OK\"") != NULL) {
+	                return 1; // Yanıt başarılı
+	            }
+	        }
+	    }
+
 	    return 0; // Yanıt başarısız
 	}
 }

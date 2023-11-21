@@ -1521,7 +1521,7 @@ int main(void)
 	  HAL_Delay(500);
   }
 
-  /*while(idKontrol != 1) {
+  while(idKontrol != 1) {
 	  lcd_clear();
 	  HAL_Delay(100);
 	  lcd_print(1, 1, "ID HATASI       ");
@@ -1530,7 +1530,7 @@ int main(void)
 	  takeMachineID(0);
 	  HAL_Delay(300);
 	  idKontrol = checkMachineID(&huart1, machineID);
-  }*/
+  }
 
   lcd_clear();
   HAL_Delay(200);
