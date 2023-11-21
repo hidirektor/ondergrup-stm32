@@ -335,6 +335,17 @@ void eepromKontrol(int type) {
 	}
 }
 
+void eepromKontrol4IoT() {
+	takeCharFromEEPROM4ID(&hi2c1);
+	HAL_Delay(500);
+	if(iotMode == 1) {
+		takeCharFromEEPROM4Wifi(&hi2c1, 1);
+		HAL_Delay(500);
+		takeCharFromEEPROM4Wifi(&hi2c1, 2);
+		HAL_Delay(500);
+	}
+}
+
 void hata2EEPROM(uint8_t hataKodu) {
 	if(eepromData[eepromHataBaslangic+(indeksSayisi-1)] != 0) {
 		eepromDataFillWithEmpty();
@@ -1412,19 +1423,6 @@ void mainLoop() {
 	}
 }
 
-void takeWifiDataFromEEPROM(int type) {
-	if(type == 1) {
-		HAL_I2C_Mem_Read(&hi2c1,0xA0,60,12,machineIDTemp,12,3000);
-		HAL_Delay(1000);
-	} else if(type == 2) {
-		HAL_I2C_Mem_Read(&hi2c1,0xA0,73,33,wifiSSIDTemp,33,3000);
-		HAL_Delay(1000);
-	} else if(type == 3) {
-		HAL_I2C_Mem_Read(&hi2c1,0xA0,107,33,wifiPassTemp,33,3000);
-		HAL_Delay(1000);
-	}
-}
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1496,8 +1494,9 @@ int main(void)
   lcd_clear();
 
   eepromKontrol(0);
+  eepromKontrol4IoT();
 
-  /*if(strlen(machineID) == 0) {
+  if(strlen(machineID) == 0) {
 	  takeMachineID(1, &hi2c1);
   }
 
@@ -1506,21 +1505,21 @@ int main(void)
 
   if(iotMode == 1) {
 	  if(strlen(wifiSSID) == 0) {
-		  takeWifiSSID(1);
+		  takeWifiSSID(1, &hi2c1);
 	  }
 
 	  lcd_clear();
 	  HAL_Delay(500);
 
 	  if(strlen(wifiPass) == 0) {
-		  takeWifiPass(1);
+		  takeWifiPass(1, &hi2c1);
 	  }
 
 	  lcd_print(1, 1, "Wifi Ayarlaniyor");
 	  lcd_print(2, 1, "Lutfen Bekleyin ");
 	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
 	  HAL_Delay(500);
-  }*/
+  }
 
   /*while(idKontrol != 1) {
 	  lcd_clear();
@@ -1545,10 +1544,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  lcd_print(1, 1, "ONDERGRUP");
-	  slideText("qwertyuasf1234dghjvbxcz", 2, 2);
-	  lcd_clear_line(2);
-	  //mainLoop();
+	  mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
