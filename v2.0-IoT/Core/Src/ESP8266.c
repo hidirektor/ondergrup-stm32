@@ -86,11 +86,17 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	        strncpy(jsonResponse, jsonStart, jsonLength);
 	        jsonResponse[jsonLength] = '\0';
 
-	        if (strstr(jsonResponse, "\"msg\": \"OK\"") != NULL) {
+	        if (strstr(jsonResponse, "\"message\": \"Machine ID is available.\"") != NULL) {
 	            return 1; // Yanıt başarılı
 	        }
 	    }
 	}
+
+	/*if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL) {
+		return 1;
+	} else {
+		return 0;
+	}*/
 
 	return 0; // Yanıt başarısız
 }
