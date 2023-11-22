@@ -409,6 +409,10 @@ char getCharFromCursorPosition(int cursorPosition) {
 void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1) {
 	eepromKontrol4IoT();
 
+	//Safe Val eklenmesi gerekiyor
+	//SafeVal 1 ise id eşleşmesi yapılmıştır.
+	//bir daha elleme
+
 	if(strlen(machineID) == 0) {
 	 takeMachineID(1, &hi2c1);
 	}

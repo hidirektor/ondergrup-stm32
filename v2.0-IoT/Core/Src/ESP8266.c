@@ -73,7 +73,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	HAL_Delay(6000);
 
 	HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
-	HAL_Delay(4000);
+	HAL_Delay(5000);
 
 	if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL) {
 
