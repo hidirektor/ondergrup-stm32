@@ -130,7 +130,7 @@ void convertAndSendData() {
 }
 
 void eepromKontrol(int type) {
-	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,63,eepromData,63,3000);
+	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,145,eepromData,145,3000);
 	HAL_Delay(1000);
 
 	kaydedilenDeger = eepromData[3];

@@ -20,9 +20,12 @@ void menu(I2C_HandleTypeDef *hi2c1);
 
 void slideText(const char* text, int startPos, int startLine);
 
+void takeSafeVal(I2C_HandleTypeDef *hi2c1);
+void writeSafeVal(I2C_HandleTypeDef *hi2c1, int state);
+
 void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1);
 
-void writeDataToEEPROM(I2C_HandleTypeDef *hi2c1, const uint8_t* transferData, uint8_t startPos);
+void writeDataToEEPROM(I2C_HandleTypeDef *hi2c1, uint8_t startPos);
 void convertChars(const uint8_t* writeArray, uint8_t state);
 
 void takeCharFromEEPROM4ID(I2C_HandleTypeDef *hi2c1);
@@ -63,6 +66,7 @@ char charactersArray[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01
 char numbersArray[] = "0123456789";
 
 uint8_t idKontrol = 0;
+uint8_t safeVal = 0;
 
 uint8_t readedID[12];
 uint8_t readedSSID[33];
@@ -406,47 +410,65 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1) {
-	eepromKontrol4IoT();
-
-	//Safe Val eklenmesi gerekiyor
-	//SafeVal 1 ise id eşleşmesi yapılmıştır.
-	//bir daha elleme
-
-	if(strlen(machineID) == 0) {
-	 takeMachineID(1, &hi2c1);
-	}
-
-	lcd_clear();
+void takeSafeVal(I2C_HandleTypeDef *hi2c1) {
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 145, eepromData, 145, 3000);
 	HAL_Delay(500);
 
-	if(iotMode == 1) {
-		if(strlen(wifiSSID) == 0) {
-			takeWifiSSID(1, &hi2c1);
-		}
+	safeVal = eepromData[58];
+}
 
-		lcd_clear();
-		HAL_Delay(500);
-
-		if(strlen(wifiPass) == 0) {
-			takeWifiPass(1, &hi2c1);
-		}
-
-		lcd_print(1, 1, "Wifi Ayarlaniyor");
-		lcd_print(2, 1, "Lutfen Bekleyin ");
-		ESP8266_Init(&huart1, wifiSSID, wifiPass);
-		HAL_Delay(500);
+void writeSafeVal(I2C_HandleTypeDef *hi2c1, int state) {
+	if(state == 1) {
+		eepromData[58] == 1;
+	} else {
+		eepromData[58] == 0;
 	}
 
-	while(idKontrol != 1) {
+	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 58, 1, &eepromData, 1, 3000);
+	HAL_Delay(500);
+}
+
+void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1) {
+	eepromKontrol4IoT();
+	HAL_Delay(50);
+	takeSafeVal(&hi2c1);
+
+	if(safeVal == 0) {
+		if(strlen(machineID) == 0) {
+			 takeMachineID(1, &hi2c1);
+		}
+
 		lcd_clear();
-		HAL_Delay(100);
-		lcd_print(1, 1, "ID HATASI       ");
-		lcd_print(2, 1, "YENI ID GIRIN...");
-		HAL_Delay(2000);
-		takeMachineID(0);
-		HAL_Delay(300);
-		idKontrol = checkMachineID(&huart1, machineID);
+		HAL_Delay(500);
+
+		if(iotMode == 1) {
+			if(strlen(wifiSSID) == 0) {
+				takeWifiSSID(1, &hi2c1);
+			}
+
+			lcd_clear();
+			HAL_Delay(500);
+
+			if(strlen(wifiPass) == 0) {
+				takeWifiPass(1, &hi2c1);
+			}
+
+			lcd_print(1, 1, "Wifi Ayarlaniyor");
+			lcd_print(2, 1, "Lutfen Bekleyin ");
+			ESP8266_Init(&huart1, wifiSSID, wifiPass);
+			HAL_Delay(500);
+		}
+
+		while(idKontrol != 1) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "ID HATASI       ");
+			lcd_print(2, 1, "YENI ID GIRIN...");
+			HAL_Delay(2000);
+			takeMachineID(0);
+			HAL_Delay(300);
+			idKontrol = checkMachineID(&huart1, machineID);
+		}
 	}
 }
 
@@ -820,15 +842,12 @@ void takeWifiPass(int state, I2C_HandleTypeDef *hi2c1) {
     }
 }
 
-void writeDataToEEPROM(I2C_HandleTypeDef *hi2c1, const uint8_t* transferData, uint8_t startPos) {
-	uint8_t arrayLength = sizeof(transferData)/sizeof(transferData[0]);
-
-	HAL_I2C_Mem_Write(&hi2c1, 0xA0, startPos, arrayLength, &eepromData[arrayLength], arrayLength, 3000);
+void writeDataToEEPROM(I2C_HandleTypeDef *hi2c1, uint8_t startPos) {
+	HAL_I2C_Mem_Write(&hi2c1, 0xA0, startPos, 145, &eepromData, 145, 3000);
 	HAL_Delay(500);
 }
 
 void writeCharToEEPROM4ID(I2C_HandleTypeDef *hi2c1, const char* sendArray) {
-	uint8_t charPos[12];
 	uint8_t karakterLength = strlen(sendArray);
 	uint8_t tempArrayLength = strlen(numbersArray);
 
@@ -837,17 +856,16 @@ void writeCharToEEPROM4ID(I2C_HandleTypeDef *hi2c1, const char* sendArray) {
 	for(int i=0; i<karakterLength; i++) {
 		for(int z=0; z<tempArrayLength; z++) {
 			if(sendArray[i] == numbersArray[z]) {
-				charPos[loopVal] = z;
+				eepromData[idStartPos + loopVal] = z;
 				loopVal++;
 			}
 		}
 	}
 
-	writeDataToEEPROM(&hi2c1, charPos, idStartPos);
+	writeDataToEEPROM(&hi2c1, idStartPos);
 }
 
 void writeCharToEEPROM4Wifi(I2C_HandleTypeDef *hi2c1, const char* sendArray, uint8_t stat) {
-	uint8_t charPos[33];
 	uint8_t karakterLength = strlen(sendArray);
 	uint8_t tempArrayLength = strlen(charactersArray);
 
@@ -855,16 +873,20 @@ void writeCharToEEPROM4Wifi(I2C_HandleTypeDef *hi2c1, const char* sendArray, uin
 	for(int i=0; i<karakterLength; i++) {
 		for(int z=0; z<tempArrayLength; z++) {
 			if(sendArray[i] == charactersArray[z]) {
-				charPos[loopVal] = z;
+				if(stat == 1) {
+					eepromData[ssidStartPos + loopVal] = z;
+				} else {
+					eepromData[passStartPos + loopVal] = z;
+				}
 				loopVal++;
 			}
 		}
 	}
 
 	if(stat == 1) {
-		writeDataToEEPROM(&hi2c1, charPos, ssidStartPos);
+		writeDataToEEPROM(&hi2c1, ssidStartPos);
 	} else {
-		writeDataToEEPROM(&hi2c1, charPos, passStartPos);
+		writeDataToEEPROM(&hi2c1, passStartPos);
 	}
 }
 
