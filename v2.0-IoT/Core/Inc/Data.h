@@ -20,8 +20,16 @@ void menu(I2C_HandleTypeDef *hi2c1);
 
 void slideText(const char* text, int startPos, int startLine);
 
+void eepromKontrol4IoT();
+
+void writeCharToEEPROM4ID(I2C_HandleTypeDef *hi2c1, const char* sendArray);
+
 void takeSafeVal(I2C_HandleTypeDef *hi2c1);
 void writeSafeVal(I2C_HandleTypeDef *hi2c1, int state);
+
+void takeMachineID(int state, I2C_HandleTypeDef *hi2c1);
+void takeWifiSSID(int state, I2C_HandleTypeDef *hi2c1);
+void takeWifiPass(int state, I2C_HandleTypeDef *hi2c1);
 
 void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1);
 
@@ -67,10 +75,6 @@ char numbersArray[] = "0123456789";
 
 uint8_t idKontrol = 0;
 uint8_t safeVal = 0;
-
-uint8_t readedID[12];
-uint8_t readedSSID[33];
-uint8_t readedPASS[33];
 
 uint8_t idStartPos = 60;
 uint8_t ssidStartPos = 73;
@@ -440,50 +444,32 @@ void writeSafeVal(I2C_HandleTypeDef *hi2c1, int state) {
 
 void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1) {
 	eepromKontrol4IoT();
-	HAL_Delay(50);
-	takeSafeVal(&hi2c1);
+	HAL_Delay(100);
 
-	if(safeVal == 0) {
-		if(strlen(machineID) == 0) {
-			 takeMachineID(1, &hi2c1);
-		}
-
-		lcd_clear();
-		HAL_Delay(500);
-
-		if(iotMode == 1) {
-			if(strlen(wifiSSID) == 0) {
-				takeWifiSSID(1, &hi2c1);
-			}
-
-			lcd_clear();
-			HAL_Delay(500);
-
-			if(strlen(wifiPass) == 0) {
-				takeWifiPass(1, &hi2c1);
-			}
-
-			lcd_print(1, 1, "Wifi Ayarlaniyor");
-			lcd_print(2, 1, "Lutfen Bekleyin ");
-			ESP8266_Init(&huart1, wifiSSID, wifiPass);
-			HAL_Delay(500);
-		}
-
-		while(idKontrol != 1) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "ID HATASI       ");
-			lcd_print(2, 1, "YENI ID GIRIN...");
-			HAL_Delay(2000);
-			takeMachineID(0);
-			HAL_Delay(300);
-			idKontrol = checkMachineID(&huart1, machineID);
-		}
-
-		if(idKontrol == 1) {
-			writeSafeVal(&hi2c1, 1);
-		}
+	if(strlen(machineID) == 0) {
+		takeMachineID(1, &hi2c1);
 	}
+
+			lcd_clear();
+			HAL_Delay(500);
+
+			if(iotMode == 1) {
+				if(strlen(wifiSSID) == 0) {
+					takeWifiSSID(1, &hi2c1);
+				}
+
+				lcd_clear();
+				HAL_Delay(500);
+
+				if(strlen(wifiPass) == 0) {
+					takeWifiPass(1, &hi2c1);
+				}
+
+				lcd_print(1, 1, "Wifi Ayarlaniyor");
+				lcd_print(2, 1, "Lutfen Bekleyin ");
+				ESP8266_Init(&huart1, wifiSSID, wifiPass);
+				HAL_Delay(500);
+			}
 }
 
 void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
@@ -909,45 +895,54 @@ void convertChars(const uint8_t* writeArray, uint8_t state) {
 
 	if(state == 0) {
 		for(int i=0; i<arrayLength; i++) {
-			machineID[i] = numbersArray[writeArray[i]];
+			machineID[i] = numbersArray[writeArray[idStartPos + i]];
 		}
 	} else if(state == 1) {
 		for(int i=0; i<arrayLength; i++) {
-			wifiSSID[i] = charactersArray[writeArray[i]];
+			wifiSSID[i] = charactersArray[writeArray[ssidStartPos + i]];
 		}
 	} else {
 		for(int i=0; i<arrayLength; i++) {
-			wifiPass[i] = charactersArray[writeArray[i]];
+			wifiPass[i] = charactersArray[writeArray[passStartPos + i]];
 		}
 	}
 }
 
 void takeCharFromEEPROM4ID(I2C_HandleTypeDef *hi2c1) {
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, idStartPos, 11, readedID, 11, 3000);
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, idStartPos, 11, eepromData, 11, 3000);
 	HAL_Delay(1000);
 
-	convertChars(readedID, 0);
+	convertChars(eepromData, 0);
 }
 
 void takeCharFromEEPROM4Wifi(I2C_HandleTypeDef *hi2c1, uint8_t state) {
 	if(state == 1) {
-		HAL_I2C_Mem_Read(&hi2c1, 0xA0, ssidStartPos, 32, readedSSID, 32, 3000);
+		HAL_I2C_Mem_Read(&hi2c1, 0xA0, ssidStartPos, 32, eepromData, 32, 3000);
 		HAL_Delay(1000);
 
-		convertChars(readedSSID, state);
+		convertChars(eepromData, state);
 	} else {
-		HAL_I2C_Mem_Read(&hi2c1, 0xA0, passStartPos, 32, readedPASS, 32, 3000);
+		HAL_I2C_Mem_Read(&hi2c1, 0xA0, passStartPos, 32, eepromData, 32, 3000);
 		HAL_Delay(1000);
 
-		convertChars(readedPASS, state);
+		convertChars(eepromData, state);
 	}
 }
 
 void slideText(const char* text, int startPos, int startLine) {
-	for(int z=0; z < strlen(text); z++) {
-		for(int i=startPos + z; i < strlen(text); i++) {
-			lcd_print_char(startLine, i-z, text[i]);
-			HAL_Delay(50);
+	uint8_t uzunluk = strlen(text);
+
+	for(int z=0; z < uzunluk; z++) {
+		for(int i=startPos + z; i < uzunluk + startPos; i++) {
+			lcd_print_char(startLine, i-z, text[i-startPos]);
+			HAL_Delay(7);
+		}
+
+		for (int j = uzunluk - 1; j >= uzunluk - z; j--) {
+		     if(j >= startPos) {
+		    	 lcd_print_char(startLine, j, ' ');
+		    	 HAL_Delay(7);
+		     }
 		}
 	}
 }
@@ -2671,6 +2666,9 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID(0, &hi2c1);
 
+			HAL_Delay(50);
+			takeCharFromEEPROM4ID(&hi2c1);
+
 			lcd_print(2, 1, machineID);
 			lcd_print(2, 1+strlen(machineID), emptyArray);
 
@@ -2694,6 +2692,9 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID(0, &hi2c1);
 
+			HAL_Delay(50);
+			takeCharFromEEPROM4Wifi(&hi2c1, 1);
+
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 
@@ -2716,6 +2717,9 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass(0, &hi2c1);
+
+			HAL_Delay(50);
+			takeCharFromEEPROM4Wifi(&hi2c1, 0);
 
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);
