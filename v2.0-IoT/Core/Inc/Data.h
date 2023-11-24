@@ -307,7 +307,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
-				slideText(wifiSSID, 7, 1);
+				lcd_print(1, 7, wifiSSID);
+				//slideText(wifiSSID, 7, 1);
 			}
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
@@ -317,7 +318,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
-				slideText(wifiSSID, 7, 1);
+				lcd_print(1, 7, wifiSSID);
+				//slideText(wifiSSID, 7, 1);
 			}
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
@@ -327,7 +329,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
-				slideText(wifiSSID, 7, 1);
+				lcd_print(1, 7, wifiSSID);
+				//slideText(wifiSSID, 7, 1);
 			}
 			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
 		} else if(page == 4) {
@@ -337,7 +340,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
-				slideText(wifiSSID, 7, 1);
+				lcd_print(1, 7, wifiSSID);
+				//slideText(wifiSSID, 7, 1);
 			}
 			lcd_print(2, 1, "WXYZ0123456789!@");
 		} else if(page == 5) {
@@ -347,7 +351,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiSSID) <= 10) {
 				lcd_print(1, 7, wifiSSID);
 			} else {
-				slideText(wifiSSID, 7, 1);
+				lcd_print(1, 7, wifiSSID);
+				//slideText(wifiSSID, 7, 1);
 			}
 			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
 		}
@@ -359,7 +364,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiPass) <= 10) {
 				lcd_print(1, 7, wifiPass);
 			} else {
-				slideText(wifiPass, 7, 1);
+				lcd_print(1, 7, wifiPass);
+				//slideText(wifiPass, 7, 1);
 			}
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
@@ -369,7 +375,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiPass) <= 10) {
 				lcd_print(1, 7, wifiPass);
 			} else {
-				slideText(wifiPass, 7, 1);
+				lcd_print(1, 7, wifiPass);
+				//slideText(wifiPass, 7, 1);
 			}
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
@@ -379,7 +386,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiPass) <= 10) {
 				lcd_print(1, 7, wifiPass);
 			} else {
-				slideText(wifiPass, 7, 1);
+				lcd_print(1, 7, wifiPass);
+				//slideText(wifiPass, 7, 1);
 			}
 			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
 		} else if(page == 4) {
@@ -389,7 +397,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiPass) <= 10) {
 				lcd_print(1, 7, wifiPass);
 			} else {
-				slideText(wifiPass, 7, 1);
+				lcd_print(1, 7, wifiPass);
+				//slideText(wifiPass, 7, 1);
 			}
 			lcd_print(2, 1, "WXYZ0123456789!@");
 		} else if(page == 5) {
@@ -399,7 +408,8 @@ void printTemplate(int type, int page) {
 			if(strlen(wifiPass) <= 10) {
 				lcd_print(1, 7, wifiPass);
 			} else {
-				slideText(wifiPass, 7, 1);
+				lcd_print(1, 7, wifiPass);
+				//slideText(wifiPass, 7, 1);
 			}
 			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
 		}
@@ -468,6 +478,10 @@ void iotModeStartup(I2C_HandleTypeDef *hi2c1, UART_HandleTypeDef *huart1) {
 			takeMachineID(0);
 			HAL_Delay(300);
 			idKontrol = checkMachineID(&huart1, machineID);
+		}
+
+		if(idKontrol == 1) {
+			writeSafeVal(&hi2c1, 1);
 		}
 	}
 }
@@ -2672,7 +2686,9 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 		} else {
-			slideText(wifiSSID, 1, 2);
+			lcd_print(2, 1, wifiSSID);
+			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+			//slideText(wifiSSID, 1, 2);
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -2693,7 +2709,9 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);
 		} else {
-			slideText(wifiPass, 1, 2);
+			lcd_print(2, 1, wifiPass);
+			lcd_print(2, 1+strlen(wifiPass), emptyArray);
+			//slideText(wifiPass, 1, 2);
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
