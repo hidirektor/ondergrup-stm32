@@ -1494,7 +1494,7 @@ int main(void)
 
   eepromKontrol(0);
   HAL_Delay(200);
-  //iotModeStartup(&hi2c1, &huart1);
+  iotModeStartup(&hi2c1, &huart1);
 
   lcd_clear();
   HAL_Delay(200);
@@ -1502,16 +1502,13 @@ int main(void)
   backLightTimer = millis;
 
   /* USER CODE END 2 */
-  lcd_print(1, 1, "ONDERGRUP");
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-	  //mainLoop();
-	  lcd_print(2, 1, "PASS: ");
-	  slideText("Hello world. This is my first program !!!", 7, 2);
+	  mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
