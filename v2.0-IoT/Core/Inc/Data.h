@@ -361,6 +361,7 @@ char getNumbersFromCursorPosition(int cursorPosition) {
 }
 
 void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
+	mainSection:
 	lcd_cursor(1);
 
 	if(state == 0) {
@@ -376,6 +377,16 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
+
+        	if(strlen(machineID) != 12) {
+        		lcd_clear();
+        		lcd_print(1, 1, " ID 12 KARAKTER ");
+        		lcd_print(2, 1, " OLMAK ZORUNDA! ");
+        		HAL_Delay(300);
+        		memset(machineID, 0, sizeof(machineID));
+        		HAL_Delay(1200);
+        		goto mainSection;
+        	}
 
             break;
         }
@@ -432,7 +443,7 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
         	writeLoc++;
         	machineIDLoc++;
 
-        	HAL_Delay(350);
+        	HAL_Delay(450);
         }
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
@@ -456,7 +467,7 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
                 }
             }
 
-            HAL_Delay(250);
+            HAL_Delay(350);
         }
 
         lcd_gotoxy(2, cursorPosition);
@@ -2504,7 +2515,7 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 			HAL_Delay(50);
 
 			lcd_print(2, 1, machineID);
-			lcd_print(2, 1+strlen(machineID), emptyArray);
+			lcd_print(2, 13, "    ");
 
 			bekle();
 		}
