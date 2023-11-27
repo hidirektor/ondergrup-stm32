@@ -11,6 +11,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+void saveAndConvert(int state);
+void convertAndSave(const char* writeArray, int state);
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -332,6 +334,8 @@ void eepromKontrol(int type) {
 	if(iotMode == 1 && type == 1) {
 		convertAndSendData();
 	}
+
+	saveAndConvert(0);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -1411,6 +1415,44 @@ void mainLoop() {
 	}
 }
 
+void convertAndSave(const char* writeArray, int state) {
+	int arrayLength = strlen(writeArray);
+	int loopVal;
+
+	if(state == 0) {
+		loopVal = 60;
+		for(int i=0; i<arrayLength; i++) {
+			for(int j=0; j<strlen(numbersArray); j++) {
+				if(writeArray[i] == numbersArray[j]) {
+					eepromData[loopVal] = j;
+					loopVal++;
+				}
+			}
+		}
+	}
+
+	HAL_Delay(200);
+	HAL_I2C_Mem_Write(&hi2c1,0xA0,0,145,&eepromData[0],145,3000);
+	HAL_Delay(500);
+}
+
+void saveAndConvert(int state) {
+	int loopVal;
+
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 145, eepromData, 145, 3000);
+	HAL_Delay(1000);
+
+	if(state == 0) {
+		loopVal = 60;
+		for(int i=0; i<12; i++) {
+			if(eepromData[loopVal] != '\0') {
+				machineID[i] = getNumbersFromCursorPosition(eepromData[loopVal]);
+				loopVal++;
+			}
+		}
+	}
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1488,6 +1530,9 @@ int main(void)
   HAL_Delay(200);
 
   backLightTimer = millis;
+
+  takeMachineID(1, &hi2c1);
+  convertAndSave(machineID, 0);
 
   /* USER CODE END 2 */
 

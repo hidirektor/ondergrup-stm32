@@ -396,6 +396,10 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
+char getNumbersFromCursorPosition(int cursorPosition) {
+	return numbersArray[cursorPosition];
+}
+
 void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
 	lcd_cursor(1);
 
@@ -757,17 +761,20 @@ void takeWifiPass(int state, I2C_HandleTypeDef *hi2c1) {
 void slideText(const char* text, int startPos, int startLine) {
 	uint8_t uzunluk = strlen(text);
 
-	for(int z=0; z < uzunluk; z++) {
-		for(int i=startPos + z; i < uzunluk + startPos; i++) {
-			lcd_print_char(startLine, i-z, text[i-startPos]);
-			HAL_Delay(7);
-		}
+	while(1) {
+		for(int z=0; z < uzunluk; z++) {
 
-		for (int j = uzunluk - 1; j >= uzunluk - z; j--) {
-		     if(j >= startPos) {
-		    	 lcd_print_char(startLine, j, ' ');
-		    	 HAL_Delay(7);
-		     }
+			for(int i=startPos + z; i < uzunluk + startPos; i++) {
+				lcd_print_char(startLine, i-z, text[i-startPos]);
+				HAL_Delay(7);
+			}
+
+			for (int j = uzunluk - 1; j >= uzunluk - z; j--) {
+			     if(j >= startPos) {
+			    	 lcd_print_char(startLine, j, ' ');
+			    	 HAL_Delay(7);
+			     }
+			}
 		}
 	}
 }
