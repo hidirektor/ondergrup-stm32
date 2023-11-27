@@ -334,17 +334,6 @@ void eepromKontrol(int type) {
 	}
 }
 
-void eepromKontrol4IoT() {
-	takeCharFromEEPROM4ID(&hi2c1);
-	HAL_Delay(500);
-	if(iotMode == 1) {
-		takeCharFromEEPROM4Wifi(&hi2c1, 1);
-		HAL_Delay(500);
-		takeCharFromEEPROM4Wifi(&hi2c1, 2);
-		HAL_Delay(500);
-	}
-}
-
 void hata2EEPROM(uint8_t hataKodu) {
 	if(eepromData[eepromHataBaslangic+(indeksSayisi-1)] != 0) {
 		eepromDataFillWithEmpty();
@@ -1494,7 +1483,6 @@ int main(void)
 
   eepromKontrol(0);
   HAL_Delay(200);
-  iotModeStartup(&hi2c1, &huart1);
 
   lcd_clear();
   HAL_Delay(200);
