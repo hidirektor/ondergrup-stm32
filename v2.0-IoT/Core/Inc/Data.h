@@ -25,8 +25,6 @@ char* copyTextNormal(const char* text);
 void printTemplate(int type, int page);
 
 char getCharFromCursorPosition(int cursorPosition);
-uint8_t getPosFromChar(char cursorChar);
-void convertArrays(int state);
 
 void takeMachineID(int state);
 void takeWifiSSID(int state);
@@ -367,47 +365,6 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-uint8_t getPosFromChar(char cursorChar) {
-	for(int i=0; i<strlen(charactersArray); i++) {
-		if(cursorChar == charactersArray[i]) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-void convertArrays(int state) {
-	int startVal;
-
-	if(state == 0) {
-		startVal = ssidStartPos;
-		int uzunluk = 0;
-
-		for(int i=0; i<20; i++) {
-			if(eepromData[startVal + i] != '\0') {
-				uzunluk++;
-			}
-		}
-
-		for(int k=0; k<uzunluk; k++) {
-			wifiSSID[k] = getCharFromCursorPosition(eepromData[k]);
-		}
-	} else {
-		startVal = passStartPos;
-		int uzunluk = 0;
-
-		for(int i=0; i<20; i++) {
-			if(eepromData[startVal + i] != '\0') {
-				uzunluk++;
-			}
-		}
-
-		for(int k=0; k<uzunluk; k++) {
-			wifiPass[k] = getCharFromCursorPosition(eepromData[k]);
-		}
-	}
-}
-
 void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
@@ -551,8 +508,6 @@ void takeWifiSSID(int state) {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
-    int saveVal = ssidStartPos;
-
     printTemplate(2, 1);
 
     while (1) {
@@ -643,7 +598,6 @@ void takeWifiSSID(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-            eepromData[saveVal] = getPosFromChar(getCharFromCursorPosition(realCharPos - 1));
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
@@ -692,8 +646,6 @@ void takeWifiPass(int state) {
     page = 1;
     int wifiPassLoc = 0;
     int writeLoc = 7;
-
-    int saveVal = passStartPos;
 
     printTemplate(3, 1);
 
@@ -785,7 +737,6 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-        	eepromData[saveVal] = getPosFromChar(getCharFromCursorPosition(realCharPos - 1));
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
@@ -2617,8 +2568,6 @@ void menu() {
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
 
-		convertArrays(0);
-
 		lcd_print(1, 1, "WIFI SSID       ");
 		if(strlen(wifiSSID) <=16) {
 			lcd_print(2, 1, wifiSSID);
@@ -2641,8 +2590,6 @@ void menu() {
 
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
-
-		convertArrays(1);
 
 		lcd_print(1, 1, "WIFI PASS       ");
 		if(strlen(wifiPass) <= 16) {

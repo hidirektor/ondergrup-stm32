@@ -321,9 +321,6 @@ void eepromKontrol(int type) {
 		iotMode=0;
 	}
 
-	//memset(wifiSSID, 0, sizeof(wifiSSID));
-	//memset(wifiPass, 0, sizeof(wifiPass));
-
 	memcpy(machineID, &eepromData[idStartPos], 12);
 	HAL_Delay(100);
 
