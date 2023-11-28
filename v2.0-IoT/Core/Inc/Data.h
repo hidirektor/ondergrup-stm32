@@ -28,7 +28,9 @@ void menu();
 
 void slideText(const char* text, int startPos, int startLine, int state);
 
-void convertToCharArray(char *outputArray, const uint8_t *inputArray);
+uint8_t getCharPos(char inputChar);
+
+void convertToCharArray(char *outputArray, const uint8_t *inputArray, int state);
 void sendData2Flash();
 
 void takeMachineID(int state);
@@ -37,7 +39,7 @@ void takeWifiPass(int state);
 
 void loadMenuTexts(uint8_t dilSecim);
 
-uint8_t eepromData[113];
+uint8_t eepromData[110];
 uint8_t kaydedilenDeger = 0;
 char snum[5];
 unsigned long millis = 0;
@@ -66,14 +68,13 @@ int cursorPosition = 1;
 int page = 1;
 char emptyArray[] = "                ";
 char charactersArray[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>? ";
-char numbersArray[] = "0123456789";
 
 uint8_t idKontrol = 0;
 uint8_t safeVal = 0;
 
 uint8_t idStartPos = 50;
 uint8_t ssidStartPos = 62;
-uint8_t passStartPos = 88;
+uint8_t passStartPos = 82;
 
 uint8_t x = 0;
 uint8_t y = 0;
@@ -369,13 +370,33 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-void convertToCharArray(char *outputArray, const uint8_t *inputArray) {
-	int startVal = 0;
-	for(int i=62; i<87; i++) {
-		if(inputArray[i] != '\0') {
-			outputArray[startVal] = charactersArray[inputArray[i]];
-			startVal++;
-		}
+void convertToCharArray(char *outputArray, const uint8_t *inputArray, int state) {
+	int startVal;
+
+	if(state == 0) {
+		startVal = ssidStartPos;
+	} else {
+		startVal = passStartPos;
+	}
+
+	for(int i=0; i<20; i++) {
+		outputArray[i] = getCharFromCursorPosition(inputArray[startVal]);
+		startVal++;
+	}
+}
+
+void convertToIntArray(uint8_t *outputArray, const char *inputArray, int state) {
+	int startVal;
+	if(state == 0) {
+		startVal = ssidStartPos;
+	} else {
+		startVal = passStartPos;
+	}
+
+	for(int i=0; i<20; i++) {
+		uint8_t pos = getCharPos(inputArray[i]);
+		eepromData[startVal] = pos;
+		startVal++;
 	}
 }
 
@@ -429,7 +450,7 @@ void takeMachineID(int state) {
         	memcpy(&eepromData[idStartPos], machineID, 12);
         	HAL_Delay(200);
 
-        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
+        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(500);
 
             break;
@@ -546,7 +567,9 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, 60);
+            convertToIntArray(eepromData, wifiSSIDTemp, 0);
+            HAL_Delay(200);
+            memcpy(&eepromData[ssidStartPos], wifiSSIDTemp, 20);
             HAL_Delay(200);
 
             hafizaYaz = 1;
@@ -687,7 +710,9 @@ void takeWifiPass(int state) {
                 goto mainPASSSection;
             }
 
-            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, 20);
+            convertToIntArray(eepromData, wifiPassTemp, 1);
+            HAL_Delay(200);
+            memcpy(&eepromData[passStartPos], wifiPassTemp, 20);
             HAL_Delay(200);
 
             hafizaYaz = 1;
