@@ -11,8 +11,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-void saveAndConvert(int state);
-void convertAndSave(const char* writeArray, int state);
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -125,7 +124,7 @@ void convertAndSendData() {
 }
 
 void eepromKontrol(int type) {
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
 	HAL_Delay(1500);
 
 	kaydedilenDeger = eepromData[3];
@@ -161,7 +160,7 @@ void eepromKontrol(int type) {
 	calismaSayisi1000 = eepromData[31];
 	calismaSayisi10000 = eepromData[32];
 	dilSecim = eepromData[33];
-	iotMode = eepromData[47];
+	iotMode = eepromData[48];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
 	kapiAcTipi = eepromData[36];
@@ -322,8 +321,10 @@ void eepromKontrol(int type) {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[49], 12);
-	HAL_Delay(500);
+	memcpy(machineID, &eepromData[idStartPos], 12);
+	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
+	memcpy(wifiPass, (char *)&eepromData[passStartPos], 20);
+	HAL_Delay(1000);
 
 	if(iotMode == 1 && type == 1) {
 		convertAndSendData();
@@ -1310,7 +1311,7 @@ void mainLoop() {
 		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
 		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
 
-		  HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+		  HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
 		  HAL_Delay(500);
 
 		  hafizaYaz=0;
@@ -1485,10 +1486,11 @@ int main(void)
 
   backLightTimer = millis;
 
-  if(strlen(machineID) != 12) {
+  //ESP8266_Init(&huart1, "H.İ.D.", "asdasd0099123");
+
+  if(machineID[11] == '\0') {
 	  takeMachineID(0);
   }
-  //convertAndSave(machineID, 0);
 
   /* USER CODE END 2 */
 

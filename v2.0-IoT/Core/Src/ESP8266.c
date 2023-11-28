@@ -75,28 +75,9 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
 	HAL_Delay(5000);
 
-	if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL) {
-
-	    char *jsonStart = strstr(bufferRX, "{");
-	    char *jsonEnd = strstr(bufferRX, "}");
-
-	    if (jsonStart != NULL && jsonEnd != NULL) {
-	        int jsonLength = jsonEnd - jsonStart + 1;
-	        char jsonResponse[jsonLength + 1];
-	        strncpy(jsonResponse, jsonStart, jsonLength);
-	        jsonResponse[jsonLength] = '\0';
-
-	        if (strstr(jsonResponse, "\"message\": \"Machine ID is available.\"") != NULL) {
-	            return 1; // Yanıt başarılı
-	        }
-	    }
+	if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL && strstr(bufferRX, "\"message\": \"Machine ID is available.\"") != NULL) {
+	    return 1; // Success
 	}
-
-	/*if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL) {
-		return 1;
-	} else {
-		return 0;
-	}*/
 
 	return 0; // Yanıt başarısız
 }

@@ -28,13 +28,16 @@ void menu();
 
 void slideText(const char* text, int startPos, int startLine, int state);
 
+void convertToCharArray(char *outputArray, const uint8_t *inputArray);
+void sendData2Flash();
+
 void takeMachineID(int state);
 void takeWifiSSID(int state);
 void takeWifiPass(int state);
 
 void loadMenuTexts(uint8_t dilSecim);
 
-uint8_t eepromData[130];
+uint8_t eepromData[113];
 uint8_t kaydedilenDeger = 0;
 char snum[5];
 unsigned long millis = 0;
@@ -54,8 +57,10 @@ int eepromHataBaslangic = 38;
 uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 char machineID[12];
-char wifiSSID[33];
-char wifiPass[33];
+char wifiSSID[20];
+char wifiPass[20];
+uint8_t wifiSSIDTemp[20];
+uint8_t wifiPassTemp[20];
 
 int cursorPosition = 1;
 int page = 1;
@@ -66,9 +71,9 @@ char numbersArray[] = "0123456789";
 uint8_t idKontrol = 0;
 uint8_t safeVal = 0;
 
-uint8_t idStartPos = 60;
-uint8_t ssidStartPos = 73;
-uint8_t passStartPos = 107;
+uint8_t idStartPos = 50;
+uint8_t ssidStartPos = 62;
+uint8_t passStartPos = 88;
 
 uint8_t x = 0;
 uint8_t y = 0;
@@ -364,8 +369,24 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-char getNumbersFromCursorPosition(int cursorPosition) {
-	return numbersArray[cursorPosition];
+void convertToCharArray(char *outputArray, const uint8_t *inputArray) {
+	int startVal = 0;
+	for(int i=62; i<87; i++) {
+		if(inputArray[i] != '\0') {
+			outputArray[startVal] = charactersArray[inputArray[i]];
+			startVal++;
+		}
+	}
+}
+
+uint8_t getCharPos(char inputChar) {
+	for(int k=0; k<79; k++) {
+		if(inputChar == charactersArray[k]) {
+			return k;
+		}
+	}
+
+	return -1;
 }
 
 void takeMachineID(int state) {
@@ -375,8 +396,6 @@ void takeMachineID(int state) {
     int cursorPosition = 3;
     int machineIDLoc = 0;
     int writeLoc = 5;
-
-    int saveVal = 49;
 
     if(state == 0) {
     	memset(machineID, 0, sizeof(machineID));
@@ -389,13 +408,29 @@ void takeMachineID(int state) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
 
-        	if(strlen(machineID) != 12) {
+        	if(machineID[11] == '\0') {
         		lcd_clear();
         		lcd_print(1, 1, " ID 12 KARAKTER ");
         		lcd_print(2, 1, " OLMAK ZORUNDA! ");
         		HAL_Delay(1200);
         		goto mainSection;
         	}
+
+        	/*if(checkMachineID(&huart1, machineID) != 1) {
+        		lcd_clear();
+        		lcd_print(1, 1, "BU ID ILE MAKINE");
+        		lcd_print(2, 1, "OLUSTURAMAZSINIZ");
+        		HAL_Delay(1200);
+        		goto mainSection;
+        	} else {
+        		eepromData[49] = 1;
+        	}*/
+
+        	memcpy(&eepromData[idStartPos], machineID, 12);
+        	HAL_Delay(200);
+
+        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
+        	HAL_Delay(500);
 
             break;
         }
@@ -446,14 +481,11 @@ void takeMachineID(int state) {
         	} else if(cursorPosition == 14) {
         		machineID[machineIDLoc] = '9';
         	}
-        	saveVal++;
 
         	lcd_print_char(1, writeLoc, machineID[machineIDLoc]);
 
         	writeLoc++;
         	machineIDLoc++;
-
-        	memcpy(&eepromData[49], machineID, 12);
 
         	HAL_Delay(450);
         }
@@ -487,6 +519,7 @@ void takeMachineID(int state) {
 }
 
 void takeWifiSSID(int state) {
+	mainSSIDSection:
     lcd_cursor(1);
 
     if(state == 0) {
@@ -504,6 +537,20 @@ void takeWifiSSID(int state) {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
+
+            if(wifiSSID[19] == '\0') {
+                lcd_clear();
+                lcd_print(1, 1, "SSID 12 KARAKTER");
+                lcd_print(2, 1, " OLMAK ZORUNDA! ");
+                HAL_Delay(1200);
+                goto mainSSIDSection;
+            }
+
+            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, 20);
+            HAL_Delay(200);
+
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
+            HAL_Delay(500);
 
             break;
         }
@@ -614,6 +661,7 @@ void takeWifiSSID(int state) {
 }
 
 void takeWifiPass(int state) {
+	mainPASSSection:
     lcd_cursor(1);
 
     if(state == 0) {
@@ -631,6 +679,20 @@ void takeWifiPass(int state) {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
+
+            if(wifiPass[19] == '\0') {
+                lcd_clear();
+                lcd_print(1, 1, "PASS 12 KARAKTER");
+                lcd_print(2, 1, " OLMAK ZORUNDA! ");
+                HAL_Delay(1200);
+                goto mainPASSSection;
+            }
+
+            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, 20);
+            HAL_Delay(200);
+
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
+            HAL_Delay(500);
 
             break;
         }
@@ -2508,7 +2570,7 @@ void menu() {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)) {
-			eepromData[47] = iotMode;
+			eepromData[48] = iotMode;
 			hafizaYaz = 1;
 		}
 	}
@@ -2519,7 +2581,7 @@ void menu() {
 		lcd_print(1, 1, "MAKINE ID       ");
 
 		lcd_print(2, 1, machineID);
-		lcd_print(2, 1+strlen(machineID), emptyArray);
+		lcd_print(2, 13, "    ");
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID(0);
@@ -2528,9 +2590,6 @@ void menu() {
 
 			lcd_print(2, 1, machineID);
 			lcd_print(2, 13, "    ");
-
-			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(500);
 
 			bekle();
 		}
