@@ -21,22 +21,21 @@ TIM_HandleTypeDef htim1;
 UART_HandleTypeDef huart1;
 
 char* copyText(const char* text);
-
 char* copyTextNormal(const char* text);
+void printTemplate(int type, int page);
 
-void menu();
-
-void slideText(const char* text, int startPos, int startLine, int state);
-
-uint8_t getCharPos(char inputChar);
-
-void convertToCharArray(char *outputArray, const uint8_t *inputArray, int state);
-void sendData2Flash();
+char getCharFromCursorPosition(int cursorPosition);
+uint8_t getPosFromChar(char cursorChar);
+void convertArrays(int state);
 
 void takeMachineID(int state);
 void takeWifiSSID(int state);
 void takeWifiPass(int state);
 
+int checkSlideVal(int state);
+void slideText(const char* text, int startPos, int startLine, int state);
+
+void menu();
 void loadMenuTexts(uint8_t dilSecim);
 
 uint8_t eepromData[110];
@@ -61,8 +60,6 @@ uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 9
 char machineID[12];
 char wifiSSID[20];
 char wifiPass[20];
-uint8_t wifiSSIDTemp[20];
-uint8_t wifiPassTemp[20];
 
 int cursorPosition = 1;
 int page = 1;
@@ -370,44 +367,45 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-void convertToCharArray(char *outputArray, const uint8_t *inputArray, int state) {
-	int startVal;
-
-	if(state == 0) {
-		startVal = ssidStartPos;
-	} else {
-		startVal = passStartPos;
-	}
-
-	for(int i=0; i<20; i++) {
-		outputArray[i] = getCharFromCursorPosition(inputArray[startVal]);
-		startVal++;
-	}
-}
-
-void convertToIntArray(uint8_t *outputArray, const char *inputArray, int state) {
-	int startVal;
-	if(state == 0) {
-		startVal = ssidStartPos;
-	} else {
-		startVal = passStartPos;
-	}
-
-	for(int i=0; i<20; i++) {
-		uint8_t pos = getCharPos(inputArray[i]);
-		eepromData[startVal] = pos;
-		startVal++;
-	}
-}
-
-uint8_t getCharPos(char inputChar) {
-	for(int k=0; k<79; k++) {
-		if(inputChar == charactersArray[k]) {
-			return k;
+uint8_t getPosFromChar(char cursorChar) {
+	for(int i=0; i<strlen(charactersArray); i++) {
+		if(cursorChar == charactersArray[i]) {
+			return i;
 		}
 	}
-
 	return -1;
+}
+
+void convertArrays(int state) {
+	int startVal;
+
+	if(state == 0) {
+		startVal = ssidStartPos;
+		int uzunluk = 0;
+
+		for(int i=0; i<20; i++) {
+			if(eepromData[startVal + i] != '\0') {
+				uzunluk++;
+			}
+		}
+
+		for(int k=0; k<uzunluk; k++) {
+			wifiSSID[k] = getCharFromCursorPosition(eepromData[k]);
+		}
+	} else {
+		startVal = passStartPos;
+		int uzunluk = 0;
+
+		for(int i=0; i<20; i++) {
+			if(eepromData[startVal + i] != '\0') {
+				uzunluk++;
+			}
+		}
+
+		for(int k=0; k<uzunluk; k++) {
+			wifiPass[k] = getCharFromCursorPosition(eepromData[k]);
+		}
+	}
 }
 
 void takeMachineID(int state) {
@@ -553,6 +551,8 @@ void takeWifiSSID(int state) {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
+    int saveVal = ssidStartPos;
+
     printTemplate(2, 1);
 
     while (1) {
@@ -567,12 +567,8 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            convertToIntArray(eepromData, wifiSSIDTemp, 0);
-            HAL_Delay(200);
-            memcpy(&eepromData[ssidStartPos], wifiSSIDTemp, 20);
-            HAL_Delay(200);
-
-            hafizaYaz = 1;
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            HAL_Delay(500);
 
             break;
         }
@@ -647,6 +643,7 @@ void takeWifiSSID(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
+            eepromData[saveVal] = getPosFromChar(getCharFromCursorPosition(realCharPos - 1));
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
@@ -696,6 +693,8 @@ void takeWifiPass(int state) {
     int wifiPassLoc = 0;
     int writeLoc = 7;
 
+    int saveVal = passStartPos;
+
     printTemplate(3, 1);
 
     while (1) {
@@ -710,12 +709,8 @@ void takeWifiPass(int state) {
                 goto mainPASSSection;
             }
 
-            convertToIntArray(eepromData, wifiPassTemp, 1);
-            HAL_Delay(200);
-            memcpy(&eepromData[passStartPos], wifiPassTemp, 20);
-            HAL_Delay(200);
-
-            hafizaYaz = 1;
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            HAL_Delay(500);
 
             break;
         }
@@ -790,6 +785,7 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
+        	eepromData[saveVal] = getPosFromChar(getCharFromCursorPosition(realCharPos - 1));
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
@@ -2621,6 +2617,8 @@ void menu() {
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
 
+		convertArrays(0);
+
 		lcd_print(1, 1, "WIFI SSID       ");
 		if(strlen(wifiSSID) <=16) {
 			lcd_print(2, 1, wifiSSID);
@@ -2643,6 +2641,8 @@ void menu() {
 
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
+
+		convertArrays(1);
 
 		lcd_print(1, 1, "WIFI PASS       ");
 		if(strlen(wifiPass) <= 16) {
