@@ -538,19 +538,18 @@ void takeWifiSSID(int state) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(wifiSSID[19] == '\0') {
+            if(strlen(wifiSSID) > 20) {
                 lcd_clear();
-                lcd_print(1, 1, "SSID 12 KARAKTER");
-                lcd_print(2, 1, " OLMAK ZORUNDA! ");
+                lcd_print(1, 1, " 20 KARAKTERDEN ");
+                lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 HAL_Delay(1200);
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, 20);
+            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, 60);
             HAL_Delay(200);
 
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
-            HAL_Delay(500);
+            hafizaYaz = 1;
 
             break;
         }
@@ -680,10 +679,10 @@ void takeWifiPass(int state) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(wifiPass[19] == '\0') {
+            if(strlen(wifiPass) > 20) {
                 lcd_clear();
-                lcd_print(1, 1, "PASS 12 KARAKTER");
-                lcd_print(2, 1, " OLMAK ZORUNDA! ");
+                lcd_print(1, 1, " 20 KARAKTERDEN ");
+                lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
@@ -691,8 +690,7 @@ void takeWifiPass(int state) {
             memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, 20);
             HAL_Delay(200);
 
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 113, eepromData, 113, 3000);
-            HAL_Delay(500);
+            hafizaYaz = 1;
 
             break;
         }
@@ -2609,7 +2607,7 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID(0);
 
-			HAL_Delay(50);
+			HAL_Delay(100);
 
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
