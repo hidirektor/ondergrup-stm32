@@ -12,21 +12,29 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+CAN_HandleTypeDef hcan;
+
+I2C_HandleTypeDef hi2c1;
+
+TIM_HandleTypeDef htim1;
+
+UART_HandleTypeDef huart1;
+
 char* copyText(const char* text);
 
 char* copyTextNormal(const char* text);
 
-void menu(I2C_HandleTypeDef *hi2c1);
+void menu();
 
 void slideText(const char* text, int startPos, int startLine, int state);
 
-void takeMachineID(int state, I2C_HandleTypeDef *hi2c1);
-void takeWifiSSID(int state, I2C_HandleTypeDef *hi2c1);
-void takeWifiPass(int state, I2C_HandleTypeDef *hi2c1);
+void takeMachineID(int state);
+void takeWifiSSID(int state);
+void takeWifiPass(int state);
 
 void loadMenuTexts(uint8_t dilSecim);
 
-uint8_t eepromData[145];
+uint8_t eepromData[130];
 uint8_t kaydedilenDeger = 0;
 char snum[5];
 unsigned long millis = 0;
@@ -360,17 +368,20 @@ char getNumbersFromCursorPosition(int cursorPosition) {
 	return numbersArray[cursorPosition];
 }
 
-void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
+void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
-
-	if(state == 0) {
-	    memset(machineID, 0, sizeof(machineID));
-	}
 
     int cursorPosition = 3;
     int machineIDLoc = 0;
     int writeLoc = 5;
+
+    int saveVal = 49;
+
+    if(state == 0) {
+    	memset(machineID, 0, sizeof(machineID));
+    }
+    HAL_Delay(100);
 
     printTemplate(1, 0);
 
@@ -382,8 +393,6 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
         		lcd_clear();
         		lcd_print(1, 1, " ID 12 KARAKTER ");
         		lcd_print(2, 1, " OLMAK ZORUNDA! ");
-        		HAL_Delay(300);
-        		memset(machineID, 0, sizeof(machineID));
         		HAL_Delay(1200);
         		goto mainSection;
         	}
@@ -437,11 +446,14 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
         	} else if(cursorPosition == 14) {
         		machineID[machineIDLoc] = '9';
         	}
+        	saveVal++;
 
         	lcd_print_char(1, writeLoc, machineID[machineIDLoc]);
 
         	writeLoc++;
         	machineIDLoc++;
+
+        	memcpy(&eepromData[49], machineID, 12);
 
         	HAL_Delay(450);
         }
@@ -474,7 +486,7 @@ void takeMachineID(int state, I2C_HandleTypeDef *hi2c1) {
     }
 }
 
-void takeWifiSSID(int state, I2C_HandleTypeDef *hi2c1) {
+void takeWifiSSID(int state) {
     lcd_cursor(1);
 
     if(state == 0) {
@@ -601,7 +613,7 @@ void takeWifiSSID(int state, I2C_HandleTypeDef *hi2c1) {
     }
 }
 
-void takeWifiPass(int state, I2C_HandleTypeDef *hi2c1) {
+void takeWifiPass(int state) {
     lcd_cursor(1);
 
     if(state == 0) {
@@ -793,7 +805,7 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 	}
 }
 
-void menu(I2C_HandleTypeDef *hi2c1) {
+void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
 		menuSayac = menuSayac+1;
 		if (menuSayac == 36) {    //MENÜ BÜYÜDÜKÇE DUZENLE
@@ -2496,7 +2508,7 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)) {
-			eepromData[37] = iotMode;
+			eepromData[47] = iotMode;
 			hafizaYaz = 1;
 		}
 	}
@@ -2510,12 +2522,15 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		lcd_print(2, 1+strlen(machineID), emptyArray);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeMachineID(0, hi2c1);
+			takeMachineID(0);
 
 			HAL_Delay(50);
 
 			lcd_print(2, 1, machineID);
 			lcd_print(2, 13, "    ");
+
+			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+			HAL_Delay(500);
 
 			bekle();
 		}
@@ -2533,7 +2548,7 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiSSID(0, hi2c1);
+			takeWifiSSID(0);
 
 			HAL_Delay(50);
 
@@ -2556,7 +2571,7 @@ void menu(I2C_HandleTypeDef *hi2c1) {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiPass(0, hi2c1);
+			takeWifiPass(0);
 
 			HAL_Delay(50);
 

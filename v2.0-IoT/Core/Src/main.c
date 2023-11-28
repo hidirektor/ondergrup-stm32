@@ -25,13 +25,6 @@ void convertAndSave(const char* writeArray, int state);
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-CAN_HandleTypeDef hcan;
-
-I2C_HandleTypeDef hi2c1;
-
-TIM_HandleTypeDef htim1;
-
-UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
@@ -132,8 +125,8 @@ void convertAndSendData() {
 }
 
 void eepromKontrol(int type) {
-	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,145,eepromData,145,3000);
-	HAL_Delay(1000);
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+	HAL_Delay(1500);
 
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
@@ -168,7 +161,7 @@ void eepromKontrol(int type) {
 	calismaSayisi1000 = eepromData[31];
 	calismaSayisi10000 = eepromData[32];
 	dilSecim = eepromData[33];
-	iotMode = eepromData[37];
+	iotMode = eepromData[47];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
 	kapiAcTipi = eepromData[36];
@@ -329,13 +322,12 @@ void eepromKontrol(int type) {
 		iotMode=0;
 	}
 
-	HAL_Delay(1000);
+	memcpy(machineID, &eepromData[49], 12);
+	HAL_Delay(500);
 
 	if(iotMode == 1 && type == 1) {
 		convertAndSendData();
 	}
-
-	saveAndConvert(0);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -352,7 +344,7 @@ void hata2EEPROM(uint8_t hataKodu) {
 			}
 	}
 
-	HAL_I2C_Mem_Write(&hi2c1,0xA0,eepromHataBaslangic,indeksSayisi,&eepromData[eepromHataBaslangic],indeksSayisi,3000);
+	HAL_I2C_Mem_Write(&hi2c1, 0xA0, eepromHataBaslangic, indeksSayisi, &eepromData[eepromHataBaslangic], indeksSayisi, 3000);
 	HAL_Delay(500);
 	eepromKontrol(1);
 }
@@ -1318,8 +1310,8 @@ void mainLoop() {
 		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
 		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
 
-		  HAL_I2C_Mem_Write(&hi2c1,0xA0,0,63,eepromData,63,3000);
-		  HAL_Delay(5);
+		  HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+		  HAL_Delay(500);
 
 		  hafizaYaz=0;
 		  if(dilSecim==0) {
@@ -1415,44 +1407,6 @@ void mainLoop() {
 	}
 }
 
-void convertAndSave(const char* writeArray, int state) {
-	int arrayLength = strlen(writeArray);
-	int loopVal;
-
-	if(state == 0) {
-		loopVal = 60;
-		for(int i=0; i<arrayLength; i++) {
-			for(int j=0; j<strlen(numbersArray); j++) {
-				if(writeArray[i] == numbersArray[j]) {
-					eepromData[loopVal] = j;
-					loopVal++;
-				}
-			}
-		}
-	}
-
-	HAL_Delay(200);
-	HAL_I2C_Mem_Write(&hi2c1,0xA0,0,145,&eepromData[0],145,3000);
-	HAL_Delay(500);
-}
-
-void saveAndConvert(int state) {
-	int loopVal;
-
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 145, eepromData, 145, 3000);
-	HAL_Delay(1000);
-
-	if(state == 0) {
-		loopVal = 60;
-		for(int i=0; i<12; i++) {
-			if(eepromData[loopVal] != '\0') {
-				machineID[i] = getNumbersFromCursorPosition(eepromData[loopVal]);
-				loopVal++;
-			}
-		}
-	}
-}
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1531,8 +1485,10 @@ int main(void)
 
   backLightTimer = millis;
 
-  takeMachineID(1, &hi2c1);
-  convertAndSave(machineID, 0);
+  if(strlen(machineID) != 12) {
+	  takeMachineID(0);
+  }
+  //convertAndSave(machineID, 0);
 
   /* USER CODE END 2 */
 
