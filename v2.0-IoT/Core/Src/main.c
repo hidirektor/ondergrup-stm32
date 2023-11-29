@@ -322,7 +322,8 @@ void eepromKontrol(int type) {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
-	HAL_Delay(100);
+	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
+	memcpy(wifiPass, (char *)&eepromData[passStartPos], 20);
 
 	if(iotMode == 1 && type == 1) {
 		//convertAndSendData();

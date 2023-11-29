@@ -25,6 +25,8 @@ char* copyTextNormal(const char* text);
 void printTemplate(int type, int page);
 
 char getCharFromCursorPosition(int cursorPosition);
+void writeToEEPROM(int state);
+void readFromEEPROM(int state);
 
 void takeMachineID(int state);
 void takeWifiSSID(int state);
@@ -365,6 +367,26 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
+void writeToEEPROM(int state) {
+	if(state == 0) {
+		memset(&eepromData[ssidStartPos], 0, 20);
+		strncpy((char *)&eepromData[ssidStartPos], wifiSSID, 20);
+	} else {
+		memset(&eepromData[passStartPos], 0, 20);
+		strncpy((char *)&eepromData[passStartPos], wifiPass, 20);
+	}
+}
+
+void readFromEEPROM(int state) {
+	if(state == 0) {
+		strncpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
+		wifiSSID[20] = '\0';
+	} else {
+		strncpy(wifiPass, (char *)&eepromData[passStartPos], 20);
+		wifiPass[20] = '\0';
+	}
+}
+
 void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
@@ -522,6 +544,8 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
+            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
+
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
 
@@ -660,6 +684,8 @@ void takeWifiPass(int state) {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
+
+            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
