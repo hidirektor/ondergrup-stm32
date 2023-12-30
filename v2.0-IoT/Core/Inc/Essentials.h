@@ -5,8 +5,8 @@
  *      Author: hidirektor
  */
 
-#ifndef INC_WIFIDATA_H_
-#define INC_WIFIDATA_H_
+#ifndef INC_ESSENTIALS_H_
+#define INC_ESSENTIALS_H_
 
 #define Wifi_name "ONDERLIFT_PERSONEL"
 #define Wifi_pass "PersonelOt2022*-"
@@ -16,4 +16,4 @@
 
 char bufferTX[250];
 
-#endif /* INC_WIFIDATA_H_ */
+#endif /* INC_ESSENTIALS_H_ */

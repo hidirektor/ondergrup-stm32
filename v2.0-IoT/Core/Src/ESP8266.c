@@ -1,5 +1,5 @@
+#include <Essentials.h>
 #include "ESP8266.h"
-#include "WifiData.h"
 
 void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
 	sprintf(bufferTX, "AT+RESTORE\r\n");
