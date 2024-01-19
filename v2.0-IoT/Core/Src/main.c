@@ -320,12 +320,7 @@ void eepromKontrol(int type) {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
-	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
-	memcpy(wifiPass, (char *)&eepromData[passStartPos], 20);
-
-	if(iotMode == 1 && type == 1) {
-		//convertAndSendData();
-	}
+	readWiFiCredentialsFromEEPROM(wifiSSID, wifiPass);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -1487,6 +1482,18 @@ int main(void)
 
   if(machineID[11] == '\0') {
 	  takeMachineID(0);
+  }
+
+  if(wifiSSID[19] == '\0') {
+	  takeWifiSSID(0);
+  }
+
+  if(wifiPass[19] == '\0') {
+	  takeWifiPass(0);
+  }
+
+  if(wifiSSID[19] && wifiPass[19] != '\0') {
+	  writeWiFiCredentialsToEEPROM(wifiSSID, wifiPass);
   }
 
   /* USER CODE END 2 */
