@@ -1478,23 +1478,19 @@ int main(void)
 
   backLightTimer = millis;
 
-  //ESP8266_Init(&huart1, "H.İ.D.", "asdasd0099123");
-
   if(machineID[11] == '\0') {
 	  takeMachineID(0);
   }
 
-  if(wifiSSID[19] == '\0') {
+
+  if(checkIsConnectionEstablish(&huart1) == 0) {
 	  takeWifiSSID(0);
-  }
-
-  if(wifiPass[19] == '\0') {
+	  HAL_Delay(500);
 	  takeWifiPass(0);
+	  HAL_Delay(500);
+	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
   }
 
-  if(wifiSSID[19] && wifiPass[19] != '\0') {
-	  writeWiFiCredentialsToEEPROM(wifiSSID, wifiPass);
-  }
 
   /* USER CODE END 2 */
 
