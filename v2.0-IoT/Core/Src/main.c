@@ -1478,17 +1478,22 @@ int main(void)
 
   backLightTimer = millis;
 
-  if(machineID[11] == '\0') {
-	  takeMachineID(0);
-  }
+  if(iotMode != 0) {
+	  if(machineID[11] == '\0') {
+	  	  takeMachineID(0);
+	  }
 
-
-  if(checkIsConnectionEstablish(&huart1) == 0) {
-	  takeWifiSSID(0);
-	  HAL_Delay(500);
-	  takeWifiPass(0);
-	  HAL_Delay(500);
-	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	  //Öncelikle ESP8266 flashı kontrol edilir ardından
+	  //flashta kaydedilen wifi bilgileriyle bağlantı sağlanırsa
+	  //aşağıdaki gibi tekrar wifi bilgileri istenmiyor
+	  //eğer esp flashında veri yoksa kullanıcıdan wifi verilerini girmesi bekleniyor.
+	  if(checkIsConnectionEstablish(&huart1) == 0) {
+	  	takeWifiSSID(0);
+	  	HAL_Delay(500);
+	  	takeWifiPass(0);
+	  	HAL_Delay(500);
+	  	ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	  }
   }
 
 

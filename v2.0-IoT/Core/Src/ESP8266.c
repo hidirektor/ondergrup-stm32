@@ -83,7 +83,9 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 }
 
 int checkIsConnectionEstablish(UART_HandleTypeDef *huart1) {
-	char bufferRX[10];
+	char bufferRX[50];
+
+	memset(bufferRX, 0, sizeof(bufferRX));
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*)"AT+CWJAP?", strlen("AT+CWJAP?"));
 	HAL_Delay(2500);
