@@ -8,6 +8,8 @@
 #ifndef INC_LIMITATIONS_H_
 #define INC_LIMITATIONS_H_
 
+#include <stdint.h>
+
 #define eepromSize 110
 #define wifiCharLimit 20
 

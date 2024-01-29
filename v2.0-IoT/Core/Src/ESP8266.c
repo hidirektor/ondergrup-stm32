@@ -5,24 +5,25 @@
  *      Author: hidirektor
  */
 
-#include <Essentials.h>
 #include "ESP8266.h"
 
+char queryBufferTX[250];
+
 void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
-	sprintf(bufferTX, "AT+RESTORE\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT+RESTORE\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(1000);
 
-	sprintf(bufferTX, "AT+RST\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT+RST\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(1000);
 
-	sprintf(bufferTX, "AT\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(2000);
 
-	sprintf(bufferTX, "AT+CWMODE=1\r\n");
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT+CWMODE=1\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(2000);
 
 	char str[100];
@@ -31,8 +32,8 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	strcat(str, "\",\"");
 	strcat(str, wifiPA);
 	strcat(str, "\"\r\n");
-	sprintf(bufferTX, "%s", str);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "%s", str);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(2000);
 }
 
@@ -41,12 +42,12 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	char local_txB[50];
 	int len;
 
-	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", serverIP);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(2000);
 
 	sprintf(local_txA,
-			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, Server2);
+			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, serverIPWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
@@ -64,12 +65,12 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 
 	char bufferRX[200];
 
-	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	sprintf(queryBufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", serverIP);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) queryBufferTX, strlen(queryBufferTX));
 	HAL_Delay(2000);
 
 	sprintf(local_txA,
-			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, Server2);
+			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, serverIPWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 

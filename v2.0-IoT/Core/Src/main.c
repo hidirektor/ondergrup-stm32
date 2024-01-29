@@ -6,6 +6,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Data.h"
+#include "Variables.h"
 #include "ESP8266.h"
 /* USER CODE END Includes */
 
