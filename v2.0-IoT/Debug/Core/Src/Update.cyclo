@@ -1,3 +1,0 @@
-../Drivers/CMSIS/Include/core_cm3.h:1762:34:__NVIC_SystemReset	1
-../Core/Src/Update.c:10:10:calculateCRC32	4
-../Core/Src/Update.c:26:6:updateFirmware	3

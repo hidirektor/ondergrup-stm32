@@ -1,3 +1,10 @@
+/*
+ * ESP8266.c
+ *
+ *  Created on: Jan 29, 2024
+ *      Author: hidirektor
+ */
+
 #include <Essentials.h>
 #include "ESP8266.h"
 
