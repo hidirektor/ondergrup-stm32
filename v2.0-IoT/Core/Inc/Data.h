@@ -26,6 +26,7 @@ char* copyTextNormal(const char* text);
 void printTemplate(int type, int page);
 
 char getCharFromCursorPosition(int cursorPosition);
+uint8_t getPositionFromChar(char currentChar);
 void writeToEEPROM(int state);
 void readFromEEPROM(int state);
 
@@ -290,6 +291,15 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
+uint8_t getPositionFromChar(char currentChar) {
+	int arraySize = strlen(charactersArray);
+	for(int i=0; i<arraySize; i++) {
+		if(currentChar == charactersArray[i]) {
+			return i;
+		}
+	}
+}
+
 void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
@@ -449,6 +459,13 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
+            uint8_t ssidSize = strlen(wifiSSID);
+            for(int i=0; i<ssidSize; i++) {
+            	eepromData[tempSSIDStartPos] = getPositionFromChar(wifiSSID[i]);
+            	tempSSIDStartPos++;
+            }
+            HAL_Delay(250);
+
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
 
@@ -526,13 +543,11 @@ void takeWifiSSID(int state) {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
 
-            eepromData[tempSSIDStartPos] = realCharPos - 1;
-            tempSSIDStartPos++;
-
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
             wifiNameLoc++;
+            tempSSIDStartPos++;
 
             HAL_Delay(250);
         }
@@ -592,6 +607,14 @@ void takeWifiPass(int state) {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
+
+            uint8_t passSize = strlen(wifiPass);
+
+            for(int i=0; i<passSize; i++) {
+                eepromData[tempPassStartPos] = getPositionFromChar(wifiPass[i]);
+                tempPassStartPos++;
+            }
+            HAL_Delay(250);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -669,9 +692,6 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-
-        	eepromData[tempPassStartPos] = realCharPos - 1;
-        	tempPassStartPos++;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
