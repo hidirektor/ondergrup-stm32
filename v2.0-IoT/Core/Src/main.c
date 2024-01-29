@@ -1487,13 +1487,13 @@ int main(void)
 	  //flashta kaydedilen wifi bilgileriyle bağlantı sağlanırsa
 	  //aşağıdaki gibi tekrar wifi bilgileri istenmiyor
 	  //eğer esp flashında veri yoksa kullanıcıdan wifi verilerini girmesi bekleniyor.
-	  if(checkIsConnectionEstablish(&huart1) == 0) {
+	  /*if(checkIsConnectionEstablish(&huart1) == 0) {
 	  	takeWifiSSID(0);
 	  	HAL_Delay(500);
 	  	takeWifiPass(0);
 	  	HAL_Delay(500);
 	  	ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	  }
+	  }*/
   }
 
 
