@@ -368,26 +368,6 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-void readWiFiCredentialsFromEEPROM() {
-    uint16_t wifiDataStartAddress = 50;
-
-    HAL_I2C_Mem_Read(&hi2c1, 0xA0, wifiDataStartAddress, I2C_MEMADD_SIZE_16BIT, (uint8_t*)wifiSSID, 20, 3000);
-    HAL_I2C_Mem_Read(&hi2c1, 0xA0, wifiDataStartAddress + 21, I2C_MEMADD_SIZE_16BIT, (uint8_t*)wifiPass, 20, 3000);
-
-    wifiSSID[20] = '\0';
-    wifiPass[20] = '\0';
-}
-
-void writeWiFiCredentialsToEEPROM(const char* ssid, const char* password) {
-    uint16_t wifiDataStartAddress = 50;
-
-    HAL_I2C_Mem_Write(&hi2c1, 0xA0, wifiDataStartAddress, I2C_MEMADD_SIZE_16BIT, (uint8_t*)ssid, strlen(ssid), 3000);
-    HAL_Delay(10);
-
-    HAL_I2C_Mem_Write(&hi2c1, 0xA0, wifiDataStartAddress + strlen(ssid) + 1, I2C_MEMADD_SIZE_16BIT, (uint8_t*)password, strlen(password), 3000);
-    HAL_Delay(10);
-}
-
 void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
@@ -547,8 +527,6 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
-
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
 
@@ -692,8 +670,6 @@ void takeWifiPass(int state) {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
-
-            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);

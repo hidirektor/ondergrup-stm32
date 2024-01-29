@@ -81,20 +81,3 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 
 	return 0; // Yanıt başarısız
 }
-
-int checkIsConnectionEstablish(UART_HandleTypeDef *huart1) {
-	char bufferRX[50];
-
-	memset(bufferRX, 0, sizeof(bufferRX));
-
-	HAL_UART_Transmit_IT(huart1, (uint8_t*)"AT+CWJAP?", strlen("AT+CWJAP?"));
-	HAL_Delay(2500);
-
-	HAL_UART_Receive_IT(huart1, (uint8_t*)bufferRX, sizeof(bufferRX));
-
-	if(strstr(bufferRX, "OK") != NULL) {
-		return 1;
-	}
-
-	return 0;
-}
