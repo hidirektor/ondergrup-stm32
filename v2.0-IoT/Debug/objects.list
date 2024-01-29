@@ -1,3 +1,4 @@
+"./Core/Src/Data.o"
 "./Core/Src/ESP8266.o"
 "./Core/Src/Update.o"
 "./Core/Src/i2c-lcd.o"

@@ -973,6 +973,7 @@ void checkAktifCalisma() {
 
 		if(startBasili && HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==1) {
 			hataVar=1;
+			convertAndSendData();
 			hataKoduLcdGoster(1);
 			hata2EEPROM(1);
 			acilstophatasi=1;
@@ -985,6 +986,7 @@ void checkAktifCalisma() {
 
 		if(cerceveVar==0 && (HAL_GPIO_ReadPin(asagiStartIn_GPIO_Port, asagiStartIn_Pin)==0 || cercevesasagicalisma)&& (emniyetCercevesi==1)) {
 			hataVar=1;
+			convertAndSendData();
 			hataKoduLcdGoster(2);
 			hata2EEPROM(2);
 			emniyetCercevesihatasi=1;
@@ -998,6 +1000,7 @@ void checkAktifCalisma() {
 
 		if(basincVar==0 && basincSalteri==1 && motorcalisiyor==1 && HAL_GPIO_ReadPin(basincSalteriIn_GPIO_Port, basincSalteriIn_Pin)==1) {
 			hataVar=1;
+			convertAndSendData();
 			hataKoduLcdGoster(3);
 			hata2EEPROM(3);
 			basinchatasi=1;
@@ -1009,6 +1012,7 @@ void checkAktifCalisma() {
 		/************************************ KAPI SİVİÇ HATASI **************************************************/
 		if((startBasili || HataMakineCalisiyorkapi) && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
 			hataVar=1;
+			convertAndSendData();
 			hataKoduLcdGoster(4);
 			hata2EEPROM(4);
 			katkapisivicihatasi=1;
@@ -1022,6 +1026,7 @@ void checkAktifCalisma() {
 
 		if((startBasili || HataMakineCalisiyortabla)&& HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
 			hataVar=1;
+			convertAndSendData();
 			hataKoduLcdGoster(5);
 			hata2EEPROM(5);
 			tablakapisivicihatasi=1;
@@ -1036,6 +1041,7 @@ void checkAktifCalisma() {
 		if((motorcalisiyor)||(asagivalfcalisiyor)||(devmotorasagicalisiyor)) {
 		    if(millis-timer4>=makineCalismaTmr) {
 			  	hataVar=1;
+			  	convertAndSendData();
 			  	hataKoduLcdGoster(6);
 			  	hata2EEPROM(6);
 			  	maksimumcalismahatasi=1;
