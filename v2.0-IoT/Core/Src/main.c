@@ -320,7 +320,10 @@ void eepromKontrol(int type) {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
-	readWiFiCredentialsFromEEPROM(wifiSSID, wifiPass);
+	readValFromEEPROM(1); //SSID Okuma
+	HAL_Delay(250);
+	readValFromEEPROM(2); //Pass Okuma
+	//readWiFiCredentialsFromEEPROM(wifiSSID, wifiPass);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -1494,6 +1497,18 @@ int main(void)
 	  	HAL_Delay(500);
 	  	ESP8266_Init(&huart1, wifiSSID, wifiPass);
 	  }*/
+
+	  if(wifiSSID[0] == '\0') {
+		  takeWifiSSID(0);
+		  HAL_Delay(500);
+	  }
+
+	  if(wifiPass[0] == '\0') {
+		  takeWifiPass(0);
+		  HAL_Delay(500);
+	  }
+
+	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
   }
 
 

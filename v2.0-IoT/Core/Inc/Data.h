@@ -11,6 +11,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define wifiCharLimit 20
+
 CAN_HandleTypeDef hcan;
 
 I2C_HandleTypeDef hi2c1;
@@ -57,8 +59,8 @@ int eepromHataBaslangic = 38;
 uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 char machineID[12];
-char wifiSSID[20];
-char wifiPass[20];
+char wifiSSID[wifiCharLimit];
+char wifiPass[wifiCharLimit];
 
 int cursorPosition = 1;
 int page = 1;
@@ -529,6 +531,8 @@ void takeWifiSSID(int state) {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
+    uint8_t tempSSIDStartPos = ssidStartPos;
+
     printTemplate(2, 1);
 
     while (1) {
@@ -622,6 +626,9 @@ void takeWifiSSID(int state) {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
 
+            eepromData[tempSSIDStartPos] = realCharPos - 1;
+            tempSSIDStartPos++;
+
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
@@ -669,6 +676,8 @@ void takeWifiPass(int state) {
     page = 1;
     int wifiPassLoc = 0;
     int writeLoc = 7;
+
+    uint8_t tempPassStartPos = passStartPos;
 
     printTemplate(3, 1);
 
@@ -763,6 +772,9 @@ void takeWifiPass(int state) {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
 
+        	eepromData[tempPassStartPos] = realCharPos - 1;
+        	tempPassStartPos++;
+
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
@@ -817,6 +829,24 @@ int checkSlideVal(int state) {
 		}
 	}
 	return 0;
+}
+
+void readValFromEEPROM(int state) {
+	if(state == 1) {
+		//Wifi SSID okuma
+		uint8_t tempSSIDStartPos = ssidStartPos;
+		for(int i=0; i<wifiCharLimit; i++) {
+			wifiSSID[i] = charactersArray[eepromData[tempSSIDStartPos]];
+			tempSSIDStartPos++;
+		}
+	} else {
+		//Wifi Pass okuma
+		uint8_t tempPassStartPos = passStartPos;
+		for(int i=0; i<wifiCharLimit; i++) {
+			wifiPass[i] = charactersArray[eepromData[tempPassStartPos]];
+			tempPassStartPos++;
+		}
+	}
 }
 
 void slideText(const char* text, int startPos, int startLine, int state) {
