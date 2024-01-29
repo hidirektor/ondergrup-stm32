@@ -1507,9 +1507,9 @@ int main(void)
 		  takeWifiPass(0);
 		  HAL_Delay(500);
 	  }
-
-	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
   }
+
+  ESP8266_Init(&huart1, wifiSSID, wifiPass);
 
 
   /* USER CODE END 2 */
