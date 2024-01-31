@@ -9,6 +9,7 @@
 #define INC_DATA_H_
 
 #include "Variables.h"
+#include "SystemDefaults.h"
 #include "i2c-lcd.h"
 
 CAN_HandleTypeDef hcan;
@@ -210,6 +211,10 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
+            for(int i=characterSavePos; i<wifiCharLimit; i++) {
+            	wifiSSIDLoc[i] = '\0';
+            }
+
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, 20);
             HAL_Delay(250);
 
@@ -356,6 +361,10 @@ void takeWifiPass(int state) {
                 lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 HAL_Delay(1200);
                 goto mainPASSSection;
+            }
+
+            for(int i=characterSavePos; i<wifiCharLimit; i++) {
+            	wifiPassLocArr[i] = '\0';
             }
 
             memcpy(&eepromData[passStartPos], wifiPassLocArr, 20);
