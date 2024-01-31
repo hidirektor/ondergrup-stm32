@@ -2,45 +2,381 @@
  * Data.h
  *
  *  Created on: Jul 27, 2023
- *      Author: hidirektor
+ *      Author: hidir
  */
-
 #ifndef INC_DATA_H_
 #define INC_DATA_H_
 
-#include "Variables.h"
-#include "SystemDefaults.h"
+#include "Translate.h"
 #include "i2c-lcd.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 CAN_HandleTypeDef hcan;
+
 I2C_HandleTypeDef hi2c1;
+
 TIM_HandleTypeDef htim1;
+
 UART_HandleTypeDef huart1;
 
-char getCharFromCursorPosition(int cursorPosition);
-uint8_t getPositionFromChar(char currentChar);
+char* copyText(const char* text);
+char* copyTextNormal(const char* text);
+void printTemplate(int type, int page);
 
+char getCharFromCursorPosition(int cursorPosition);
+void writeToEEPROM(int state);
 void readValFromEEPROM(int state);
 
 void takeMachineID(int state);
 void takeWifiSSID(int state);
 void takeWifiPass(int state);
 
-void menu();
-void printTemplate(int type, int page);
 int checkSlideVal(int state);
 void slideText(const char* text, int startPos, int startLine, int state);
+
+void menu();
+void loadMenuTexts(uint8_t dilSecim);
+
+uint8_t eepromData[110];
+uint8_t kaydedilenDeger = 0;
+char snum[5];
+unsigned long millis = 0;
+unsigned long timer = 0;
+unsigned long timer1 = 0;
+unsigned long timer2 = 0;
+unsigned long timer3 = 0;
+unsigned long timer4 = 0;				// maksimum calisma kayit suresi
+unsigned long timer5 = 0;				// basinc kayit suresi
+unsigned long timer6 = 0;				// lcd update suresi
+unsigned long backLightTimer = 0;
+int eepromVal[] = {38, 39, 40, 41, 42, 43, 44, 45, 46, 47};
+int eepromFull[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int indeksSayisi = sizeof(eepromVal)/sizeof(eepromVal[0]);
+int eepromHataBaslangic = 38;
+
+uint8_t lcdBacklightSure = 6; //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
+
+char machineID[12];
+char wifiSSID[20];
+char wifiPass[20];
+
+uint8_t wifiSSIDLoc[20];
+uint8_t wifiPassLocArr[20];
+
+int cursorPosition = 1;
+int page = 1;
+char emptyArray[] = "                ";
+char charactersArray[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>? ";
+
+uint8_t idKontrol = 0;
+uint8_t safeVal = 0;
+
+uint8_t idStartPos = 50;
+uint8_t ssidStartPos = 62;
+uint8_t passStartPos = 82;
+
+uint8_t x = 0;
+uint8_t y = 0;
+uint8_t calismaSayisi = 0; //
+uint8_t calismaSayisi1 = 0; //
+uint8_t calismaSayisi10 = 0; //
+uint8_t calismaSayisi100 = 2; //
+uint8_t calismaSayisi1000 = 1; //
+uint8_t calismaSayisi10000 = 0; //
+//Menü içi parametreler
+uint8_t menuSayac = 0;
+uint8_t durakSayisi = 0;
+uint8_t calismaSekli = 0;
+uint8_t hataGostermeSirasi = 0;
+uint8_t basincVar = 0;
+uint8_t basincVartmr = 0;
+uint8_t emniyetCercevesi = 0;
+uint8_t yavaslamaLimit = 0;
+uint8_t altLimit = 0;
+uint8_t basincSalteri = 0;
+uint8_t kapiSecimleri = 0;
+uint8_t kapi1Tip = 0;
+uint8_t kapi2Tip = 0;
+uint8_t kapitablaTip = 0;
+uint8_t kapiAcTipi = 0;
+uint8_t kapiTablaAcKonum = 0;
+uint8_t yukariYavasLimit = 0;
+uint8_t devirmeYuruyusSecim = 0;
+uint8_t devirmeYukariIleriLimit = 0;
+uint8_t devirmeAsagiGeriLimit = 0;
+uint8_t devirmeSilindirTipi = 0;
+uint8_t platformSilindirTipi = 0;
+uint8_t yukariValfTmr = 0;
+uint8_t asagiValfTmr = 0;
+uint8_t devirmeYukariIleriTmr = 0;
+uint8_t devirmeAsagiGeriTmr = 0;
+uint8_t makineCalismaTmr = 0;
+uint8_t kapi1AcSure = 0;
+uint8_t kapi2AcSure = 0;
+uint8_t kapiTablaAcSure = 0;
+uint8_t buzzer = 0;
+uint8_t menuGiris = 0;
+uint8_t demoMode = 0;
+uint8_t iotMode = 0;
+uint8_t calismaSayModu = 0;
+uint8_t dilSecim = 0;
+uint8_t hataKayit1 = 0;
+uint8_t hataKayit2 = 0;
+uint8_t hataKayit3 = 0;
+uint8_t hataKayit4 = 0;
+uint8_t hataKayit5 = 0;
+uint8_t hataKayit6 = 0;
+uint8_t hataKayit7 = 0;
+uint8_t hataKayit8 = 0;
+uint8_t hataKayit9 = 0;
+uint8_t hataKayit10 = 0;
+bool hafizaYaz = 0;
+bool hafizaOku = 0;
+bool ilkOkuma = 0;
+bool butonKontrol = 0;
+bool butonKontrol2 = 0;
+bool butonKontrol3 = 0;
+bool butonKontrol4 = 0;
+bool butonKontrol5 = 0;
+bool mesajYazildi = 0;
+bool yukarimotorcalisiyor = 0;
+bool devmotoryukaricalisiyor = 0;
+bool devmotorasagicalisiyor = 0;
+bool asagivalfcalisiyor = 0;
+bool yukarivalfcalisiyor = 0;
+bool devyukarivalfcalisiyor = 0;
+bool devasagivalfcalisiyor = 0;
+bool basgondercalisyukari = 0;
+bool basgondercalisasagi = 0;
+bool demoCalismaSayisiYar = 0;
+bool CalismaSayisiYukari = 0;
+bool CalismaSayisiAsagi = 0;
+bool calismaSayisiYar = 0;
+bool makineStop = 0;
+bool kapi1prudhome = 0; bool kapi1butonkontrol = 0; bool kapi1pizzato = 0;
+bool kapi2prudhome = 0; bool kapi2butonkontrol = 0; bool kapi2pizzato = 0;
+bool kapiTablaprudhome = 0; bool kapiTablabutonkontrol = 0; bool kapiTablapizzato = 0;
+bool kapiTablaAcKonumKat1 = 0; bool kapiTablaAcKonumKat2 = 0;
+bool startBasili = 0;
+bool maksimumcalismahatasi = 0;
+bool acilstophatasi = 0;
+bool emniyetCercevesihatasi = 0;
+bool stopVar = 0;
+bool kapiSivicVar = 0;
+bool motorcalisiyor = 0;
+bool hataVar = 0;
+bool makineCalisiyor = 0;
+bool cerceveVar = 0;
+bool demoYukariCalis = 0;
+bool demoAsagiCalis = 0;
+bool demoDevYukari = 0;
+bool demoDevAsagi = 0;
+bool kapiactablaesp1 = 0;
+bool kapiactablaesp2 = 0;
+bool basinchatasi = 0;
+bool katkapisivicihatasi = 0;
+bool tablakapisivicihatasi = 0;
+bool cercevesasagicalisma = 0;
+bool HataMakineCalisiyorkapi = 0;
+bool HataMakineCalisiyortabla = 0;
+
+//Menü için text değişkenleri
+char *mainText;
+char *mainText2;
+char *menuyeGirildiText;
+char *ayarlarText;
+char *hataKayitListText;
+char *birHataKoduText;
+char *ikiHataKoduText;
+char *ucHataKoduText;
+char *dortHataKoduText;
+char *besHataKoduText;
+char *altiHataKoduText;
+char *yediHataKoduText;
+char *sekizHataKoduText;
+char *dokuzHataKoduText;
+char *onHataKoduText;
+char *silmekIcinText;
+char *calismaSekliText;
+char *devirmeYuruyusText;
+char *bastikcaCalisanText;
+char *basGonderText;
+char *emniyetCercevesiText;
+char *pasifText;
+char *aktifText;
+char *ondSafetyText;
+char *yavaslamaLimitText;
+char *altLimitText;
+char *basincSalteriText;
+char *kapiSecimleriText;
+char *katKapisiAktifText;
+char *tablaKapiAktifText;
+char *katArtiTablaAktifText;
+char *kapiAcmaTipiText;
+char *kapiButonuESPText;
+char *katButonuEXTText;
+char *birKatKapiTipiText;
+char *prudhomeText;
+char *butonKontrolluText;
+char *pizzattoText;
+char *birinciKapiAcSuresiText;
+char *kacSaniyeText;
+char *ikinciKatKapiTipiText;
+char *ikinciKapiAcSuresiText;
+char *tablaKapiTipiText;
+char *tablaKapiAcKonumText;
+char *birinciKattaAcText;
+char *ikinciKattaAcText;
+char *birVeIkinciKattaAcText;
+char *tablaKapiAcSureText;
+char *yukariYavaslamaLimitiText;
+char *devirmeYuruyusMenuText;
+char *devirmeAktifText;
+char *yuruyusAktifText;
+char *devirmeYukariText;
+char *yuruyusIleriText;
+char *devirmeAsagiSivicText;
+char *yuruyusGeriSivicText;
+char *yuruyusSecildiText;
+char *devirmeSilindirTipiText;
+char *tekTesirText;
+char *ciftTesirText;
+char *platformSilindirTipiText;
+char *asagiValfSureText;
+char *devirmeYukariValfSureText;
+char *ileriValfSureText;
+char *devirmeAsagiValfSureText;
+char *geriValfSureText;
+char *calismaSuresiText;
+char *buzzerText;
+char *demoModText;
+char *calismaSayisiText;
+char *enterlaSifirlaText;
+char *dilSecimText;
+char *secilenDilText;
+char *menudenCikisText;
+char *enteraBasinizText;
+char *hataKoduText;
+
+char* copyText(const char* text) {
+    char* result = (char*)malloc(strlen(text) + 1);
+    if (result != NULL) {
+        strcpy(result, text);
+    }
+    return result;
+}
+
+char* copyTextNormal(const char* text) {
+    size_t textLength = strlen(text);
+    char* result = (char*)malloc(textLength + 17);
+    if (result != NULL) {
+        strcpy(result, text);
+        if (textLength < 16) {
+            for (size_t i = textLength; i < 16; i++) {
+                result[i] = ' ';
+            }
+            result[16] = '\0';
+        }
+    }
+    return result;
+}
+
+void printTemplate(int type, int page) {
+	HAL_Delay(200);
+	lcd_clear();
+	if(type == 1 && page == 0) {
+		lcd_print(1, 1, "ID: ");
+		lcd_print(2, 3, "0");
+		lcd_print(2, 4, "1");
+		lcd_print(2, 5, "2");
+		lcd_print(2, 6, "3");
+		lcd_print(2, 7, "4");
+		lcd_print(2, 10, "5");
+		lcd_print(2, 11, "6");
+		lcd_print(2, 12, "7");
+		lcd_print(2, 13, "8");
+		lcd_print(2, 14, "9");
+		lcd_print(1, 5, machineID);
+		lcd_gotoxy(2, 3);
+	} else if(type == 2) {
+		if(page == 1) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
+			lcd_print(2, 1, "abcdefghijklmnop");
+		} else if(page == 2) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
+			lcd_print(2, 1, "qrstuvwxyzABCDEF");
+		} else if(page == 3) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
+			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
+		} else if(page == 4) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
+			lcd_print(2, 1, "WXYZ0123456789!@");
+		} else if(page == 5) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
+			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
+		}
+	} else if(type == 3) {
+		if(page == 1) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "PASS: ");
+			lcd_print(1, 7, wifiPass);
+			lcd_print(2, 1, "abcdefghijklmnop");
+		} else if(page == 2) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "PASS: ");
+			lcd_print(1, 7, wifiPass);
+			lcd_print(2, 1, "qrstuvwxyzABCDEF");
+		} else if(page == 3) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "PASS: ");
+			lcd_print(1, 7, wifiPass);
+			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
+		} else if(page == 4) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "PASS: ");
+			lcd_print(1, 7, wifiPass);
+			lcd_print(2, 1, "WXYZ0123456789!@");
+		} else if(page == 5) {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "PASS: ");
+			lcd_print(1, 7, wifiPass);
+			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
+		}
+	}
+}
 
 char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
-uint8_t getPositionFromChar(char currentChar) {
-	int arraySize = strlen(charactersArray);
-	for(int i=0; i<arraySize; i++) {
-		if(currentChar == charactersArray[i]) {
-			return i;
-		}
+void writeToEEPROM(int state) {
+	if(state == 0) {
+		memset(&eepromData[ssidStartPos], 0, 20);
+		strncpy((char *)&eepromData[ssidStartPos], wifiSSID, 20);
+	} else {
+		memset(&eepromData[passStartPos], 0, 20);
+		strncpy((char *)&eepromData[passStartPos], wifiPass, 20);
 	}
 }
 
@@ -48,16 +384,17 @@ void readValFromEEPROM(int state) {
 	if(state == 1) {
 		//Wifi SSID okuma
 		uint8_t tempSSIDStartPos = ssidStartPos;
-		for(int i=0; i<wifiCharLimit; i++) {
+		for(int i=0; i<20; i++) {
 			if(eepromData[tempSSIDStartPos] != '\0') {
 				wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
+
 				tempSSIDStartPos++;
 			}
 		}
 	} else {
 		//Wifi Pass okuma
 		uint8_t tempPassStartPos = passStartPos;
-		for(int i=0; i<wifiCharLimit; i++) {
+		for(int i=0; i<20; i++) {
 			if(eepromData[tempPassStartPos] != '\0') {
 				wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
 				tempPassStartPos++;
@@ -92,6 +429,16 @@ void takeMachineID(int state) {
         		HAL_Delay(1200);
         		goto mainSection;
         	}
+
+        	/*if(checkMachineID(&huart1, machineID) != 1) {
+        		lcd_clear();
+        		lcd_print(1, 1, "BU ID ILE MAKINE");
+        		lcd_print(2, 1, "OLUSTURAMAZSINIZ");
+        		HAL_Delay(1200);
+        		goto mainSection;
+        	} else {
+        		eepromData[49] = 1;
+        	}*/
 
         	memcpy(&eepromData[idStartPos], machineID, 12);
         	HAL_Delay(200);
@@ -199,8 +546,7 @@ void takeWifiSSID(int state) {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
-    int characterSavePos = 0;
-    uint8_t characterSavePosTemp = ssidStartPos;
+    uint8_t characterSavePos = 0;
 
     printTemplate(2, 1);
 
@@ -216,12 +562,9 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            /*for(int i=characterSavePos; i<wifiCharLimit; i++) {
-            	wifiSSIDLoc[i] = '\0';
-            }
-
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, 20);
-            HAL_Delay(250);*/
+            HAL_Delay(250);
+            //memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -299,10 +642,7 @@ void takeWifiSSID(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-
-            //wifiSSIDLoc[characterSavePos] = realCharPos - 1;
-            eepromData[characterSavePosTemp] = realCharPos - 1;
-
+            wifiSSIDLoc[characterSavePos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
@@ -353,8 +693,7 @@ void takeWifiPass(int state) {
     int wifiPassLoc = 0;
     int writeLoc = 7;
 
-    int characterSavePos = 0;
-    uint8_t characterSavePosTemp = passStartPos;
+    uint8_t characterSavePos = 0;
 
     printTemplate(3, 1);
 
@@ -370,12 +709,9 @@ void takeWifiPass(int state) {
                 goto mainPASSSection;
             }
 
-            /*for(int i=characterSavePos; i<wifiCharLimit; i++) {
-            	wifiPassLocArr[i] = '\0';
-            }
-
             memcpy(&eepromData[passStartPos], wifiPassLocArr, 20);
-            HAL_Delay(250);*/
+            HAL_Delay(250);
+            //memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -453,9 +789,7 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-
-        	//wifiPassLocArr[characterSavePos] = realCharPos - 1;
-        	eepromData[characterSavePosTemp] = realCharPos - 1;
+        	wifiPassLocArr[characterSavePos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
@@ -493,6 +827,69 @@ void takeWifiPass(int state) {
     }
 }
 
+int checkSlideVal(int state) {
+	if(state == 0) { //ssid (33)
+		if(HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
+			return 34;
+		}
+
+		if(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
+			return 32;
+		}
+	} else { //pass (34)
+		if(HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
+			return 35;
+		}
+
+		if(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
+			return 33;
+		}
+	}
+	return 0;
+}
+
+void slideText(const char* text, int startPos, int startLine, int state) {
+	uint8_t uzunluk = strlen(text);
+	int mainLoopVal = 1;
+
+	while(mainLoopVal == 1) {
+		if(checkSlideVal(state) > 0) {
+			menuSayac = checkSlideVal(state);
+			break;
+		}
+
+		for(int z=0; z < uzunluk; z++) {
+			if(checkSlideVal(state) > 0) {
+				menuSayac = checkSlideVal(state);
+				mainLoopVal = 0;
+				break;
+			}
+			for(int i=startPos + z; i < uzunluk + startPos; i++) {
+				if(checkSlideVal(state) > 0) {
+					menuSayac = checkSlideVal(state);
+					z = uzunluk;
+					mainLoopVal = 0;
+					break;
+				}
+				lcd_print_char(startLine, i-z, text[i-startPos]);
+				HAL_Delay(30);
+			}
+
+			for (int j = uzunluk - 1; j >= uzunluk - z; j--) {
+				if(checkSlideVal(state) > 0) {
+					menuSayac = checkSlideVal(state);
+					z = uzunluk;
+					mainLoopVal = 0;
+					break;
+				}
+			     if(j >= startPos) {
+			    	 lcd_print_char(startLine, j, ' ');
+			    	 HAL_Delay(30);
+			     }
+			}
+		}
+	}
+}
 
 void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -2287,151 +2684,154 @@ void menu() {
 	}
 }
 
-void printTemplate(int type, int page) {
-	HAL_Delay(200);
-	lcd_clear();
-	if(type == 1 && page == 0) {
-		lcd_print(1, 1, "ID: ");
-		lcd_print(2, 3, "0");
-		lcd_print(2, 4, "1");
-		lcd_print(2, 5, "2");
-		lcd_print(2, 6, "3");
-		lcd_print(2, 7, "4");
-		lcd_print(2, 10, "5");
-		lcd_print(2, 11, "6");
-		lcd_print(2, 12, "7");
-		lcd_print(2, 13, "8");
-		lcd_print(2, 14, "9");
-		lcd_print(1, 5, machineID);
-		lcd_gotoxy(2, 3);
-	} else if(type == 2) {
-		if(page == 1) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
-			lcd_print(2, 1, "abcdefghijklmnop");
-		} else if(page == 2) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
-			lcd_print(2, 1, "qrstuvwxyzABCDEF");
-		} else if(page == 3) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
-			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
-		} else if(page == 4) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
-			lcd_print(2, 1, "WXYZ0123456789!@");
-		} else if(page == 5) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "SSID: ");
-			lcd_print(1, 7, wifiSSID);
-			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
-		}
-	} else if(type == 3) {
-		if(page == 1) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
-			lcd_print(2, 1, "abcdefghijklmnop");
-		} else if(page == 2) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
-			lcd_print(2, 1, "qrstuvwxyzABCDEF");
-		} else if(page == 3) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
-			lcd_print(2, 1, "GHIJKLMNOPQRSTUV");
-		} else if(page == 4) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
-			lcd_print(2, 1, "WXYZ0123456789!@");
-		} else if(page == 5) {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "PASS: ");
-			lcd_print(1, 7, wifiPass);
-			lcd_print(2, 1, "#$%^&*()-_+=<>? ");
-		}
-	}
-}
-
-int checkSlideVal(int state) {
-	if(state == 0) { //ssid (33)
-		if(HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-			return 34;
-		}
-
-		if(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
-			return 32;
-		}
-	} else { //pass (34)
-		if(HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-			return 35;
-		}
-
-		if(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
-			return 33;
-		}
-	}
-	return 0;
-}
-
-void slideText(const char* text, int startPos, int startLine, int state) {
-	uint8_t uzunluk = strlen(text);
-	int mainLoopVal = 1;
-
-	while(mainLoopVal == 1) {
-		if(checkSlideVal(state) > 0) {
-			menuSayac = checkSlideVal(state);
-			break;
-		}
-
-		for(int z=0; z < uzunluk; z++) {
-			if(checkSlideVal(state) > 0) {
-				menuSayac = checkSlideVal(state);
-				mainLoopVal = 0;
-				break;
-			}
-			for(int i=startPos + z; i < uzunluk + startPos; i++) {
-				if(checkSlideVal(state) > 0) {
-					menuSayac = checkSlideVal(state);
-					z = uzunluk;
-					mainLoopVal = 0;
-					break;
-				}
-				lcd_print_char(startLine, i-z, text[i-startPos]);
-				HAL_Delay(30);
-			}
-
-			for (int j = uzunluk - 1; j >= uzunluk - z; j--) {
-				if(checkSlideVal(state) > 0) {
-					menuSayac = checkSlideVal(state);
-					z = uzunluk;
-					mainLoopVal = 0;
-					break;
-				}
-			     if(j >= startPos) {
-			    	 lcd_print_char(startLine, j, ' ');
-			    	 HAL_Delay(30);
-			     }
-			}
-		}
+void loadMenuTexts(uint8_t dilSecim) {
+	mainText = copyText(mainTextGN);
+	mainText2 = copyText(mainText2GN);
+	ondSafetyText = copyText(ondSafetyTextGN);
+	prudhomeText = copyText(prudhomeTextGN);
+	pizzattoText = copyText(pizzattoTextGN);
+	buzzerText = copyText(buzzerTextGN);
+	demoModText = copyText(demoModTextGN);
+	if(dilSecim == 0) {
+		menuyeGirildiText = copyText(menuyeGirildiTextTR);
+		ayarlarText = copyText(ayarlarTextTR);
+		hataKayitListText = copyText(hataKayitListTextTR);
+		birHataKoduText = copyText(birHataKoduTextTR);
+		ikiHataKoduText = copyText(ikiHataKoduTextTR);
+		ucHataKoduText = copyText(ucHataKoduTextTR);
+		dortHataKoduText = copyText(dortHataKoduTextTR);
+		besHataKoduText = copyText(besHataKoduTextTR);
+		altiHataKoduText = copyText(altiHataKoduTextTR);
+		yediHataKoduText = copyText(yediHataKoduTextTR);
+		sekizHataKoduText = copyText(sekizHataKoduTextTR);
+		dokuzHataKoduText = copyText(dokuzHataKoduTextTR);
+		onHataKoduText = copyText(onHataKoduTextTR);
+		silmekIcinText = copyText(silmekIcinTextTR);
+		calismaSekliText = copyText(calismaSekliTextTR);
+		devirmeYuruyusText = copyText(devirmeYuruyusTextTR);
+		bastikcaCalisanText = copyText(bastikcaCalisanTextTR);
+		basGonderText = copyText(basGonderTextTR);
+		emniyetCercevesiText = copyText(emniyetCercevesiTextTR);
+		pasifText = copyText(pasifTextTR);
+		aktifText = copyText(aktifTextTR);
+		yavaslamaLimitText = copyText(yavaslamaLimitTextTR);
+		altLimitText = copyText(altLimitTextTR);
+		basincSalteriText = copyText(basincSalteriTextTR);
+		kapiSecimleriText = copyText(kapiSecimleriTextTR);
+		katKapisiAktifText = copyText(katKapisiAktifTextTR);
+		tablaKapiAktifText = copyText(tablaKapiAktifTextTR);
+		katArtiTablaAktifText = copyText(katArtiTablaAktifTextTR);
+		kapiAcmaTipiText = copyText(kapiAcmaTipiTextTR);
+		kapiButonuESPText = copyText(kapiButonuESPTextTR);
+		katButonuEXTText = copyText(katButonuEXTTextTR);
+		birKatKapiTipiText = copyText(birKatKapiTipiTextTR);
+		butonKontrolluText = copyText(butonKontrolluTextTR);
+		birinciKapiAcSuresiText = copyText(birinciKapiAcSuresiTextTR);
+		kacSaniyeText = copyText(kacSaniyeTextTR);
+		ikinciKatKapiTipiText = copyText(ikinciKatKapiTipiTextTR);
+		ikinciKapiAcSuresiText = copyText(ikinciKapiAcSuresiTextTR);
+		tablaKapiTipiText = copyText(tablaKapiTipiTextTR);
+		tablaKapiAcKonumText = copyText(tablaKapiAcKonumTextTR);
+		birinciKattaAcText = copyText(birinciKattaAcTextTR);
+		ikinciKattaAcText = copyText(ikinciKattaAcTextTR);
+		birVeIkinciKattaAcText = copyText(birVeIkinciKattaAcTextTR);
+		tablaKapiAcSureText = copyText(tablaKapiAcSureTextTR);
+		yukariYavaslamaLimitiText = copyText(yukariYavaslamaLimitiTextTR);
+		devirmeYuruyusMenuText = copyText(devirmeYuruyusMenuTextTR);
+		devirmeAktifText = copyText(devirmeAktifTextTR);
+		yuruyusAktifText = copyText(yuruyusAktifTextTR);
+		devirmeYukariText = copyText(devirmeYukariTextTR);
+		yuruyusIleriText = copyText(yuruyusIleriTextTR);
+		devirmeAsagiSivicText = copyText(devirmeAsagiSivicTextTR);
+		yuruyusGeriSivicText = copyText(yuruyusGeriSivicTextTR);
+		yuruyusSecildiText = copyText(yuruyusSecildiTextTR);
+		devirmeSilindirTipiText = copyText(devirmeSilindirTipiTextTR);
+		tekTesirText = copyText(tekTesirTextTR);
+		ciftTesirText = copyText(ciftTesirTextTR);
+		platformSilindirTipiText = copyText(platformSilindirTipiTextTR);
+		asagiValfSureText = copyText(asagiValfSureTextTR);
+		devirmeYukariValfSureText = copyText(devirmeYukariValfSureTextTR);
+		ileriValfSureText = copyText(ileriValfSureTextTR);
+		devirmeAsagiValfSureText = copyText(devirmeAsagiValfSureTextTR);
+		geriValfSureText = copyText(geriValfSureTextTR);
+		calismaSuresiText = copyText(calismaSuresiTextTR);
+		calismaSayisiText = copyText(calismaSayisiTextTR);
+		enterlaSifirlaText = copyText(enterlaSifirlaTextTR);
+		dilSecimText = copyText(dilSecimTextTR);
+		secilenDilText = copyText(secilenDilTextTR);
+		menudenCikisText = copyText(menudenCikisTextTR);
+		enteraBasinizText = copyText(enteraBasinizTextTR);
+		hataKoduText = copyText(hataKoduTextTR);
+	} else {
+		menuyeGirildiText = copyText(menuyeGirildiTextEN);
+		ayarlarText = copyText(ayarlarTextEN);
+		hataKayitListText = copyText(hataKayitListTextEN);
+		birHataKoduText = copyText(birHataKoduTextEN);
+		ikiHataKoduText = copyText(ikiHataKoduTextEN);
+		ucHataKoduText = copyText(ucHataKoduTextEN);
+		dortHataKoduText = copyText(dortHataKoduTextEN);
+		besHataKoduText = copyText(besHataKoduTextEN);
+		altiHataKoduText = copyText(altiHataKoduTextEN);
+		yediHataKoduText = copyText(yediHataKoduTextEN);
+		sekizHataKoduText = copyText(sekizHataKoduTextEN);
+		dokuzHataKoduText = copyText(dokuzHataKoduTextEN);
+		onHataKoduText = copyText(onHataKoduTextEN);
+		silmekIcinText = copyText(silmekIcinTextEN);
+		calismaSekliText = copyText(calismaSekliTextEN);
+		devirmeYuruyusText = copyText(devirmeYuruyusTextEN);
+		bastikcaCalisanText = copyText(bastikcaCalisanTextEN);
+		basGonderText = copyText(basGonderTextEN);
+		emniyetCercevesiText = copyText(emniyetCercevesiTextEN);
+		pasifText = copyText(pasifTextEN);
+		aktifText = copyText(aktifTextEN);
+		yavaslamaLimitText = copyText(yavaslamaLimitTextEN);
+		altLimitText = copyText(altLimitTextEN);
+		basincSalteriText = copyText(basincSalteriTextEN);
+		kapiSecimleriText = copyText(kapiSecimleriTextEN);
+		katKapisiAktifText = copyText(katKapisiAktifTextEN);
+		tablaKapiAktifText = copyText(tablaKapiAktifTextEN);
+		katArtiTablaAktifText = copyText(katArtiTablaAktifTextEN);
+		kapiAcmaTipiText = copyText(kapiAcmaTipiTextEN);
+		kapiButonuESPText = copyText(kapiButonuESPTextEN);
+		katButonuEXTText = copyText(katButonuEXTTextEN);
+		birKatKapiTipiText = copyText(birKatKapiTipiTextEN);
+		butonKontrolluText = copyText(butonKontrolluTextEN);
+		birinciKapiAcSuresiText = copyText(birinciKapiAcSuresiTextEN);
+		kacSaniyeText = copyText(kacSaniyeTextEN);
+		ikinciKatKapiTipiText = copyText(ikinciKatKapiTipiTextEN);
+		ikinciKapiAcSuresiText = copyText(ikinciKapiAcSuresiTextEN);
+		tablaKapiTipiText = copyText(tablaKapiTipiTextEN);
+		tablaKapiAcKonumText = copyText(tablaKapiAcKonumTextEN);
+		birinciKattaAcText = copyText(birinciKattaAcTextEN);
+		ikinciKattaAcText = copyText(ikinciKattaAcTextEN);
+		birVeIkinciKattaAcText = copyText(birVeIkinciKattaAcTextEN);
+		tablaKapiAcSureText = copyText(tablaKapiAcSureTextEN);
+		yukariYavaslamaLimitiText = copyText(yukariYavaslamaLimitiTextEN);
+		devirmeYuruyusMenuText = copyText(devirmeYuruyusMenuTextEN);
+		devirmeAktifText = copyText(devirmeAktifTextEN);
+		yuruyusAktifText = copyText(yuruyusAktifTextEN);
+		devirmeYukariText = copyText(devirmeYukariTextEN);
+		yuruyusIleriText = copyText(yuruyusIleriTextEN);
+		devirmeAsagiSivicText = copyText(devirmeAsagiSivicTextEN);
+		yuruyusGeriSivicText = copyText(yuruyusGeriSivicTextEN);
+		yuruyusSecildiText = copyText(yuruyusSecildiTextEN);
+		devirmeSilindirTipiText = copyText(devirmeSilindirTipiTextEN);
+		tekTesirText = copyText(tekTesirTextEN);
+		ciftTesirText = copyText(ciftTesirTextEN);
+		platformSilindirTipiText = copyText(platformSilindirTipiTextEN);
+		asagiValfSureText = copyText(asagiValfSureTextEN);
+		devirmeYukariValfSureText = copyText(devirmeYukariValfSureTextEN);
+		ileriValfSureText = copyText(ileriValfSureTextEN);
+		devirmeAsagiValfSureText = copyText(devirmeAsagiValfSureTextEN);
+		geriValfSureText = copyText(geriValfSureTextEN);
+		calismaSuresiText = copyText(calismaSuresiTextEN);
+		calismaSayisiText = copyText(calismaSayisiTextEN);
+		enterlaSifirlaText = copyText(enterlaSifirlaTextEN);
+		dilSecimText = copyText(dilSecimTextEN);
+		secilenDilText = copyText(secilenDilTextEN);
+		menudenCikisText = copyText(menudenCikisTextEN);
+		enteraBasinizText = copyText(enteraBasinizTextEN);
+		hataKoduText = copyText(hataKoduTextEN);
 	}
 }
 

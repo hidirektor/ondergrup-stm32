@@ -6,7 +6,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Data.h"
-#include "Variables.h"
 #include "ESP8266.h"
 /* USER CODE END Includes */
 
@@ -176,6 +175,8 @@ void eepromKontrol(int type) {
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
 
+	loadMenuTexts(dilSecim);
+
 	if(calismaSayisi10000>9) {
 	    calismaSayisi10000=0;
 	}
@@ -321,10 +322,10 @@ void eepromKontrol(int type) {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
-	readValFromEEPROM(1); //SSID Okuma
 	HAL_Delay(250);
-	readValFromEEPROM(2); //Pass Okuma
-	//readWiFiCredentialsFromEEPROM(wifiSSID, wifiPass);
+	readValFromEEPROM(1);
+	HAL_Delay(250);
+	readValFromEEPROM(2);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -974,9 +975,9 @@ void checkAktifCalisma() {
 
 		if(startBasili && HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==1) {
 			hataVar=1;
-			convertAndSendData();
 			hataKoduLcdGoster(1);
 			hata2EEPROM(1);
+			convertAndSendData();
 			acilstophatasi=1;
 		} else if(acilstophatasi && HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==0 && startBasili==0) {
 			acilstophatasi=0;
@@ -987,9 +988,9 @@ void checkAktifCalisma() {
 
 		if(cerceveVar==0 && (HAL_GPIO_ReadPin(asagiStartIn_GPIO_Port, asagiStartIn_Pin)==0 || cercevesasagicalisma)&& (emniyetCercevesi==1)) {
 			hataVar=1;
-			convertAndSendData();
 			hataKoduLcdGoster(2);
 			hata2EEPROM(2);
+			convertAndSendData();
 			emniyetCercevesihatasi=1;
 		} else if(emniyetCercevesihatasi && cerceveVar==1 && asagivalfcalisiyor==0) {
 			emniyetCercevesihatasi=0;
@@ -1001,9 +1002,9 @@ void checkAktifCalisma() {
 
 		if(basincVar==0 && basincSalteri==1 && motorcalisiyor==1 && HAL_GPIO_ReadPin(basincSalteriIn_GPIO_Port, basincSalteriIn_Pin)==1) {
 			hataVar=1;
-			convertAndSendData();
 			hataKoduLcdGoster(3);
 			hata2EEPROM(3);
+			convertAndSendData();
 			basinchatasi=1;
 		} else if(basinchatasi && basincVar==1 && HAL_GPIO_ReadPin(yukariStartIn_GPIO_Port, yukariStartIn_Pin)==1) {
 			basinchatasi=0;
@@ -1013,9 +1014,9 @@ void checkAktifCalisma() {
 		/************************************ KAPI SİVİÇ HATASI **************************************************/
 		if((startBasili || HataMakineCalisiyorkapi) && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
 			hataVar=1;
-			convertAndSendData();
 			hataKoduLcdGoster(4);
 			hata2EEPROM(4);
+			convertAndSendData();
 			katkapisivicihatasi=1;
 		} else if (katkapisivicihatasi && makineStop && startBasili==0 && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==0) {
 			katkapisivicihatasi=0;
@@ -1027,9 +1028,9 @@ void checkAktifCalisma() {
 
 		if((startBasili || HataMakineCalisiyortabla)&& HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
 			hataVar=1;
-			convertAndSendData();
 			hataKoduLcdGoster(5);
 			hata2EEPROM(5);
+			convertAndSendData();
 			tablakapisivicihatasi=1;
 		} else if (tablakapisivicihatasi && makineStop && startBasili==0 && HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==0 && makineStop==1) {
 			tablakapisivicihatasi=0;
@@ -1042,9 +1043,9 @@ void checkAktifCalisma() {
 		if((motorcalisiyor)||(asagivalfcalisiyor)||(devmotorasagicalisiyor)) {
 		    if(millis-timer4>=makineCalismaTmr) {
 			  	hataVar=1;
-			  	convertAndSendData();
 			  	hataKoduLcdGoster(6);
 			  	hata2EEPROM(6);
+			  	convertAndSendData();
 			  	maksimumcalismahatasi=1;
 			  }
 		}
@@ -1490,22 +1491,21 @@ int main(void)
 
   if(iotMode != 0) {
 	  if(machineID[11] == '\0') {
-	  	  takeMachineID(0);
+		  takeMachineID(0);
 	  }
 
-	  //if(wifiSSID[0] == '\0') {
+	  if(wifiSSID[0] != '\0') {
 		  takeWifiSSID(0);
-		  HAL_Delay(500);
-	  //}
+	  }
 
-	  //if(wifiPass[0] == '\0') {
+	  if(wifiPass[0] != '\0') {
 		  takeWifiPass(0);
-		  HAL_Delay(500);
-	  //}
+	  }
+
+	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	  HAL_Delay(250);
+	  convertAndSendData();
   }
-
-  ESP8266_Init(&huart1, wifiSSID, wifiPass);
-
 
   /* USER CODE END 2 */
 
