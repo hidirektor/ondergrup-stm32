@@ -1493,15 +1493,15 @@ int main(void)
 	  	  takeMachineID(0);
 	  }
 
-	  if(wifiSSID[0] == '\0') {
+	  //if(wifiSSID[0] == '\0') {
 		  takeWifiSSID(0);
 		  HAL_Delay(500);
-	  }
+	  //}
 
-	  if(wifiPass[0] == '\0') {
+	  //if(wifiPass[0] == '\0') {
 		  takeWifiPass(0);
 		  HAL_Delay(500);
-	  }
+	  //}
   }
 
   ESP8266_Init(&huart1, wifiSSID, wifiPass);

@@ -49,15 +49,19 @@ void readValFromEEPROM(int state) {
 		//Wifi SSID okuma
 		uint8_t tempSSIDStartPos = ssidStartPos;
 		for(int i=0; i<wifiCharLimit; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
-			tempSSIDStartPos++;
+			if(eepromData[tempSSIDStartPos] != '\0') {
+				wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
+				tempSSIDStartPos++;
+			}
 		}
 	} else {
 		//Wifi Pass okuma
 		uint8_t tempPassStartPos = passStartPos;
 		for(int i=0; i<wifiCharLimit; i++) {
-			wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
-			tempPassStartPos++;
+			if(eepromData[tempPassStartPos] != '\0') {
+				wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
+				tempPassStartPos++;
+			}
 		}
 	}
 }
