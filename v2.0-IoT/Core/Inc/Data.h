@@ -196,6 +196,7 @@ void takeWifiSSID(int state) {
     int writeLoc = 7;
 
     int characterSavePos = 0;
+    uint8_t characterSavePosTemp = ssidStartPos;
 
     printTemplate(2, 1);
 
@@ -211,12 +212,12 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            for(int i=characterSavePos; i<wifiCharLimit; i++) {
+            /*for(int i=characterSavePos; i<wifiCharLimit; i++) {
             	wifiSSIDLoc[i] = '\0';
             }
 
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, 20);
-            HAL_Delay(250);
+            HAL_Delay(250);*/
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -295,7 +296,8 @@ void takeWifiSSID(int state) {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
 
-            wifiSSIDLoc[characterSavePos] = realCharPos - 1;
+            //wifiSSIDLoc[characterSavePos] = realCharPos - 1;
+            eepromData[characterSavePosTemp] = realCharPos - 1;
 
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
@@ -348,6 +350,7 @@ void takeWifiPass(int state) {
     int writeLoc = 7;
 
     int characterSavePos = 0;
+    uint8_t characterSavePosTemp = passStartPos;
 
     printTemplate(3, 1);
 
@@ -363,12 +366,12 @@ void takeWifiPass(int state) {
                 goto mainPASSSection;
             }
 
-            for(int i=characterSavePos; i<wifiCharLimit; i++) {
+            /*for(int i=characterSavePos; i<wifiCharLimit; i++) {
             	wifiPassLocArr[i] = '\0';
             }
 
             memcpy(&eepromData[passStartPos], wifiPassLocArr, 20);
-            HAL_Delay(250);
+            HAL_Delay(250);*/
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -447,7 +450,8 @@ void takeWifiPass(int state) {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
 
-        	wifiPassLocArr[characterSavePos] = realCharPos - 1;
+        	//wifiPassLocArr[characterSavePos] = realCharPos - 1;
+        	eepromData[characterSavePosTemp] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
