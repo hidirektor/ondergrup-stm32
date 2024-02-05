@@ -12,7 +12,7 @@
 #include "i2c-lcd.h"
 
 char* mergeData() {
-	char combinedString[45] = "";
+	char combinedString[44] = "";
 	char temp[10];
 
 	uint8_t uintVariables[] = {
@@ -49,7 +49,6 @@ char* mergeData() {
 			calismaSayisi1000,
 			calismaSayisi10000,
 			dilSecim,
-			eepromData[37],
 			eepromData[38],
 			eepromData[39],
 			eepromData[40],
