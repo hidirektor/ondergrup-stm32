@@ -31,6 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Process.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,13 +61,6 @@ uint8_t buttonCheck(void);
 void bekle(void);
 void i2cTest(void);
 
-//ana fonksiyonlar:
-void checkLCDBacklight(void);
-void checkBasincSalteri(void);
-void checkBasGonder(void);
-void checkKapiSecimleri(void);
-void checkAktifCalisma(void);
-void checkDemoModCalisma(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

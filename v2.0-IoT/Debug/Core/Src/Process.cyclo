@@ -1,0 +1,7 @@
+../Core/Src/Process.c:13:6:checkLCDBacklight	2
+../Core/Src/Process.c:21:6:checkBasincSalteri	5
+../Core/Src/Process.c:38:6:checkBasGonder	9
+../Core/Src/Process.c:52:6:checkKapiSecimleri	9
+../Core/Src/Process.c:82:6:checkAktifCalisma	347
+../Core/Src/Process.c:620:6:checkDemoModCalisma	43
+../Core/Src/Process.c:782:6:mainLoop	34

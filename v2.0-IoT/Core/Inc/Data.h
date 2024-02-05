@@ -11,7 +11,6 @@
 #include "SystemDefaults.h"
 #include "GlobalVariables.h"
 #include "i2c-lcd.h"
-#include <stdint.h>
 
 void printTemplate(int type, int page);
 
