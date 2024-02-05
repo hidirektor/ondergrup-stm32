@@ -32,8 +32,13 @@ void takeMachineID(int state) {
 
         	if(machineID[11] == '\0') {
         		lcd_clear();
-        		lcd_print(1, 1, " ID 12 KARAKTER ");
-        		lcd_print(2, 1, " OLMAK ZORUNDA! ");
+        		if(dilSecim == 0) {
+        			lcd_print(1, 1, " ID 12 KARAKTER ");
+        			lcd_print(2, 1, " OLMAK ZORUNDA! ");
+        		} else {
+        			lcd_print(1, 1, "MACHINE ID MUST");
+        			lcd_print(2, 1, "BE 12 CHARACTERS");
+        		}
         		HAL_Delay(1200);
         		goto mainSection;
         	}
@@ -162,15 +167,19 @@ void takeWifiSSID(int state) {
 
             if(strlen(wifiSSID) > wifiCharacterLimit) {
                 lcd_clear();
-                lcd_print(1, 1, " 20 KARAKTERDEN ");
-                lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                if(dilSecim == 0) {
+                	lcd_print(1, 1, " 20 KARAKTERDEN ");
+                	lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                } else {
+                	lcd_print(1, 1, "SSID CANT EXCEED");
+                	lcd_print(2, 1, " 20  CHARACTERS ");
+                }
                 HAL_Delay(1200);
                 goto mainSSIDSection;
             }
 
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
             HAL_Delay(250);
-            //memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -307,8 +316,13 @@ void takeWifiPass(int state) {
 
             if(strlen(wifiPass) > wifiCharacterLimit) {
                 lcd_clear();
-                lcd_print(1, 1, " 20 KARAKTERDEN ");
-                lcd_print(2, 1, "FAZLA PASS OLMAZ");
+                if(dilSecim == 0) {
+                	lcd_print(1, 1, " 20 KARAKTERDEN ");
+                	lcd_print(2, 1, "FAZLA PASS OLMAZ");
+                } else {
+                	lcd_print(1, 1, "PASS CANT EXCEED");
+                	lcd_print(2, 1, " 20  CHARACTERS ");
+                }
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
@@ -492,8 +506,13 @@ char* mergeData() {
 }
 
 void convertAndSendData() {
-	lcd_print(1, 1, "Veri Esleme");
-	lcd_print(2, 1, "Baslatildi...");
+	if(dilSecim == 0) {
+		lcd_print(1, 1, "  Veri  Esleme  ");
+		lcd_print(2, 1, " Baslatildi ... ");
+	} else {
+		lcd_print(1, 1, " Syncronization ");
+		lcd_print(2, 1, "   Started...   ");
+	}
 	for(int i=0; i<2; i++) {
 		sendMachineData(&huart1, machineID, mergeData());
 	}

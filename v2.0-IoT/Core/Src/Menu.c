@@ -1684,7 +1684,7 @@ void menu() {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(iotMode == 1) {
-			if(dilSecim == 0){
+			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "Active          ");
@@ -1720,7 +1720,11 @@ void menu() {
 	if (menuSayac == 32) {
 		calismaSayModu = 0;
 
-		lcd_print(1, 1, "MAKINE ID       ");
+		if(dilSecim == 0) {
+			lcd_print(1, 1, "MAKINE ID       ");
+		} else {
+			lcd_print(1, 1, "MACHINE ID      ");
+		}
 
 		lcd_print(2, 1, machineID);
 		lcd_print(2, 13, "    ");
