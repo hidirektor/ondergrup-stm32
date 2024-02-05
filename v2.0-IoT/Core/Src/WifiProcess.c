@@ -11,7 +11,6 @@
 #include "ESP8266.h"
 #include "i2c-lcd.h"
 
-
 void takeMachineID(int state) {
 	mainSection:
 	lcd_cursor(1);
@@ -155,15 +154,13 @@ void takeWifiSSID(int state) {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
-    uint8_t characterSavePos = 0;
-
     printTemplate(2, 1);
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(strlen(wifiSSID) > 20) {
+            if(strlen(wifiSSID) > wifiCharacterLimit) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
                 lcd_print(2, 1, "FAZLA SSID OLMAZ");
@@ -171,7 +168,7 @@ void takeWifiSSID(int state) {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, 20);
+            memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
             HAL_Delay(250);
             //memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
@@ -251,13 +248,12 @@ void takeWifiSSID(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-            wifiSSIDLoc[characterSavePos] = realCharPos - 1;
+            wifiSSIDLoc[wifiNameLoc] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
             wifiNameLoc++;
-            characterSavePos++;
 
             HAL_Delay(250);
         }
@@ -265,6 +261,7 @@ void takeWifiSSID(int state) {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
         		wifiSSID[wifiNameLoc] = '\0';
+        		wifiSSIDLoc[wifiNameLoc] = '\0';
 
         		lcd_delete_char(1, 6+wifiNameLoc);
         		HAL_Delay(50);
@@ -302,15 +299,13 @@ void takeWifiPass(int state) {
     int wifiPassLoc = 0;
     int writeLoc = 7;
 
-    uint8_t characterSavePos = 0;
-
     printTemplate(3, 1);
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(strlen(wifiPass) > 20) {
+            if(strlen(wifiPass) > wifiCharacterLimit) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
                 lcd_print(2, 1, "FAZLA PASS OLMAZ");
@@ -318,9 +313,8 @@ void takeWifiPass(int state) {
                 goto mainPASSSection;
             }
 
-            memcpy(&eepromData[passStartPos], wifiPassLocArr, 20);
+            memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
             HAL_Delay(250);
-            //memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -398,13 +392,12 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-        	wifiPassLocArr[characterSavePos] = realCharPos - 1;
+        	wifiPassLocArr[wifiPassLoc] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
             wifiPassLoc++;
-            characterSavePos++;
 
             HAL_Delay(250);
         }
@@ -412,6 +405,7 @@ void takeWifiPass(int state) {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(wifiPass) >= 1) {
             	wifiPass[wifiPassLoc] = '\0';
+            	wifiPassLocArr[wifiPassLoc] = '\0';
 
             	lcd_delete_char(1, 6+wifiPassLoc);
             	HAL_Delay(50);

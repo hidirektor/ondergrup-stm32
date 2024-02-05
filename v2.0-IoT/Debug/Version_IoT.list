@@ -7,45 +7,45 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         0000cc38  080001e4  080001e4  000101e4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000fa8  0800ce1c  0800ce1c  0001ce1c  2**2
+  2 .rodata       00000f94  0800ce1c  0800ce1c  0001ce1c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  0800ddc4  0800ddc4  0002010c  2**0
+  3 .ARM.extab    00000000  0800ddb0  0800ddb0  0002010c  2**0
                   CONTENTS
-  4 .ARM          00000000  0800ddc4  0800ddc4  0002010c  2**0
+  4 .ARM          00000000  0800ddb0  0800ddb0  0002010c  2**0
                   CONTENTS
-  5 .preinit_array 00000000  0800ddc4  0800ddc4  0002010c  2**0
+  5 .preinit_array 00000000  0800ddb0  0800ddb0  0002010c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0800ddc4  0800ddc4  0001ddc4  2**2
+  6 .init_array   00000004  0800ddb0  0800ddb0  0001ddb0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  0800ddc8  0800ddc8  0001ddc8  2**2
+  7 .fini_array   00000004  0800ddb4  0800ddb4  0001ddb4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         0000010c  20000000  0800ddcc  00020000  2**2
+  8 .data         0000010c  20000000  0800ddb8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000004d4  2000010c  0800ded8  0002010c  2**2
+  9 .bss          000004d4  2000010c  0800dec4  0002010c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  200005e0  0800ded8  000205e0  2**0
+ 10 ._user_heap_stack 00000600  200005e0  0800dec4  000205e0  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002010c  2**0
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00020135  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00017976  00000000  00000000  00020178  2**0
+ 13 .debug_info   00017953  00000000  00000000  00020178  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 000035c5  00000000  00000000  00037aee  2**0
+ 14 .debug_abbrev 000035c6  00000000  00000000  00037acb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00001288  00000000  00000000  0003b0b8  2**3
+ 15 .debug_aranges 00001288  00000000  00000000  0003b098  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 00000e5b  00000000  00000000  0003c340  2**0
+ 16 .debug_rnglists 00000e5b  00000000  00000000  0003c320  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001c602  00000000  00000000  0003d19b  2**0
+ 17 .debug_macro  0001c602  00000000  00000000  0003d17b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0001c037  00000000  00000000  0005979d  2**0
+ 18 .debug_line   0001c025  00000000  00000000  0005977d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0009ee5a  00000000  00000000  000757d4  2**0
+ 19 .debug_str    0009ee49  00000000  00000000  000757a2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00005238  00000000  00000000  00114630  2**2
+ 20 .debug_frame  00005238  00000000  00000000  001145ec  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006a  00000000  00000000  00119868  2**0
+ 21 .debug_line_str 0000006a  00000000  00000000  00119824  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -10166,7 +10166,7 @@ void menu() {
  80048e8:	d016      	beq.n	8004918 <menu+0x35c8>
 			takeWifiPass(0);
  80048ea:	2000      	movs	r0, #0
- 80048ec:	f002 fcfa 	bl	80072e4 <takeWifiPass>
+ 80048ec:	f002 fcfc 	bl	80072e8 <takeWifiPass>
 
 			HAL_Delay(50);
  80048f0:	2032      	movs	r0, #50	; 0x32
@@ -13301,7 +13301,7 @@ void checkAktifCalisma() {
  8005fd0:	2001      	movs	r0, #1
  8005fd2:	f7fa fd4b 	bl	8000a6c <hata2EEPROM>
 			convertAndSendData();
- 8005fd6:	f001 fc71 	bl	80078bc <convertAndSendData>
+ 8005fd6:	f001 fc75 	bl	80078c4 <convertAndSendData>
 			acilstophatasi=1;
  8005fda:	4b34      	ldr	r3, [pc, #208]	; (80060ac <checkAktifCalisma+0x1324>)
  8005fdc:	2201      	movs	r2, #1
@@ -13368,7 +13368,7 @@ void checkAktifCalisma() {
  800604e:	2002      	movs	r0, #2
  8006050:	f7fa fd0c 	bl	8000a6c <hata2EEPROM>
 			convertAndSendData();
- 8006054:	f001 fc32 	bl	80078bc <convertAndSendData>
+ 8006054:	f001 fc36 	bl	80078c4 <convertAndSendData>
 			emniyetCercevesihatasi=1;
  8006058:	4b18      	ldr	r3, [pc, #96]	; (80060bc <checkAktifCalisma+0x1334>)
  800605a:	2201      	movs	r2, #1
@@ -13459,7 +13459,7 @@ void checkAktifCalisma() {
  8006124:	2003      	movs	r0, #3
  8006126:	f7fa fca1 	bl	8000a6c <hata2EEPROM>
 			convertAndSendData();
- 800612a:	f001 fbc7 	bl	80078bc <convertAndSendData>
+ 800612a:	f001 fbcb 	bl	80078c4 <convertAndSendData>
 			basinchatasi=1;
  800612e:	4b89      	ldr	r3, [pc, #548]	; (8006354 <checkAktifCalisma+0x15cc>)
  8006130:	2201      	movs	r2, #1
@@ -13525,7 +13525,7 @@ void checkAktifCalisma() {
  800619e:	2004      	movs	r0, #4
  80061a0:	f7fa fc64 	bl	8000a6c <hata2EEPROM>
 			convertAndSendData();
- 80061a4:	f001 fb8a 	bl	80078bc <convertAndSendData>
+ 80061a4:	f001 fb8e 	bl	80078c4 <convertAndSendData>
 			katkapisivicihatasi=1;
  80061a8:	4b70      	ldr	r3, [pc, #448]	; (800636c <checkAktifCalisma+0x15e4>)
  80061aa:	2201      	movs	r2, #1
@@ -13602,7 +13602,7 @@ void checkAktifCalisma() {
  800622c:	2005      	movs	r0, #5
  800622e:	f7fa fc1d 	bl	8000a6c <hata2EEPROM>
 			convertAndSendData();
- 8006232:	f001 fb43 	bl	80078bc <convertAndSendData>
+ 8006232:	f001 fb47 	bl	80078c4 <convertAndSendData>
 			tablakapisivicihatasi=1;
  8006236:	4b50      	ldr	r3, [pc, #320]	; (8006378 <checkAktifCalisma+0x15f0>)
  8006238:	2201      	movs	r2, #1
@@ -13683,7 +13683,7 @@ void checkAktifCalisma() {
  80062bc:	2006      	movs	r0, #6
  80062be:	f7fa fbd5 	bl	8000a6c <hata2EEPROM>
 			  	convertAndSendData();
- 80062c2:	f001 fafb 	bl	80078bc <convertAndSendData>
+ 80062c2:	f001 faff 	bl	80078c4 <convertAndSendData>
 			  	maksimumcalismahatasi=1;
  80062c6:	4b31      	ldr	r3, [pc, #196]	; (800638c <checkAktifCalisma+0x1604>)
  80062c8:	2201      	movs	r2, #1
@@ -15009,10 +15009,10 @@ void mainLoop() {
  8006ca0:	20000276 	.word	0x20000276
 
 08006ca4 <takeMachineID>:
+#include "main.h"
 #include "GlobalVariables.h"
 #include "ESP8266.h"
 #include "i2c-lcd.h"
-
 
 void takeMachineID(int state) {
  8006ca4:	b580      	push	{r7, lr}
@@ -15458,7 +15458,7 @@ void takeWifiSSID(int state) {
     	memset(wifiSSID, 0, sizeof(wifiSSID));
  8006f64:	2214      	movs	r2, #20
  8006f66:	2100      	movs	r1, #0
- 8006f68:	4892      	ldr	r0, [pc, #584]	; (80071b4 <takeWifiSSID+0x264>)
+ 8006f68:	4891      	ldr	r0, [pc, #580]	; (80071b0 <takeWifiSSID+0x260>)
  8006f6a:	f005 fb5d 	bl	800c628 <memset>
     }
 
@@ -15466,11 +15466,11 @@ void takeWifiSSID(int state) {
  8006f6e:	2301      	movs	r3, #1
  8006f70:	617b      	str	r3, [r7, #20]
     cursorPosition = 1;
- 8006f72:	4b91      	ldr	r3, [pc, #580]	; (80071b8 <takeWifiSSID+0x268>)
+ 8006f72:	4b90      	ldr	r3, [pc, #576]	; (80071b4 <takeWifiSSID+0x264>)
  8006f74:	2201      	movs	r2, #1
  8006f76:	601a      	str	r2, [r3, #0]
     page = 1;
- 8006f78:	4b90      	ldr	r3, [pc, #576]	; (80071bc <takeWifiSSID+0x26c>)
+ 8006f78:	4b8f      	ldr	r3, [pc, #572]	; (80071b8 <takeWifiSSID+0x268>)
  8006f7a:	2201      	movs	r2, #1
  8006f7c:	601a      	str	r2, [r3, #0]
     int wifiNameLoc = 0;
@@ -15480,402 +15480,400 @@ void takeWifiSSID(int state) {
  8006f82:	2307      	movs	r3, #7
  8006f84:	60fb      	str	r3, [r7, #12]
 
-    uint8_t characterSavePos = 0;
- 8006f86:	2300      	movs	r3, #0
- 8006f88:	72fb      	strb	r3, [r7, #11]
-
     printTemplate(2, 1);
- 8006f8a:	2101      	movs	r1, #1
- 8006f8c:	2002      	movs	r0, #2
- 8006f8e:	f7f9 ff79 	bl	8000e84 <printTemplate>
+ 8006f86:	2101      	movs	r1, #1
+ 8006f88:	2002      	movs	r0, #2
+ 8006f8a:	f7f9 ff7b 	bl	8000e84 <printTemplate>
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
- 8006f92:	2108      	movs	r1, #8
- 8006f94:	488a      	ldr	r0, [pc, #552]	; (80071c0 <takeWifiSSID+0x270>)
- 8006f96:	f002 f9e1 	bl	800935c <HAL_GPIO_ReadPin>
- 8006f9a:	4603      	mov	r3, r0
- 8006f9c:	2b01      	cmp	r3, #1
- 8006f9e:	d13d      	bne.n	800701c <takeWifiSSID+0xcc>
+ 8006f8e:	2108      	movs	r1, #8
+ 8006f90:	488a      	ldr	r0, [pc, #552]	; (80071bc <takeWifiSSID+0x26c>)
+ 8006f92:	f002 f9e3 	bl	800935c <HAL_GPIO_ReadPin>
+ 8006f96:	4603      	mov	r3, r0
+ 8006f98:	2b01      	cmp	r3, #1
+ 8006f9a:	d13d      	bne.n	8007018 <takeWifiSSID+0xc8>
             lcd_cursor(0);
- 8006fa0:	2000      	movs	r0, #0
- 8006fa2:	f000 ff0d 	bl	8007dc0 <lcd_cursor>
+ 8006f9c:	2000      	movs	r0, #0
+ 8006f9e:	f000 ff0f 	bl	8007dc0 <lcd_cursor>
 
-            if(strlen(wifiSSID) > 20) {
- 8006fa6:	4883      	ldr	r0, [pc, #524]	; (80071b4 <takeWifiSSID+0x264>)
- 8006fa8:	f7f9 f93c 	bl	8000224 <strlen>
- 8006fac:	4603      	mov	r3, r0
- 8006fae:	2b14      	cmp	r3, #20
- 8006fb0:	d910      	bls.n	8006fd4 <takeWifiSSID+0x84>
+            if(strlen(wifiSSID) > wifiCharacterLimit) {
+ 8006fa2:	4883      	ldr	r0, [pc, #524]	; (80071b0 <takeWifiSSID+0x260>)
+ 8006fa4:	f7f9 f93e 	bl	8000224 <strlen>
+ 8006fa8:	4603      	mov	r3, r0
+ 8006faa:	2b14      	cmp	r3, #20
+ 8006fac:	d910      	bls.n	8006fd0 <takeWifiSSID+0x80>
                 lcd_clear();
- 8006fb2:	f000 fed4 	bl	8007d5e <lcd_clear>
+ 8006fae:	f000 fed6 	bl	8007d5e <lcd_clear>
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
- 8006fb6:	4a83      	ldr	r2, [pc, #524]	; (80071c4 <takeWifiSSID+0x274>)
- 8006fb8:	2101      	movs	r1, #1
- 8006fba:	2001      	movs	r0, #1
- 8006fbc:	f000 fe80 	bl	8007cc0 <lcd_print>
+ 8006fb2:	4a83      	ldr	r2, [pc, #524]	; (80071c0 <takeWifiSSID+0x270>)
+ 8006fb4:	2101      	movs	r1, #1
+ 8006fb6:	2001      	movs	r0, #1
+ 8006fb8:	f000 fe82 	bl	8007cc0 <lcd_print>
                 lcd_print(2, 1, "FAZLA SSID OLMAZ");
- 8006fc0:	4a81      	ldr	r2, [pc, #516]	; (80071c8 <takeWifiSSID+0x278>)
- 8006fc2:	2101      	movs	r1, #1
- 8006fc4:	2002      	movs	r0, #2
- 8006fc6:	f000 fe7b 	bl	8007cc0 <lcd_print>
+ 8006fbc:	4a81      	ldr	r2, [pc, #516]	; (80071c4 <takeWifiSSID+0x274>)
+ 8006fbe:	2101      	movs	r1, #1
+ 8006fc0:	2002      	movs	r0, #2
+ 8006fc2:	f000 fe7d 	bl	8007cc0 <lcd_print>
                 HAL_Delay(1200);
- 8006fca:	f44f 6096 	mov.w	r0, #1200	; 0x4b0
- 8006fce:	f001 fbf5 	bl	80087bc <HAL_Delay>
+ 8006fc6:	f44f 6096 	mov.w	r0, #1200	; 0x4b0
+ 8006fca:	f001 fbf7 	bl	80087bc <HAL_Delay>
                 goto mainSSIDSection;
- 8006fd2:	e7c1      	b.n	8006f58 <takeWifiSSID+0x8>
+ 8006fce:	e7c3      	b.n	8006f58 <takeWifiSSID+0x8>
             }
 
-            memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, 20);
- 8006fd4:	4b7d      	ldr	r3, [pc, #500]	; (80071cc <takeWifiSSID+0x27c>)
- 8006fd6:	681b      	ldr	r3, [r3, #0]
+            memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
+ 8006fd0:	4b7d      	ldr	r3, [pc, #500]	; (80071c8 <takeWifiSSID+0x278>)
+ 8006fd2:	681b      	ldr	r3, [r3, #0]
+ 8006fd4:	4a7d      	ldr	r2, [pc, #500]	; (80071cc <takeWifiSSID+0x27c>)
+ 8006fd6:	4413      	add	r3, r2
  8006fd8:	4a7d      	ldr	r2, [pc, #500]	; (80071d0 <takeWifiSSID+0x280>)
- 8006fda:	4413      	add	r3, r2
- 8006fdc:	4a7d      	ldr	r2, [pc, #500]	; (80071d4 <takeWifiSSID+0x284>)
- 8006fde:	6811      	ldr	r1, [r2, #0]
- 8006fe0:	6855      	ldr	r5, [r2, #4]
- 8006fe2:	6894      	ldr	r4, [r2, #8]
- 8006fe4:	68d0      	ldr	r0, [r2, #12]
- 8006fe6:	6019      	str	r1, [r3, #0]
- 8006fe8:	605d      	str	r5, [r3, #4]
- 8006fea:	609c      	str	r4, [r3, #8]
- 8006fec:	60d8      	str	r0, [r3, #12]
- 8006fee:	6911      	ldr	r1, [r2, #16]
- 8006ff0:	6119      	str	r1, [r3, #16]
+ 8006fda:	6811      	ldr	r1, [r2, #0]
+ 8006fdc:	6855      	ldr	r5, [r2, #4]
+ 8006fde:	6894      	ldr	r4, [r2, #8]
+ 8006fe0:	68d0      	ldr	r0, [r2, #12]
+ 8006fe2:	6019      	str	r1, [r3, #0]
+ 8006fe4:	605d      	str	r5, [r3, #4]
+ 8006fe6:	609c      	str	r4, [r3, #8]
+ 8006fe8:	60d8      	str	r0, [r3, #12]
+ 8006fea:	6911      	ldr	r1, [r2, #16]
+ 8006fec:	6119      	str	r1, [r3, #16]
             HAL_Delay(250);
- 8006ff2:	20fa      	movs	r0, #250	; 0xfa
- 8006ff4:	f001 fbe2 	bl	80087bc <HAL_Delay>
+ 8006fee:	20fa      	movs	r0, #250	; 0xfa
+ 8006ff0:	f001 fbe4 	bl	80087bc <HAL_Delay>
             //memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
- 8006ff8:	f640 33b8 	movw	r3, #3000	; 0xbb8
- 8006ffc:	9302      	str	r3, [sp, #8]
- 8006ffe:	236e      	movs	r3, #110	; 0x6e
- 8007000:	9301      	str	r3, [sp, #4]
- 8007002:	4b73      	ldr	r3, [pc, #460]	; (80071d0 <takeWifiSSID+0x280>)
- 8007004:	9300      	str	r3, [sp, #0]
- 8007006:	236e      	movs	r3, #110	; 0x6e
- 8007008:	2200      	movs	r2, #0
- 800700a:	21a0      	movs	r1, #160	; 0xa0
- 800700c:	4872      	ldr	r0, [pc, #456]	; (80071d8 <takeWifiSSID+0x288>)
- 800700e:	f002 fc5f 	bl	80098d0 <HAL_I2C_Mem_Write>
+ 8006ff4:	f640 33b8 	movw	r3, #3000	; 0xbb8
+ 8006ff8:	9302      	str	r3, [sp, #8]
+ 8006ffa:	236e      	movs	r3, #110	; 0x6e
+ 8006ffc:	9301      	str	r3, [sp, #4]
+ 8006ffe:	4b73      	ldr	r3, [pc, #460]	; (80071cc <takeWifiSSID+0x27c>)
+ 8007000:	9300      	str	r3, [sp, #0]
+ 8007002:	236e      	movs	r3, #110	; 0x6e
+ 8007004:	2200      	movs	r2, #0
+ 8007006:	21a0      	movs	r1, #160	; 0xa0
+ 8007008:	4872      	ldr	r0, [pc, #456]	; (80071d4 <takeWifiSSID+0x284>)
+ 800700a:	f002 fc61 	bl	80098d0 <HAL_I2C_Mem_Write>
             HAL_Delay(500);
- 8007012:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
- 8007016:	f001 fbd1 	bl	80087bc <HAL_Delay>
+ 800700e:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
+ 8007012:	f001 fbd3 	bl	80087bc <HAL_Delay>
 
             break;
- 800701a:	e157      	b.n	80072cc <takeWifiSSID+0x37c>
+ 8007016:	e15b      	b.n	80072d0 <takeWifiSSID+0x380>
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
- 800701c:	2101      	movs	r1, #1
- 800701e:	4868      	ldr	r0, [pc, #416]	; (80071c0 <takeWifiSSID+0x270>)
- 8007020:	f002 f99c 	bl	800935c <HAL_GPIO_ReadPin>
- 8007024:	4603      	mov	r3, r0
- 8007026:	2b01      	cmp	r3, #1
- 8007028:	d166      	bne.n	80070f8 <takeWifiSSID+0x1a8>
+ 8007018:	2101      	movs	r1, #1
+ 800701a:	4868      	ldr	r0, [pc, #416]	; (80071bc <takeWifiSSID+0x26c>)
+ 800701c:	f002 f99e 	bl	800935c <HAL_GPIO_ReadPin>
+ 8007020:	4603      	mov	r3, r0
+ 8007022:	2b01      	cmp	r3, #1
+ 8007024:	d166      	bne.n	80070f4 <takeWifiSSID+0x1a4>
         	realCharPos++;
- 800702a:	697b      	ldr	r3, [r7, #20]
- 800702c:	3301      	adds	r3, #1
- 800702e:	617b      	str	r3, [r7, #20]
+ 8007026:	697b      	ldr	r3, [r7, #20]
+ 8007028:	3301      	adds	r3, #1
+ 800702a:	617b      	str	r3, [r7, #20]
         	if(realCharPos > 80) {
- 8007030:	697b      	ldr	r3, [r7, #20]
- 8007032:	2b50      	cmp	r3, #80	; 0x50
- 8007034:	dd01      	ble.n	800703a <takeWifiSSID+0xea>
+ 800702c:	697b      	ldr	r3, [r7, #20]
+ 800702e:	2b50      	cmp	r3, #80	; 0x50
+ 8007030:	dd01      	ble.n	8007036 <takeWifiSSID+0xe6>
         		realCharPos = 1;
- 8007036:	2301      	movs	r3, #1
- 8007038:	617b      	str	r3, [r7, #20]
+ 8007032:	2301      	movs	r3, #1
+ 8007034:	617b      	str	r3, [r7, #20]
         	}
             if (cursorPosition == 16) {
- 800703a:	4b5f      	ldr	r3, [pc, #380]	; (80071b8 <takeWifiSSID+0x268>)
- 800703c:	681b      	ldr	r3, [r3, #0]
- 800703e:	2b10      	cmp	r3, #16
- 8007040:	d152      	bne.n	80070e8 <takeWifiSSID+0x198>
+ 8007036:	4b5f      	ldr	r3, [pc, #380]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007038:	681b      	ldr	r3, [r3, #0]
+ 800703a:	2b10      	cmp	r3, #16
+ 800703c:	d152      	bne.n	80070e4 <takeWifiSSID+0x194>
             	if(page == 1) {
- 8007042:	4b5e      	ldr	r3, [pc, #376]	; (80071bc <takeWifiSSID+0x26c>)
- 8007044:	681b      	ldr	r3, [r3, #0]
- 8007046:	2b01      	cmp	r3, #1
- 8007048:	d10c      	bne.n	8007064 <takeWifiSSID+0x114>
+ 800703e:	4b5e      	ldr	r3, [pc, #376]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007040:	681b      	ldr	r3, [r3, #0]
+ 8007042:	2b01      	cmp	r3, #1
+ 8007044:	d10c      	bne.n	8007060 <takeWifiSSID+0x110>
             		cursorPosition = 1;
- 800704a:	4b5b      	ldr	r3, [pc, #364]	; (80071b8 <takeWifiSSID+0x268>)
- 800704c:	2201      	movs	r2, #1
- 800704e:	601a      	str	r2, [r3, #0]
+ 8007046:	4b5b      	ldr	r3, [pc, #364]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007048:	2201      	movs	r2, #1
+ 800704a:	601a      	str	r2, [r3, #0]
             		page++;
- 8007050:	4b5a      	ldr	r3, [pc, #360]	; (80071bc <takeWifiSSID+0x26c>)
- 8007052:	681b      	ldr	r3, [r3, #0]
- 8007054:	3301      	adds	r3, #1
- 8007056:	4a59      	ldr	r2, [pc, #356]	; (80071bc <takeWifiSSID+0x26c>)
- 8007058:	6013      	str	r3, [r2, #0]
+ 800704c:	4b5a      	ldr	r3, [pc, #360]	; (80071b8 <takeWifiSSID+0x268>)
+ 800704e:	681b      	ldr	r3, [r3, #0]
+ 8007050:	3301      	adds	r3, #1
+ 8007052:	4a59      	ldr	r2, [pc, #356]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007054:	6013      	str	r3, [r2, #0]
             		printTemplate(2, 2);
- 800705a:	2102      	movs	r1, #2
- 800705c:	2002      	movs	r0, #2
- 800705e:	f7f9 ff11 	bl	8000e84 <printTemplate>
- 8007062:	e046      	b.n	80070f2 <takeWifiSSID+0x1a2>
+ 8007056:	2102      	movs	r1, #2
+ 8007058:	2002      	movs	r0, #2
+ 800705a:	f7f9 ff13 	bl	8000e84 <printTemplate>
+ 800705e:	e046      	b.n	80070ee <takeWifiSSID+0x19e>
             	} else if(page == 2) {
- 8007064:	4b55      	ldr	r3, [pc, #340]	; (80071bc <takeWifiSSID+0x26c>)
- 8007066:	681b      	ldr	r3, [r3, #0]
- 8007068:	2b02      	cmp	r3, #2
- 800706a:	d10c      	bne.n	8007086 <takeWifiSSID+0x136>
+ 8007060:	4b55      	ldr	r3, [pc, #340]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007062:	681b      	ldr	r3, [r3, #0]
+ 8007064:	2b02      	cmp	r3, #2
+ 8007066:	d10c      	bne.n	8007082 <takeWifiSSID+0x132>
             		cursorPosition = 1;
- 800706c:	4b52      	ldr	r3, [pc, #328]	; (80071b8 <takeWifiSSID+0x268>)
- 800706e:	2201      	movs	r2, #1
- 8007070:	601a      	str	r2, [r3, #0]
+ 8007068:	4b52      	ldr	r3, [pc, #328]	; (80071b4 <takeWifiSSID+0x264>)
+ 800706a:	2201      	movs	r2, #1
+ 800706c:	601a      	str	r2, [r3, #0]
             		page++;
- 8007072:	4b52      	ldr	r3, [pc, #328]	; (80071bc <takeWifiSSID+0x26c>)
- 8007074:	681b      	ldr	r3, [r3, #0]
- 8007076:	3301      	adds	r3, #1
- 8007078:	4a50      	ldr	r2, [pc, #320]	; (80071bc <takeWifiSSID+0x26c>)
- 800707a:	6013      	str	r3, [r2, #0]
+ 800706e:	4b52      	ldr	r3, [pc, #328]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007070:	681b      	ldr	r3, [r3, #0]
+ 8007072:	3301      	adds	r3, #1
+ 8007074:	4a50      	ldr	r2, [pc, #320]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007076:	6013      	str	r3, [r2, #0]
             		printTemplate(2, 3);
- 800707c:	2103      	movs	r1, #3
- 800707e:	2002      	movs	r0, #2
- 8007080:	f7f9 ff00 	bl	8000e84 <printTemplate>
- 8007084:	e035      	b.n	80070f2 <takeWifiSSID+0x1a2>
+ 8007078:	2103      	movs	r1, #3
+ 800707a:	2002      	movs	r0, #2
+ 800707c:	f7f9 ff02 	bl	8000e84 <printTemplate>
+ 8007080:	e035      	b.n	80070ee <takeWifiSSID+0x19e>
             	} else if(page == 3) {
- 8007086:	4b4d      	ldr	r3, [pc, #308]	; (80071bc <takeWifiSSID+0x26c>)
- 8007088:	681b      	ldr	r3, [r3, #0]
- 800708a:	2b03      	cmp	r3, #3
- 800708c:	d10c      	bne.n	80070a8 <takeWifiSSID+0x158>
+ 8007082:	4b4d      	ldr	r3, [pc, #308]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007084:	681b      	ldr	r3, [r3, #0]
+ 8007086:	2b03      	cmp	r3, #3
+ 8007088:	d10c      	bne.n	80070a4 <takeWifiSSID+0x154>
             		cursorPosition = 1;
- 800708e:	4b4a      	ldr	r3, [pc, #296]	; (80071b8 <takeWifiSSID+0x268>)
- 8007090:	2201      	movs	r2, #1
- 8007092:	601a      	str	r2, [r3, #0]
+ 800708a:	4b4a      	ldr	r3, [pc, #296]	; (80071b4 <takeWifiSSID+0x264>)
+ 800708c:	2201      	movs	r2, #1
+ 800708e:	601a      	str	r2, [r3, #0]
             		page++;
- 8007094:	4b49      	ldr	r3, [pc, #292]	; (80071bc <takeWifiSSID+0x26c>)
- 8007096:	681b      	ldr	r3, [r3, #0]
- 8007098:	3301      	adds	r3, #1
- 800709a:	4a48      	ldr	r2, [pc, #288]	; (80071bc <takeWifiSSID+0x26c>)
- 800709c:	6013      	str	r3, [r2, #0]
+ 8007090:	4b49      	ldr	r3, [pc, #292]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007092:	681b      	ldr	r3, [r3, #0]
+ 8007094:	3301      	adds	r3, #1
+ 8007096:	4a48      	ldr	r2, [pc, #288]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007098:	6013      	str	r3, [r2, #0]
             		printTemplate(2, 4);
- 800709e:	2104      	movs	r1, #4
- 80070a0:	2002      	movs	r0, #2
- 80070a2:	f7f9 feef 	bl	8000e84 <printTemplate>
- 80070a6:	e024      	b.n	80070f2 <takeWifiSSID+0x1a2>
+ 800709a:	2104      	movs	r1, #4
+ 800709c:	2002      	movs	r0, #2
+ 800709e:	f7f9 fef1 	bl	8000e84 <printTemplate>
+ 80070a2:	e024      	b.n	80070ee <takeWifiSSID+0x19e>
             	} else if(page == 4) {
- 80070a8:	4b44      	ldr	r3, [pc, #272]	; (80071bc <takeWifiSSID+0x26c>)
- 80070aa:	681b      	ldr	r3, [r3, #0]
- 80070ac:	2b04      	cmp	r3, #4
- 80070ae:	d10c      	bne.n	80070ca <takeWifiSSID+0x17a>
+ 80070a4:	4b44      	ldr	r3, [pc, #272]	; (80071b8 <takeWifiSSID+0x268>)
+ 80070a6:	681b      	ldr	r3, [r3, #0]
+ 80070a8:	2b04      	cmp	r3, #4
+ 80070aa:	d10c      	bne.n	80070c6 <takeWifiSSID+0x176>
             		cursorPosition = 1;
- 80070b0:	4b41      	ldr	r3, [pc, #260]	; (80071b8 <takeWifiSSID+0x268>)
- 80070b2:	2201      	movs	r2, #1
- 80070b4:	601a      	str	r2, [r3, #0]
+ 80070ac:	4b41      	ldr	r3, [pc, #260]	; (80071b4 <takeWifiSSID+0x264>)
+ 80070ae:	2201      	movs	r2, #1
+ 80070b0:	601a      	str	r2, [r3, #0]
             		page++;
- 80070b6:	4b41      	ldr	r3, [pc, #260]	; (80071bc <takeWifiSSID+0x26c>)
- 80070b8:	681b      	ldr	r3, [r3, #0]
- 80070ba:	3301      	adds	r3, #1
- 80070bc:	4a3f      	ldr	r2, [pc, #252]	; (80071bc <takeWifiSSID+0x26c>)
- 80070be:	6013      	str	r3, [r2, #0]
+ 80070b2:	4b41      	ldr	r3, [pc, #260]	; (80071b8 <takeWifiSSID+0x268>)
+ 80070b4:	681b      	ldr	r3, [r3, #0]
+ 80070b6:	3301      	adds	r3, #1
+ 80070b8:	4a3f      	ldr	r2, [pc, #252]	; (80071b8 <takeWifiSSID+0x268>)
+ 80070ba:	6013      	str	r3, [r2, #0]
             		printTemplate(2, 5);
- 80070c0:	2105      	movs	r1, #5
- 80070c2:	2002      	movs	r0, #2
- 80070c4:	f7f9 fede 	bl	8000e84 <printTemplate>
- 80070c8:	e013      	b.n	80070f2 <takeWifiSSID+0x1a2>
+ 80070bc:	2105      	movs	r1, #5
+ 80070be:	2002      	movs	r0, #2
+ 80070c0:	f7f9 fee0 	bl	8000e84 <printTemplate>
+ 80070c4:	e013      	b.n	80070ee <takeWifiSSID+0x19e>
             	} else if(page == 5) {
- 80070ca:	4b3c      	ldr	r3, [pc, #240]	; (80071bc <takeWifiSSID+0x26c>)
- 80070cc:	681b      	ldr	r3, [r3, #0]
- 80070ce:	2b05      	cmp	r3, #5
- 80070d0:	d10f      	bne.n	80070f2 <takeWifiSSID+0x1a2>
+ 80070c6:	4b3c      	ldr	r3, [pc, #240]	; (80071b8 <takeWifiSSID+0x268>)
+ 80070c8:	681b      	ldr	r3, [r3, #0]
+ 80070ca:	2b05      	cmp	r3, #5
+ 80070cc:	d10f      	bne.n	80070ee <takeWifiSSID+0x19e>
             		cursorPosition = 1;
- 80070d2:	4b39      	ldr	r3, [pc, #228]	; (80071b8 <takeWifiSSID+0x268>)
- 80070d4:	2201      	movs	r2, #1
- 80070d6:	601a      	str	r2, [r3, #0]
+ 80070ce:	4b39      	ldr	r3, [pc, #228]	; (80071b4 <takeWifiSSID+0x264>)
+ 80070d0:	2201      	movs	r2, #1
+ 80070d2:	601a      	str	r2, [r3, #0]
             		page = 1;
- 80070d8:	4b38      	ldr	r3, [pc, #224]	; (80071bc <takeWifiSSID+0x26c>)
- 80070da:	2201      	movs	r2, #1
- 80070dc:	601a      	str	r2, [r3, #0]
+ 80070d4:	4b38      	ldr	r3, [pc, #224]	; (80071b8 <takeWifiSSID+0x268>)
+ 80070d6:	2201      	movs	r2, #1
+ 80070d8:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 1);
- 80070de:	2101      	movs	r1, #1
- 80070e0:	2002      	movs	r0, #2
- 80070e2:	f7f9 fecf 	bl	8000e84 <printTemplate>
- 80070e6:	e004      	b.n	80070f2 <takeWifiSSID+0x1a2>
+ 80070da:	2101      	movs	r1, #1
+ 80070dc:	2002      	movs	r0, #2
+ 80070de:	f7f9 fed1 	bl	8000e84 <printTemplate>
+ 80070e2:	e004      	b.n	80070ee <takeWifiSSID+0x19e>
             	}
             } else {
             	cursorPosition++;
- 80070e8:	4b33      	ldr	r3, [pc, #204]	; (80071b8 <takeWifiSSID+0x268>)
- 80070ea:	681b      	ldr	r3, [r3, #0]
- 80070ec:	3301      	adds	r3, #1
- 80070ee:	4a32      	ldr	r2, [pc, #200]	; (80071b8 <takeWifiSSID+0x268>)
- 80070f0:	6013      	str	r3, [r2, #0]
+ 80070e4:	4b33      	ldr	r3, [pc, #204]	; (80071b4 <takeWifiSSID+0x264>)
+ 80070e6:	681b      	ldr	r3, [r3, #0]
+ 80070e8:	3301      	adds	r3, #1
+ 80070ea:	4a32      	ldr	r2, [pc, #200]	; (80071b4 <takeWifiSSID+0x264>)
+ 80070ec:	6013      	str	r3, [r2, #0]
             }
 
             HAL_Delay(250);
- 80070f2:	20fa      	movs	r0, #250	; 0xfa
- 80070f4:	f001 fb62 	bl	80087bc <HAL_Delay>
+ 80070ee:	20fa      	movs	r0, #250	; 0xfa
+ 80070f0:	f001 fb64 	bl	80087bc <HAL_Delay>
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
- 80070f8:	2108      	movs	r1, #8
- 80070fa:	4838      	ldr	r0, [pc, #224]	; (80071dc <takeWifiSSID+0x28c>)
- 80070fc:	f002 f92e 	bl	800935c <HAL_GPIO_ReadPin>
- 8007100:	4603      	mov	r3, r0
- 8007102:	2b01      	cmp	r3, #1
- 8007104:	d174      	bne.n	80071f0 <takeWifiSSID+0x2a0>
+ 80070f4:	2108      	movs	r1, #8
+ 80070f6:	4838      	ldr	r0, [pc, #224]	; (80071d8 <takeWifiSSID+0x288>)
+ 80070f8:	f002 f930 	bl	800935c <HAL_GPIO_ReadPin>
+ 80070fc:	4603      	mov	r3, r0
+ 80070fe:	2b01      	cmp	r3, #1
+ 8007100:	d174      	bne.n	80071ec <takeWifiSSID+0x29c>
         	realCharPos--;
- 8007106:	697b      	ldr	r3, [r7, #20]
- 8007108:	3b01      	subs	r3, #1
- 800710a:	617b      	str	r3, [r7, #20]
+ 8007102:	697b      	ldr	r3, [r7, #20]
+ 8007104:	3b01      	subs	r3, #1
+ 8007106:	617b      	str	r3, [r7, #20]
         	if(realCharPos < 1) {
- 800710c:	697b      	ldr	r3, [r7, #20]
- 800710e:	2b00      	cmp	r3, #0
- 8007110:	dc01      	bgt.n	8007116 <takeWifiSSID+0x1c6>
+ 8007108:	697b      	ldr	r3, [r7, #20]
+ 800710a:	2b00      	cmp	r3, #0
+ 800710c:	dc01      	bgt.n	8007112 <takeWifiSSID+0x1c2>
         		realCharPos = 80;
- 8007112:	2350      	movs	r3, #80	; 0x50
- 8007114:	617b      	str	r3, [r7, #20]
+ 800710e:	2350      	movs	r3, #80	; 0x50
+ 8007110:	617b      	str	r3, [r7, #20]
         	}
             if(cursorPosition == 1) {
- 8007116:	4b28      	ldr	r3, [pc, #160]	; (80071b8 <takeWifiSSID+0x268>)
- 8007118:	681b      	ldr	r3, [r3, #0]
- 800711a:	2b01      	cmp	r3, #1
- 800711c:	d160      	bne.n	80071e0 <takeWifiSSID+0x290>
+ 8007112:	4b28      	ldr	r3, [pc, #160]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007114:	681b      	ldr	r3, [r3, #0]
+ 8007116:	2b01      	cmp	r3, #1
+ 8007118:	d160      	bne.n	80071dc <takeWifiSSID+0x28c>
             	if(page == 1) {
- 800711e:	4b27      	ldr	r3, [pc, #156]	; (80071bc <takeWifiSSID+0x26c>)
- 8007120:	681b      	ldr	r3, [r3, #0]
- 8007122:	2b01      	cmp	r3, #1
- 8007124:	d10a      	bne.n	800713c <takeWifiSSID+0x1ec>
+ 800711a:	4b27      	ldr	r3, [pc, #156]	; (80071b8 <takeWifiSSID+0x268>)
+ 800711c:	681b      	ldr	r3, [r3, #0]
+ 800711e:	2b01      	cmp	r3, #1
+ 8007120:	d10a      	bne.n	8007138 <takeWifiSSID+0x1e8>
             		cursorPosition = 16;
- 8007126:	4b24      	ldr	r3, [pc, #144]	; (80071b8 <takeWifiSSID+0x268>)
- 8007128:	2210      	movs	r2, #16
- 800712a:	601a      	str	r2, [r3, #0]
+ 8007122:	4b24      	ldr	r3, [pc, #144]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007124:	2210      	movs	r2, #16
+ 8007126:	601a      	str	r2, [r3, #0]
             		page = 5;
- 800712c:	4b23      	ldr	r3, [pc, #140]	; (80071bc <takeWifiSSID+0x26c>)
- 800712e:	2205      	movs	r2, #5
- 8007130:	601a      	str	r2, [r3, #0]
+ 8007128:	4b23      	ldr	r3, [pc, #140]	; (80071b8 <takeWifiSSID+0x268>)
+ 800712a:	2205      	movs	r2, #5
+ 800712c:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 5);
- 8007132:	2105      	movs	r1, #5
- 8007134:	2002      	movs	r0, #2
- 8007136:	f7f9 fea5 	bl	8000e84 <printTemplate>
- 800713a:	e056      	b.n	80071ea <takeWifiSSID+0x29a>
+ 800712e:	2105      	movs	r1, #5
+ 8007130:	2002      	movs	r0, #2
+ 8007132:	f7f9 fea7 	bl	8000e84 <printTemplate>
+ 8007136:	e056      	b.n	80071e6 <takeWifiSSID+0x296>
             	} else if(page == 2) {
- 800713c:	4b1f      	ldr	r3, [pc, #124]	; (80071bc <takeWifiSSID+0x26c>)
- 800713e:	681b      	ldr	r3, [r3, #0]
- 8007140:	2b02      	cmp	r3, #2
- 8007142:	d10a      	bne.n	800715a <takeWifiSSID+0x20a>
+ 8007138:	4b1f      	ldr	r3, [pc, #124]	; (80071b8 <takeWifiSSID+0x268>)
+ 800713a:	681b      	ldr	r3, [r3, #0]
+ 800713c:	2b02      	cmp	r3, #2
+ 800713e:	d10a      	bne.n	8007156 <takeWifiSSID+0x206>
             		cursorPosition = 16;
- 8007144:	4b1c      	ldr	r3, [pc, #112]	; (80071b8 <takeWifiSSID+0x268>)
- 8007146:	2210      	movs	r2, #16
- 8007148:	601a      	str	r2, [r3, #0]
+ 8007140:	4b1c      	ldr	r3, [pc, #112]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007142:	2210      	movs	r2, #16
+ 8007144:	601a      	str	r2, [r3, #0]
             		page = 1;
- 800714a:	4b1c      	ldr	r3, [pc, #112]	; (80071bc <takeWifiSSID+0x26c>)
- 800714c:	2201      	movs	r2, #1
- 800714e:	601a      	str	r2, [r3, #0]
+ 8007146:	4b1c      	ldr	r3, [pc, #112]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007148:	2201      	movs	r2, #1
+ 800714a:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 1);
- 8007150:	2101      	movs	r1, #1
- 8007152:	2002      	movs	r0, #2
- 8007154:	f7f9 fe96 	bl	8000e84 <printTemplate>
- 8007158:	e047      	b.n	80071ea <takeWifiSSID+0x29a>
+ 800714c:	2101      	movs	r1, #1
+ 800714e:	2002      	movs	r0, #2
+ 8007150:	f7f9 fe98 	bl	8000e84 <printTemplate>
+ 8007154:	e047      	b.n	80071e6 <takeWifiSSID+0x296>
             	} else if(page == 3) {
- 800715a:	4b18      	ldr	r3, [pc, #96]	; (80071bc <takeWifiSSID+0x26c>)
- 800715c:	681b      	ldr	r3, [r3, #0]
- 800715e:	2b03      	cmp	r3, #3
- 8007160:	d10a      	bne.n	8007178 <takeWifiSSID+0x228>
+ 8007156:	4b18      	ldr	r3, [pc, #96]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007158:	681b      	ldr	r3, [r3, #0]
+ 800715a:	2b03      	cmp	r3, #3
+ 800715c:	d10a      	bne.n	8007174 <takeWifiSSID+0x224>
             		cursorPosition = 16;
- 8007162:	4b15      	ldr	r3, [pc, #84]	; (80071b8 <takeWifiSSID+0x268>)
- 8007164:	2210      	movs	r2, #16
- 8007166:	601a      	str	r2, [r3, #0]
+ 800715e:	4b15      	ldr	r3, [pc, #84]	; (80071b4 <takeWifiSSID+0x264>)
+ 8007160:	2210      	movs	r2, #16
+ 8007162:	601a      	str	r2, [r3, #0]
             		page = 2;
- 8007168:	4b14      	ldr	r3, [pc, #80]	; (80071bc <takeWifiSSID+0x26c>)
- 800716a:	2202      	movs	r2, #2
- 800716c:	601a      	str	r2, [r3, #0]
+ 8007164:	4b14      	ldr	r3, [pc, #80]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007166:	2202      	movs	r2, #2
+ 8007168:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 2);
- 800716e:	2102      	movs	r1, #2
- 8007170:	2002      	movs	r0, #2
- 8007172:	f7f9 fe87 	bl	8000e84 <printTemplate>
- 8007176:	e038      	b.n	80071ea <takeWifiSSID+0x29a>
+ 800716a:	2102      	movs	r1, #2
+ 800716c:	2002      	movs	r0, #2
+ 800716e:	f7f9 fe89 	bl	8000e84 <printTemplate>
+ 8007172:	e038      	b.n	80071e6 <takeWifiSSID+0x296>
             	} else if(page == 4) {
- 8007178:	4b10      	ldr	r3, [pc, #64]	; (80071bc <takeWifiSSID+0x26c>)
- 800717a:	681b      	ldr	r3, [r3, #0]
- 800717c:	2b04      	cmp	r3, #4
- 800717e:	d10a      	bne.n	8007196 <takeWifiSSID+0x246>
+ 8007174:	4b10      	ldr	r3, [pc, #64]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007176:	681b      	ldr	r3, [r3, #0]
+ 8007178:	2b04      	cmp	r3, #4
+ 800717a:	d10a      	bne.n	8007192 <takeWifiSSID+0x242>
             		cursorPosition = 16;
- 8007180:	4b0d      	ldr	r3, [pc, #52]	; (80071b8 <takeWifiSSID+0x268>)
- 8007182:	2210      	movs	r2, #16
- 8007184:	601a      	str	r2, [r3, #0]
+ 800717c:	4b0d      	ldr	r3, [pc, #52]	; (80071b4 <takeWifiSSID+0x264>)
+ 800717e:	2210      	movs	r2, #16
+ 8007180:	601a      	str	r2, [r3, #0]
             		page = 3;
- 8007186:	4b0d      	ldr	r3, [pc, #52]	; (80071bc <takeWifiSSID+0x26c>)
- 8007188:	2203      	movs	r2, #3
- 800718a:	601a      	str	r2, [r3, #0]
+ 8007182:	4b0d      	ldr	r3, [pc, #52]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007184:	2203      	movs	r2, #3
+ 8007186:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 3);
- 800718c:	2103      	movs	r1, #3
- 800718e:	2002      	movs	r0, #2
- 8007190:	f7f9 fe78 	bl	8000e84 <printTemplate>
- 8007194:	e029      	b.n	80071ea <takeWifiSSID+0x29a>
+ 8007188:	2103      	movs	r1, #3
+ 800718a:	2002      	movs	r0, #2
+ 800718c:	f7f9 fe7a 	bl	8000e84 <printTemplate>
+ 8007190:	e029      	b.n	80071e6 <takeWifiSSID+0x296>
             	} else if(page == 5) {
- 8007196:	4b09      	ldr	r3, [pc, #36]	; (80071bc <takeWifiSSID+0x26c>)
- 8007198:	681b      	ldr	r3, [r3, #0]
- 800719a:	2b05      	cmp	r3, #5
- 800719c:	d125      	bne.n	80071ea <takeWifiSSID+0x29a>
+ 8007192:	4b09      	ldr	r3, [pc, #36]	; (80071b8 <takeWifiSSID+0x268>)
+ 8007194:	681b      	ldr	r3, [r3, #0]
+ 8007196:	2b05      	cmp	r3, #5
+ 8007198:	d125      	bne.n	80071e6 <takeWifiSSID+0x296>
             		cursorPosition = 16;
- 800719e:	4b06      	ldr	r3, [pc, #24]	; (80071b8 <takeWifiSSID+0x268>)
- 80071a0:	2210      	movs	r2, #16
- 80071a2:	601a      	str	r2, [r3, #0]
+ 800719a:	4b06      	ldr	r3, [pc, #24]	; (80071b4 <takeWifiSSID+0x264>)
+ 800719c:	2210      	movs	r2, #16
+ 800719e:	601a      	str	r2, [r3, #0]
             		page = 4;
- 80071a4:	4b05      	ldr	r3, [pc, #20]	; (80071bc <takeWifiSSID+0x26c>)
- 80071a6:	2204      	movs	r2, #4
- 80071a8:	601a      	str	r2, [r3, #0]
+ 80071a0:	4b05      	ldr	r3, [pc, #20]	; (80071b8 <takeWifiSSID+0x268>)
+ 80071a2:	2204      	movs	r2, #4
+ 80071a4:	601a      	str	r2, [r3, #0]
             		printTemplate(2, 4);
- 80071aa:	2104      	movs	r1, #4
- 80071ac:	2002      	movs	r0, #2
- 80071ae:	f7f9 fe69 	bl	8000e84 <printTemplate>
- 80071b2:	e01a      	b.n	80071ea <takeWifiSSID+0x29a>
- 80071b4:	200001ac 	.word	0x200001ac
- 80071b8:	20000000 	.word	0x20000000
- 80071bc:	20000004 	.word	0x20000004
- 80071c0:	40010800 	.word	0x40010800
- 80071c4:	0800dca8 	.word	0x0800dca8
- 80071c8:	0800dcbc 	.word	0x0800dcbc
- 80071cc:	20000010 	.word	0x20000010
- 80071d0:	20000128 	.word	0x20000128
- 80071d4:	200001d4 	.word	0x200001d4
- 80071d8:	200003ac 	.word	0x200003ac
- 80071dc:	40011000 	.word	0x40011000
+ 80071a6:	2104      	movs	r1, #4
+ 80071a8:	2002      	movs	r0, #2
+ 80071aa:	f7f9 fe6b 	bl	8000e84 <printTemplate>
+ 80071ae:	e01a      	b.n	80071e6 <takeWifiSSID+0x296>
+ 80071b0:	200001ac 	.word	0x200001ac
+ 80071b4:	20000000 	.word	0x20000000
+ 80071b8:	20000004 	.word	0x20000004
+ 80071bc:	40010800 	.word	0x40010800
+ 80071c0:	0800dca8 	.word	0x0800dca8
+ 80071c4:	0800dcbc 	.word	0x0800dcbc
+ 80071c8:	20000010 	.word	0x20000010
+ 80071cc:	20000128 	.word	0x20000128
+ 80071d0:	200001d4 	.word	0x200001d4
+ 80071d4:	200003ac 	.word	0x200003ac
+ 80071d8:	40011000 	.word	0x40011000
             	}
             } else {
             	cursorPosition--;
- 80071e0:	4b3c      	ldr	r3, [pc, #240]	; (80072d4 <takeWifiSSID+0x384>)
- 80071e2:	681b      	ldr	r3, [r3, #0]
- 80071e4:	3b01      	subs	r3, #1
- 80071e6:	4a3b      	ldr	r2, [pc, #236]	; (80072d4 <takeWifiSSID+0x384>)
- 80071e8:	6013      	str	r3, [r2, #0]
+ 80071dc:	4b3e      	ldr	r3, [pc, #248]	; (80072d8 <takeWifiSSID+0x388>)
+ 80071de:	681b      	ldr	r3, [r3, #0]
+ 80071e0:	3b01      	subs	r3, #1
+ 80071e2:	4a3d      	ldr	r2, [pc, #244]	; (80072d8 <takeWifiSSID+0x388>)
+ 80071e4:	6013      	str	r3, [r2, #0]
             }
 
             HAL_Delay(250);
- 80071ea:	20fa      	movs	r0, #250	; 0xfa
- 80071ec:	f001 fae6 	bl	80087bc <HAL_Delay>
+ 80071e6:	20fa      	movs	r0, #250	; 0xfa
+ 80071e8:	f001 fae8 	bl	80087bc <HAL_Delay>
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
- 80071f0:	2102      	movs	r1, #2
- 80071f2:	4839      	ldr	r0, [pc, #228]	; (80072d8 <takeWifiSSID+0x388>)
- 80071f4:	f002 f8b2 	bl	800935c <HAL_GPIO_ReadPin>
- 80071f8:	4603      	mov	r3, r0
- 80071fa:	2b01      	cmp	r3, #1
- 80071fc:	d128      	bne.n	8007250 <takeWifiSSID+0x300>
+ 80071ec:	2102      	movs	r1, #2
+ 80071ee:	483b      	ldr	r0, [pc, #236]	; (80072dc <takeWifiSSID+0x38c>)
+ 80071f0:	f002 f8b4 	bl	800935c <HAL_GPIO_ReadPin>
+ 80071f4:	4603      	mov	r3, r0
+ 80071f6:	2b01      	cmp	r3, #1
+ 80071f8:	d127      	bne.n	800724a <takeWifiSSID+0x2fa>
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
- 80071fe:	697b      	ldr	r3, [r7, #20]
- 8007200:	3b01      	subs	r3, #1
- 8007202:	4618      	mov	r0, r3
- 8007204:	f7f9 fa9e 	bl	8000744 <getCharFromCursorPosition>
- 8007208:	4603      	mov	r3, r0
- 800720a:	b2d9      	uxtb	r1, r3
- 800720c:	4a33      	ldr	r2, [pc, #204]	; (80072dc <takeWifiSSID+0x38c>)
- 800720e:	693b      	ldr	r3, [r7, #16]
- 8007210:	4413      	add	r3, r2
- 8007212:	460a      	mov	r2, r1
- 8007214:	701a      	strb	r2, [r3, #0]
-            wifiSSIDLoc[characterSavePos] = realCharPos - 1;
- 8007216:	697b      	ldr	r3, [r7, #20]
- 8007218:	b2da      	uxtb	r2, r3
- 800721a:	7afb      	ldrb	r3, [r7, #11]
- 800721c:	3a01      	subs	r2, #1
- 800721e:	b2d1      	uxtb	r1, r2
- 8007220:	4a2f      	ldr	r2, [pc, #188]	; (80072e0 <takeWifiSSID+0x390>)
- 8007222:	54d1      	strb	r1, [r2, r3]
+ 80071fa:	697b      	ldr	r3, [r7, #20]
+ 80071fc:	3b01      	subs	r3, #1
+ 80071fe:	4618      	mov	r0, r3
+ 8007200:	f7f9 faa0 	bl	8000744 <getCharFromCursorPosition>
+ 8007204:	4603      	mov	r3, r0
+ 8007206:	b2d9      	uxtb	r1, r3
+ 8007208:	4a35      	ldr	r2, [pc, #212]	; (80072e0 <takeWifiSSID+0x390>)
+ 800720a:	693b      	ldr	r3, [r7, #16]
+ 800720c:	4413      	add	r3, r2
+ 800720e:	460a      	mov	r2, r1
+ 8007210:	701a      	strb	r2, [r3, #0]
+            wifiSSIDLoc[wifiNameLoc] = realCharPos - 1;
+ 8007212:	697b      	ldr	r3, [r7, #20]
+ 8007214:	b2db      	uxtb	r3, r3
+ 8007216:	3b01      	subs	r3, #1
+ 8007218:	b2d9      	uxtb	r1, r3
+ 800721a:	4a32      	ldr	r2, [pc, #200]	; (80072e4 <takeWifiSSID+0x394>)
+ 800721c:	693b      	ldr	r3, [r7, #16]
+ 800721e:	4413      	add	r3, r2
+ 8007220:	460a      	mov	r2, r1
+ 8007222:	701a      	strb	r2, [r3, #0]
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
  8007224:	68fb      	ldr	r3, [r7, #12]
  8007226:	b2d9      	uxtb	r1, r3
- 8007228:	4a2c      	ldr	r2, [pc, #176]	; (80072dc <takeWifiSSID+0x38c>)
+ 8007228:	4a2d      	ldr	r2, [pc, #180]	; (80072e0 <takeWifiSSID+0x390>)
  800722a:	693b      	ldr	r3, [r7, #16]
  800722c:	4413      	add	r3, r2
  800722e:	781b      	ldrb	r3, [r3, #0]
@@ -15891,152 +15889,150 @@ void takeWifiSSID(int state) {
  800723e:	693b      	ldr	r3, [r7, #16]
  8007240:	3301      	adds	r3, #1
  8007242:	613b      	str	r3, [r7, #16]
-            characterSavePos++;
- 8007244:	7afb      	ldrb	r3, [r7, #11]
- 8007246:	3301      	adds	r3, #1
- 8007248:	72fb      	strb	r3, [r7, #11]
 
             HAL_Delay(250);
- 800724a:	20fa      	movs	r0, #250	; 0xfa
- 800724c:	f001 fab6 	bl	80087bc <HAL_Delay>
+ 8007244:	20fa      	movs	r0, #250	; 0xfa
+ 8007246:	f001 fab9 	bl	80087bc <HAL_Delay>
         }
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
- 8007250:	2104      	movs	r1, #4
- 8007252:	4821      	ldr	r0, [pc, #132]	; (80072d8 <takeWifiSSID+0x388>)
- 8007254:	f002 f882 	bl	800935c <HAL_GPIO_ReadPin>
- 8007258:	4603      	mov	r3, r0
- 800725a:	2b01      	cmp	r3, #1
- 800725c:	d12e      	bne.n	80072bc <takeWifiSSID+0x36c>
+ 800724a:	2104      	movs	r1, #4
+ 800724c:	4823      	ldr	r0, [pc, #140]	; (80072dc <takeWifiSSID+0x38c>)
+ 800724e:	f002 f885 	bl	800935c <HAL_GPIO_ReadPin>
+ 8007252:	4603      	mov	r3, r0
+ 8007254:	2b01      	cmp	r3, #1
+ 8007256:	d133      	bne.n	80072c0 <takeWifiSSID+0x370>
         	if(strlen(wifiSSID) >= 1) {
- 800725e:	4b1f      	ldr	r3, [pc, #124]	; (80072dc <takeWifiSSID+0x38c>)
- 8007260:	781b      	ldrb	r3, [r3, #0]
- 8007262:	2b00      	cmp	r3, #0
- 8007264:	d027      	beq.n	80072b6 <takeWifiSSID+0x366>
+ 8007258:	4b21      	ldr	r3, [pc, #132]	; (80072e0 <takeWifiSSID+0x390>)
+ 800725a:	781b      	ldrb	r3, [r3, #0]
+ 800725c:	2b00      	cmp	r3, #0
+ 800725e:	d02c      	beq.n	80072ba <takeWifiSSID+0x36a>
         		wifiSSID[wifiNameLoc] = '\0';
- 8007266:	4a1d      	ldr	r2, [pc, #116]	; (80072dc <takeWifiSSID+0x38c>)
- 8007268:	693b      	ldr	r3, [r7, #16]
- 800726a:	4413      	add	r3, r2
- 800726c:	2200      	movs	r2, #0
- 800726e:	701a      	strb	r2, [r3, #0]
+ 8007260:	4a1f      	ldr	r2, [pc, #124]	; (80072e0 <takeWifiSSID+0x390>)
+ 8007262:	693b      	ldr	r3, [r7, #16]
+ 8007264:	4413      	add	r3, r2
+ 8007266:	2200      	movs	r2, #0
+ 8007268:	701a      	strb	r2, [r3, #0]
+        		wifiSSIDLoc[wifiNameLoc] = '\0';
+ 800726a:	4a1e      	ldr	r2, [pc, #120]	; (80072e4 <takeWifiSSID+0x394>)
+ 800726c:	693b      	ldr	r3, [r7, #16]
+ 800726e:	4413      	add	r3, r2
+ 8007270:	2200      	movs	r2, #0
+ 8007272:	701a      	strb	r2, [r3, #0]
 
         		lcd_delete_char(1, 6+wifiNameLoc);
- 8007270:	693b      	ldr	r3, [r7, #16]
- 8007272:	b2db      	uxtb	r3, r3
- 8007274:	3306      	adds	r3, #6
+ 8007274:	693b      	ldr	r3, [r7, #16]
  8007276:	b2db      	uxtb	r3, r3
- 8007278:	4619      	mov	r1, r3
- 800727a:	2001      	movs	r0, #1
- 800727c:	f000 fd79 	bl	8007d72 <lcd_delete_char>
+ 8007278:	3306      	adds	r3, #6
+ 800727a:	b2db      	uxtb	r3, r3
+ 800727c:	4619      	mov	r1, r3
+ 800727e:	2001      	movs	r0, #1
+ 8007280:	f000 fd77 	bl	8007d72 <lcd_delete_char>
         		HAL_Delay(50);
- 8007280:	2032      	movs	r0, #50	; 0x32
- 8007282:	f001 fa9b 	bl	80087bc <HAL_Delay>
+ 8007284:	2032      	movs	r0, #50	; 0x32
+ 8007286:	f001 fa99 	bl	80087bc <HAL_Delay>
         		if(writeLoc > 7) {
- 8007286:	68fb      	ldr	r3, [r7, #12]
- 8007288:	2b07      	cmp	r3, #7
- 800728a:	dd03      	ble.n	8007294 <takeWifiSSID+0x344>
+ 800728a:	68fb      	ldr	r3, [r7, #12]
+ 800728c:	2b07      	cmp	r3, #7
+ 800728e:	dd03      	ble.n	8007298 <takeWifiSSID+0x348>
         			writeLoc--;
- 800728c:	68fb      	ldr	r3, [r7, #12]
- 800728e:	3b01      	subs	r3, #1
- 8007290:	60fb      	str	r3, [r7, #12]
- 8007292:	e004      	b.n	800729e <takeWifiSSID+0x34e>
+ 8007290:	68fb      	ldr	r3, [r7, #12]
+ 8007292:	3b01      	subs	r3, #1
+ 8007294:	60fb      	str	r3, [r7, #12]
+ 8007296:	e004      	b.n	80072a2 <takeWifiSSID+0x352>
         		} else if(writeLoc < 7) {
- 8007294:	68fb      	ldr	r3, [r7, #12]
- 8007296:	2b06      	cmp	r3, #6
- 8007298:	dc01      	bgt.n	800729e <takeWifiSSID+0x34e>
+ 8007298:	68fb      	ldr	r3, [r7, #12]
+ 800729a:	2b06      	cmp	r3, #6
+ 800729c:	dc01      	bgt.n	80072a2 <takeWifiSSID+0x352>
         			writeLoc = 7;
- 800729a:	2307      	movs	r3, #7
- 800729c:	60fb      	str	r3, [r7, #12]
+ 800729e:	2307      	movs	r3, #7
+ 80072a0:	60fb      	str	r3, [r7, #12]
         		}
 
         		if(wifiNameLoc > 0) {
- 800729e:	693b      	ldr	r3, [r7, #16]
- 80072a0:	2b00      	cmp	r3, #0
- 80072a2:	dd03      	ble.n	80072ac <takeWifiSSID+0x35c>
+ 80072a2:	693b      	ldr	r3, [r7, #16]
+ 80072a4:	2b00      	cmp	r3, #0
+ 80072a6:	dd03      	ble.n	80072b0 <takeWifiSSID+0x360>
         			wifiNameLoc--;
- 80072a4:	693b      	ldr	r3, [r7, #16]
- 80072a6:	3b01      	subs	r3, #1
- 80072a8:	613b      	str	r3, [r7, #16]
- 80072aa:	e004      	b.n	80072b6 <takeWifiSSID+0x366>
+ 80072a8:	693b      	ldr	r3, [r7, #16]
+ 80072aa:	3b01      	subs	r3, #1
+ 80072ac:	613b      	str	r3, [r7, #16]
+ 80072ae:	e004      	b.n	80072ba <takeWifiSSID+0x36a>
         		} else if(wifiNameLoc < 0) {
- 80072ac:	693b      	ldr	r3, [r7, #16]
- 80072ae:	2b00      	cmp	r3, #0
- 80072b0:	da01      	bge.n	80072b6 <takeWifiSSID+0x366>
+ 80072b0:	693b      	ldr	r3, [r7, #16]
+ 80072b2:	2b00      	cmp	r3, #0
+ 80072b4:	da01      	bge.n	80072ba <takeWifiSSID+0x36a>
         			wifiNameLoc = 0;
- 80072b2:	2300      	movs	r3, #0
- 80072b4:	613b      	str	r3, [r7, #16]
+ 80072b6:	2300      	movs	r3, #0
+ 80072b8:	613b      	str	r3, [r7, #16]
         		}
         	}
 
         	HAL_Delay(250);
- 80072b6:	20fa      	movs	r0, #250	; 0xfa
- 80072b8:	f001 fa80 	bl	80087bc <HAL_Delay>
+ 80072ba:	20fa      	movs	r0, #250	; 0xfa
+ 80072bc:	f001 fa7e 	bl	80087bc <HAL_Delay>
         }
 
         lcd_gotoxy(2, cursorPosition);
- 80072bc:	4b05      	ldr	r3, [pc, #20]	; (80072d4 <takeWifiSSID+0x384>)
- 80072be:	681b      	ldr	r3, [r3, #0]
- 80072c0:	b2db      	uxtb	r3, r3
- 80072c2:	4619      	mov	r1, r3
- 80072c4:	2002      	movs	r0, #2
- 80072c6:	f000 fcdc 	bl	8007c82 <lcd_gotoxy>
+ 80072c0:	4b05      	ldr	r3, [pc, #20]	; (80072d8 <takeWifiSSID+0x388>)
+ 80072c2:	681b      	ldr	r3, [r3, #0]
+ 80072c4:	b2db      	uxtb	r3, r3
+ 80072c6:	4619      	mov	r1, r3
+ 80072c8:	2002      	movs	r0, #2
+ 80072ca:	f000 fcda 	bl	8007c82 <lcd_gotoxy>
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
- 80072ca:	e662      	b.n	8006f92 <takeWifiSSID+0x42>
+ 80072ce:	e65e      	b.n	8006f8e <takeWifiSSID+0x3e>
     }
 }
- 80072cc:	bf00      	nop
- 80072ce:	3718      	adds	r7, #24
- 80072d0:	46bd      	mov	sp, r7
- 80072d2:	bdb0      	pop	{r4, r5, r7, pc}
- 80072d4:	20000000 	.word	0x20000000
- 80072d8:	40010800 	.word	0x40010800
- 80072dc:	200001ac 	.word	0x200001ac
- 80072e0:	200001d4 	.word	0x200001d4
+ 80072d0:	bf00      	nop
+ 80072d2:	3718      	adds	r7, #24
+ 80072d4:	46bd      	mov	sp, r7
+ 80072d6:	bdb0      	pop	{r4, r5, r7, pc}
+ 80072d8:	20000000 	.word	0x20000000
+ 80072dc:	40010800 	.word	0x40010800
+ 80072e0:	200001ac 	.word	0x200001ac
+ 80072e4:	200001d4 	.word	0x200001d4
 
-080072e4 <takeWifiPass>:
+080072e8 <takeWifiPass>:
 
 void takeWifiPass(int state) {
- 80072e4:	b5b0      	push	{r4, r5, r7, lr}
- 80072e6:	b08a      	sub	sp, #40	; 0x28
- 80072e8:	af04      	add	r7, sp, #16
- 80072ea:	6078      	str	r0, [r7, #4]
+ 80072e8:	b5b0      	push	{r4, r5, r7, lr}
+ 80072ea:	b08a      	sub	sp, #40	; 0x28
+ 80072ec:	af04      	add	r7, sp, #16
+ 80072ee:	6078      	str	r0, [r7, #4]
 	mainPASSSection:
     lcd_cursor(1);
- 80072ec:	2001      	movs	r0, #1
- 80072ee:	f000 fd67 	bl	8007dc0 <lcd_cursor>
+ 80072f0:	2001      	movs	r0, #1
+ 80072f2:	f000 fd65 	bl	8007dc0 <lcd_cursor>
 
     if(state == 0) {
- 80072f2:	687b      	ldr	r3, [r7, #4]
- 80072f4:	2b00      	cmp	r3, #0
- 80072f6:	d104      	bne.n	8007302 <takeWifiPass+0x1e>
+ 80072f6:	687b      	ldr	r3, [r7, #4]
+ 80072f8:	2b00      	cmp	r3, #0
+ 80072fa:	d104      	bne.n	8007306 <takeWifiPass+0x1e>
     	memset(wifiPass, 0, sizeof(wifiPass));
- 80072f8:	2214      	movs	r2, #20
- 80072fa:	2100      	movs	r1, #0
- 80072fc:	4892      	ldr	r0, [pc, #584]	; (8007548 <takeWifiPass+0x264>)
- 80072fe:	f005 f993 	bl	800c628 <memset>
+ 80072fc:	2214      	movs	r2, #20
+ 80072fe:	2100      	movs	r1, #0
+ 8007300:	4891      	ldr	r0, [pc, #580]	; (8007548 <takeWifiPass+0x260>)
+ 8007302:	f005 f991 	bl	800c628 <memset>
     }
 
     int realCharPos = 1;
- 8007302:	2301      	movs	r3, #1
- 8007304:	617b      	str	r3, [r7, #20]
+ 8007306:	2301      	movs	r3, #1
+ 8007308:	617b      	str	r3, [r7, #20]
     cursorPosition = 1;
- 8007306:	4b91      	ldr	r3, [pc, #580]	; (800754c <takeWifiPass+0x268>)
- 8007308:	2201      	movs	r2, #1
- 800730a:	601a      	str	r2, [r3, #0]
+ 800730a:	4b90      	ldr	r3, [pc, #576]	; (800754c <takeWifiPass+0x264>)
+ 800730c:	2201      	movs	r2, #1
+ 800730e:	601a      	str	r2, [r3, #0]
     page = 1;
- 800730c:	4b90      	ldr	r3, [pc, #576]	; (8007550 <takeWifiPass+0x26c>)
- 800730e:	2201      	movs	r2, #1
- 8007310:	601a      	str	r2, [r3, #0]
+ 8007310:	4b8f      	ldr	r3, [pc, #572]	; (8007550 <takeWifiPass+0x268>)
+ 8007312:	2201      	movs	r2, #1
+ 8007314:	601a      	str	r2, [r3, #0]
     int wifiPassLoc = 0;
- 8007312:	2300      	movs	r3, #0
- 8007314:	613b      	str	r3, [r7, #16]
+ 8007316:	2300      	movs	r3, #0
+ 8007318:	613b      	str	r3, [r7, #16]
     int writeLoc = 7;
- 8007316:	2307      	movs	r3, #7
- 8007318:	60fb      	str	r3, [r7, #12]
-
-    uint8_t characterSavePos = 0;
- 800731a:	2300      	movs	r3, #0
- 800731c:	72fb      	strb	r3, [r7, #11]
+ 800731a:	2307      	movs	r3, #7
+ 800731c:	60fb      	str	r3, [r7, #12]
 
     printTemplate(3, 1);
  800731e:	2101      	movs	r1, #1
@@ -16046,30 +16042,30 @@ void takeWifiPass(int state) {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
  8007326:	2108      	movs	r1, #8
- 8007328:	488a      	ldr	r0, [pc, #552]	; (8007554 <takeWifiPass+0x270>)
+ 8007328:	488a      	ldr	r0, [pc, #552]	; (8007554 <takeWifiPass+0x26c>)
  800732a:	f002 f817 	bl	800935c <HAL_GPIO_ReadPin>
  800732e:	4603      	mov	r3, r0
  8007330:	2b01      	cmp	r3, #1
- 8007332:	d13d      	bne.n	80073b0 <takeWifiPass+0xcc>
+ 8007332:	d13d      	bne.n	80073b0 <takeWifiPass+0xc8>
             lcd_cursor(0);
  8007334:	2000      	movs	r0, #0
  8007336:	f000 fd43 	bl	8007dc0 <lcd_cursor>
 
-            if(strlen(wifiPass) > 20) {
- 800733a:	4883      	ldr	r0, [pc, #524]	; (8007548 <takeWifiPass+0x264>)
+            if(strlen(wifiPass) > wifiCharacterLimit) {
+ 800733a:	4883      	ldr	r0, [pc, #524]	; (8007548 <takeWifiPass+0x260>)
  800733c:	f7f8 ff72 	bl	8000224 <strlen>
  8007340:	4603      	mov	r3, r0
  8007342:	2b14      	cmp	r3, #20
- 8007344:	d910      	bls.n	8007368 <takeWifiPass+0x84>
+ 8007344:	d910      	bls.n	8007368 <takeWifiPass+0x80>
                 lcd_clear();
  8007346:	f000 fd0a 	bl	8007d5e <lcd_clear>
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
- 800734a:	4a83      	ldr	r2, [pc, #524]	; (8007558 <takeWifiPass+0x274>)
+ 800734a:	4a83      	ldr	r2, [pc, #524]	; (8007558 <takeWifiPass+0x270>)
  800734c:	2101      	movs	r1, #1
  800734e:	2001      	movs	r0, #1
  8007350:	f000 fcb6 	bl	8007cc0 <lcd_print>
                 lcd_print(2, 1, "FAZLA PASS OLMAZ");
- 8007354:	4a81      	ldr	r2, [pc, #516]	; (800755c <takeWifiPass+0x278>)
+ 8007354:	4a81      	ldr	r2, [pc, #516]	; (800755c <takeWifiPass+0x274>)
  8007356:	2101      	movs	r1, #1
  8007358:	2002      	movs	r0, #2
  800735a:	f000 fcb1 	bl	8007cc0 <lcd_print>
@@ -16077,15 +16073,15 @@ void takeWifiPass(int state) {
  800735e:	f44f 6096 	mov.w	r0, #1200	; 0x4b0
  8007362:	f001 fa2b 	bl	80087bc <HAL_Delay>
                 goto mainPASSSection;
- 8007366:	e7c1      	b.n	80072ec <takeWifiPass+0x8>
+ 8007366:	e7c3      	b.n	80072f0 <takeWifiPass+0x8>
             }
 
-            memcpy(&eepromData[passStartPos], wifiPassLocArr, 20);
- 8007368:	4b7d      	ldr	r3, [pc, #500]	; (8007560 <takeWifiPass+0x27c>)
+            memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
+ 8007368:	4b7d      	ldr	r3, [pc, #500]	; (8007560 <takeWifiPass+0x278>)
  800736a:	681b      	ldr	r3, [r3, #0]
- 800736c:	4a7d      	ldr	r2, [pc, #500]	; (8007564 <takeWifiPass+0x280>)
+ 800736c:	4a7d      	ldr	r2, [pc, #500]	; (8007564 <takeWifiPass+0x27c>)
  800736e:	4413      	add	r3, r2
- 8007370:	4a7d      	ldr	r2, [pc, #500]	; (8007568 <takeWifiPass+0x284>)
+ 8007370:	4a7d      	ldr	r2, [pc, #500]	; (8007568 <takeWifiPass+0x280>)
  8007372:	6811      	ldr	r1, [r2, #0]
  8007374:	6855      	ldr	r5, [r2, #4]
  8007376:	6894      	ldr	r4, [r2, #8]
@@ -16099,35 +16095,34 @@ void takeWifiPass(int state) {
             HAL_Delay(250);
  8007386:	20fa      	movs	r0, #250	; 0xfa
  8007388:	f001 fa18 	bl	80087bc <HAL_Delay>
-            //memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
  800738c:	f640 33b8 	movw	r3, #3000	; 0xbb8
  8007390:	9302      	str	r3, [sp, #8]
  8007392:	236e      	movs	r3, #110	; 0x6e
  8007394:	9301      	str	r3, [sp, #4]
- 8007396:	4b73      	ldr	r3, [pc, #460]	; (8007564 <takeWifiPass+0x280>)
+ 8007396:	4b73      	ldr	r3, [pc, #460]	; (8007564 <takeWifiPass+0x27c>)
  8007398:	9300      	str	r3, [sp, #0]
  800739a:	236e      	movs	r3, #110	; 0x6e
  800739c:	2200      	movs	r2, #0
  800739e:	21a0      	movs	r1, #160	; 0xa0
- 80073a0:	4872      	ldr	r0, [pc, #456]	; (800756c <takeWifiPass+0x288>)
+ 80073a0:	4872      	ldr	r0, [pc, #456]	; (800756c <takeWifiPass+0x284>)
  80073a2:	f002 fa95 	bl	80098d0 <HAL_I2C_Mem_Write>
             HAL_Delay(500);
  80073a6:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  80073aa:	f001 fa07 	bl	80087bc <HAL_Delay>
 
             break;
- 80073ae:	e157      	b.n	8007660 <takeWifiPass+0x37c>
+ 80073ae:	e15b      	b.n	8007668 <takeWifiPass+0x380>
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
  80073b0:	2101      	movs	r1, #1
- 80073b2:	4868      	ldr	r0, [pc, #416]	; (8007554 <takeWifiPass+0x270>)
+ 80073b2:	4868      	ldr	r0, [pc, #416]	; (8007554 <takeWifiPass+0x26c>)
  80073b4:	f001 ffd2 	bl	800935c <HAL_GPIO_ReadPin>
  80073b8:	4603      	mov	r3, r0
  80073ba:	2b01      	cmp	r3, #1
- 80073bc:	d166      	bne.n	800748c <takeWifiPass+0x1a8>
+ 80073bc:	d166      	bne.n	800748c <takeWifiPass+0x1a4>
         	realCharPos++;
  80073be:	697b      	ldr	r3, [r7, #20]
  80073c0:	3301      	adds	r3, #1
@@ -16135,121 +16130,121 @@ void takeWifiPass(int state) {
         	if(realCharPos > 80) {
  80073c4:	697b      	ldr	r3, [r7, #20]
  80073c6:	2b50      	cmp	r3, #80	; 0x50
- 80073c8:	dd01      	ble.n	80073ce <takeWifiPass+0xea>
+ 80073c8:	dd01      	ble.n	80073ce <takeWifiPass+0xe6>
         	    realCharPos = 1;
  80073ca:	2301      	movs	r3, #1
  80073cc:	617b      	str	r3, [r7, #20]
         	}
             if (cursorPosition == 16) {
- 80073ce:	4b5f      	ldr	r3, [pc, #380]	; (800754c <takeWifiPass+0x268>)
+ 80073ce:	4b5f      	ldr	r3, [pc, #380]	; (800754c <takeWifiPass+0x264>)
  80073d0:	681b      	ldr	r3, [r3, #0]
  80073d2:	2b10      	cmp	r3, #16
- 80073d4:	d152      	bne.n	800747c <takeWifiPass+0x198>
+ 80073d4:	d152      	bne.n	800747c <takeWifiPass+0x194>
             	if(page == 1) {
- 80073d6:	4b5e      	ldr	r3, [pc, #376]	; (8007550 <takeWifiPass+0x26c>)
+ 80073d6:	4b5e      	ldr	r3, [pc, #376]	; (8007550 <takeWifiPass+0x268>)
  80073d8:	681b      	ldr	r3, [r3, #0]
  80073da:	2b01      	cmp	r3, #1
- 80073dc:	d10c      	bne.n	80073f8 <takeWifiPass+0x114>
+ 80073dc:	d10c      	bne.n	80073f8 <takeWifiPass+0x110>
             		cursorPosition = 1;
- 80073de:	4b5b      	ldr	r3, [pc, #364]	; (800754c <takeWifiPass+0x268>)
+ 80073de:	4b5b      	ldr	r3, [pc, #364]	; (800754c <takeWifiPass+0x264>)
  80073e0:	2201      	movs	r2, #1
  80073e2:	601a      	str	r2, [r3, #0]
             		page++;
- 80073e4:	4b5a      	ldr	r3, [pc, #360]	; (8007550 <takeWifiPass+0x26c>)
+ 80073e4:	4b5a      	ldr	r3, [pc, #360]	; (8007550 <takeWifiPass+0x268>)
  80073e6:	681b      	ldr	r3, [r3, #0]
  80073e8:	3301      	adds	r3, #1
- 80073ea:	4a59      	ldr	r2, [pc, #356]	; (8007550 <takeWifiPass+0x26c>)
+ 80073ea:	4a59      	ldr	r2, [pc, #356]	; (8007550 <takeWifiPass+0x268>)
  80073ec:	6013      	str	r3, [r2, #0]
             		printTemplate(3, 2);
  80073ee:	2102      	movs	r1, #2
  80073f0:	2003      	movs	r0, #3
  80073f2:	f7f9 fd47 	bl	8000e84 <printTemplate>
- 80073f6:	e046      	b.n	8007486 <takeWifiPass+0x1a2>
+ 80073f6:	e046      	b.n	8007486 <takeWifiPass+0x19e>
             	} else if(page == 2) {
- 80073f8:	4b55      	ldr	r3, [pc, #340]	; (8007550 <takeWifiPass+0x26c>)
+ 80073f8:	4b55      	ldr	r3, [pc, #340]	; (8007550 <takeWifiPass+0x268>)
  80073fa:	681b      	ldr	r3, [r3, #0]
  80073fc:	2b02      	cmp	r3, #2
- 80073fe:	d10c      	bne.n	800741a <takeWifiPass+0x136>
+ 80073fe:	d10c      	bne.n	800741a <takeWifiPass+0x132>
             		cursorPosition = 1;
- 8007400:	4b52      	ldr	r3, [pc, #328]	; (800754c <takeWifiPass+0x268>)
+ 8007400:	4b52      	ldr	r3, [pc, #328]	; (800754c <takeWifiPass+0x264>)
  8007402:	2201      	movs	r2, #1
  8007404:	601a      	str	r2, [r3, #0]
             		page++;
- 8007406:	4b52      	ldr	r3, [pc, #328]	; (8007550 <takeWifiPass+0x26c>)
+ 8007406:	4b52      	ldr	r3, [pc, #328]	; (8007550 <takeWifiPass+0x268>)
  8007408:	681b      	ldr	r3, [r3, #0]
  800740a:	3301      	adds	r3, #1
- 800740c:	4a50      	ldr	r2, [pc, #320]	; (8007550 <takeWifiPass+0x26c>)
+ 800740c:	4a50      	ldr	r2, [pc, #320]	; (8007550 <takeWifiPass+0x268>)
  800740e:	6013      	str	r3, [r2, #0]
             		printTemplate(3, 3);
  8007410:	2103      	movs	r1, #3
  8007412:	2003      	movs	r0, #3
  8007414:	f7f9 fd36 	bl	8000e84 <printTemplate>
- 8007418:	e035      	b.n	8007486 <takeWifiPass+0x1a2>
+ 8007418:	e035      	b.n	8007486 <takeWifiPass+0x19e>
             	} else if(page == 3) {
- 800741a:	4b4d      	ldr	r3, [pc, #308]	; (8007550 <takeWifiPass+0x26c>)
+ 800741a:	4b4d      	ldr	r3, [pc, #308]	; (8007550 <takeWifiPass+0x268>)
  800741c:	681b      	ldr	r3, [r3, #0]
  800741e:	2b03      	cmp	r3, #3
- 8007420:	d10c      	bne.n	800743c <takeWifiPass+0x158>
+ 8007420:	d10c      	bne.n	800743c <takeWifiPass+0x154>
             		cursorPosition = 1;
- 8007422:	4b4a      	ldr	r3, [pc, #296]	; (800754c <takeWifiPass+0x268>)
+ 8007422:	4b4a      	ldr	r3, [pc, #296]	; (800754c <takeWifiPass+0x264>)
  8007424:	2201      	movs	r2, #1
  8007426:	601a      	str	r2, [r3, #0]
             		page++;
- 8007428:	4b49      	ldr	r3, [pc, #292]	; (8007550 <takeWifiPass+0x26c>)
+ 8007428:	4b49      	ldr	r3, [pc, #292]	; (8007550 <takeWifiPass+0x268>)
  800742a:	681b      	ldr	r3, [r3, #0]
  800742c:	3301      	adds	r3, #1
- 800742e:	4a48      	ldr	r2, [pc, #288]	; (8007550 <takeWifiPass+0x26c>)
+ 800742e:	4a48      	ldr	r2, [pc, #288]	; (8007550 <takeWifiPass+0x268>)
  8007430:	6013      	str	r3, [r2, #0]
             		printTemplate(3, 4);
  8007432:	2104      	movs	r1, #4
  8007434:	2003      	movs	r0, #3
  8007436:	f7f9 fd25 	bl	8000e84 <printTemplate>
- 800743a:	e024      	b.n	8007486 <takeWifiPass+0x1a2>
+ 800743a:	e024      	b.n	8007486 <takeWifiPass+0x19e>
             	} else if(page == 4) {
- 800743c:	4b44      	ldr	r3, [pc, #272]	; (8007550 <takeWifiPass+0x26c>)
+ 800743c:	4b44      	ldr	r3, [pc, #272]	; (8007550 <takeWifiPass+0x268>)
  800743e:	681b      	ldr	r3, [r3, #0]
  8007440:	2b04      	cmp	r3, #4
- 8007442:	d10c      	bne.n	800745e <takeWifiPass+0x17a>
+ 8007442:	d10c      	bne.n	800745e <takeWifiPass+0x176>
             		cursorPosition = 1;
- 8007444:	4b41      	ldr	r3, [pc, #260]	; (800754c <takeWifiPass+0x268>)
+ 8007444:	4b41      	ldr	r3, [pc, #260]	; (800754c <takeWifiPass+0x264>)
  8007446:	2201      	movs	r2, #1
  8007448:	601a      	str	r2, [r3, #0]
             		page++;
- 800744a:	4b41      	ldr	r3, [pc, #260]	; (8007550 <takeWifiPass+0x26c>)
+ 800744a:	4b41      	ldr	r3, [pc, #260]	; (8007550 <takeWifiPass+0x268>)
  800744c:	681b      	ldr	r3, [r3, #0]
  800744e:	3301      	adds	r3, #1
- 8007450:	4a3f      	ldr	r2, [pc, #252]	; (8007550 <takeWifiPass+0x26c>)
+ 8007450:	4a3f      	ldr	r2, [pc, #252]	; (8007550 <takeWifiPass+0x268>)
  8007452:	6013      	str	r3, [r2, #0]
             		printTemplate(3, 5);
  8007454:	2105      	movs	r1, #5
  8007456:	2003      	movs	r0, #3
  8007458:	f7f9 fd14 	bl	8000e84 <printTemplate>
- 800745c:	e013      	b.n	8007486 <takeWifiPass+0x1a2>
+ 800745c:	e013      	b.n	8007486 <takeWifiPass+0x19e>
             	} else if(page == 5) {
- 800745e:	4b3c      	ldr	r3, [pc, #240]	; (8007550 <takeWifiPass+0x26c>)
+ 800745e:	4b3c      	ldr	r3, [pc, #240]	; (8007550 <takeWifiPass+0x268>)
  8007460:	681b      	ldr	r3, [r3, #0]
  8007462:	2b05      	cmp	r3, #5
- 8007464:	d10f      	bne.n	8007486 <takeWifiPass+0x1a2>
+ 8007464:	d10f      	bne.n	8007486 <takeWifiPass+0x19e>
             		cursorPosition = 1;
- 8007466:	4b39      	ldr	r3, [pc, #228]	; (800754c <takeWifiPass+0x268>)
+ 8007466:	4b39      	ldr	r3, [pc, #228]	; (800754c <takeWifiPass+0x264>)
  8007468:	2201      	movs	r2, #1
  800746a:	601a      	str	r2, [r3, #0]
             		page = 1;
- 800746c:	4b38      	ldr	r3, [pc, #224]	; (8007550 <takeWifiPass+0x26c>)
+ 800746c:	4b38      	ldr	r3, [pc, #224]	; (8007550 <takeWifiPass+0x268>)
  800746e:	2201      	movs	r2, #1
  8007470:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 1);
  8007472:	2101      	movs	r1, #1
  8007474:	2003      	movs	r0, #3
  8007476:	f7f9 fd05 	bl	8000e84 <printTemplate>
- 800747a:	e004      	b.n	8007486 <takeWifiPass+0x1a2>
+ 800747a:	e004      	b.n	8007486 <takeWifiPass+0x19e>
             	}
             } else {
             	cursorPosition++;
- 800747c:	4b33      	ldr	r3, [pc, #204]	; (800754c <takeWifiPass+0x268>)
+ 800747c:	4b33      	ldr	r3, [pc, #204]	; (800754c <takeWifiPass+0x264>)
  800747e:	681b      	ldr	r3, [r3, #0]
  8007480:	3301      	adds	r3, #1
- 8007482:	4a32      	ldr	r2, [pc, #200]	; (800754c <takeWifiPass+0x268>)
+ 8007482:	4a32      	ldr	r2, [pc, #200]	; (800754c <takeWifiPass+0x264>)
  8007484:	6013      	str	r3, [r2, #0]
             }
 
@@ -16260,11 +16255,11 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
  800748c:	2108      	movs	r1, #8
- 800748e:	4838      	ldr	r0, [pc, #224]	; (8007570 <takeWifiPass+0x28c>)
+ 800748e:	4838      	ldr	r0, [pc, #224]	; (8007570 <takeWifiPass+0x288>)
  8007490:	f001 ff64 	bl	800935c <HAL_GPIO_ReadPin>
  8007494:	4603      	mov	r3, r0
  8007496:	2b01      	cmp	r3, #1
- 8007498:	d174      	bne.n	8007584 <takeWifiPass+0x2a0>
+ 8007498:	d174      	bne.n	8007584 <takeWifiPass+0x29c>
         	realCharPos--;
  800749a:	697b      	ldr	r3, [r7, #20]
  800749c:	3b01      	subs	r3, #1
@@ -16272,106 +16267,106 @@ void takeWifiPass(int state) {
         	if(realCharPos < 1) {
  80074a0:	697b      	ldr	r3, [r7, #20]
  80074a2:	2b00      	cmp	r3, #0
- 80074a4:	dc01      	bgt.n	80074aa <takeWifiPass+0x1c6>
+ 80074a4:	dc01      	bgt.n	80074aa <takeWifiPass+0x1c2>
         	    realCharPos = 80;
  80074a6:	2350      	movs	r3, #80	; 0x50
  80074a8:	617b      	str	r3, [r7, #20]
         	}
             if(cursorPosition == 1) {
- 80074aa:	4b28      	ldr	r3, [pc, #160]	; (800754c <takeWifiPass+0x268>)
+ 80074aa:	4b28      	ldr	r3, [pc, #160]	; (800754c <takeWifiPass+0x264>)
  80074ac:	681b      	ldr	r3, [r3, #0]
  80074ae:	2b01      	cmp	r3, #1
- 80074b0:	d160      	bne.n	8007574 <takeWifiPass+0x290>
+ 80074b0:	d160      	bne.n	8007574 <takeWifiPass+0x28c>
             	if(page == 1) {
- 80074b2:	4b27      	ldr	r3, [pc, #156]	; (8007550 <takeWifiPass+0x26c>)
+ 80074b2:	4b27      	ldr	r3, [pc, #156]	; (8007550 <takeWifiPass+0x268>)
  80074b4:	681b      	ldr	r3, [r3, #0]
  80074b6:	2b01      	cmp	r3, #1
- 80074b8:	d10a      	bne.n	80074d0 <takeWifiPass+0x1ec>
+ 80074b8:	d10a      	bne.n	80074d0 <takeWifiPass+0x1e8>
             		cursorPosition = 16;
- 80074ba:	4b24      	ldr	r3, [pc, #144]	; (800754c <takeWifiPass+0x268>)
+ 80074ba:	4b24      	ldr	r3, [pc, #144]	; (800754c <takeWifiPass+0x264>)
  80074bc:	2210      	movs	r2, #16
  80074be:	601a      	str	r2, [r3, #0]
             		page = 5;
- 80074c0:	4b23      	ldr	r3, [pc, #140]	; (8007550 <takeWifiPass+0x26c>)
+ 80074c0:	4b23      	ldr	r3, [pc, #140]	; (8007550 <takeWifiPass+0x268>)
  80074c2:	2205      	movs	r2, #5
  80074c4:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 5);
  80074c6:	2105      	movs	r1, #5
  80074c8:	2003      	movs	r0, #3
  80074ca:	f7f9 fcdb 	bl	8000e84 <printTemplate>
- 80074ce:	e056      	b.n	800757e <takeWifiPass+0x29a>
+ 80074ce:	e056      	b.n	800757e <takeWifiPass+0x296>
             	} else if(page == 2) {
- 80074d0:	4b1f      	ldr	r3, [pc, #124]	; (8007550 <takeWifiPass+0x26c>)
+ 80074d0:	4b1f      	ldr	r3, [pc, #124]	; (8007550 <takeWifiPass+0x268>)
  80074d2:	681b      	ldr	r3, [r3, #0]
  80074d4:	2b02      	cmp	r3, #2
- 80074d6:	d10a      	bne.n	80074ee <takeWifiPass+0x20a>
+ 80074d6:	d10a      	bne.n	80074ee <takeWifiPass+0x206>
             		cursorPosition = 16;
- 80074d8:	4b1c      	ldr	r3, [pc, #112]	; (800754c <takeWifiPass+0x268>)
+ 80074d8:	4b1c      	ldr	r3, [pc, #112]	; (800754c <takeWifiPass+0x264>)
  80074da:	2210      	movs	r2, #16
  80074dc:	601a      	str	r2, [r3, #0]
             		page = 1;
- 80074de:	4b1c      	ldr	r3, [pc, #112]	; (8007550 <takeWifiPass+0x26c>)
+ 80074de:	4b1c      	ldr	r3, [pc, #112]	; (8007550 <takeWifiPass+0x268>)
  80074e0:	2201      	movs	r2, #1
  80074e2:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 1);
  80074e4:	2101      	movs	r1, #1
  80074e6:	2003      	movs	r0, #3
  80074e8:	f7f9 fccc 	bl	8000e84 <printTemplate>
- 80074ec:	e047      	b.n	800757e <takeWifiPass+0x29a>
+ 80074ec:	e047      	b.n	800757e <takeWifiPass+0x296>
             	} else if(page == 3) {
- 80074ee:	4b18      	ldr	r3, [pc, #96]	; (8007550 <takeWifiPass+0x26c>)
+ 80074ee:	4b18      	ldr	r3, [pc, #96]	; (8007550 <takeWifiPass+0x268>)
  80074f0:	681b      	ldr	r3, [r3, #0]
  80074f2:	2b03      	cmp	r3, #3
- 80074f4:	d10a      	bne.n	800750c <takeWifiPass+0x228>
+ 80074f4:	d10a      	bne.n	800750c <takeWifiPass+0x224>
             		cursorPosition = 16;
- 80074f6:	4b15      	ldr	r3, [pc, #84]	; (800754c <takeWifiPass+0x268>)
+ 80074f6:	4b15      	ldr	r3, [pc, #84]	; (800754c <takeWifiPass+0x264>)
  80074f8:	2210      	movs	r2, #16
  80074fa:	601a      	str	r2, [r3, #0]
             		page = 2;
- 80074fc:	4b14      	ldr	r3, [pc, #80]	; (8007550 <takeWifiPass+0x26c>)
+ 80074fc:	4b14      	ldr	r3, [pc, #80]	; (8007550 <takeWifiPass+0x268>)
  80074fe:	2202      	movs	r2, #2
  8007500:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 2);
  8007502:	2102      	movs	r1, #2
  8007504:	2003      	movs	r0, #3
  8007506:	f7f9 fcbd 	bl	8000e84 <printTemplate>
- 800750a:	e038      	b.n	800757e <takeWifiPass+0x29a>
+ 800750a:	e038      	b.n	800757e <takeWifiPass+0x296>
             	} else if(page == 4) {
- 800750c:	4b10      	ldr	r3, [pc, #64]	; (8007550 <takeWifiPass+0x26c>)
+ 800750c:	4b10      	ldr	r3, [pc, #64]	; (8007550 <takeWifiPass+0x268>)
  800750e:	681b      	ldr	r3, [r3, #0]
  8007510:	2b04      	cmp	r3, #4
- 8007512:	d10a      	bne.n	800752a <takeWifiPass+0x246>
+ 8007512:	d10a      	bne.n	800752a <takeWifiPass+0x242>
             		cursorPosition = 16;
- 8007514:	4b0d      	ldr	r3, [pc, #52]	; (800754c <takeWifiPass+0x268>)
+ 8007514:	4b0d      	ldr	r3, [pc, #52]	; (800754c <takeWifiPass+0x264>)
  8007516:	2210      	movs	r2, #16
  8007518:	601a      	str	r2, [r3, #0]
             		page = 3;
- 800751a:	4b0d      	ldr	r3, [pc, #52]	; (8007550 <takeWifiPass+0x26c>)
+ 800751a:	4b0d      	ldr	r3, [pc, #52]	; (8007550 <takeWifiPass+0x268>)
  800751c:	2203      	movs	r2, #3
  800751e:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 3);
  8007520:	2103      	movs	r1, #3
  8007522:	2003      	movs	r0, #3
  8007524:	f7f9 fcae 	bl	8000e84 <printTemplate>
- 8007528:	e029      	b.n	800757e <takeWifiPass+0x29a>
+ 8007528:	e029      	b.n	800757e <takeWifiPass+0x296>
             	} else if(page == 5) {
- 800752a:	4b09      	ldr	r3, [pc, #36]	; (8007550 <takeWifiPass+0x26c>)
+ 800752a:	4b09      	ldr	r3, [pc, #36]	; (8007550 <takeWifiPass+0x268>)
  800752c:	681b      	ldr	r3, [r3, #0]
  800752e:	2b05      	cmp	r3, #5
- 8007530:	d125      	bne.n	800757e <takeWifiPass+0x29a>
+ 8007530:	d125      	bne.n	800757e <takeWifiPass+0x296>
             		cursorPosition = 16;
- 8007532:	4b06      	ldr	r3, [pc, #24]	; (800754c <takeWifiPass+0x268>)
+ 8007532:	4b06      	ldr	r3, [pc, #24]	; (800754c <takeWifiPass+0x264>)
  8007534:	2210      	movs	r2, #16
  8007536:	601a      	str	r2, [r3, #0]
             		page = 4;
- 8007538:	4b05      	ldr	r3, [pc, #20]	; (8007550 <takeWifiPass+0x26c>)
+ 8007538:	4b05      	ldr	r3, [pc, #20]	; (8007550 <takeWifiPass+0x268>)
  800753a:	2204      	movs	r2, #4
  800753c:	601a      	str	r2, [r3, #0]
             		printTemplate(3, 4);
  800753e:	2104      	movs	r1, #4
  8007540:	2003      	movs	r0, #3
  8007542:	f7f9 fc9f 	bl	8000e84 <printTemplate>
- 8007546:	e01a      	b.n	800757e <takeWifiPass+0x29a>
+ 8007546:	e01a      	b.n	800757e <takeWifiPass+0x296>
  8007548:	200001c0 	.word	0x200001c0
  800754c:	20000000 	.word	0x20000000
  8007550:	20000004 	.word	0x20000004
@@ -16386,10 +16381,10 @@ void takeWifiPass(int state) {
             	}
             } else {
             	cursorPosition--;
- 8007574:	4b3c      	ldr	r3, [pc, #240]	; (8007668 <takeWifiPass+0x384>)
+ 8007574:	4b3e      	ldr	r3, [pc, #248]	; (8007670 <takeWifiPass+0x388>)
  8007576:	681b      	ldr	r3, [r3, #0]
  8007578:	3b01      	subs	r3, #1
- 800757a:	4a3b      	ldr	r2, [pc, #236]	; (8007668 <takeWifiPass+0x384>)
+ 800757a:	4a3d      	ldr	r2, [pc, #244]	; (8007670 <takeWifiPass+0x388>)
  800757c:	6013      	str	r3, [r2, #0]
             }
 
@@ -16400,11 +16395,11 @@ void takeWifiPass(int state) {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
  8007584:	2102      	movs	r1, #2
- 8007586:	4839      	ldr	r0, [pc, #228]	; (800766c <takeWifiPass+0x388>)
+ 8007586:	483b      	ldr	r0, [pc, #236]	; (8007674 <takeWifiPass+0x38c>)
  8007588:	f001 fee8 	bl	800935c <HAL_GPIO_ReadPin>
  800758c:	4603      	mov	r3, r0
  800758e:	2b01      	cmp	r3, #1
- 8007590:	d128      	bne.n	80075e4 <takeWifiPass+0x300>
+ 8007590:	d127      	bne.n	80075e2 <takeWifiPass+0x2fa>
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
  8007592:	697b      	ldr	r3, [r7, #20]
  8007594:	3b01      	subs	r3, #1
@@ -16412,518 +16407,521 @@ void takeWifiPass(int state) {
  8007598:	f7f9 f8d4 	bl	8000744 <getCharFromCursorPosition>
  800759c:	4603      	mov	r3, r0
  800759e:	b2d9      	uxtb	r1, r3
- 80075a0:	4a33      	ldr	r2, [pc, #204]	; (8007670 <takeWifiPass+0x38c>)
+ 80075a0:	4a35      	ldr	r2, [pc, #212]	; (8007678 <takeWifiPass+0x390>)
  80075a2:	693b      	ldr	r3, [r7, #16]
  80075a4:	4413      	add	r3, r2
  80075a6:	460a      	mov	r2, r1
  80075a8:	701a      	strb	r2, [r3, #0]
-        	wifiPassLocArr[characterSavePos] = realCharPos - 1;
+        	wifiPassLocArr[wifiPassLoc] = realCharPos - 1;
  80075aa:	697b      	ldr	r3, [r7, #20]
- 80075ac:	b2da      	uxtb	r2, r3
- 80075ae:	7afb      	ldrb	r3, [r7, #11]
- 80075b0:	3a01      	subs	r2, #1
- 80075b2:	b2d1      	uxtb	r1, r2
- 80075b4:	4a2f      	ldr	r2, [pc, #188]	; (8007674 <takeWifiPass+0x390>)
- 80075b6:	54d1      	strb	r1, [r2, r3]
+ 80075ac:	b2db      	uxtb	r3, r3
+ 80075ae:	3b01      	subs	r3, #1
+ 80075b0:	b2d9      	uxtb	r1, r3
+ 80075b2:	4a32      	ldr	r2, [pc, #200]	; (800767c <takeWifiPass+0x394>)
+ 80075b4:	693b      	ldr	r3, [r7, #16]
+ 80075b6:	4413      	add	r3, r2
+ 80075b8:	460a      	mov	r2, r1
+ 80075ba:	701a      	strb	r2, [r3, #0]
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
- 80075b8:	68fb      	ldr	r3, [r7, #12]
- 80075ba:	b2d9      	uxtb	r1, r3
- 80075bc:	4a2c      	ldr	r2, [pc, #176]	; (8007670 <takeWifiPass+0x38c>)
- 80075be:	693b      	ldr	r3, [r7, #16]
- 80075c0:	4413      	add	r3, r2
- 80075c2:	781b      	ldrb	r3, [r3, #0]
- 80075c4:	461a      	mov	r2, r3
- 80075c6:	2001      	movs	r0, #1
- 80075c8:	f000 fbb2 	bl	8007d30 <lcd_print_char>
+ 80075bc:	68fb      	ldr	r3, [r7, #12]
+ 80075be:	b2d9      	uxtb	r1, r3
+ 80075c0:	4a2d      	ldr	r2, [pc, #180]	; (8007678 <takeWifiPass+0x390>)
+ 80075c2:	693b      	ldr	r3, [r7, #16]
+ 80075c4:	4413      	add	r3, r2
+ 80075c6:	781b      	ldrb	r3, [r3, #0]
+ 80075c8:	461a      	mov	r2, r3
+ 80075ca:	2001      	movs	r0, #1
+ 80075cc:	f000 fbb0 	bl	8007d30 <lcd_print_char>
 
             writeLoc++;
- 80075cc:	68fb      	ldr	r3, [r7, #12]
- 80075ce:	3301      	adds	r3, #1
- 80075d0:	60fb      	str	r3, [r7, #12]
+ 80075d0:	68fb      	ldr	r3, [r7, #12]
+ 80075d2:	3301      	adds	r3, #1
+ 80075d4:	60fb      	str	r3, [r7, #12]
             wifiPassLoc++;
- 80075d2:	693b      	ldr	r3, [r7, #16]
- 80075d4:	3301      	adds	r3, #1
- 80075d6:	613b      	str	r3, [r7, #16]
-            characterSavePos++;
- 80075d8:	7afb      	ldrb	r3, [r7, #11]
- 80075da:	3301      	adds	r3, #1
- 80075dc:	72fb      	strb	r3, [r7, #11]
+ 80075d6:	693b      	ldr	r3, [r7, #16]
+ 80075d8:	3301      	adds	r3, #1
+ 80075da:	613b      	str	r3, [r7, #16]
 
             HAL_Delay(250);
- 80075de:	20fa      	movs	r0, #250	; 0xfa
- 80075e0:	f001 f8ec 	bl	80087bc <HAL_Delay>
+ 80075dc:	20fa      	movs	r0, #250	; 0xfa
+ 80075de:	f001 f8ed 	bl	80087bc <HAL_Delay>
         }
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
- 80075e4:	2104      	movs	r1, #4
- 80075e6:	4821      	ldr	r0, [pc, #132]	; (800766c <takeWifiPass+0x388>)
- 80075e8:	f001 feb8 	bl	800935c <HAL_GPIO_ReadPin>
- 80075ec:	4603      	mov	r3, r0
- 80075ee:	2b01      	cmp	r3, #1
- 80075f0:	d12e      	bne.n	8007650 <takeWifiPass+0x36c>
+ 80075e2:	2104      	movs	r1, #4
+ 80075e4:	4823      	ldr	r0, [pc, #140]	; (8007674 <takeWifiPass+0x38c>)
+ 80075e6:	f001 feb9 	bl	800935c <HAL_GPIO_ReadPin>
+ 80075ea:	4603      	mov	r3, r0
+ 80075ec:	2b01      	cmp	r3, #1
+ 80075ee:	d133      	bne.n	8007658 <takeWifiPass+0x370>
             if(strlen(wifiPass) >= 1) {
- 80075f2:	4b1f      	ldr	r3, [pc, #124]	; (8007670 <takeWifiPass+0x38c>)
- 80075f4:	781b      	ldrb	r3, [r3, #0]
- 80075f6:	2b00      	cmp	r3, #0
- 80075f8:	d027      	beq.n	800764a <takeWifiPass+0x366>
+ 80075f0:	4b21      	ldr	r3, [pc, #132]	; (8007678 <takeWifiPass+0x390>)
+ 80075f2:	781b      	ldrb	r3, [r3, #0]
+ 80075f4:	2b00      	cmp	r3, #0
+ 80075f6:	d02c      	beq.n	8007652 <takeWifiPass+0x36a>
             	wifiPass[wifiPassLoc] = '\0';
- 80075fa:	4a1d      	ldr	r2, [pc, #116]	; (8007670 <takeWifiPass+0x38c>)
- 80075fc:	693b      	ldr	r3, [r7, #16]
- 80075fe:	4413      	add	r3, r2
- 8007600:	2200      	movs	r2, #0
- 8007602:	701a      	strb	r2, [r3, #0]
+ 80075f8:	4a1f      	ldr	r2, [pc, #124]	; (8007678 <takeWifiPass+0x390>)
+ 80075fa:	693b      	ldr	r3, [r7, #16]
+ 80075fc:	4413      	add	r3, r2
+ 80075fe:	2200      	movs	r2, #0
+ 8007600:	701a      	strb	r2, [r3, #0]
+            	wifiPassLocArr[wifiPassLoc] = '\0';
+ 8007602:	4a1e      	ldr	r2, [pc, #120]	; (800767c <takeWifiPass+0x394>)
+ 8007604:	693b      	ldr	r3, [r7, #16]
+ 8007606:	4413      	add	r3, r2
+ 8007608:	2200      	movs	r2, #0
+ 800760a:	701a      	strb	r2, [r3, #0]
 
             	lcd_delete_char(1, 6+wifiPassLoc);
- 8007604:	693b      	ldr	r3, [r7, #16]
- 8007606:	b2db      	uxtb	r3, r3
- 8007608:	3306      	adds	r3, #6
- 800760a:	b2db      	uxtb	r3, r3
- 800760c:	4619      	mov	r1, r3
- 800760e:	2001      	movs	r0, #1
- 8007610:	f000 fbaf 	bl	8007d72 <lcd_delete_char>
+ 800760c:	693b      	ldr	r3, [r7, #16]
+ 800760e:	b2db      	uxtb	r3, r3
+ 8007610:	3306      	adds	r3, #6
+ 8007612:	b2db      	uxtb	r3, r3
+ 8007614:	4619      	mov	r1, r3
+ 8007616:	2001      	movs	r0, #1
+ 8007618:	f000 fbab 	bl	8007d72 <lcd_delete_char>
             	HAL_Delay(50);
- 8007614:	2032      	movs	r0, #50	; 0x32
- 8007616:	f001 f8d1 	bl	80087bc <HAL_Delay>
+ 800761c:	2032      	movs	r0, #50	; 0x32
+ 800761e:	f001 f8cd 	bl	80087bc <HAL_Delay>
 
             	if(writeLoc > 7) {
- 800761a:	68fb      	ldr	r3, [r7, #12]
- 800761c:	2b07      	cmp	r3, #7
- 800761e:	dd03      	ble.n	8007628 <takeWifiPass+0x344>
+ 8007622:	68fb      	ldr	r3, [r7, #12]
+ 8007624:	2b07      	cmp	r3, #7
+ 8007626:	dd03      	ble.n	8007630 <takeWifiPass+0x348>
             		writeLoc--;
- 8007620:	68fb      	ldr	r3, [r7, #12]
- 8007622:	3b01      	subs	r3, #1
- 8007624:	60fb      	str	r3, [r7, #12]
- 8007626:	e004      	b.n	8007632 <takeWifiPass+0x34e>
-            	} else if(writeLoc < 7) {
  8007628:	68fb      	ldr	r3, [r7, #12]
- 800762a:	2b06      	cmp	r3, #6
- 800762c:	dc01      	bgt.n	8007632 <takeWifiPass+0x34e>
+ 800762a:	3b01      	subs	r3, #1
+ 800762c:	60fb      	str	r3, [r7, #12]
+ 800762e:	e004      	b.n	800763a <takeWifiPass+0x352>
+            	} else if(writeLoc < 7) {
+ 8007630:	68fb      	ldr	r3, [r7, #12]
+ 8007632:	2b06      	cmp	r3, #6
+ 8007634:	dc01      	bgt.n	800763a <takeWifiPass+0x352>
             		writeLoc = 7;
- 800762e:	2307      	movs	r3, #7
- 8007630:	60fb      	str	r3, [r7, #12]
+ 8007636:	2307      	movs	r3, #7
+ 8007638:	60fb      	str	r3, [r7, #12]
             	}
 
             	if(wifiPassLoc > 0) {
- 8007632:	693b      	ldr	r3, [r7, #16]
- 8007634:	2b00      	cmp	r3, #0
- 8007636:	dd03      	ble.n	8007640 <takeWifiPass+0x35c>
+ 800763a:	693b      	ldr	r3, [r7, #16]
+ 800763c:	2b00      	cmp	r3, #0
+ 800763e:	dd03      	ble.n	8007648 <takeWifiPass+0x360>
             		wifiPassLoc--;
- 8007638:	693b      	ldr	r3, [r7, #16]
- 800763a:	3b01      	subs	r3, #1
- 800763c:	613b      	str	r3, [r7, #16]
- 800763e:	e004      	b.n	800764a <takeWifiPass+0x366>
-            	} else if(wifiPassLoc < 0) {
  8007640:	693b      	ldr	r3, [r7, #16]
- 8007642:	2b00      	cmp	r3, #0
- 8007644:	da01      	bge.n	800764a <takeWifiPass+0x366>
+ 8007642:	3b01      	subs	r3, #1
+ 8007644:	613b      	str	r3, [r7, #16]
+ 8007646:	e004      	b.n	8007652 <takeWifiPass+0x36a>
+            	} else if(wifiPassLoc < 0) {
+ 8007648:	693b      	ldr	r3, [r7, #16]
+ 800764a:	2b00      	cmp	r3, #0
+ 800764c:	da01      	bge.n	8007652 <takeWifiPass+0x36a>
             		wifiPassLoc = 0;
- 8007646:	2300      	movs	r3, #0
- 8007648:	613b      	str	r3, [r7, #16]
+ 800764e:	2300      	movs	r3, #0
+ 8007650:	613b      	str	r3, [r7, #16]
             	}
             }
 
             HAL_Delay(250);
- 800764a:	20fa      	movs	r0, #250	; 0xfa
- 800764c:	f001 f8b6 	bl	80087bc <HAL_Delay>
+ 8007652:	20fa      	movs	r0, #250	; 0xfa
+ 8007654:	f001 f8b2 	bl	80087bc <HAL_Delay>
         }
 
         lcd_gotoxy(2, cursorPosition);
- 8007650:	4b05      	ldr	r3, [pc, #20]	; (8007668 <takeWifiPass+0x384>)
- 8007652:	681b      	ldr	r3, [r3, #0]
- 8007654:	b2db      	uxtb	r3, r3
- 8007656:	4619      	mov	r1, r3
- 8007658:	2002      	movs	r0, #2
- 800765a:	f000 fb12 	bl	8007c82 <lcd_gotoxy>
+ 8007658:	4b05      	ldr	r3, [pc, #20]	; (8007670 <takeWifiPass+0x388>)
+ 800765a:	681b      	ldr	r3, [r3, #0]
+ 800765c:	b2db      	uxtb	r3, r3
+ 800765e:	4619      	mov	r1, r3
+ 8007660:	2002      	movs	r0, #2
+ 8007662:	f000 fb0e 	bl	8007c82 <lcd_gotoxy>
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
- 800765e:	e662      	b.n	8007326 <takeWifiPass+0x42>
+ 8007666:	e65e      	b.n	8007326 <takeWifiPass+0x3e>
     }
 }
- 8007660:	bf00      	nop
- 8007662:	3718      	adds	r7, #24
- 8007664:	46bd      	mov	sp, r7
- 8007666:	bdb0      	pop	{r4, r5, r7, pc}
- 8007668:	20000000 	.word	0x20000000
- 800766c:	40010800 	.word	0x40010800
- 8007670:	200001c0 	.word	0x200001c0
- 8007674:	200001e8 	.word	0x200001e8
+ 8007668:	bf00      	nop
+ 800766a:	3718      	adds	r7, #24
+ 800766c:	46bd      	mov	sp, r7
+ 800766e:	bdb0      	pop	{r4, r5, r7, pc}
+ 8007670:	20000000 	.word	0x20000000
+ 8007674:	40010800 	.word	0x40010800
+ 8007678:	200001c0 	.word	0x200001c0
+ 800767c:	200001e8 	.word	0x200001e8
 
-08007678 <mergeData>:
+08007680 <mergeData>:
 
 char* mergeData() {
- 8007678:	b580      	push	{r7, lr}
- 800767a:	b09c      	sub	sp, #112	; 0x70
- 800767c:	af00      	add	r7, sp, #0
+ 8007680:	b580      	push	{r7, lr}
+ 8007682:	b09c      	sub	sp, #112	; 0x70
+ 8007684:	af00      	add	r7, sp, #0
 	char combinedString[44] = "";
- 800767e:	2300      	movs	r3, #0
- 8007680:	63fb      	str	r3, [r7, #60]	; 0x3c
- 8007682:	f107 0340 	add.w	r3, r7, #64	; 0x40
- 8007686:	2228      	movs	r2, #40	; 0x28
- 8007688:	2100      	movs	r1, #0
- 800768a:	4618      	mov	r0, r3
- 800768c:	f004 ffcc 	bl	800c628 <memset>
+ 8007686:	2300      	movs	r3, #0
+ 8007688:	63fb      	str	r3, [r7, #60]	; 0x3c
+ 800768a:	f107 0340 	add.w	r3, r7, #64	; 0x40
+ 800768e:	2228      	movs	r2, #40	; 0x28
+ 8007690:	2100      	movs	r1, #0
+ 8007692:	4618      	mov	r0, r3
+ 8007694:	f004 ffc8 	bl	800c628 <memset>
 	char temp[10];
 
 	uint8_t uintVariables[] = {
- 8007690:	4b67      	ldr	r3, [pc, #412]	; (8007830 <mergeData+0x1b8>)
- 8007692:	781b      	ldrb	r3, [r3, #0]
- 8007694:	713b      	strb	r3, [r7, #4]
- 8007696:	4b67      	ldr	r3, [pc, #412]	; (8007834 <mergeData+0x1bc>)
- 8007698:	781b      	ldrb	r3, [r3, #0]
- 800769a:	717b      	strb	r3, [r7, #5]
- 800769c:	4b66      	ldr	r3, [pc, #408]	; (8007838 <mergeData+0x1c0>)
- 800769e:	781b      	ldrb	r3, [r3, #0]
- 80076a0:	71bb      	strb	r3, [r7, #6]
- 80076a2:	4b66      	ldr	r3, [pc, #408]	; (800783c <mergeData+0x1c4>)
- 80076a4:	781b      	ldrb	r3, [r3, #0]
- 80076a6:	71fb      	strb	r3, [r7, #7]
- 80076a8:	4b65      	ldr	r3, [pc, #404]	; (8007840 <mergeData+0x1c8>)
- 80076aa:	781b      	ldrb	r3, [r3, #0]
- 80076ac:	723b      	strb	r3, [r7, #8]
- 80076ae:	4b65      	ldr	r3, [pc, #404]	; (8007844 <mergeData+0x1cc>)
- 80076b0:	781b      	ldrb	r3, [r3, #0]
- 80076b2:	727b      	strb	r3, [r7, #9]
- 80076b4:	4b64      	ldr	r3, [pc, #400]	; (8007848 <mergeData+0x1d0>)
- 80076b6:	781b      	ldrb	r3, [r3, #0]
- 80076b8:	72bb      	strb	r3, [r7, #10]
- 80076ba:	4b64      	ldr	r3, [pc, #400]	; (800784c <mergeData+0x1d4>)
- 80076bc:	781b      	ldrb	r3, [r3, #0]
- 80076be:	72fb      	strb	r3, [r7, #11]
- 80076c0:	4b63      	ldr	r3, [pc, #396]	; (8007850 <mergeData+0x1d8>)
- 80076c2:	781b      	ldrb	r3, [r3, #0]
- 80076c4:	733b      	strb	r3, [r7, #12]
- 80076c6:	4b63      	ldr	r3, [pc, #396]	; (8007854 <mergeData+0x1dc>)
- 80076c8:	781b      	ldrb	r3, [r3, #0]
- 80076ca:	737b      	strb	r3, [r7, #13]
- 80076cc:	4b62      	ldr	r3, [pc, #392]	; (8007858 <mergeData+0x1e0>)
- 80076ce:	781b      	ldrb	r3, [r3, #0]
- 80076d0:	73bb      	strb	r3, [r7, #14]
- 80076d2:	4b62      	ldr	r3, [pc, #392]	; (800785c <mergeData+0x1e4>)
- 80076d4:	781b      	ldrb	r3, [r3, #0]
- 80076d6:	73fb      	strb	r3, [r7, #15]
- 80076d8:	4b61      	ldr	r3, [pc, #388]	; (8007860 <mergeData+0x1e8>)
- 80076da:	781b      	ldrb	r3, [r3, #0]
- 80076dc:	743b      	strb	r3, [r7, #16]
- 80076de:	4b61      	ldr	r3, [pc, #388]	; (8007864 <mergeData+0x1ec>)
- 80076e0:	781b      	ldrb	r3, [r3, #0]
- 80076e2:	747b      	strb	r3, [r7, #17]
- 80076e4:	4b60      	ldr	r3, [pc, #384]	; (8007868 <mergeData+0x1f0>)
- 80076e6:	781b      	ldrb	r3, [r3, #0]
- 80076e8:	74bb      	strb	r3, [r7, #18]
- 80076ea:	4b60      	ldr	r3, [pc, #384]	; (800786c <mergeData+0x1f4>)
- 80076ec:	781b      	ldrb	r3, [r3, #0]
- 80076ee:	74fb      	strb	r3, [r7, #19]
- 80076f0:	4b5f      	ldr	r3, [pc, #380]	; (8007870 <mergeData+0x1f8>)
- 80076f2:	781b      	ldrb	r3, [r3, #0]
- 80076f4:	753b      	strb	r3, [r7, #20]
- 80076f6:	4b5f      	ldr	r3, [pc, #380]	; (8007874 <mergeData+0x1fc>)
- 80076f8:	781b      	ldrb	r3, [r3, #0]
- 80076fa:	757b      	strb	r3, [r7, #21]
- 80076fc:	4b5e      	ldr	r3, [pc, #376]	; (8007878 <mergeData+0x200>)
- 80076fe:	781b      	ldrb	r3, [r3, #0]
- 8007700:	75bb      	strb	r3, [r7, #22]
- 8007702:	4b5e      	ldr	r3, [pc, #376]	; (800787c <mergeData+0x204>)
- 8007704:	781b      	ldrb	r3, [r3, #0]
- 8007706:	75fb      	strb	r3, [r7, #23]
- 8007708:	4b5d      	ldr	r3, [pc, #372]	; (8007880 <mergeData+0x208>)
- 800770a:	781b      	ldrb	r3, [r3, #0]
- 800770c:	763b      	strb	r3, [r7, #24]
- 800770e:	4b5d      	ldr	r3, [pc, #372]	; (8007884 <mergeData+0x20c>)
- 8007710:	781b      	ldrb	r3, [r3, #0]
- 8007712:	767b      	strb	r3, [r7, #25]
- 8007714:	4b5c      	ldr	r3, [pc, #368]	; (8007888 <mergeData+0x210>)
- 8007716:	781b      	ldrb	r3, [r3, #0]
- 8007718:	76bb      	strb	r3, [r7, #26]
- 800771a:	4b5c      	ldr	r3, [pc, #368]	; (800788c <mergeData+0x214>)
- 800771c:	781b      	ldrb	r3, [r3, #0]
- 800771e:	76fb      	strb	r3, [r7, #27]
- 8007720:	4b5b      	ldr	r3, [pc, #364]	; (8007890 <mergeData+0x218>)
- 8007722:	781b      	ldrb	r3, [r3, #0]
- 8007724:	773b      	strb	r3, [r7, #28]
- 8007726:	4b5b      	ldr	r3, [pc, #364]	; (8007894 <mergeData+0x21c>)
- 8007728:	781b      	ldrb	r3, [r3, #0]
- 800772a:	777b      	strb	r3, [r7, #29]
- 800772c:	4b5a      	ldr	r3, [pc, #360]	; (8007898 <mergeData+0x220>)
- 800772e:	781b      	ldrb	r3, [r3, #0]
- 8007730:	77bb      	strb	r3, [r7, #30]
- 8007732:	4b5a      	ldr	r3, [pc, #360]	; (800789c <mergeData+0x224>)
- 8007734:	781b      	ldrb	r3, [r3, #0]
- 8007736:	77fb      	strb	r3, [r7, #31]
- 8007738:	4b59      	ldr	r3, [pc, #356]	; (80078a0 <mergeData+0x228>)
- 800773a:	781b      	ldrb	r3, [r3, #0]
- 800773c:	f887 3020 	strb.w	r3, [r7, #32]
- 8007740:	4b58      	ldr	r3, [pc, #352]	; (80078a4 <mergeData+0x22c>)
+ 8007698:	4b67      	ldr	r3, [pc, #412]	; (8007838 <mergeData+0x1b8>)
+ 800769a:	781b      	ldrb	r3, [r3, #0]
+ 800769c:	713b      	strb	r3, [r7, #4]
+ 800769e:	4b67      	ldr	r3, [pc, #412]	; (800783c <mergeData+0x1bc>)
+ 80076a0:	781b      	ldrb	r3, [r3, #0]
+ 80076a2:	717b      	strb	r3, [r7, #5]
+ 80076a4:	4b66      	ldr	r3, [pc, #408]	; (8007840 <mergeData+0x1c0>)
+ 80076a6:	781b      	ldrb	r3, [r3, #0]
+ 80076a8:	71bb      	strb	r3, [r7, #6]
+ 80076aa:	4b66      	ldr	r3, [pc, #408]	; (8007844 <mergeData+0x1c4>)
+ 80076ac:	781b      	ldrb	r3, [r3, #0]
+ 80076ae:	71fb      	strb	r3, [r7, #7]
+ 80076b0:	4b65      	ldr	r3, [pc, #404]	; (8007848 <mergeData+0x1c8>)
+ 80076b2:	781b      	ldrb	r3, [r3, #0]
+ 80076b4:	723b      	strb	r3, [r7, #8]
+ 80076b6:	4b65      	ldr	r3, [pc, #404]	; (800784c <mergeData+0x1cc>)
+ 80076b8:	781b      	ldrb	r3, [r3, #0]
+ 80076ba:	727b      	strb	r3, [r7, #9]
+ 80076bc:	4b64      	ldr	r3, [pc, #400]	; (8007850 <mergeData+0x1d0>)
+ 80076be:	781b      	ldrb	r3, [r3, #0]
+ 80076c0:	72bb      	strb	r3, [r7, #10]
+ 80076c2:	4b64      	ldr	r3, [pc, #400]	; (8007854 <mergeData+0x1d4>)
+ 80076c4:	781b      	ldrb	r3, [r3, #0]
+ 80076c6:	72fb      	strb	r3, [r7, #11]
+ 80076c8:	4b63      	ldr	r3, [pc, #396]	; (8007858 <mergeData+0x1d8>)
+ 80076ca:	781b      	ldrb	r3, [r3, #0]
+ 80076cc:	733b      	strb	r3, [r7, #12]
+ 80076ce:	4b63      	ldr	r3, [pc, #396]	; (800785c <mergeData+0x1dc>)
+ 80076d0:	781b      	ldrb	r3, [r3, #0]
+ 80076d2:	737b      	strb	r3, [r7, #13]
+ 80076d4:	4b62      	ldr	r3, [pc, #392]	; (8007860 <mergeData+0x1e0>)
+ 80076d6:	781b      	ldrb	r3, [r3, #0]
+ 80076d8:	73bb      	strb	r3, [r7, #14]
+ 80076da:	4b62      	ldr	r3, [pc, #392]	; (8007864 <mergeData+0x1e4>)
+ 80076dc:	781b      	ldrb	r3, [r3, #0]
+ 80076de:	73fb      	strb	r3, [r7, #15]
+ 80076e0:	4b61      	ldr	r3, [pc, #388]	; (8007868 <mergeData+0x1e8>)
+ 80076e2:	781b      	ldrb	r3, [r3, #0]
+ 80076e4:	743b      	strb	r3, [r7, #16]
+ 80076e6:	4b61      	ldr	r3, [pc, #388]	; (800786c <mergeData+0x1ec>)
+ 80076e8:	781b      	ldrb	r3, [r3, #0]
+ 80076ea:	747b      	strb	r3, [r7, #17]
+ 80076ec:	4b60      	ldr	r3, [pc, #384]	; (8007870 <mergeData+0x1f0>)
+ 80076ee:	781b      	ldrb	r3, [r3, #0]
+ 80076f0:	74bb      	strb	r3, [r7, #18]
+ 80076f2:	4b60      	ldr	r3, [pc, #384]	; (8007874 <mergeData+0x1f4>)
+ 80076f4:	781b      	ldrb	r3, [r3, #0]
+ 80076f6:	74fb      	strb	r3, [r7, #19]
+ 80076f8:	4b5f      	ldr	r3, [pc, #380]	; (8007878 <mergeData+0x1f8>)
+ 80076fa:	781b      	ldrb	r3, [r3, #0]
+ 80076fc:	753b      	strb	r3, [r7, #20]
+ 80076fe:	4b5f      	ldr	r3, [pc, #380]	; (800787c <mergeData+0x1fc>)
+ 8007700:	781b      	ldrb	r3, [r3, #0]
+ 8007702:	757b      	strb	r3, [r7, #21]
+ 8007704:	4b5e      	ldr	r3, [pc, #376]	; (8007880 <mergeData+0x200>)
+ 8007706:	781b      	ldrb	r3, [r3, #0]
+ 8007708:	75bb      	strb	r3, [r7, #22]
+ 800770a:	4b5e      	ldr	r3, [pc, #376]	; (8007884 <mergeData+0x204>)
+ 800770c:	781b      	ldrb	r3, [r3, #0]
+ 800770e:	75fb      	strb	r3, [r7, #23]
+ 8007710:	4b5d      	ldr	r3, [pc, #372]	; (8007888 <mergeData+0x208>)
+ 8007712:	781b      	ldrb	r3, [r3, #0]
+ 8007714:	763b      	strb	r3, [r7, #24]
+ 8007716:	4b5d      	ldr	r3, [pc, #372]	; (800788c <mergeData+0x20c>)
+ 8007718:	781b      	ldrb	r3, [r3, #0]
+ 800771a:	767b      	strb	r3, [r7, #25]
+ 800771c:	4b5c      	ldr	r3, [pc, #368]	; (8007890 <mergeData+0x210>)
+ 800771e:	781b      	ldrb	r3, [r3, #0]
+ 8007720:	76bb      	strb	r3, [r7, #26]
+ 8007722:	4b5c      	ldr	r3, [pc, #368]	; (8007894 <mergeData+0x214>)
+ 8007724:	781b      	ldrb	r3, [r3, #0]
+ 8007726:	76fb      	strb	r3, [r7, #27]
+ 8007728:	4b5b      	ldr	r3, [pc, #364]	; (8007898 <mergeData+0x218>)
+ 800772a:	781b      	ldrb	r3, [r3, #0]
+ 800772c:	773b      	strb	r3, [r7, #28]
+ 800772e:	4b5b      	ldr	r3, [pc, #364]	; (800789c <mergeData+0x21c>)
+ 8007730:	781b      	ldrb	r3, [r3, #0]
+ 8007732:	777b      	strb	r3, [r7, #29]
+ 8007734:	4b5a      	ldr	r3, [pc, #360]	; (80078a0 <mergeData+0x220>)
+ 8007736:	781b      	ldrb	r3, [r3, #0]
+ 8007738:	77bb      	strb	r3, [r7, #30]
+ 800773a:	4b5a      	ldr	r3, [pc, #360]	; (80078a4 <mergeData+0x224>)
+ 800773c:	781b      	ldrb	r3, [r3, #0]
+ 800773e:	77fb      	strb	r3, [r7, #31]
+ 8007740:	4b59      	ldr	r3, [pc, #356]	; (80078a8 <mergeData+0x228>)
  8007742:	781b      	ldrb	r3, [r3, #0]
- 8007744:	f887 3021 	strb.w	r3, [r7, #33]	; 0x21
- 8007748:	4b57      	ldr	r3, [pc, #348]	; (80078a8 <mergeData+0x230>)
+ 8007744:	f887 3020 	strb.w	r3, [r7, #32]
+ 8007748:	4b58      	ldr	r3, [pc, #352]	; (80078ac <mergeData+0x22c>)
  800774a:	781b      	ldrb	r3, [r3, #0]
- 800774c:	f887 3022 	strb.w	r3, [r7, #34]	; 0x22
- 8007750:	4b56      	ldr	r3, [pc, #344]	; (80078ac <mergeData+0x234>)
+ 800774c:	f887 3021 	strb.w	r3, [r7, #33]	; 0x21
+ 8007750:	4b57      	ldr	r3, [pc, #348]	; (80078b0 <mergeData+0x230>)
  8007752:	781b      	ldrb	r3, [r3, #0]
- 8007754:	f887 3023 	strb.w	r3, [r7, #35]	; 0x23
- 8007758:	4b55      	ldr	r3, [pc, #340]	; (80078b0 <mergeData+0x238>)
+ 8007754:	f887 3022 	strb.w	r3, [r7, #34]	; 0x22
+ 8007758:	4b56      	ldr	r3, [pc, #344]	; (80078b4 <mergeData+0x234>)
  800775a:	781b      	ldrb	r3, [r3, #0]
- 800775c:	f887 3024 	strb.w	r3, [r7, #36]	; 0x24
+ 800775c:	f887 3023 	strb.w	r3, [r7, #35]	; 0x23
+ 8007760:	4b55      	ldr	r3, [pc, #340]	; (80078b8 <mergeData+0x238>)
+ 8007762:	781b      	ldrb	r3, [r3, #0]
+ 8007764:	f887 3024 	strb.w	r3, [r7, #36]	; 0x24
 			calismaSayisi10,
 			calismaSayisi100,
 			calismaSayisi1000,
 			calismaSayisi10000,
 			dilSecim,
 			eepromData[38],
- 8007760:	4b54      	ldr	r3, [pc, #336]	; (80078b4 <mergeData+0x23c>)
- 8007762:	f893 3026 	ldrb.w	r3, [r3, #38]	; 0x26
+ 8007768:	4b54      	ldr	r3, [pc, #336]	; (80078bc <mergeData+0x23c>)
+ 800776a:	f893 3026 	ldrb.w	r3, [r3, #38]	; 0x26
 	uint8_t uintVariables[] = {
- 8007766:	f887 3025 	strb.w	r3, [r7, #37]	; 0x25
+ 800776e:	f887 3025 	strb.w	r3, [r7, #37]	; 0x25
 			eepromData[39],
- 800776a:	4b52      	ldr	r3, [pc, #328]	; (80078b4 <mergeData+0x23c>)
- 800776c:	f893 3027 	ldrb.w	r3, [r3, #39]	; 0x27
+ 8007772:	4b52      	ldr	r3, [pc, #328]	; (80078bc <mergeData+0x23c>)
+ 8007774:	f893 3027 	ldrb.w	r3, [r3, #39]	; 0x27
 	uint8_t uintVariables[] = {
- 8007770:	f887 3026 	strb.w	r3, [r7, #38]	; 0x26
+ 8007778:	f887 3026 	strb.w	r3, [r7, #38]	; 0x26
 			eepromData[40],
- 8007774:	4b4f      	ldr	r3, [pc, #316]	; (80078b4 <mergeData+0x23c>)
- 8007776:	f893 3028 	ldrb.w	r3, [r3, #40]	; 0x28
+ 800777c:	4b4f      	ldr	r3, [pc, #316]	; (80078bc <mergeData+0x23c>)
+ 800777e:	f893 3028 	ldrb.w	r3, [r3, #40]	; 0x28
 	uint8_t uintVariables[] = {
- 800777a:	f887 3027 	strb.w	r3, [r7, #39]	; 0x27
+ 8007782:	f887 3027 	strb.w	r3, [r7, #39]	; 0x27
 			eepromData[41],
- 800777e:	4b4d      	ldr	r3, [pc, #308]	; (80078b4 <mergeData+0x23c>)
- 8007780:	f893 3029 	ldrb.w	r3, [r3, #41]	; 0x29
+ 8007786:	4b4d      	ldr	r3, [pc, #308]	; (80078bc <mergeData+0x23c>)
+ 8007788:	f893 3029 	ldrb.w	r3, [r3, #41]	; 0x29
 	uint8_t uintVariables[] = {
- 8007784:	f887 3028 	strb.w	r3, [r7, #40]	; 0x28
+ 800778c:	f887 3028 	strb.w	r3, [r7, #40]	; 0x28
 			eepromData[42],
- 8007788:	4b4a      	ldr	r3, [pc, #296]	; (80078b4 <mergeData+0x23c>)
- 800778a:	f893 302a 	ldrb.w	r3, [r3, #42]	; 0x2a
+ 8007790:	4b4a      	ldr	r3, [pc, #296]	; (80078bc <mergeData+0x23c>)
+ 8007792:	f893 302a 	ldrb.w	r3, [r3, #42]	; 0x2a
 	uint8_t uintVariables[] = {
- 800778e:	f887 3029 	strb.w	r3, [r7, #41]	; 0x29
+ 8007796:	f887 3029 	strb.w	r3, [r7, #41]	; 0x29
 			eepromData[43],
- 8007792:	4b48      	ldr	r3, [pc, #288]	; (80078b4 <mergeData+0x23c>)
- 8007794:	f893 302b 	ldrb.w	r3, [r3, #43]	; 0x2b
+ 800779a:	4b48      	ldr	r3, [pc, #288]	; (80078bc <mergeData+0x23c>)
+ 800779c:	f893 302b 	ldrb.w	r3, [r3, #43]	; 0x2b
 	uint8_t uintVariables[] = {
- 8007798:	f887 302a 	strb.w	r3, [r7, #42]	; 0x2a
+ 80077a0:	f887 302a 	strb.w	r3, [r7, #42]	; 0x2a
 			eepromData[44],
- 800779c:	4b45      	ldr	r3, [pc, #276]	; (80078b4 <mergeData+0x23c>)
- 800779e:	f893 302c 	ldrb.w	r3, [r3, #44]	; 0x2c
+ 80077a4:	4b45      	ldr	r3, [pc, #276]	; (80078bc <mergeData+0x23c>)
+ 80077a6:	f893 302c 	ldrb.w	r3, [r3, #44]	; 0x2c
 	uint8_t uintVariables[] = {
- 80077a2:	f887 302b 	strb.w	r3, [r7, #43]	; 0x2b
+ 80077aa:	f887 302b 	strb.w	r3, [r7, #43]	; 0x2b
 			eepromData[45],
- 80077a6:	4b43      	ldr	r3, [pc, #268]	; (80078b4 <mergeData+0x23c>)
- 80077a8:	f893 302d 	ldrb.w	r3, [r3, #45]	; 0x2d
+ 80077ae:	4b43      	ldr	r3, [pc, #268]	; (80078bc <mergeData+0x23c>)
+ 80077b0:	f893 302d 	ldrb.w	r3, [r3, #45]	; 0x2d
 	uint8_t uintVariables[] = {
- 80077ac:	f887 302c 	strb.w	r3, [r7, #44]	; 0x2c
+ 80077b4:	f887 302c 	strb.w	r3, [r7, #44]	; 0x2c
 			eepromData[46],
- 80077b0:	4b40      	ldr	r3, [pc, #256]	; (80078b4 <mergeData+0x23c>)
- 80077b2:	f893 302e 	ldrb.w	r3, [r3, #46]	; 0x2e
+ 80077b8:	4b40      	ldr	r3, [pc, #256]	; (80078bc <mergeData+0x23c>)
+ 80077ba:	f893 302e 	ldrb.w	r3, [r3, #46]	; 0x2e
 	uint8_t uintVariables[] = {
- 80077b6:	f887 302d 	strb.w	r3, [r7, #45]	; 0x2d
+ 80077be:	f887 302d 	strb.w	r3, [r7, #45]	; 0x2d
 			eepromData[47],
- 80077ba:	4b3e      	ldr	r3, [pc, #248]	; (80078b4 <mergeData+0x23c>)
- 80077bc:	f893 302f 	ldrb.w	r3, [r3, #47]	; 0x2f
+ 80077c2:	4b3e      	ldr	r3, [pc, #248]	; (80078bc <mergeData+0x23c>)
+ 80077c4:	f893 302f 	ldrb.w	r3, [r3, #47]	; 0x2f
 	uint8_t uintVariables[] = {
- 80077c0:	f887 302e 	strb.w	r3, [r7, #46]	; 0x2e
- 80077c4:	2306      	movs	r3, #6
- 80077c6:	f887 302f 	strb.w	r3, [r7, #47]	; 0x2f
+ 80077c8:	f887 302e 	strb.w	r3, [r7, #46]	; 0x2e
+ 80077cc:	2306      	movs	r3, #6
+ 80077ce:	f887 302f 	strb.w	r3, [r7, #47]	; 0x2f
 			lcdBacklightSure
 	};
 
 	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
- 80077ca:	2300      	movs	r3, #0
- 80077cc:	66fb      	str	r3, [r7, #108]	; 0x6c
- 80077ce:	e015      	b.n	80077fc <mergeData+0x184>
+ 80077d2:	2300      	movs	r3, #0
+ 80077d4:	66fb      	str	r3, [r7, #108]	; 0x6c
+ 80077d6:	e015      	b.n	8007804 <mergeData+0x184>
 	    sprintf(temp, "%u", uintVariables[i]);
- 80077d0:	1d3a      	adds	r2, r7, #4
- 80077d2:	6efb      	ldr	r3, [r7, #108]	; 0x6c
- 80077d4:	4413      	add	r3, r2
- 80077d6:	781b      	ldrb	r3, [r3, #0]
- 80077d8:	461a      	mov	r2, r3
- 80077da:	f107 0330 	add.w	r3, r7, #48	; 0x30
- 80077de:	4936      	ldr	r1, [pc, #216]	; (80078b8 <mergeData+0x240>)
- 80077e0:	4618      	mov	r0, r3
- 80077e2:	f004 fe9d 	bl	800c520 <siprintf>
+ 80077d8:	1d3a      	adds	r2, r7, #4
+ 80077da:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 80077dc:	4413      	add	r3, r2
+ 80077de:	781b      	ldrb	r3, [r3, #0]
+ 80077e0:	461a      	mov	r2, r3
+ 80077e2:	f107 0330 	add.w	r3, r7, #48	; 0x30
+ 80077e6:	4936      	ldr	r1, [pc, #216]	; (80078c0 <mergeData+0x240>)
+ 80077e8:	4618      	mov	r0, r3
+ 80077ea:	f004 fe99 	bl	800c520 <siprintf>
 	    strcat(combinedString, temp);
- 80077e6:	f107 0230 	add.w	r2, r7, #48	; 0x30
- 80077ea:	f107 033c 	add.w	r3, r7, #60	; 0x3c
- 80077ee:	4611      	mov	r1, r2
- 80077f0:	4618      	mov	r0, r3
- 80077f2:	f004 fef7 	bl	800c5e4 <strcat>
+ 80077ee:	f107 0230 	add.w	r2, r7, #48	; 0x30
+ 80077f2:	f107 033c 	add.w	r3, r7, #60	; 0x3c
+ 80077f6:	4611      	mov	r1, r2
+ 80077f8:	4618      	mov	r0, r3
+ 80077fa:	f004 fef3 	bl	800c5e4 <strcat>
 	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
- 80077f6:	6efb      	ldr	r3, [r7, #108]	; 0x6c
- 80077f8:	3301      	adds	r3, #1
- 80077fa:	66fb      	str	r3, [r7, #108]	; 0x6c
- 80077fc:	6efb      	ldr	r3, [r7, #108]	; 0x6c
- 80077fe:	2b2b      	cmp	r3, #43	; 0x2b
- 8007800:	d9e6      	bls.n	80077d0 <mergeData+0x158>
+ 80077fe:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8007800:	3301      	adds	r3, #1
+ 8007802:	66fb      	str	r3, [r7, #108]	; 0x6c
+ 8007804:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8007806:	2b2b      	cmp	r3, #43	; 0x2b
+ 8007808:	d9e6      	bls.n	80077d8 <mergeData+0x158>
 	}
 
 	char* result = malloc(strlen(combinedString) + 1);
- 8007802:	f107 033c 	add.w	r3, r7, #60	; 0x3c
- 8007806:	4618      	mov	r0, r3
- 8007808:	f7f8 fd0c 	bl	8000224 <strlen>
- 800780c:	4603      	mov	r3, r0
- 800780e:	3301      	adds	r3, #1
- 8007810:	4618      	mov	r0, r3
- 8007812:	f004 fdd1 	bl	800c3b8 <malloc>
- 8007816:	4603      	mov	r3, r0
- 8007818:	66bb      	str	r3, [r7, #104]	; 0x68
+ 800780a:	f107 033c 	add.w	r3, r7, #60	; 0x3c
+ 800780e:	4618      	mov	r0, r3
+ 8007810:	f7f8 fd08 	bl	8000224 <strlen>
+ 8007814:	4603      	mov	r3, r0
+ 8007816:	3301      	adds	r3, #1
+ 8007818:	4618      	mov	r0, r3
+ 800781a:	f004 fdcd 	bl	800c3b8 <malloc>
+ 800781e:	4603      	mov	r3, r0
+ 8007820:	66bb      	str	r3, [r7, #104]	; 0x68
 	strcpy(result, combinedString);
- 800781a:	f107 033c 	add.w	r3, r7, #60	; 0x3c
- 800781e:	4619      	mov	r1, r3
- 8007820:	6eb8      	ldr	r0, [r7, #104]	; 0x68
- 8007822:	f004 ff45 	bl	800c6b0 <strcpy>
+ 8007822:	f107 033c 	add.w	r3, r7, #60	; 0x3c
+ 8007826:	4619      	mov	r1, r3
+ 8007828:	6eb8      	ldr	r0, [r7, #104]	; 0x68
+ 800782a:	f004 ff41 	bl	800c6b0 <strcpy>
 	return result;
- 8007826:	6ebb      	ldr	r3, [r7, #104]	; 0x68
+ 800782e:	6ebb      	ldr	r3, [r7, #104]	; 0x68
 }
- 8007828:	4618      	mov	r0, r3
- 800782a:	3770      	adds	r7, #112	; 0x70
- 800782c:	46bd      	mov	sp, r7
- 800782e:	bd80      	pop	{r7, pc}
- 8007830:	20000233 	.word	0x20000233
- 8007834:	20000225 	.word	0x20000225
- 8007838:	20000228 	.word	0x20000228
- 800783c:	20000229 	.word	0x20000229
- 8007840:	2000022a 	.word	0x2000022a
- 8007844:	20000231 	.word	0x20000231
- 8007848:	2000022b 	.word	0x2000022b
- 800784c:	2000022c 	.word	0x2000022c
- 8007850:	20000230 	.word	0x20000230
- 8007854:	2000022d 	.word	0x2000022d
- 8007858:	2000023d 	.word	0x2000023d
- 800785c:	2000022e 	.word	0x2000022e
- 8007860:	2000023e 	.word	0x2000023e
- 8007864:	2000022f 	.word	0x2000022f
- 8007868:	2000023f 	.word	0x2000023f
- 800786c:	20000232 	.word	0x20000232
- 8007870:	20000234 	.word	0x20000234
- 8007874:	20000235 	.word	0x20000235
- 8007878:	20000236 	.word	0x20000236
- 800787c:	20000237 	.word	0x20000237
- 8007880:	20000238 	.word	0x20000238
- 8007884:	20000239 	.word	0x20000239
- 8007888:	2000023a 	.word	0x2000023a
- 800788c:	2000023b 	.word	0x2000023b
- 8007890:	2000023c 	.word	0x2000023c
- 8007894:	20000240 	.word	0x20000240
- 8007898:	20000242 	.word	0x20000242
- 800789c:	20000221 	.word	0x20000221
- 80078a0:	20000222 	.word	0x20000222
- 80078a4:	20000008 	.word	0x20000008
- 80078a8:	20000009 	.word	0x20000009
- 80078ac:	20000223 	.word	0x20000223
- 80078b0:	20000245 	.word	0x20000245
- 80078b4:	20000128 	.word	0x20000128
- 80078b8:	0800dce4 	.word	0x0800dce4
+ 8007830:	4618      	mov	r0, r3
+ 8007832:	3770      	adds	r7, #112	; 0x70
+ 8007834:	46bd      	mov	sp, r7
+ 8007836:	bd80      	pop	{r7, pc}
+ 8007838:	20000233 	.word	0x20000233
+ 800783c:	20000225 	.word	0x20000225
+ 8007840:	20000228 	.word	0x20000228
+ 8007844:	20000229 	.word	0x20000229
+ 8007848:	2000022a 	.word	0x2000022a
+ 800784c:	20000231 	.word	0x20000231
+ 8007850:	2000022b 	.word	0x2000022b
+ 8007854:	2000022c 	.word	0x2000022c
+ 8007858:	20000230 	.word	0x20000230
+ 800785c:	2000022d 	.word	0x2000022d
+ 8007860:	2000023d 	.word	0x2000023d
+ 8007864:	2000022e 	.word	0x2000022e
+ 8007868:	2000023e 	.word	0x2000023e
+ 800786c:	2000022f 	.word	0x2000022f
+ 8007870:	2000023f 	.word	0x2000023f
+ 8007874:	20000232 	.word	0x20000232
+ 8007878:	20000234 	.word	0x20000234
+ 800787c:	20000235 	.word	0x20000235
+ 8007880:	20000236 	.word	0x20000236
+ 8007884:	20000237 	.word	0x20000237
+ 8007888:	20000238 	.word	0x20000238
+ 800788c:	20000239 	.word	0x20000239
+ 8007890:	2000023a 	.word	0x2000023a
+ 8007894:	2000023b 	.word	0x2000023b
+ 8007898:	2000023c 	.word	0x2000023c
+ 800789c:	20000240 	.word	0x20000240
+ 80078a0:	20000242 	.word	0x20000242
+ 80078a4:	20000221 	.word	0x20000221
+ 80078a8:	20000222 	.word	0x20000222
+ 80078ac:	20000008 	.word	0x20000008
+ 80078b0:	20000009 	.word	0x20000009
+ 80078b4:	20000223 	.word	0x20000223
+ 80078b8:	20000245 	.word	0x20000245
+ 80078bc:	20000128 	.word	0x20000128
+ 80078c0:	0800dce4 	.word	0x0800dce4
 
-080078bc <convertAndSendData>:
+080078c4 <convertAndSendData>:
 
 void convertAndSendData() {
- 80078bc:	b580      	push	{r7, lr}
- 80078be:	b082      	sub	sp, #8
- 80078c0:	af00      	add	r7, sp, #0
+ 80078c4:	b580      	push	{r7, lr}
+ 80078c6:	b082      	sub	sp, #8
+ 80078c8:	af00      	add	r7, sp, #0
 	lcd_print(1, 1, "Veri Esleme");
- 80078c2:	4a14      	ldr	r2, [pc, #80]	; (8007914 <convertAndSendData+0x58>)
- 80078c4:	2101      	movs	r1, #1
- 80078c6:	2001      	movs	r0, #1
- 80078c8:	f000 f9fa 	bl	8007cc0 <lcd_print>
+ 80078ca:	4a14      	ldr	r2, [pc, #80]	; (800791c <convertAndSendData+0x58>)
+ 80078cc:	2101      	movs	r1, #1
+ 80078ce:	2001      	movs	r0, #1
+ 80078d0:	f000 f9f6 	bl	8007cc0 <lcd_print>
 	lcd_print(2, 1, "Baslatildi...");
- 80078cc:	4a12      	ldr	r2, [pc, #72]	; (8007918 <convertAndSendData+0x5c>)
- 80078ce:	2101      	movs	r1, #1
- 80078d0:	2002      	movs	r0, #2
- 80078d2:	f000 f9f5 	bl	8007cc0 <lcd_print>
+ 80078d4:	4a12      	ldr	r2, [pc, #72]	; (8007920 <convertAndSendData+0x5c>)
+ 80078d6:	2101      	movs	r1, #1
+ 80078d8:	2002      	movs	r0, #2
+ 80078da:	f000 f9f1 	bl	8007cc0 <lcd_print>
 	for(int i=0; i<2; i++) {
- 80078d6:	2300      	movs	r3, #0
- 80078d8:	607b      	str	r3, [r7, #4]
- 80078da:	e00a      	b.n	80078f2 <convertAndSendData+0x36>
+ 80078de:	2300      	movs	r3, #0
+ 80078e0:	607b      	str	r3, [r7, #4]
+ 80078e2:	e00a      	b.n	80078fa <convertAndSendData+0x36>
 		sendMachineData(&huart1, machineID, mergeData());
- 80078dc:	f7ff fecc 	bl	8007678 <mergeData>
- 80078e0:	4603      	mov	r3, r0
- 80078e2:	461a      	mov	r2, r3
- 80078e4:	490d      	ldr	r1, [pc, #52]	; (800791c <convertAndSendData+0x60>)
- 80078e6:	480e      	ldr	r0, [pc, #56]	; (8007920 <convertAndSendData+0x64>)
- 80078e8:	f7f9 f83e 	bl	8000968 <sendMachineData>
+ 80078e4:	f7ff fecc 	bl	8007680 <mergeData>
+ 80078e8:	4603      	mov	r3, r0
+ 80078ea:	461a      	mov	r2, r3
+ 80078ec:	490d      	ldr	r1, [pc, #52]	; (8007924 <convertAndSendData+0x60>)
+ 80078ee:	480e      	ldr	r0, [pc, #56]	; (8007928 <convertAndSendData+0x64>)
+ 80078f0:	f7f9 f83a 	bl	8000968 <sendMachineData>
 	for(int i=0; i<2; i++) {
- 80078ec:	687b      	ldr	r3, [r7, #4]
- 80078ee:	3301      	adds	r3, #1
- 80078f0:	607b      	str	r3, [r7, #4]
- 80078f2:	687b      	ldr	r3, [r7, #4]
- 80078f4:	2b01      	cmp	r3, #1
- 80078f6:	ddf1      	ble.n	80078dc <convertAndSendData+0x20>
+ 80078f4:	687b      	ldr	r3, [r7, #4]
+ 80078f6:	3301      	adds	r3, #1
+ 80078f8:	607b      	str	r3, [r7, #4]
+ 80078fa:	687b      	ldr	r3, [r7, #4]
+ 80078fc:	2b01      	cmp	r3, #1
+ 80078fe:	ddf1      	ble.n	80078e4 <convertAndSendData+0x20>
 	}
 	HAL_Delay(500);
- 80078f8:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
- 80078fc:	f000 ff5e 	bl	80087bc <HAL_Delay>
+ 8007900:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
+ 8007904:	f000 ff5a 	bl	80087bc <HAL_Delay>
 	lcd_clear();
- 8007900:	f000 fa2d 	bl	8007d5e <lcd_clear>
+ 8007908:	f000 fa29 	bl	8007d5e <lcd_clear>
 	HAL_Delay(500);
- 8007904:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
- 8007908:	f000 ff58 	bl	80087bc <HAL_Delay>
+ 800790c:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
+ 8007910:	f000 ff54 	bl	80087bc <HAL_Delay>
 }
- 800790c:	bf00      	nop
- 800790e:	3708      	adds	r7, #8
- 8007910:	46bd      	mov	sp, r7
- 8007912:	bd80      	pop	{r7, pc}
- 8007914:	0800dce8 	.word	0x0800dce8
- 8007918:	0800dcf4 	.word	0x0800dcf4
- 800791c:	200001a0 	.word	0x200001a0
- 8007920:	20000448 	.word	0x20000448
+ 8007914:	bf00      	nop
+ 8007916:	3708      	adds	r7, #8
+ 8007918:	46bd      	mov	sp, r7
+ 800791a:	bd80      	pop	{r7, pc}
+ 800791c:	0800dce8 	.word	0x0800dce8
+ 8007920:	0800dcf4 	.word	0x0800dcf4
+ 8007924:	200001a0 	.word	0x200001a0
+ 8007928:	20000448 	.word	0x20000448
 
-08007924 <iotSetup>:
+0800792c <iotSetup>:
 
 void iotSetup() {
- 8007924:	b580      	push	{r7, lr}
- 8007926:	af00      	add	r7, sp, #0
+ 800792c:	b580      	push	{r7, lr}
+ 800792e:	af00      	add	r7, sp, #0
 	if(iotMode != 0) {
- 8007928:	4b12      	ldr	r3, [pc, #72]	; (8007974 <iotSetup+0x50>)
- 800792a:	781b      	ldrb	r3, [r3, #0]
- 800792c:	2b00      	cmp	r3, #0
- 800792e:	d014      	beq.n	800795a <iotSetup+0x36>
-		if(machineID[machineIDCharacterLimit-1] == '\0') {
- 8007930:	4b11      	ldr	r3, [pc, #68]	; (8007978 <iotSetup+0x54>)
- 8007932:	7adb      	ldrb	r3, [r3, #11]
+ 8007930:	4b12      	ldr	r3, [pc, #72]	; (800797c <iotSetup+0x50>)
+ 8007932:	781b      	ldrb	r3, [r3, #0]
  8007934:	2b00      	cmp	r3, #0
- 8007936:	d102      	bne.n	800793e <iotSetup+0x1a>
+ 8007936:	d014      	beq.n	8007962 <iotSetup+0x36>
+		if(machineID[machineIDCharacterLimit-1] == '\0') {
+ 8007938:	4b11      	ldr	r3, [pc, #68]	; (8007980 <iotSetup+0x54>)
+ 800793a:	7adb      	ldrb	r3, [r3, #11]
+ 800793c:	2b00      	cmp	r3, #0
+ 800793e:	d102      	bne.n	8007946 <iotSetup+0x1a>
 			takeMachineID(0);
- 8007938:	2000      	movs	r0, #0
- 800793a:	f7ff f9b3 	bl	8006ca4 <takeMachineID>
+ 8007940:	2000      	movs	r0, #0
+ 8007942:	f7ff f9af 	bl	8006ca4 <takeMachineID>
 		}
 
 		if(wifiSSID[0] != '\0') {
- 800793e:	4b0f      	ldr	r3, [pc, #60]	; (800797c <iotSetup+0x58>)
- 8007940:	781b      	ldrb	r3, [r3, #0]
- 8007942:	2b00      	cmp	r3, #0
- 8007944:	d002      	beq.n	800794c <iotSetup+0x28>
+ 8007946:	4b0f      	ldr	r3, [pc, #60]	; (8007984 <iotSetup+0x58>)
+ 8007948:	781b      	ldrb	r3, [r3, #0]
+ 800794a:	2b00      	cmp	r3, #0
+ 800794c:	d002      	beq.n	8007954 <iotSetup+0x28>
 			takeWifiSSID(0);
- 8007946:	2000      	movs	r0, #0
- 8007948:	f7ff fb02 	bl	8006f50 <takeWifiSSID>
+ 800794e:	2000      	movs	r0, #0
+ 8007950:	f7ff fafe 	bl	8006f50 <takeWifiSSID>
 		}
 
 		if(wifiPass[0] != '\0') {
- 800794c:	4b0c      	ldr	r3, [pc, #48]	; (8007980 <iotSetup+0x5c>)
- 800794e:	781b      	ldrb	r3, [r3, #0]
- 8007950:	2b00      	cmp	r3, #0
- 8007952:	d002      	beq.n	800795a <iotSetup+0x36>
+ 8007954:	4b0c      	ldr	r3, [pc, #48]	; (8007988 <iotSetup+0x5c>)
+ 8007956:	781b      	ldrb	r3, [r3, #0]
+ 8007958:	2b00      	cmp	r3, #0
+ 800795a:	d002      	beq.n	8007962 <iotSetup+0x36>
 			takeWifiPass(0);
- 8007954:	2000      	movs	r0, #0
- 8007956:	f7ff fcc5 	bl	80072e4 <takeWifiPass>
+ 800795c:	2000      	movs	r0, #0
+ 800795e:	f7ff fcc3 	bl	80072e8 <takeWifiPass>
 		}
 	}
 
-	ESP8266_Init(&huart1, "iPhone", "ipek123456");
- 800795a:	4a0a      	ldr	r2, [pc, #40]	; (8007984 <iotSetup+0x60>)
- 800795c:	490a      	ldr	r1, [pc, #40]	; (8007988 <iotSetup+0x64>)
- 800795e:	480b      	ldr	r0, [pc, #44]	; (800798c <iotSetup+0x68>)
- 8007960:	f7f8 ff58 	bl	8000814 <ESP8266_Init>
+	//ESP8266_Init(&huart1, "iPhone", "ipek123456");
+	ESP8266_Init(&huart1, wifiSSID, wifiPass);
+ 8007962:	4a09      	ldr	r2, [pc, #36]	; (8007988 <iotSetup+0x5c>)
+ 8007964:	4907      	ldr	r1, [pc, #28]	; (8007984 <iotSetup+0x58>)
+ 8007966:	4809      	ldr	r0, [pc, #36]	; (800798c <iotSetup+0x60>)
+ 8007968:	f7f8 ff54 	bl	8000814 <ESP8266_Init>
 	HAL_Delay(500);
- 8007964:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
- 8007968:	f000 ff28 	bl	80087bc <HAL_Delay>
+ 800796c:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
+ 8007970:	f000 ff24 	bl	80087bc <HAL_Delay>
 	convertAndSendData();
- 800796c:	f7ff ffa6 	bl	80078bc <convertAndSendData>
+ 8007974:	f7ff ffa6 	bl	80078c4 <convertAndSendData>
 }
- 8007970:	bf00      	nop
- 8007972:	bd80      	pop	{r7, pc}
- 8007974:	20000243 	.word	0x20000243
- 8007978:	200001a0 	.word	0x200001a0
- 800797c:	200001ac 	.word	0x200001ac
- 8007980:	200001c0 	.word	0x200001c0
- 8007984:	0800dd04 	.word	0x0800dd04
- 8007988:	0800dd10 	.word	0x0800dd10
+ 8007978:	bf00      	nop
+ 800797a:	bd80      	pop	{r7, pc}
+ 800797c:	20000243 	.word	0x20000243
+ 8007980:	200001a0 	.word	0x200001a0
+ 8007984:	200001ac 	.word	0x200001ac
+ 8007988:	200001c0 	.word	0x200001c0
  800798c:	20000448 	.word	0x20000448
 
 08007990 <lcd_send_cmd>:
@@ -17801,7 +17799,7 @@ int main(void)
  8007f32:	6013      	str	r3, [r2, #0]
 
   iotSetup();
- 8007f34:	f7ff fcf6 	bl	8007924 <iotSetup>
+ 8007f34:	f7ff fcfa 	bl	800792c <iotSetup>
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -17816,8 +17814,8 @@ int main(void)
  8007f48:	200003ac 	.word	0x200003ac
  8007f4c:	40011000 	.word	0x40011000
  8007f50:	40010800 	.word	0x40010800
- 8007f54:	0800dd18 	.word	0x0800dd18
- 8007f58:	0800dd2c 	.word	0x0800dd2c
+ 8007f54:	0800dd04 	.word	0x0800dd04
+ 8007f58:	0800dd18 	.word	0x0800dd18
  8007f5c:	20000200 	.word	0x20000200
  8007f60:	2000021c 	.word	0x2000021c
 
@@ -19343,7 +19341,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  80086e4:	2000010c 	.word	0x2000010c
   ldr r2, =_sidata
- 80086e8:	0800ddcc 	.word	0x0800ddcc
+ 80086e8:	0800ddb8 	.word	0x0800ddb8
   ldr r2, =_sbss
  80086ec:	2000010c 	.word	0x2000010c
   ldr r4, =_ebss
@@ -26247,7 +26245,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  800aef2:	bf00      	nop
  800aef4:	40022000 	.word	0x40022000
  800aef8:	40021000 	.word	0x40021000
- 800aefc:	0800dd40 	.word	0x0800dd40
+ 800aefc:	0800dd2c 	.word	0x0800dd2c
  800af00:	200000b0 	.word	0x200000b0
  800af04:	200000b4 	.word	0x200000b4
 
@@ -26382,8 +26380,8 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  800af9a:	bf00      	nop
  800af9c:	40021000 	.word	0x40021000
  800afa0:	007a1200 	.word	0x007a1200
- 800afa4:	0800dd58 	.word	0x0800dd58
- 800afa8:	0800dd68 	.word	0x0800dd68
+ 800afa4:	0800dd44 	.word	0x0800dd44
+ 800afa8:	0800dd54 	.word	0x0800dd54
  800afac:	003d0900 	.word	0x003d0900
 
 0800afb0 <HAL_RCC_GetHCLKFreq>:
@@ -26429,7 +26427,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  800afe0:	4618      	mov	r0, r3
  800afe2:	bd80      	pop	{r7, pc}
  800afe4:	40021000 	.word	0x40021000
- 800afe8:	0800dd50 	.word	0x0800dd50
+ 800afe8:	0800dd3c 	.word	0x0800dd3c
 
 0800afec <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -26455,7 +26453,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  800b008:	4618      	mov	r0, r3
  800b00a:	bd80      	pop	{r7, pc}
  800b00c:	40021000 	.word	0x40021000
- 800b010:	0800dd50 	.word	0x0800dd50
+ 800b010:	0800dd3c 	.word	0x0800dd3c
 
 0800b014 <RCC_Delay>:
   * @brief  This function provides delay (in milliseconds) based on CPU cycles method.
@@ -30187,7 +30185,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800c5d8:	f801 5901 	strb.w	r5, [r1], #-1
  800c5dc:	e7f4      	b.n	800c5c8 <__utoa+0x68>
  800c5de:	bf00      	nop
- 800c5e0:	0800dd6a 	.word	0x0800dd6a
+ 800c5e0:	0800dd56 	.word	0x0800dd56
 
 0800c5e4 <strcat>:
  800c5e4:	4602      	mov	r2, r0
@@ -30280,10 +30278,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800c696:	4798      	blx	r3
  800c698:	3601      	adds	r6, #1
  800c69a:	e7f2      	b.n	800c682 <__libc_init_array+0x1e>
- 800c69c:	0800ddc4 	.word	0x0800ddc4
- 800c6a0:	0800ddc4 	.word	0x0800ddc4
- 800c6a4:	0800ddc4 	.word	0x0800ddc4
- 800c6a8:	0800ddc8 	.word	0x0800ddc8
+ 800c69c:	0800ddb0 	.word	0x0800ddb0
+ 800c6a0:	0800ddb0 	.word	0x0800ddb0
+ 800c6a4:	0800ddb0 	.word	0x0800ddb0
+ 800c6a8:	0800ddb4 	.word	0x0800ddb4
 
 0800c6ac <__retarget_lock_acquire_recursive>:
  800c6ac:	4770      	bx	lr
@@ -30644,9 +30642,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800c9e4:	a904      	add	r1, sp, #16
  800c9e6:	f000 f87d 	bl	800cae4 <_printf_i>
  800c9ea:	e7eb      	b.n	800c9c4 <_svfiprintf_r+0x1c0>
- 800c9ec:	0800dd8f 	.word	0x0800dd8f
- 800c9f0:	0800dd95 	.word	0x0800dd95
- 800c9f4:	0800dd99 	.word	0x0800dd99
+ 800c9ec:	0800dd7b 	.word	0x0800dd7b
+ 800c9f0:	0800dd81 	.word	0x0800dd81
+ 800c9f4:	0800dd85 	.word	0x0800dd85
  800c9f8:	00000000 	.word	0x00000000
  800c9fc:	0800c751 	.word	0x0800c751
 
@@ -30982,8 +30980,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800cd18:	2500      	movs	r5, #0
  800cd1a:	f104 0619 	add.w	r6, r4, #25
  800cd1e:	e7f5      	b.n	800cd0c <_printf_i+0x228>
- 800cd20:	0800dda0 	.word	0x0800dda0
- 800cd24:	0800ddb1 	.word	0x0800ddb1
+ 800cd20:	0800dd8c 	.word	0x0800dd8c
+ 800cd24:	0800dd9d 	.word	0x0800dd9d
 
 0800cd28 <_realloc_r>:
  800cd28:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
