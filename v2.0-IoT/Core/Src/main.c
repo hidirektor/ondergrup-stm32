@@ -1489,7 +1489,7 @@ int main(void)
 
   backLightTimer = millis;
 
-  if(iotMode != 0) {
+  /*if(iotMode != 0) {
 	  if(machineID[11] == '\0') {
 		  takeMachineID(0);
 	  }
@@ -1501,11 +1501,11 @@ int main(void)
 	  if(wifiPass[0] != '\0') {
 		  takeWifiPass(0);
 	  }
+  }*/
 
-	  ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	  HAL_Delay(250);
-	  convertAndSendData();
-  }
+  ESP8266_Init(&huart1, "iPhone", "ipek123456");
+  HAL_Delay(250);
+  convertAndSendData();
 
   /* USER CODE END 2 */
 
