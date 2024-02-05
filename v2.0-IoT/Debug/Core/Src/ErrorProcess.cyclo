@@ -1,0 +1,3 @@
+../Core/Src/ErrorProcess.c:12:6:hata2EEPROM	4
+../Core/Src/ErrorProcess.c:31:6:hataKoduLcdGoster	19
+../Core/Src/ErrorProcess.c:83:6:eepromDataFillWithEmpty	2

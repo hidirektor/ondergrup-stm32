@@ -51,12 +51,7 @@ extern UART_HandleTypeDef huart1;
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 void lcdUpdate(uint8_t);
-void hataKoduLcdGoster(uint8_t);
-char* mergeData(void);
-void convertAndSendData(void);
 void eepromKontrol(int);
-void hata2EEPROM(uint8_t);
-void eepromDataFillWithEmpty(void);
 uint8_t buttonCheck(void);
 void bekle(void);
 void i2cTest(void);
