@@ -50,11 +50,6 @@ extern UART_HandleTypeDef huart1;
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-void lcdUpdate(uint8_t);
-void eepromKontrol(int);
-uint8_t buttonCheck(void);
-void bekle(void);
-void i2cTest(void);
 
 /* USER CODE END EC */
 

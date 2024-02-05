@@ -10,6 +10,74 @@
 #include "GlobalVariables.h"
 #include "i2c-lcd.h"
 
+void lcdUpdate(uint8_t y) {
+	if(y==1) {
+		lcd_print(2, 1, " ");
+	} else if(y==2) {
+		lcd_print(2, 2, " ");
+	} else if(y==3) {
+		lcd_print(2, 3, " ");
+	} else if(y==4) {
+		lcd_print(2, 4, " ");
+	} else if(y==5) {
+		lcd_print(2, 5, " ");
+	} else if(y==6) {
+		lcd_print(2, 6, " ");
+	} else if (y==7) {
+		lcd_clear();
+		lcd_print(1, 4, "ESP-RMK");
+		lcd_print(2, 6, "RUN");
+	}
+}
+
+void bekle() {
+	timer1=millis;
+    while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (millis-timer1<1)){ /* Butona basili olduğu surece bekle */
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port,kapi1AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port,kapi2AcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+    while((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port,kapiTablaAcButonIn_Pin) == 0) && (millis-timer1<1)){
+    	butonKontrol = 1;
+    }
+
+}
+
+uint8_t buttonCheck(void) {
+	if((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port,butonGeriIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1)
+			|| (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1)) {
+		backLightTimer = 0;
+		return 1;
+	}
+	return 0;
+}
+
 void checkLCDBacklight() {
 	if(millis - backLightTimer >= lcdBacklightSure*10) {
 		lcd_backlight(0);

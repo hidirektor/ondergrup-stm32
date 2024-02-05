@@ -8,6 +8,9 @@
 #ifndef INC_PROCESS_H_
 #define INC_PROCESS_H_
 
+void lcdUpdate(uint8_t);
+void bekle(void);
+uint8_t buttonCheck(void);
 void checkLCDBacklight(void);
 void checkBasincSalteri(void);
 void checkBasGonder(void);
