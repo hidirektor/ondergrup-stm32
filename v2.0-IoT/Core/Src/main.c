@@ -1,17 +1,20 @@
 /* USER CODE BEGIN Header */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <Data.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Data.h"
 #include "ESP8266.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+CAN_HandleTypeDef hcan;
+I2C_HandleTypeDef hi2c1;
+TIM_HandleTypeDef htim1;
+UART_HandleTypeDef huart1;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -55,61 +58,123 @@ void lcdUpdate(uint8_t y) {
 		lcd_print(2, 6, " ");
 	} else if (y==7) {
 		lcd_clear();
-		lcd_print(1, 1, "    ESP-RMK     ");
-		lcd_print(2, 1, "      RUN       ");
+		lcd_print(1, 4, "ESP-RMK");
+		lcd_print(2, 6, "RUN");
 	}
 }
 
 void hataKoduLcdGoster(uint8_t x) {
 	if(x==1) {
 		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 1, "1");
 		lcd_print(2, 7, "          ");
 	} else if(x==2){
 		if(dilSecim==0){
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 2, "2");
 		lcd_print(2, 7, "          ");
 	} else if(x==3) {
 		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 3, "3");
 		lcd_print(2, 7, "          ");
 	} else if(x==4){
 		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 4, "4");
 		lcd_print(2, 7, "          ");
 	} else if(x==5) {
 		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 5, "5");
 		lcd_print(2, 7, "          ");
 	} else if(x==6) {
 		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU    ");
+			lcd_print(1, 1, "   HATA KODU");
 		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE   ");
+			lcd_print(1, 1, "   ERROR CODE");
 		}
 		lcd_print(2, 6, "6");
 		lcd_print(2, 7, "          ");
 	}
+}
+
+char* mergeData() {
+	char combinedString[45] = "";
+	char temp[10];
+
+	uint8_t uintVariables[] = {
+			devirmeYuruyusSecim,
+			calismaSekli,
+			emniyetCercevesi,
+			yavaslamaLimit,
+			altLimit,
+			kapiTablaAcKonum,
+			basincSalteri,
+			kapiSecimleri,
+			kapiAcTipi,
+			kapi1Tip,
+			kapi1AcSure,
+			kapi2Tip,
+			kapi2AcSure,
+			kapitablaTip,
+			kapiTablaAcSure,
+			yukariYavasLimit,
+			devirmeYukariIleriLimit,
+			devirmeAsagiGeriLimit,
+			devirmeSilindirTipi,
+			platformSilindirTipi,
+			yukariValfTmr,
+			asagiValfTmr,
+			devirmeYukariIleriTmr,
+			devirmeAsagiGeriTmr,
+			makineCalismaTmr,
+			buzzer,
+			demoMode,
+			calismaSayisi1,
+			calismaSayisi10,
+			calismaSayisi100,
+			calismaSayisi1000,
+			calismaSayisi10000,
+			dilSecim,
+			eepromData[37],
+			eepromData[38],
+			eepromData[39],
+			eepromData[40],
+			eepromData[41],
+			eepromData[42],
+			eepromData[43],
+			eepromData[44],
+			eepromData[45],
+			eepromData[46],
+			eepromData[47],
+			lcdBacklightSure
+	};
+
+	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
+	    sprintf(temp, "%u", uintVariables[i]);
+	    strcat(combinedString, temp);
+	}
+
+	char* result = malloc(strlen(combinedString) + 1);
+	strcpy(result, combinedString);
+	return result;
 }
 
 void convertAndSendData() {
@@ -174,8 +239,6 @@ void eepromKontrol(int type) {
 	hataKayit8 = eepromData[45];
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
-
-	loadMenuTexts(dilSecim);
 
 	if(calismaSayisi10000>9) {
 	    calismaSayisi10000=0;
@@ -323,9 +386,9 @@ void eepromKontrol(int type) {
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
 	HAL_Delay(250);
-	readValFromEEPROM(1);
+	readFromEEPROM(1);
 	HAL_Delay(250);
-	readValFromEEPROM(2);
+	readFromEEPROM(2);
 }
 
 void hata2EEPROM(uint8_t hataKodu) {
@@ -1238,68 +1301,6 @@ void checkDemoModCalisma() {
 	}
 }
 
-char* mergeData() {
-	char combinedString[45] = "";
-	char temp[10];
-
-	uint8_t uintVariables[] = {
-			devirmeYuruyusSecim,
-			calismaSekli,
-			emniyetCercevesi,
-			yavaslamaLimit,
-			altLimit,
-			kapiTablaAcKonum,
-			basincSalteri,
-			kapiSecimleri,
-			kapiAcTipi,
-			kapi1Tip,
-			kapi1AcSure,
-			kapi2Tip,
-			kapi2AcSure,
-			kapitablaTip,
-			kapiTablaAcSure,
-			yukariYavasLimit,
-			devirmeYukariIleriLimit,
-			devirmeAsagiGeriLimit,
-			devirmeSilindirTipi,
-			platformSilindirTipi,
-			yukariValfTmr,
-			asagiValfTmr,
-			devirmeYukariIleriTmr,
-			devirmeAsagiGeriTmr,
-			makineCalismaTmr,
-			buzzer,
-			demoMode,
-			calismaSayisi1,
-			calismaSayisi10,
-			calismaSayisi100,
-			calismaSayisi1000,
-			calismaSayisi10000,
-			dilSecim,
-			eepromData[37],
-			eepromData[38],
-			eepromData[39],
-			eepromData[40],
-			eepromData[41],
-			eepromData[42],
-			eepromData[43],
-			eepromData[44],
-			eepromData[45],
-			eepromData[46],
-			eepromData[47],
-			lcdBacklightSure
-	};
-
-	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
-	    sprintf(temp, "%u", uintVariables[i]);
-	    strcat(combinedString, temp);
-	}
-
-	char* result = malloc(strlen(combinedString) + 1);
-	strcpy(result, combinedString);
-	return result;
-}
-
 void mainLoop() {
 	while(1) {
 		checkLCDBacklight();
@@ -1379,7 +1380,7 @@ void mainLoop() {
 		}
 
 		if(menuGiris==1) {
-			menu(&hi2c1);
+			menu();
 		}
 
 		HAL_GPIO_TogglePin(cycleLed_GPIO_Port, cycleLed_Pin);

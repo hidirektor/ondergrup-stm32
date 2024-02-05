@@ -38,18 +38,27 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+extern CAN_HandleTypeDef hcan;
+
+extern I2C_HandleTypeDef hi2c1;
+
+extern TIM_HandleTypeDef htim1;
+
+extern UART_HandleTypeDef huart1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-void i2cTest(void);
-void bekle(void);
 void lcdUpdate(uint8_t);
 void hataKoduLcdGoster(uint8_t);
+char* mergeData(void);
+void convertAndSendData(void);
 void eepromKontrol(int);
 void hata2EEPROM(uint8_t);
 void eepromDataFillWithEmpty(void);
 uint8_t buttonCheck(void);
+void bekle(void);
+void i2cTest(void);
 
 //ana fonksiyonlar:
 void checkLCDBacklight(void);
@@ -58,7 +67,6 @@ void checkBasGonder(void);
 void checkKapiSecimleri(void);
 void checkAktifCalisma(void);
 void checkDemoModCalisma(void);
-char* mergeData(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

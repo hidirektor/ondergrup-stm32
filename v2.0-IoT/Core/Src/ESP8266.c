@@ -1,5 +1,6 @@
 #include "ESP8266.h"
-#include "WifiData.h"
+
+#include "SystemDefaults.h"
 
 void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
 	sprintf(bufferTX, "AT+RESTORE\r\n");
@@ -19,7 +20,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	HAL_Delay(2000);
 
 	char str[100];
-	strcpy(str, "AT+CWJAP=\"");
+	strcpy(str, "AT+CWJAP_DEF=\"");
 	strcat(str, wifiSS);
 	strcat(str, "\",\"");
 	strcat(str, wifiPA);
@@ -34,12 +35,12 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	char local_txB[50];
 	int len;
 
-	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
+	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(2000);
 
 	sprintf(local_txA,
-			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, Server2);
+			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
@@ -57,12 +58,12 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 
 	char bufferRX[200];
 
-	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", Server);
+	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(2000);
 
 	sprintf(local_txA,
-			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, Server2);
+			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
