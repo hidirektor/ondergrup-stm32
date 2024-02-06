@@ -10,6 +10,8 @@
 #include "GlobalVariables.h"
 #include "ESP8266.h"
 #include "i2c-lcd.h"
+#include "EEPROMProcess.h"
+#include "IoTMenu.h"
 
 void takeMachineID(int state) {
 	mainSection:
@@ -185,8 +187,10 @@ void takeWifiSSID(int state) {
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
             HAL_Delay(750);
 
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(500);
+            hafizaYaz = 1;
+
+            //HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            //HAL_Delay(1000);
 
             break;
         }
@@ -334,8 +338,10 @@ void takeWifiPass(int state) {
             memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
             HAL_Delay(750);
 
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(500);
+            hafizaYaz = 1;
+
+            //HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            //HAL_Delay(1000);
 
             break;
         }

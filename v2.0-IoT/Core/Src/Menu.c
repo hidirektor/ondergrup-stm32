@@ -8,6 +8,7 @@
 #include "Menu.h"
 #include "main.h"
 #include "GlobalVariables.h"
+#include "EEPROMProcess.h"
 
 void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -1755,10 +1756,10 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID(0);
 
-			HAL_Delay(100);
+			/*HAL_Delay(100);
 
 			lcd_print(2, 1, wifiSSID);
-			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+			lcd_print(2, 1+strlen(wifiSSID), emptyArray);*/
 
 			bekle();
 		}
@@ -1778,10 +1779,10 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass(0);
 
-			HAL_Delay(50);
+			/*HAL_Delay(50);
 
 			lcd_print(2, 1, wifiPass);
-			lcd_print(2, 1+strlen(wifiPass), emptyArray);
+			lcd_print(2, 1+strlen(wifiPass), emptyArray);*/
 
 			bekle();
 		}
