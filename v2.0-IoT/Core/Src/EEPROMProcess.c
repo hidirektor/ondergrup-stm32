@@ -9,7 +9,7 @@
 #include "main.h"
 #include "GlobalVariables.h"
 
-void eepromKontrol(int type) {
+void eepromKontrol() {
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
 	HAL_Delay(1500);
 
@@ -234,20 +234,17 @@ void readFromEEPROM(int state) {
 		//Wifi SSID okuma
 		uint8_t tempSSIDStartPos = ssidStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			if(eepromData[tempSSIDStartPos] != '\0') {
-				wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
+			wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
 
-				tempSSIDStartPos++;
-			}
+			tempSSIDStartPos++;
 		}
 	} else {
 		//Wifi Pass okuma
 		uint8_t tempPassStartPos = passStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			if(eepromData[tempPassStartPos] != '\0') {
-				wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
-				tempPassStartPos++;
-			}
+			wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
+
+			tempPassStartPos++;
 		}
 	}
 }

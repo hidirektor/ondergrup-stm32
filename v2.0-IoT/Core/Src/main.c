@@ -116,11 +116,8 @@ int main(void)
   HAL_Delay(1000);
   lcd_clear();
 
-  eepromKontrol(0);
-  HAL_Delay(200);
-
-  lcd_clear();
-  HAL_Delay(200);
+  eepromKontrol();
+  HAL_Delay(500);
 
   backLightTimer = millis;
 

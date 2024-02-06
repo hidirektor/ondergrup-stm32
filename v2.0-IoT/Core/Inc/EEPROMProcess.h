@@ -8,7 +8,7 @@
 #ifndef INC_EEPROMPROCESS_H_
 #define INC_EEPROMPROCESS_H_
 
-void eepromKontrol(int);
+void eepromKontrol(void);
 char getCharFromCursorPosition(int cursorPosition);
 void writeToEEPROM(int state);
 void readFromEEPROM(int state);
