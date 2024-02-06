@@ -9,6 +9,9 @@
 #include "main.h"
 #include "GlobalVariables.h"
 #include "EEPROMProcess.h"
+#include "i2c-lcd.h"
+#include "WifiProcess.h"
+#include "IoTMenu.h"
 
 void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -1731,7 +1734,7 @@ void menu() {
 		lcd_print(2, 13, "    ");
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeMachineID(0);
+			takeMachineID();
 
 			HAL_Delay(50);
 
@@ -1754,14 +1757,14 @@ void menu() {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiSSID(0);
+			takeWifiSSID();
 
 			/*HAL_Delay(100);
 
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);*/
 
-			bekle();
+			//bekle();
 		}
 	}
 
@@ -1777,14 +1780,14 @@ void menu() {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiPass(0);
+			takeWifiPass();
 
 			/*HAL_Delay(50);
 
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);*/
 
-			bekle();
+			//bekle();
 		}
 	}
 
@@ -1799,6 +1802,12 @@ void menu() {
 
 		if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) {
 			menuGiris = 0;
+
+			while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+			while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
+
+			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+			HAL_Delay(1000);
 
 			lcd_clear();
 			HAL_Delay(500);

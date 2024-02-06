@@ -13,18 +13,16 @@
 #include "EEPROMProcess.h"
 #include "IoTMenu.h"
 
-void takeMachineID(int state) {
+void takeMachineID() {
 	mainSection:
 	lcd_cursor(1);
+
+    memset(machineID, 0, sizeof(machineID));
+    HAL_Delay(500);
 
     int cursorPosition = 3;
     int machineIDLoc = 0;
     int writeLoc = 5;
-
-    if(state == 0) {
-    	memset(machineID, 0, sizeof(machineID));
-    }
-    HAL_Delay(100);
 
     printTemplate(1, 0);
 
@@ -151,13 +149,12 @@ void takeMachineID(int state) {
     }
 }
 
-void takeWifiSSID(int state) {
+void takeWifiSSID() {
 	mainSSIDSection:
     lcd_cursor(1);
 
-    if(state == 0) {
-    	memset(wifiSSID, 0, sizeof(wifiSSID));
-    }
+    memset(wifiSSID, 0, sizeof(wifiSSID));
+    HAL_Delay(500);
 
     int realCharPos = 1;
     cursorPosition = 1;
@@ -299,16 +296,16 @@ void takeWifiSSID(int state) {
         }
 
         lcd_gotoxy(2, cursorPosition);
+        bekle();
     }
 }
 
-void takeWifiPass(int state) {
+void takeWifiPass() {
 	mainPASSSection:
     lcd_cursor(1);
 
-    if(state == 0) {
-    	memset(wifiPass, 0, sizeof(wifiPass));
-    }
+    memset(wifiPass, 0, sizeof(wifiPass));
+    HAL_Delay(500);
 
     int realCharPos = 1;
     cursorPosition = 1;
@@ -451,6 +448,7 @@ void takeWifiPass(int state) {
         }
 
         lcd_gotoxy(2, cursorPosition);
+        bekle();
     }
 }
 
@@ -534,18 +532,20 @@ void convertAndSendData() {
 void iotSetup() {
 	if(iotMode != 0) {
 		if(machineID[machineIDCharacterLimit-1] == '\0') {
-			takeMachineID(0);
+			takeMachineID();
 		}
+		HAL_Delay(500);
 
 		if(wifiSSID[0] != '\0') {
-			takeWifiSSID(0);
+			takeWifiSSID();
 		}
+		HAL_Delay(500);
 
 		if(wifiPass[0] != '\0') {
-			takeWifiPass(0);
+			takeWifiPass();
 		}
+		HAL_Delay(500);
 	}
-	HAL_Delay(500);
 
 	//ESP8266_Init(&huart1, "iPhone", "ipek123456");
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
