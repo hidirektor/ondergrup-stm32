@@ -209,6 +209,10 @@ void eepromKontrol() {
 
 	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
 	HAL_Delay(500);
+	memcpy(wifiSSIDLoc, &eepromData[ssidStartPos], wifiCharacterLimit);
+	HAL_Delay(500);
+	memcpy(wifiPassLocArr, &eepromData[passStartPos], wifiCharacterLimit);
+	HAL_Delay(500);
 	readFromEEPROM(1);
 	HAL_Delay(1000);
 	readFromEEPROM(2);
@@ -234,7 +238,7 @@ void readFromEEPROM(int state) {
 		//Wifi SSID okuma
 		uint8_t tempSSIDStartPos = ssidStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
+			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDLoc[tempSSIDStartPos]);
 
 			tempSSIDStartPos++;
 		}
@@ -242,7 +246,7 @@ void readFromEEPROM(int state) {
 		//Wifi Pass okuma
 		uint8_t tempPassStartPos = passStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
+			wifiPass[i] = getCharFromCursorPosition(wifiPassLocArr[tempPassStartPos]);
 
 			tempPassStartPos++;
 		}
