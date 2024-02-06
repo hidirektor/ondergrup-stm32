@@ -207,11 +207,12 @@ void eepromKontrol(int type) {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[idStartPos], 12);
-	HAL_Delay(250);
+	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
+	HAL_Delay(500);
 	readFromEEPROM(1);
-	HAL_Delay(250);
+	HAL_Delay(1000);
 	readFromEEPROM(2);
+	HAL_Delay(1000);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {

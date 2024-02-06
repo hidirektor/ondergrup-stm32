@@ -107,17 +107,8 @@ void lcd_gotoxy(unsigned char row, unsigned char column) {
 }
 
 void lcd_print(unsigned char row, unsigned char column, char *str) {
-	char buffer[17];
-	strncpy(buffer, str, 16);
-	buffer[16] = '\0';
-
-	int len = strlen(buffer);
-	for (int i = len; i < 16; i++) {
-	    buffer[i] = ' ';
-	}
-	buffer[16] = '\0';
 	lcd_gotoxy(row, column);
-	lcd_send_string(buffer);
+	lcd_send_string(str);
 }
 
 void lcd_print_char(unsigned char row, unsigned char column, char ch) {

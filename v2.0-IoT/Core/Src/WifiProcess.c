@@ -539,6 +539,7 @@ void iotSetup() {
 			takeWifiPass(0);
 		}
 	}
+	HAL_Delay(500);
 
 	//ESP8266_Init(&huart1, "iPhone", "ipek123456");
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
