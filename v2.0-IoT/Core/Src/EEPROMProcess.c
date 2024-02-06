@@ -61,6 +61,8 @@ void eepromKontrol(int type) {
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
 
+	setupCompleted = eepromData[102];
+
 	if(calismaSayisi10000>9) {
 	    calismaSayisi10000=0;
 	}

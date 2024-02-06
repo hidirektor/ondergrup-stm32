@@ -21,6 +21,8 @@ extern char wifiPass[wifiCharacterLimit];
 extern uint8_t wifiSSIDLoc[wifiCharacterLimit];
 extern uint8_t wifiPassLocArr[wifiCharacterLimit];
 
+extern uint8_t setupCompleted;
+
 extern uint8_t kaydedilenDeger;
 extern unsigned long millis;
 extern unsigned long timer;

@@ -43,17 +43,21 @@ void takeMachineID(int state) {
         		goto mainSection;
         	}
 
-        	/*if(checkMachineID(&huart1, machineID) != 1) {
-        		lcd_clear();
-        		lcd_print(1, 1, "BU ID ILE MAKINE");
-        		lcd_print(2, 1, "OLUSTURAMAZSINIZ");
-        		HAL_Delay(1200);
-        		goto mainSection;
-        	} else {
-        		eepromData[49] = 1;
+        	/*if(setupCompleted != 1) {
+        		int checkIDVal = checkMachineID(&huart1, machineID);
+
+        		if(checkIDVal != 1) {
+        			lcd_clear();
+        			lcd_print(1, 1, "BU ID ILE MAKINE");
+        			lcd_print(2, 1, "OLUSTURAMAZSINIZ");
+        			HAL_Delay(1500);
+        			goto mainSection;
+        		} else {
+        			setupCompleted = 1;
+        		}
         	}*/
 
-        	memcpy(&eepromData[idStartPos], machineID, 12);
+        	memcpy(&eepromData[idStartPos], machineID, machineIDCharacterLimit);
         	HAL_Delay(200);
 
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
