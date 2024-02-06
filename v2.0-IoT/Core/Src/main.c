@@ -9,6 +9,9 @@
 #include "ESP8266.h"
 #include "GlobalVariables.h"
 #include "Process.h"
+#include "HardwareTest.h"
+#include "EEPROMProcess.h"
+#include "WifiProcess.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
