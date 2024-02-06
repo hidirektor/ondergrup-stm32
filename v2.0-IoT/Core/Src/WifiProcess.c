@@ -183,7 +183,7 @@ void takeWifiSSID(int state) {
             }
 
             memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
-            HAL_Delay(250);
+            HAL_Delay(750);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -332,7 +332,7 @@ void takeWifiPass(int state) {
             }
 
             memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
-            HAL_Delay(250);
+            HAL_Delay(750);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
