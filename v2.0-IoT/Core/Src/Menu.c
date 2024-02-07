@@ -1747,47 +1747,56 @@ void menu() {
 
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
+		lcd_clear();
+		HAL_Delay(500);
 
 		lcd_print(1, 1, "WIFI SSID       ");
-		if(strlen(wifiSSID) <=16) {
+		lcd_print(2, 1, wifiSSID);
+		lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+		/*if(strlen(wifiSSID) <=16) {
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 		} else {
 			slideText(wifiSSID, 1, 2, 0);
-		}
+		}*/
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
 
-			/*HAL_Delay(100);
+			HAL_Delay(100);
 
 			lcd_print(2, 1, wifiSSID);
-			lcd_print(2, 1+strlen(wifiSSID), emptyArray);*/
+			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 
-			//bekle();
+			bekle();
 		}
 	}
 
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
 
+		lcd_clear();
+		HAL_Delay(500);
+
 		lcd_print(1, 1, "WIFI PASS       ");
-		if(strlen(wifiPass) <= 16) {
+		lcd_print(2, 1, wifiPass);
+		lcd_print(2, 1, 1+strlen(wifiPass), emptyArray);
+		/*if(strlen(wifiPass) <= 16) {
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);
 		} else {
 			slideText(wifiPass, 1, 2, 1);
-		}
+		}*/
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
 
-			/*HAL_Delay(50);
+			HAL_Delay(50);
 
 			lcd_print(2, 1, wifiPass);
-			lcd_print(2, 1+strlen(wifiPass), emptyArray);*/
+			lcd_print(2, 1+strlen(wifiPass), emptyArray);
 
-			//bekle();
+			bekle();
 		}
 	}
 
@@ -1807,7 +1816,7 @@ void menu() {
 			while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
 
 			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(1000);
+			HAL_Delay(1200);
 
 			lcd_clear();
 			HAL_Delay(500);
