@@ -1751,14 +1751,15 @@ void menu() {
 		HAL_Delay(500);
 
 		lcd_print(1, 1, "WIFI SSID       ");
-		lcd_print(2, 1, wifiSSID);
-		lcd_print(2, 1+strlen(wifiSSID), emptyArray);
-		/*if(strlen(wifiSSID) <=16) {
+		if(strlen(wifiSSID) <=16) {
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
 		} else {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "WIFI SSID       ");
 			slideText(wifiSSID, 1, 2, 0);
-		}*/
+		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
@@ -1779,14 +1780,15 @@ void menu() {
 		HAL_Delay(500);
 
 		lcd_print(1, 1, "WIFI PASS       ");
-		lcd_print(2, 1, wifiPass);
-		lcd_print(2, 1, 1+strlen(wifiPass), emptyArray);
-		/*if(strlen(wifiPass) <= 16) {
+		if(strlen(wifiPass) <= 16) {
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);
 		} else {
+			lcd_clear();
+			HAL_Delay(100);
+			lcd_print(1, 1, "WIFI PASS       ");
 			slideText(wifiPass, 1, 2, 1);
-		}*/
+		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
