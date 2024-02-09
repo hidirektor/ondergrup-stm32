@@ -1750,10 +1750,12 @@ void menu() {
 		lcd_clear();
 		HAL_Delay(500);
 
+		int ssidLength = strlen(wifiSSID);
+
 		lcd_print(1, 1, "WIFI SSID       ");
-		if(strlen(wifiSSID) <=16) {
+		if(ssidLength <=16) {
 			lcd_print(2, 1, wifiSSID);
-			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
+			lcd_print(2, 1+ssidLength, emptyArray);
 		} else {
 			lcd_clear();
 			HAL_Delay(100);
@@ -1779,10 +1781,12 @@ void menu() {
 		lcd_clear();
 		HAL_Delay(500);
 
+		int passLength = strlen(wifiPass);
+
 		lcd_print(1, 1, "WIFI PASS       ");
-		if(strlen(wifiPass) <= 16) {
+		if(passLength <= 16) {
 			lcd_print(2, 1, wifiPass);
-			lcd_print(2, 1+strlen(wifiPass), emptyArray);
+			lcd_print(2, 1+passLength, emptyArray);
 		} else {
 			lcd_clear();
 			HAL_Delay(100);
