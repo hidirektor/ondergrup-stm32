@@ -1747,8 +1747,6 @@ void menu() {
 
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
-		lcd_clear();
-		HAL_Delay(500);
 
 		int ssidLength = strlen(wifiSSID);
 
@@ -1757,9 +1755,6 @@ void menu() {
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+ssidLength, emptyArray);
 		} else {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "WIFI SSID       ");
 			slideText(wifiSSID, 1, 2, 0);
 		}
 
@@ -1778,9 +1773,6 @@ void menu() {
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
 
-		lcd_clear();
-		HAL_Delay(500);
-
 		int passLength = strlen(wifiPass);
 
 		lcd_print(1, 1, "WIFI PASS       ");
@@ -1788,9 +1780,6 @@ void menu() {
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+passLength, emptyArray);
 		} else {
-			lcd_clear();
-			HAL_Delay(100);
-			lcd_print(1, 1, "WIFI PASS       ");
 			slideText(wifiPass, 1, 2, 1);
 		}
 

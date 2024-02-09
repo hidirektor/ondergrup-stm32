@@ -18,7 +18,6 @@ void takeMachineID() {
 	lcd_cursor(1);
 
     memset(machineID, 0, sizeof(machineID));
-    HAL_Delay(500);
 
     int cursorPosition = 3;
     int machineIDLoc = 0;
@@ -154,7 +153,6 @@ void takeWifiSSID() {
     lcd_cursor(1);
 
     memset(wifiSSID, 0, sizeof(wifiSSID));
-    HAL_Delay(500);
 
     int realCharPos = 1;
     cursorPosition = 1;
@@ -305,7 +303,6 @@ void takeWifiPass() {
     lcd_cursor(1);
 
     memset(wifiPass, 0, sizeof(wifiPass));
-    HAL_Delay(500);
 
     int realCharPos = 1;
     cursorPosition = 1;
