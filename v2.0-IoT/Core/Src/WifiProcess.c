@@ -160,6 +160,8 @@ void takeWifiSSID() {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
+    int characterSavePos = ssidStartPos;
+
     printTemplate(2, 1);
 
     while (1) {
@@ -179,13 +181,11 @@ void takeWifiSSID() {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
-            HAL_Delay(750);
+            //memcpy(&eepromData[ssidStartPos], wifiSSIDLoc, wifiCharacterLimit);
+            //HAL_Delay(750);
 
-            hafizaYaz = 1;
-
-            //HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            //HAL_Delay(1000);
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            HAL_Delay(1000);
 
             break;
         }
@@ -260,12 +260,15 @@ void takeWifiSSID() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-            wifiSSIDLoc[wifiNameLoc] = realCharPos - 1;
+            //wifiSSIDLoc[wifiNameLoc] = realCharPos - 1;
+
+            eepromData[characterSavePos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
             wifiNameLoc++;
+            characterSavePos++;
 
             HAL_Delay(250);
         }
@@ -310,6 +313,8 @@ void takeWifiPass() {
     int wifiPassLoc = 0;
     int writeLoc = 7;
 
+    int characterSavePos = passStartPos;
+
     printTemplate(3, 1);
 
     while (1) {
@@ -329,13 +334,11 @@ void takeWifiPass() {
                 goto mainPASSSection;
             }
 
-            memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
-            HAL_Delay(750);
+            //memcpy(&eepromData[passStartPos], wifiPassLocArr, wifiCharacterLimit);
+            //HAL_Delay(750);
 
-            hafizaYaz = 1;
-
-            //HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            //HAL_Delay(1000);
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            HAL_Delay(1000);
 
             break;
         }
@@ -410,12 +413,14 @@ void takeWifiPass() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-        	wifiPassLocArr[wifiPassLoc] = realCharPos - 1;
+        	//wifiPassLocArr[wifiPassLoc] = realCharPos - 1;
+        	eepromData[characterSavePos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
             wifiPassLoc++;
+            characterSavePos++;
 
             HAL_Delay(250);
         }
@@ -544,7 +549,6 @@ void iotSetup() {
 		HAL_Delay(500);
 	}
 
-	//ESP8266_Init(&huart1, "iPhone", "ipek123456");
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
 	HAL_Delay(500);
 	convertAndSendData();
