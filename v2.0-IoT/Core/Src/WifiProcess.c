@@ -247,13 +247,21 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-
             characterPos = (characterPos + 1) % charactersArrayLength;
-            // SSID ve Password için sayfa kontrolü
-            if (type != 'M' && *writeLoc >= 16) {
-                *writeLoc = 0; // İmleci sıfırla
-                page++; // Sonraki sayfaya geç
-                printTemplate(type == 'S' ? 2 : 3, page);
+
+            if (type == 'M') {
+            	// Machine ID için özel cursor hareketi
+            	if (*writeLoc == 7) *writeLoc = 10; // 7'den 10'a atla
+            	else if (*writeLoc == 14) *writeLoc = 3; // 14'ten 3'e dön
+            	else (*writeLoc)++;
+            } else {
+            	// SSID ve Password için sayfa kontrolü
+            	if (*writeLoc >= 16) {
+            	    *writeLoc = 0; // İmleci sıfırla
+            	    page++; // Sonraki sayfaya geç
+            	    printTemplate(type == 'S' ? 2 : 3, page);
+            	}
+            	*writeLoc %= 16;
             }
             lcd_gotoxy(2, *writeLoc % 16);
             if(type == 'M') {
@@ -266,11 +274,23 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
             characterPos = (characterPos - 1 + charactersArrayLength) % charactersArrayLength;
-            // SSID ve Password için sayfa kontrolü
-            if (type != 'M' && *writeLoc <= 1) {
-                *writeLoc = 16; // İmleci sayfanın sonuna taşı
-                page = page > 1 ? page - 1 : 1; // Önceki sayfaya geç, 1'den küçük olmamalı
-                printTemplate(type == 'S' ? 2 : 3, page);
+
+            if (type == 'M') {
+            	// Machine ID için özel cursor hareketi
+            	if (*writeLoc == 10) *writeLoc = 7; // 10'dan 7'ye atla
+            	else if (*writeLoc == 3) *writeLoc = 14; // 3'ten 14'e dön
+            	else (*writeLoc)--;
+            } else {
+            	// SSID ve Password için sayfa kontrolü
+            	if (*writeLoc <= 1 && page > 1) {
+            	    *writeLoc = 16; // İmleci sayfanın sonuna taşı
+            	    page--; // Önceki sayfaya geç
+            	    printTemplate(type == 'S' ? 2 : 3, page);
+            	} else if (*writeLoc <= 1) {
+            	    *writeLoc = 16;
+            	} else {
+            	    (*writeLoc)--;
+            	}
             }
             lcd_gotoxy(2, (*writeLoc - 1) % 16);
             if(type == 'M') {
