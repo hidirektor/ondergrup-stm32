@@ -1,3 +1,4 @@
-../Core/Src/ESP8266.c:5:6:ESP8266_Init	1
-../Core/Src/ESP8266.c:33:6:sendMachineData	1
-../Core/Src/ESP8266.c:54:5:checkMachineID	3
+../Core/Src/ESP8266.c:5:6:sendATCommand	1
+../Core/Src/ESP8266.c:10:6:ESP8266_Init	1
+../Core/Src/ESP8266.c:21:6:sendMachineData	1
+../Core/Src/ESP8266.c:36:5:checkMachineID	3

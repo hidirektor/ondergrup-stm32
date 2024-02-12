@@ -4,4 +4,4 @@
 ../Core/Src/WifiProcess.c:126:7:mergeData	2
 ../Core/Src/WifiProcess.c:187:6:convertAndSendData	3
 ../Core/Src/WifiProcess.c:202:6:iotSetup	5
-../Core/Src/WifiProcess.c:225:6:saveCharacter	18
+../Core/Src/WifiProcess.c:225:6:saveCharacter	24

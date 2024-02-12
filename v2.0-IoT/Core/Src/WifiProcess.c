@@ -27,7 +27,24 @@ void takeMachineID() {
 		saveCharacter(&loc, &writeLoc, machineID, idStartPos, 'M');
 
 		if (strlen(machineID) == 12) {
-		    validInput = true; // Doğru uzunlukta veri girildi
+		    if(checkMachineID(&huart1, machineID) == 1) {
+		    	validInput = true; // Doğru uzunlukta veri girildi
+		    	setupCompleted = 1;
+		    } else {
+		    	lcd_clear();
+		    	HAL_Delay(50);
+		    	if(dilSecim == 0) {
+		    		lcd_print(1, 1, "BU ID FARKLI BIR");
+		    		lcd_print(2, 1, " MAKINEDE AKTIF ");
+		    	} else {
+		    		lcd_print(1, 1, "THIS  ID CAN NOT");
+		    		lcd_print(2, 1, "    BE  USED    ");
+		    	}
+		    	HAL_Delay(2000);
+		    	loc = 0;
+		    	writeLoc = 1;
+		    	memset(machineID, 0, sizeof(machineID));
+		    }
 		} else {
 		    lcd_clear();
 		    if(dilSecim == 0) {
