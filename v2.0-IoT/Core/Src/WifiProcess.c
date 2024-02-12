@@ -260,7 +260,6 @@ void takeWifiSSID() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-            //wifiSSIDLoc[wifiNameLoc] = realCharPos - 1;
 
             eepromData[characterSavePos] = realCharPos - 1;
 
@@ -276,7 +275,6 @@ void takeWifiSSID() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
         		wifiSSID[wifiNameLoc] = '\0';
-        		//wifiSSIDLoc[wifiNameLoc] = '\0';
         		eepromData[characterSavePos] = '\0';
 
         		lcd_delete_char(1, 6+wifiNameLoc);

@@ -14,9 +14,6 @@ char machineID[machineIDCharacterLimit] = {};
 char wifiSSID[wifiCharacterLimit] = {};
 char wifiPass[wifiCharacterLimit] = {};
 
-uint8_t wifiSSIDLoc[wifiCharacterLimit] = {};
-uint8_t wifiPassLocArr[wifiCharacterLimit] = {};
-
 uint8_t setupCompleted = 0;
 
 uint8_t kaydedilenDeger = 0;
