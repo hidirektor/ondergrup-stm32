@@ -541,12 +541,12 @@ void iotSetup() {
 		}
 		HAL_Delay(500);
 
-		if(wifiSSID[0] != '\0') {
+		if(wifiSSID[0] == '\0') {
 			takeWifiSSID();
 		}
 		HAL_Delay(500);
 
-		if(wifiPass[0] != '\0') {
+		if(wifiPass[0] == '\0') {
 			takeWifiPass();
 		}
 		HAL_Delay(500);

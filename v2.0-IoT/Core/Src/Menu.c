@@ -1761,7 +1761,7 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
 
-			HAL_Delay(100);
+			HAL_Delay(50);
 
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
@@ -1776,6 +1776,7 @@ void menu() {
 		int passLength = strlen(wifiPass);
 
 		lcd_print(1, 1, "WIFI PASS       ");
+
 		if(passLength <= 16) {
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+passLength, emptyArray);
