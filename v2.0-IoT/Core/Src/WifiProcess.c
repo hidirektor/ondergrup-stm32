@@ -261,7 +261,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
             } else {
             	lcd_send_char(charactersArray[characterPos]);
             }
-            HAL_Delay(250); // Debouncing için gecikme
+            HAL_Delay(200); // Debouncing için gecikme
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
@@ -278,7 +278,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
             } else {
             	lcd_send_char(charactersArray[characterPos]);
             }
-            HAL_Delay(250); // Debouncing için gecikme
+            HAL_Delay(200); // Debouncing için gecikme
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -293,7 +293,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
             (*loc)++;
             (*writeLoc)++;
             lcd_print_char(2, *writeLoc, selectedChar);
-            HAL_Delay(250); // Debouncing için gecikme
+            HAL_Delay(200); // Debouncing için gecikme
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
@@ -305,7 +305,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
                 data[*loc] = '\0';
                 eepromData[startPos + *loc] = '\0';
             }
-            HAL_Delay(250); // Debouncing için gecikme
+            HAL_Delay(200); // Debouncing için gecikme
         }
     }
 }
