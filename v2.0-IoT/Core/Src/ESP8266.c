@@ -37,7 +37,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 
 	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
-	HAL_Delay(2000);
+	HAL_Delay(4000);
 
 	sprintf(local_txA,
 			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, mainServerWithPort);
@@ -45,10 +45,10 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
-	HAL_Delay(2000);
+	HAL_Delay(4000);
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
-	HAL_Delay(2000);
+	HAL_Delay(4000);
 }
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {

@@ -238,7 +238,7 @@ void readFromEEPROM(int state) {
 		//Wifi SSID okuma
 		uint8_t tempSSIDStartPos = ssidStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDLoc[tempSSIDStartPos]);
+			wifiSSID[i] = getCharFromCursorPosition(eepromData[tempSSIDStartPos]);
 
 			tempSSIDStartPos++;
 		}
@@ -246,7 +246,7 @@ void readFromEEPROM(int state) {
 		//Wifi Pass okuma
 		uint8_t tempPassStartPos = passStartPos;
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPass[i] = getCharFromCursorPosition(wifiPassLocArr[tempPassStartPos]);
+			wifiPass[i] = getCharFromCursorPosition(eepromData[tempPassStartPos]);
 
 			tempPassStartPos++;
 		}

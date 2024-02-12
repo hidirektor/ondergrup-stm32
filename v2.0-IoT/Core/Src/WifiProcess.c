@@ -528,7 +528,6 @@ void convertAndSendData() {
 	}
 	HAL_Delay(500);
 	lcd_clear();
-	HAL_Delay(500);
 }
 
 void iotSetup() {
