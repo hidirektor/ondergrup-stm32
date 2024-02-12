@@ -24,6 +24,7 @@ extern int ssidStartPos;
 extern int passStartPos;
 
 extern char emptyArray[];
+extern char idCharactersArray[];
 extern char charactersArray[];
 
 extern int eepromVal[10];

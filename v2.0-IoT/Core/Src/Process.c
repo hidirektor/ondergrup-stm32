@@ -9,6 +9,10 @@
 #include "Process.h"
 #include "GlobalVariables.h"
 #include "i2c-lcd.h"
+#include "ErrorProcess.h"
+#include "EEPROMProcess.h"
+#include "WifiProcess.h"
+#include "Menu.h"
 
 void lcdUpdate(uint8_t y) {
 	if(y==1) {
@@ -908,7 +912,7 @@ void mainLoop() {
 
 		  lcd_clear();
 
-		  eepromKontrol(1);
+		  eepromKontrol();
 		  hafizaOku=1;
 		}
 

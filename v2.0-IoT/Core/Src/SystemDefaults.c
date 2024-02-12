@@ -14,6 +14,7 @@ int ssidStartPos = 62;
 int passStartPos = 82;
 
 char emptyArray[] = "                ";
+char idCharactersArray[] = "0123456789";
 char charactersArray[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>? ";
 
 int eepromVal[10] = {38, 39, 40, 41, 42, 43, 44, 45, 46, 47};

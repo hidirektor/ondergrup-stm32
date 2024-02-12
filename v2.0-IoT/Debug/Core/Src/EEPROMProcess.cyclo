@@ -1,4 +1,4 @@
 ../Core/Src/EEPROMProcess.c:12:6:eepromKontrol	36
-../Core/Src/EEPROMProcess.c:219:6:getCharFromCursorPosition	1
-../Core/Src/EEPROMProcess.c:223:6:writeToEEPROM	2
-../Core/Src/EEPROMProcess.c:233:6:readFromEEPROM	7
+../Core/Src/EEPROMProcess.c:218:6:getCharFromCursorPosition	1
+../Core/Src/EEPROMProcess.c:222:6:writeToEEPROM	2
+../Core/Src/EEPROMProcess.c:232:6:readFromEEPROM	7
