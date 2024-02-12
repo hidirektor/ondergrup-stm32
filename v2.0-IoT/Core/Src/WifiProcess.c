@@ -276,7 +276,8 @@ void takeWifiSSID() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
         		wifiSSID[wifiNameLoc] = '\0';
-        		wifiSSIDLoc[wifiNameLoc] = '\0';
+        		//wifiSSIDLoc[wifiNameLoc] = '\0';
+        		eepromData[characterSavePos] = '\0';
 
         		lcd_delete_char(1, 6+wifiNameLoc);
         		HAL_Delay(50);
@@ -288,6 +289,7 @@ void takeWifiSSID() {
 
         		if(wifiNameLoc > 0) {
         			wifiNameLoc--;
+        			characterSavePos--;
         		} else if(wifiNameLoc < 0) {
         			wifiNameLoc = 0;
         		}
@@ -428,7 +430,8 @@ void takeWifiPass() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(wifiPass) >= 1) {
             	wifiPass[wifiPassLoc] = '\0';
-            	wifiPassLocArr[wifiPassLoc] = '\0';
+            	//wifiPassLocArr[wifiPassLoc] = '\0';
+            	eepromData[characterSavePos] = '\0';
 
             	lcd_delete_char(1, 6+wifiPassLoc);
             	HAL_Delay(50);
@@ -441,6 +444,7 @@ void takeWifiPass() {
 
             	if(wifiPassLoc > 0) {
             		wifiPassLoc--;
+            		characterSavePos--;
             	} else if(wifiPassLoc < 0) {
             		wifiPassLoc = 0;
             	}
