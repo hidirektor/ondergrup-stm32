@@ -302,6 +302,7 @@ void saveCharacter(int loc, int writeLoc, int startPos, char type) {
         	}
 
         	lcd_gotoxy(2, cursorLoc);
+        	HAL_Delay(200);
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
@@ -335,6 +336,7 @@ void saveCharacter(int loc, int writeLoc, int startPos, char type) {
         	}
 
         	lcd_gotoxy(2, cursorLoc);
+        	HAL_Delay(200);
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -398,6 +400,8 @@ void saveCharacter(int loc, int writeLoc, int startPos, char type) {
         		writeLoc++;
         		startPos++;
         	}
+
+        	HAL_Delay(200);
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
