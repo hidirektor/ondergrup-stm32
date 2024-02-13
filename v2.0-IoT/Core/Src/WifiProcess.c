@@ -373,16 +373,28 @@ void saveCharacter(int loc, int writeLoc, char *data, int startPos, char type) {
             // Karakteri seç ve kaydet
         	if(type == 'M') {
         		selectedChar = idCharactersArray[characterPos];
+        		machineID[loc] = selectedChar;
+
+        		//lcd_print_char(1, writeLoc, selectedChar);
+
+        		lcd_print(1, writeLoc, machineID);
         	} else {
         		selectedChar = charactersArray[characterPos];
+
+        		if(type == 'S') {
+        			wifiSSID[loc] = selectedChar;
+
+        			lcd_print(1, writeLoc, wifiSSID);
+        		} else {
+        			wifiPass[loc] = selectedChar;
+
+        			lcd_print(1, writeLoc, wifiPass);
+        		}
         	}
 
-            data[loc] = selectedChar; //machineID, SSID ya da PASS dizisine karakteri kaydet
             eepromData[startPos + loc] = characterPos; //eepromData'ya karakteri kaydet
 
             loc++;
-            writeLoc++;
-            lcd_print_char(1, writeLoc, selectedChar);
             HAL_Delay(250); // Debouncing için gecikme
         }
 
