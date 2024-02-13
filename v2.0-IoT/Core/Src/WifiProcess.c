@@ -275,7 +275,7 @@ void saveCharacter(int loc, int writeLoc, int startPos, char type) {
         	if(type == 'M') {
         		if(cursorLoc == 7) {
         			cursorLoc = 10;
-        		} else if(cursorLoc = 14) {
+        		} else if(cursorLoc == 14) {
         			cursorLoc = 3;
         		} else {
         			cursorLoc++;
