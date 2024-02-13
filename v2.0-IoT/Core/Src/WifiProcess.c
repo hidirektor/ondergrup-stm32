@@ -416,7 +416,7 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
 
         		machineID[loc] = '\0';
         		eepromData[startPos] = '\0';
-        		lcd_print_char(1, writeLoc, '\0');
+        		lcd_print(1, 5, machineID);
         	} else {
         		loc--;
         		writeLoc--;
@@ -426,14 +426,14 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
         			wifiSSID[loc] = '\0';
         			eepromData[startPos] = '\0';
 
-        			lcd_gotoxy(1, writeLoc);
-        			lcd_print_char(1, writeLoc, '\0');
+        			lcd_gotoxy(1, 7);
+        			lcd_print(1, 7, wifiSSID);
         		} else {
         			wifiPass[loc] = '\0';
         			eepromData[startPos] = '\0';
 
-        			lcd_gotoxy(1, writeLoc);
-        			lcd_print_char(1, writeLoc, '\0');
+        			lcd_gotoxy(1, 7);
+        			lcd_print_char(1, 7, wifiPASS);
         		}
 
         		lcd_gotoxy(2, cursorLoc);
