@@ -26,38 +26,24 @@ void takeMachineID() {
 
 		saveCharacter(loc, writeLoc, idStartPos, 'M');
 
-		if (strlen(machineID) == 12) {
-		    if(checkMachineID(&huart1, machineID) == 1) {
-		    	validInput = true; // Doğru uzunlukta veri girildi
-		    	setupCompleted = 1;
-		    } else {
-		    	lcd_clear();
-		    	HAL_Delay(50);
-		    	if(dilSecim == 0) {
-		    		lcd_print(1, 1, "BU ID FARKLI BIR");
-		    		lcd_print(2, 1, " MAKINEDE AKTIF ");
-		    	} else {
-		    		lcd_print(1, 1, "THIS  ID CAN NOT");
-		    		lcd_print(2, 1, "    BE  USED    ");
-		    	}
-		    	HAL_Delay(2000);
-		    	loc = 0;
-		    	writeLoc = 5;
-		    	memset(machineID, 0, sizeof(machineID));
-		    }
+		if(checkMachineID(&huart1, machineID) == 1) {
+			validInput = true; // Doğru uzunlukta veri girildi
+			setupCompleted = 1;
 		} else {
-		    lcd_clear();
-		    if(dilSecim == 0) {
-		    	lcd_print(1, 1, " ID 12 KARAKTER ");
-		    	lcd_print(2, 1, " OLMAK ZORUNDA! ");
-		    } else {
-		    	lcd_print(1, 1, "MACHINE ID MUST");
-		    	lcd_print(2, 1, "BE 12 CHARACTERS");
-		    }
-		    HAL_Delay(2000); // Kullanıcıya mesajı göster
-		    loc = 0;
-		    writeLoc = 5;
-		    memset(machineID, 0, sizeof(machineID));
+			lcd_clear();
+			HAL_Delay(50);
+			if(dilSecim == 0) {
+				lcd_print(1, 1, "BU ID FARKLI BIR");
+				lcd_print(2, 1, " MAKINEDE AKTIF ");
+			} else {
+				lcd_print(1, 1, "THIS  ID CAN NOT");
+				lcd_print(2, 1, "    BE  USED    ");
+			}
+			HAL_Delay(2000);
+
+			loc = 0;
+			writeLoc = 5;
+			memset(machineID, 0, sizeof(machineID));
 		}
 	}
 
@@ -271,7 +257,27 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             // Kaydetme işlemini bitir
-            break;
+        	if(type == 'M') {
+        		if (strlen(machineID) == 12) {
+
+        		} else {
+        			lcd_clear();
+        			if(dilSecim == 0) {
+        				lcd_print(1, 1, " ID 12 KARAKTER ");
+        				lcd_print(2, 1, " OLMAK ZORUNDA! ");
+        			} else {
+        				lcd_print(1, 1, "MACHINE ID MUST");
+        				lcd_print(2, 1, "BE 12 CHARACTERS");
+        			}
+        			HAL_Delay(2000); // Kullanıcıya mesajı göster
+
+        			loc = 0;
+        			writeLoc = 5;
+        			memset(machineID, 0, sizeof(machineID));
+        		}
+        	} else {
+        		break;
+        	}
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -416,7 +422,7 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
 
         		machineID[loc] = '\0';
         		eepromData[startPos] = '\0';
-        		lcd_print(1, 5, machineID);
+        		lcd_delete_char(1, writeLoc);
         	} else {
         		loc--;
         		writeLoc--;
@@ -426,14 +432,12 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
         			wifiSSID[loc] = '\0';
         			eepromData[startPos] = '\0';
 
-        			lcd_gotoxy(1, 7);
-        			lcd_print(1, 7, wifiSSID);
+        			lcd_delete_char(1, writeLoc);
         		} else {
         			wifiPass[loc] = '\0';
         			eepromData[startPos] = '\0';
 
-        			lcd_gotoxy(1, 7);
-        			lcd_print_char(1, 7, wifiPASS);
+        			lcd_delete_char(1, writeLoc);
         		}
 
         		lcd_gotoxy(2, cursorLoc);
