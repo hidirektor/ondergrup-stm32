@@ -17,7 +17,7 @@ void takeMachineID() {
 	bool validInput = false;
 
 	int loc = 0;
-	int writeLoc = 1;
+	int writeLoc = 5;
 
 	memset(machineID, 0, sizeof(machineID));
 
@@ -70,7 +70,7 @@ void takeWifiSSID() {
     bool validInput = false;
 
     int loc = 0;
-    int writeLoc = 1;
+    int writeLoc = 7;
 
     memset(wifiSSID, 0, sizeof(wifiSSID));
 
@@ -107,14 +107,14 @@ void takeWifiPass() {
     bool validInput = false;
 
     int loc = 0;
-    int writeLoc = 1;
+    int writeLoc = 7;
 
     memset(wifiPass, 0, sizeof(wifiPass));
 
     while(!validInput) {
         lcd_clear();
 
-        saveCharacter(&loc, &writeLoc, wifiPass, passStartPos, 'S');
+        saveCharacter(&loc, &writeLoc, wifiPass, passStartPos, 'P');
 
         if (strlen(wifiPass) <= 20) {
             validInput = true; // Uygun uzunlukta veri girildi
@@ -243,10 +243,13 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
     int characterPos = 0; // Kullanıcının LCD üzerinde seçtiği karakterin pozisyonu
     char selectedChar;
 
-    int charactersArrayLength = 0;
+    int cursorLoc = 1;
+
     int page = 1; // SSID ve password için sayfa kontrolü
 
     lcd_clear();
+    HAL_Delay(50);
+    lcd_cursor(1);
     if (type == 'M') {
     	charactersArrayLength = strlen(idCharactersArray);
 
@@ -264,58 +267,104 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-            characterPos = (characterPos + 1) % charactersArrayLength;
+        	characterPos++;
+        	cursorLoc++;
 
-            if (type == 'M') {
-            	// Machine ID için özel cursor hareketi
-            	if (*writeLoc == 7) *writeLoc = 10; // 7'den 10'a atla
-            	else if (*writeLoc == 14) *writeLoc = 3; // 14'ten 3'e dön
-            	else (*writeLoc)++;
-            } else {
-            	// SSID ve Password için sayfa kontrolü
-            	if (*writeLoc >= 16) {
-            	    *writeLoc = 0; // İmleci sıfırla
-            	    page++; // Sonraki sayfaya geç
-            	    printTemplate(type == 'S' ? 2 : 3, page);
-            	}
-            	*writeLoc %= 16;
-            }
-            lcd_gotoxy(2, *writeLoc % 16);
-            if(type == 'M') {
-            	lcd_send_char(idCharactersArray[characterPos]);
-            } else {
-            	lcd_send_char(charactersArray[characterPos]);
-            }
-            HAL_Delay(200); // Debouncing için gecikme
+        	if(type == 'M') {
+        		if(cursorLoc == 10) {
+        			cursorLoc = 7;
+        		} else if(cursorLoc == 3) {
+        			cursorLoc = 14;
+        		}
+        	} else {
+        		if(cursorLoc == 16) {
+        		    if(type == 'S') {
+        		    	printTemplate(2, 2);
+        		    } else {
+        		    	printTemplate(3, 2);
+        		    }
+        		} else if(cursorLoc == 32) {
+        		    if(type == 'S') {
+        		    	printTemplate(2, 3);
+        		    } else {
+        		    	printTemplate(3, 3);
+        		    }
+        		} else if(cursorLoc == 48) {
+        		    if(type == 'S') {
+        		    	printTemplate(2, 4);
+        		    } else {
+        		    	printTemplate(3, 4);
+        		    }
+        		} else if(cursorLoc == 64) {
+        		    if(type == 'S') {
+        		    	printTemplate(2, 5);
+        		    } else {
+        		    	printTemplate(3, 5);
+        		    }
+        		} else if(cursorLoc == 80) {
+        		    cursorLoc = 1;
+
+        		    if(type == 'S') {
+        		    	printTemplate(2, 1);
+        		    } else {
+        		    	printTemplate(3, 1);
+        		    }
+        		}
+        	}
+
+        	lcd_gotoxy(2, cursorLoc);
+        	HAL_Delay(250); //Debouncing delay
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
-            characterPos = (characterPos - 1 + charactersArrayLength) % charactersArrayLength;
+        	characterPos--;
+        	cursorLoc--;
 
-            if (type == 'M') {
-            	// Machine ID için özel cursor hareketi
-            	if (*writeLoc == 10) *writeLoc = 7; // 10'dan 7'ye atla
-            	else if (*writeLoc == 3) *writeLoc = 14; // 3'ten 14'e dön
-            	else (*writeLoc)--;
-            } else {
-            	// SSID ve Password için sayfa kontrolü
-            	if (*writeLoc <= 1 && page > 1) {
-            	    *writeLoc = 16; // İmleci sayfanın sonuna taşı
-            	    page--; // Önceki sayfaya geç
-            	    printTemplate(type == 'S' ? 2 : 3, page);
-            	} else if (*writeLoc <= 1) {
-            	    *writeLoc = 16;
-            	} else {
-            	    (*writeLoc)--;
-            	}
-            }
-            lcd_gotoxy(2, (*writeLoc - 1) % 16);
-            if(type == 'M') {
-            	lcd_send_char(idCharactersArray[characterPos]);
-            } else {
-            	lcd_send_char(charactersArray[characterPos]);
-            }
-            HAL_Delay(200); // Debouncing için gecikme
+        	if(type == 'M') {
+        	    if(cursorLoc == 7) {
+        	    	cursorLoc = 10;
+        	    } else if(cursorLoc == 14) {
+        	    	cursorLoc = 3;
+        	    }
+        	} else {
+        		if(cursorLoc == 1) {
+        			cursorLoc = 80;
+
+        			if(type == 'S') {
+        				printTemplate(2, 5);
+        			} else {
+        				printTemplate(3, 5);
+        			}
+        		} else if(cursorLoc == 17) {
+        			if(type == 'S') {
+        				printTemplate(2, 1);
+        			} else {
+        				printTemplate(3, 1);
+        			}
+        		} else if(cursorLoc == 33) {
+        			if(type == 'S') {
+        				printTemplate(2, 2);
+        			} else {
+        				printTemplate(3, 2);
+        			}
+        		} else if(cursorLoc == 49) {
+        			if(type == 'S') {
+        				printTemplate(2, 3);
+        			} else {
+        				printTemplate(3, 3);
+        			}
+        		} else if(cursorLoc == 65) {
+        			cursorLoc = 1;
+        			if(type == 'S') {
+        				printTemplate(2, 4);
+        			} else {
+        				printTemplate(3, 4);
+        			}
+        		}
+        	}
+
+        	lcd_gotoxy(2, cursorLoc);
+        	HAL_Delay(250); //Debouncing delay
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -325,12 +374,13 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
         	} else {
         		selectedChar = charactersArray[characterPos];
         	}
-            data[*loc] = selectedChar;
-            eepromData[startPos + *loc] = characterPos;
+            data[*loc] = selectedChar; //machineID, SSID ya da PASS dizisine karakteri kaydet
+            eepromData[startPos + *loc] = characterPos; //eepromData'ya karakteri kaydet
+
             (*loc)++;
             (*writeLoc)++;
             lcd_print_char(2, *writeLoc, selectedChar);
-            HAL_Delay(200); // Debouncing için gecikme
+            HAL_Delay(250); // Debouncing için gecikme
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
@@ -342,7 +392,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
                 data[*loc] = '\0';
                 eepromData[startPos + *loc] = '\0';
             }
-            HAL_Delay(200); // Debouncing için gecikme
+            HAL_Delay(250); // Debouncing için gecikme
         }
     }
 }

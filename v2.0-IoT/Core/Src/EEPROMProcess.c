@@ -213,10 +213,6 @@ void eepromKontrol() {
 	HAL_Delay(1000);
 	readFromEEPROM(3);
 	HAL_Delay(1000);
-
-	memset(machineID, 0, sizeof(machineID));
-	memset(wifiSSID, 0, sizeof(wifiSSID));
-	memset(wifiPass, 0, sizeof(wifiPass));
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
