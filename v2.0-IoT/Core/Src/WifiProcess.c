@@ -14,14 +14,13 @@
 #include "IoTMenu.h"
 
 void takeMachineID() {
-	int loc = 0;
 	int writeLoc = 5;
 
 	memset(machineID, 0, sizeof(machineID));
 
 	lcd_clear();
 
-	saveCharacter(loc, writeLoc, idStartPos, 'M');
+	saveCharacter(writeLoc, idStartPos, 'M');
 
 	/*if(checkMachineID(&huart1, machineID) == 1) {
 		validInput = true; // Doğru uzunlukta veri girildi
@@ -49,14 +48,13 @@ void takeMachineID() {
 }
 
 void takeWifiSSID() {
-    int loc = 0;
     int writeLoc = 7;
 
     memset(wifiSSID, 0, sizeof(wifiSSID));
 
     lcd_clear();
 
-    saveCharacter(loc, writeLoc, ssidStartPos, 'S');
+    saveCharacter(writeLoc, ssidStartPos, 'S');
 
     // EEPROM'a kaydetme işini burada gerçekleştir
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -64,14 +62,13 @@ void takeWifiSSID() {
 }
 
 void takeWifiPass() {
-    int loc = 0;
     int writeLoc = 7;
 
     memset(wifiPass, 0, sizeof(wifiPass));
 
     lcd_clear();
 
-    saveCharacter(loc, writeLoc, passStartPos, 'P');
+    saveCharacter(writeLoc, passStartPos, 'P');
 
     // EEPROM'a kaydetme işini burada gerçekleştir
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -183,10 +180,10 @@ void iotSetup() {
 	convertAndSendData();
 }
 
-void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
+void saveCharacter(int lcdPos, int eepromStartPos, char type) {
 	bool validInput = false;
 
-	int loc = arrayPos;
+	int loc = 0;
 	int writeLoc = lcdPos;
 	int startPos = eepromStartPos;
     int characterPos = 0; // Kullanıcının LCD üzerinde seçtiği karakterin pozisyonu
