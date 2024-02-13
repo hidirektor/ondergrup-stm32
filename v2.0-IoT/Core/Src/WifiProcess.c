@@ -245,7 +245,8 @@ void iotSetup() {
 	convertAndSendData();
 }
 
-void saveCharacter(int loc, int writeLoc, int startPos, char type) {
+void saveCharacter(int loc, int lcdPos, int startPos, char type) {
+	int writeLoc = lcdPos;
     int characterPos = 0; // Kullanıcının LCD üzerinde seçtiği karakterin pozisyonu
     char selectedChar;
 
