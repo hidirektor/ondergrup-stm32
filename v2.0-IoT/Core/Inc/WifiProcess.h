@@ -17,6 +17,6 @@ void convertAndSendData(void);
 
 void iotSetup(void);
 
-void saveCharacter(int loc, int writeLoc, char *data, int startPos, char type);
+void saveCharacter(int loc, int writeLoc, int startPos, char type);
 
 #endif /* INC_WIFIPROCESS_H_ */
