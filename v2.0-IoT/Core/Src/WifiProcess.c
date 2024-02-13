@@ -251,12 +251,8 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
     HAL_Delay(50);
     lcd_cursor(1);
     if (type == 'M') {
-    	charactersArrayLength = strlen(idCharactersArray);
-
     	printTemplate(1, 0);
     } else {
-    	charactersArrayLength = strlen(charactersArray);
-
     	printTemplate(type == 'S' ? 2 : 3, page);
     }
 
@@ -313,7 +309,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
         	}
 
         	lcd_gotoxy(2, cursorLoc);
-        	HAL_Delay(250); //Debouncing delay
+        	HAL_Delay(200); //Debouncing delay
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
@@ -364,33 +360,34 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
         	}
 
         	lcd_gotoxy(2, cursorLoc);
-        	HAL_Delay(250); //Debouncing delay
+        	HAL_Delay(200); //Debouncing delay
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             // Karakteri seç ve kaydet
         	if(type == 'M') {
         		selectedChar = idCharactersArray[characterPos];
-        	} else {
+        	} else if(type == 'S') {
         		selectedChar = charactersArray[characterPos];
         	}
-            data[*loc] = selectedChar; //machineID, SSID ya da PASS dizisine karakteri kaydet
-            eepromData[startPos + *loc] = characterPos; //eepromData'ya karakteri kaydet
 
-            (*loc)++;
-            (*writeLoc)++;
-            lcd_print_char(2, *writeLoc, selectedChar);
+            data[loc] = selectedChar; //machineID, SSID ya da PASS dizisine karakteri kaydet
+            eepromData[startPos + loc] = characterPos; //eepromData'ya karakteri kaydet
+
+            loc++;
+            writeLoc++;
+            lcd_print_char(1, writeLoc, selectedChar);
             HAL_Delay(250); // Debouncing için gecikme
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             // Son karakteri sil
-            if (*loc > 0) {
-                (*loc)--;
-                (*writeLoc)--;
-                lcd_delete_char(2, *writeLoc + 1);
-                data[*loc] = '\0';
-                eepromData[startPos + *loc] = '\0';
+            if (loc > 0) {
+                loc--;
+                writeLoc--;
+                lcd_delete_char(1, writeLoc + 1);
+                data[loc] = '\0';
+                eepromData[startPos + loc] = '\0';
             }
             HAL_Delay(250); // Debouncing için gecikme
         }
