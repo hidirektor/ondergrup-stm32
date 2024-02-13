@@ -245,8 +245,10 @@ void iotSetup() {
 	convertAndSendData();
 }
 
-void saveCharacter(int loc, int lcdPos, int startPos, char type) {
+void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
+	int loc = arrayPos;
 	int writeLoc = lcdPos;
+	int startPos = eepromStartPos;
     int characterPos = 0; // Kullanıcının LCD üzerinde seçtiği karakterin pozisyonu
     char selectedChar;
 
@@ -337,7 +339,8 @@ void saveCharacter(int loc, int lcdPos, int startPos, char type) {
         	}
 
         	lcd_gotoxy(2, cursorLoc);
-        	HAL_Delay(200);
+
+        	HAL_Delay(200); //Debouncing
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -395,17 +398,48 @@ void saveCharacter(int loc, int lcdPos, int startPos, char type) {
         			lcd_print_char(1, writeLoc, selectedChar); //ekrana wifiPASS'i yazdır
         		}
 
-        		lcd_gotoxy(1, cursorLoc); //karakter seçim sırasında ki konumuna imleci geri gönder
+        		lcd_gotoxy(2, cursorLoc); //karakter seçim sırasında ki konumuna imleci geri gönder
 
         		loc++;
         		writeLoc++;
         		startPos++;
         	}
 
-        	HAL_Delay(200);
+        	HAL_Delay(200); //Debouncing
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
+        	if(type == 'M') {
+        		loc--;
+        		writeLoc--;
+        		startPos--;
+
+        		machineID[loc] = '\0';
+        		eepromData[startPos] = '\0';
+        		lcd_print_char(1, writeLoc, '\0');
+        	} else {
+        		loc--;
+        		writeLoc--;
+        		startPos--;
+
+        		if(type == 'S') {
+        			wifiSSID[loc] = '\0';
+        			eepromData[startPos] = '\0';
+
+        			lcd_gotoxy(1, writeLoc);
+        			lcd_print_char(1, writeLoc, '\0');
+        		} else {
+        			wifiPass[loc] = '\0';
+        			eepromData[startPos] = '\0';
+
+        			lcd_gotoxy(1, writeLoc);
+        			lcd_print_char(1, writeLoc, '\0');
+        		}
+
+        		lcd_gotoxy(2, cursorLoc);
+        	}
+
+        	HAL_Delay(200); //Debouncing
         }
     }
 }
