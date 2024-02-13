@@ -14,38 +14,34 @@
 #include "IoTMenu.h"
 
 void takeMachineID() {
-	bool validInput = false;
-
 	int loc = 0;
 	int writeLoc = 5;
 
 	memset(machineID, 0, sizeof(machineID));
 
-	while(!validInput) {
+	lcd_clear();
+
+	saveCharacter(loc, writeLoc, idStartPos, 'M');
+
+	/*if(checkMachineID(&huart1, machineID) == 1) {
+		validInput = true; // Doğru uzunlukta veri girildi
+		setupCompleted = 1;
+	} else {
 		lcd_clear();
-
-		saveCharacter(loc, writeLoc, idStartPos, 'M');
-
-		if(checkMachineID(&huart1, machineID) == 1) {
-			validInput = true; // Doğru uzunlukta veri girildi
-			setupCompleted = 1;
+		HAL_Delay(50);
+		if(dilSecim == 0) {
+			lcd_print(1, 1, "BU ID FARKLI BIR");
+			lcd_print(2, 1, " MAKINEDE AKTIF ");
 		} else {
-			lcd_clear();
-			HAL_Delay(50);
-			if(dilSecim == 0) {
-				lcd_print(1, 1, "BU ID FARKLI BIR");
-				lcd_print(2, 1, " MAKINEDE AKTIF ");
-			} else {
-				lcd_print(1, 1, "THIS  ID CAN NOT");
-				lcd_print(2, 1, "    BE  USED    ");
-			}
-			HAL_Delay(2000);
-
-			loc = 0;
-			writeLoc = 5;
-			memset(machineID, 0, sizeof(machineID));
+			lcd_print(1, 1, "THIS  ID CAN NOT");
+			lcd_print(2, 1, "    BE  USED    ");
 		}
-	}
+		HAL_Delay(2000);
+
+		loc = 0;
+		writeLoc = 5;
+		memset(machineID, 0, sizeof(machineID));
+	}*/
 
 	//EEPROM'a kaydetme işini burada gerçekleştir
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -53,36 +49,14 @@ void takeMachineID() {
 }
 
 void takeWifiSSID() {
-    bool validInput = false;
-
     int loc = 0;
     int writeLoc = 7;
 
     memset(wifiSSID, 0, sizeof(wifiSSID));
 
-    while(!validInput) {
-        lcd_clear();
+    lcd_clear();
 
-        saveCharacter(loc, writeLoc, ssidStartPos, 'S');
-
-        if (strlen(wifiSSID) <= 20) {
-            validInput = true; // Uygun uzunlukta veri girildi
-        } else {
-            lcd_clear();
-            if(dilSecim == 0) {
-            	lcd_print(1, 1, " 20 KARAKTERDEN ");
-            	lcd_print(2, 1, "FAZLA SSID OLMAZ");
-            } else {
-            	lcd_print(1, 1, "SSID CANT EXCEED");
-            	lcd_print(2, 1, " 20 CHARACTERS ");
-            }
-            HAL_Delay(2000); // Kullanıcıya mesajı göster
-            // Uzunluğu sıfırla ve yeniden dene
-            loc = 0;
-            writeLoc = 7;
-            memset(wifiSSID, 0, sizeof(wifiSSID));
-        }
-    }
+    saveCharacter(loc, writeLoc, ssidStartPos, 'S');
 
     // EEPROM'a kaydetme işini burada gerçekleştir
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -90,36 +64,14 @@ void takeWifiSSID() {
 }
 
 void takeWifiPass() {
-    bool validInput = false;
-
     int loc = 0;
     int writeLoc = 7;
 
     memset(wifiPass, 0, sizeof(wifiPass));
 
-    while(!validInput) {
-        lcd_clear();
+    lcd_clear();
 
-        saveCharacter(loc, writeLoc, passStartPos, 'P');
-
-        if (strlen(wifiPass) <= 20) {
-            validInput = true; // Uygun uzunlukta veri girildi
-        } else {
-            lcd_clear();
-            if(dilSecim == 0) {
-            	lcd_print(1, 1, " 20 KARAKTERDEN ");
-            	lcd_print(2, 1, "FAZLA PASS OLMAZ");
-            } else {
-            	lcd_print(1, 1, "PASS CANT EXCEED");
-            	lcd_print(2, 1, " 20 CHARACTERS ");
-            }
-            HAL_Delay(2000); // Kullanıcıya mesajı göster
-            // Uzunluğu sıfırla ve yeniden dene
-            loc = 0;
-            writeLoc = 7;
-            memset(wifiPass, 0, sizeof(wifiPass));
-        }
-    }
+    saveCharacter(loc, writeLoc, passStartPos, 'P');
 
     // EEPROM'a kaydetme işini burada gerçekleştir
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -232,6 +184,8 @@ void iotSetup() {
 }
 
 void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
+	bool validInput = false;
+
 	int loc = arrayPos;
 	int writeLoc = lcdPos;
 	int startPos = eepromStartPos;
@@ -254,12 +208,12 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
 
     lcd_gotoxy(2, cursorLoc); //Seçim işleminden önce işaretçiyi geçerli konuma gönder
 
-    while (1) {
+    while (!validInput) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             // Kaydetme işlemini bitir
         	if(type == 'M') {
         		if (strlen(machineID) == 12) {
-
+        			validInput = true;
         		} else {
         			lcd_clear();
         			if(dilSecim == 0) {
@@ -276,7 +230,45 @@ void saveCharacter(int arrayPos, int lcdPos, int eepromStartPos, char type) {
         			memset(machineID, 0, sizeof(machineID));
         		}
         	} else {
-        		break;
+        		if(type == 'S') {
+        			if (strlen(wifiSSID) <= 20) {
+        			    validInput = true; // Uygun uzunlukta veri girildi
+        			} else {
+        			    lcd_clear();
+        			    if(dilSecim == 0) {
+        			        lcd_print(1, 1, " 20 KARAKTERDEN ");
+        			        lcd_print(2, 1, "FAZLA SSID OLMAZ");
+        			    } else {
+        			        lcd_print(1, 1, "SSID CANT EXCEED");
+        			        lcd_print(2, 1, " 20 CHARACTERS ");
+        			    }
+        			    HAL_Delay(2000); // Kullanıcıya mesajı göster
+
+        			    // Uzunluğu sıfırla ve yeniden dene
+        			    loc = 0;
+        			    writeLoc = 7;
+        			    memset(wifiSSID, 0, sizeof(wifiSSID));
+        			}
+        		} else {
+        			if (strlen(wifiPass) <= 20) {
+        			    validInput = true; // Uygun uzunlukta veri girildi
+        			} else {
+        			    lcd_clear();
+        			    if(dilSecim == 0) {
+        			        lcd_print(1, 1, " 20 KARAKTERDEN ");
+        			        lcd_print(2, 1, "FAZLA PASS OLMAZ");
+        			    } else {
+        			        lcd_print(1, 1, "PASS CANT EXCEED");
+        			        lcd_print(2, 1, " 20 CHARACTERS ");
+        			    }
+        			    HAL_Delay(2000); // Kullanıcıya mesajı göster
+
+        			    // Uzunluğu sıfırla ve yeniden dene
+        			    loc = 0;
+        			    writeLoc = 7;
+        			    memset(wifiPass, 0, sizeof(wifiPass));
+        			}
+        		}
         	}
         }
 
