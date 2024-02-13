@@ -24,7 +24,7 @@ void takeMachineID() {
 	while(!validInput) {
 		lcd_clear();
 
-		saveCharacter(&loc, &writeLoc, machineID, idStartPos, 'M');
+		saveCharacter(loc, writeLoc, machineID, idStartPos, 'M');
 
 		if (strlen(machineID) == 12) {
 		    if(checkMachineID(&huart1, machineID) == 1) {
@@ -42,7 +42,7 @@ void takeMachineID() {
 		    	}
 		    	HAL_Delay(2000);
 		    	loc = 0;
-		    	writeLoc = 1;
+		    	writeLoc = 5;
 		    	memset(machineID, 0, sizeof(machineID));
 		    }
 		} else {
@@ -56,7 +56,7 @@ void takeMachineID() {
 		    }
 		    HAL_Delay(2000); // Kullanıcıya mesajı göster
 		    loc = 0;
-		    writeLoc = 1;
+		    writeLoc = 5;
 		    memset(machineID, 0, sizeof(machineID));
 		}
 	}
@@ -77,7 +77,7 @@ void takeWifiSSID() {
     while(!validInput) {
         lcd_clear();
 
-        saveCharacter(&loc, &writeLoc, wifiSSID, ssidStartPos, 'S');
+        saveCharacter(loc, writeLoc, wifiSSID, ssidStartPos, 'S');
 
         if (strlen(wifiSSID) <= 20) {
             validInput = true; // Uygun uzunlukta veri girildi
@@ -93,7 +93,7 @@ void takeWifiSSID() {
             HAL_Delay(2000); // Kullanıcıya mesajı göster
             // Uzunluğu sıfırla ve yeniden dene
             loc = 0;
-            writeLoc = 1;
+            writeLoc = 7;
             memset(wifiSSID, 0, sizeof(wifiSSID));
         }
     }
@@ -114,7 +114,7 @@ void takeWifiPass() {
     while(!validInput) {
         lcd_clear();
 
-        saveCharacter(&loc, &writeLoc, wifiPass, passStartPos, 'P');
+        saveCharacter(loc, writeLoc, wifiPass, passStartPos, 'P');
 
         if (strlen(wifiPass) <= 20) {
             validInput = true; // Uygun uzunlukta veri girildi
@@ -130,7 +130,7 @@ void takeWifiPass() {
             HAL_Delay(2000); // Kullanıcıya mesajı göster
             // Uzunluğu sıfırla ve yeniden dene
             loc = 0;
-            writeLoc = 1;
+            writeLoc = 7;
             memset(wifiPass, 0, sizeof(wifiPass));
         }
     }
@@ -218,7 +218,7 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		if(machineID[machineIDCharacterLimit-1] == '\0') {
+		/*if(machineID[machineIDCharacterLimit-1] == '\0') {
 			takeMachineID();
 		}
 		HAL_Delay(500);
@@ -231,7 +231,13 @@ void iotSetup() {
 		if(wifiPass[0] == '\0') {
 			takeWifiPass();
 		}
-		HAL_Delay(500);
+		HAL_Delay(500);*/
+
+		takeMachineID();
+		HAL_Delay(10);
+		takeWifiSSID();
+		HAL_Delay(10);
+		takeWifiPass();
 	}
 
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
@@ -239,7 +245,7 @@ void iotSetup() {
 	convertAndSendData();
 }
 
-void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type) {
+void saveCharacter(int loc, int writeLoc, char *data, int startPos, char type) {
     int characterPos = 0; // Kullanıcının LCD üzerinde seçtiği karakterin pozisyonu
     char selectedChar;
 
@@ -367,7 +373,7 @@ void saveCharacter(int *loc, int *writeLoc, char *data, int startPos, char type)
             // Karakteri seç ve kaydet
         	if(type == 'M') {
         		selectedChar = idCharactersArray[characterPos];
-        	} else if(type == 'S') {
+        	} else {
         		selectedChar = charactersArray[characterPos];
         	}
 
