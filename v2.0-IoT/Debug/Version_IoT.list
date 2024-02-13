@@ -15291,7 +15291,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
  8006ed2:	79fb      	ldrb	r3, [r7, #7]
  8006ed4:	2b4d      	cmp	r3, #77	; 0x4d
  8006ed6:	d132      	bne.n	8006f3e <saveCharacter+0xee>
-        		if (strlen(machineID) == 12) {
+        		if (strlen(machineID) == machineIDCharacterLimit) {
  8006ed8:	489d      	ldr	r0, [pc, #628]	; (8007150 <saveCharacter+0x300>)
  8006eda:	f7f9 f9a3 	bl	8000224 <strlen>
  8006ede:	4603      	mov	r3, r0
@@ -15354,7 +15354,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
  8006f3e:	79fb      	ldrb	r3, [r7, #7]
  8006f40:	2b53      	cmp	r3, #83	; 0x53
  8006f42:	d132      	bne.n	8006faa <saveCharacter+0x15a>
-        			if (strlen(wifiSSID) <= 20) {
+        			if (strlen(wifiSSID) <= wifiCharacterLimit) {
  8006f44:	4888      	ldr	r0, [pc, #544]	; (8007168 <saveCharacter+0x318>)
  8006f46:	f7f9 f96d 	bl	8000224 <strlen>
  8006f4a:	4603      	mov	r3, r0
@@ -15414,7 +15414,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
  8006fa8:	e031      	b.n	800700e <saveCharacter+0x1be>
         			}
         		} else {
-        			if (strlen(wifiPass) <= 20) {
+        			if (strlen(wifiPass) <= wifiCharacterLimit) {
  8006faa:	4874      	ldr	r0, [pc, #464]	; (800717c <saveCharacter+0x32c>)
  8006fac:	f7f9 f93a 	bl	8000224 <strlen>
  8006fb0:	4603      	mov	r3, r0

@@ -209,7 +209,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             // Kaydetme işlemini bitir
         	if(type == 'M') {
-        		if (strlen(machineID) == 12) {
+        		if (strlen(machineID) == machineIDCharacterLimit) {
         			validInput = true;
         		} else {
         			lcd_clear();
@@ -228,7 +228,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         		}
         	} else {
         		if(type == 'S') {
-        			if (strlen(wifiSSID) <= 20) {
+        			if (strlen(wifiSSID) <= wifiCharacterLimit) {
         			    validInput = true; // Uygun uzunlukta veri girildi
         			} else {
         			    lcd_clear();
@@ -247,7 +247,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         			    memset(wifiSSID, 0, sizeof(wifiSSID));
         			}
         		} else {
-        			if (strlen(wifiPass) <= 20) {
+        			if (strlen(wifiPass) <= wifiCharacterLimit) {
         			    validInput = true; // Uygun uzunlukta veri girildi
         			} else {
         			    lcd_clear();
