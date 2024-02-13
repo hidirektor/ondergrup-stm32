@@ -338,6 +338,66 @@ void saveCharacter(int loc, int writeLoc, int startPos, char type) {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
+        	if(type == 'M') {
+        		if(cursorLoc == 3) {
+        			characterPos = 0;
+        		} else if(cursorLoc == 4) {
+        			characterPos = 1;
+        		} else if(cursorLoc == 5) {
+        			characterPos = 2;
+        		} else if(cursorLoc == 6) {
+        			characterPos = 3;
+        		} else if(cursorLoc == 7) {
+        			characterPos = 4;
+        		} else if(cursorLoc == 10) {
+        			characterPos = 5;
+        		} else if(cursorLoc == 11) {
+        			characterPos = 6;
+        		} else if(cursorLoc == 12) {
+        			characterPos = 7;
+        		} else if(cursorLoc == 13) {
+        			characterPos = 8;
+        		} else if(cursorLoc == 14) {
+        			characterPos = 9;
+        		}
+
+        		selectedChar = idCharactersArray[characterPos];
+        		machineID[loc] = selectedChar; //seçilen karakteri machineID dizisine aktar
+
+        		eepromData[startPos] = characterPos; //makine idsini eeproma kaydet
+
+        		lcd_print(1, writeLoc, machineID); //seçilen karakteri lcd'nin ilk satırına yaz
+
+        		loc++;
+        		writeLoc++;
+        		startPos++;
+        	} else {
+        		characterPos = (cursorLoc*page) - 1;
+
+        		selectedChar = charactersArray[characterPos];
+
+        		if(type == 'S') {
+        			wifiSSID[loc] = selectedChar;
+
+        			eepromData[startPos] = characterPos;
+
+        			lcd_gotoxy(1, writeLoc); //imleci karakterin yazılacağı konuma gönder
+        			lcd_print(1, writeLoc, wifiSSID); //ekrana wifiSSID'yi yazdır
+        		} else {
+        			wifiPass[loc] = selectedChar;
+
+        			eepromData[startPos] = characterPos;
+
+        			lcd_gotoxy(1, writeLoc); //imleci karakterin yazılacağı konuma gönders
+        			lcd_print(1, writeLoc, wifiPass); //ekrana wifiPASS'i yazdır
+        		}
+
+        		lcd_gotoxy(1, cursorLoc); //karakter seçim sırasında ki konumuna imleci geri gönder
+
+        		loc++;
+        		writeLoc++;
+        		startPos++;
+        	}
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
