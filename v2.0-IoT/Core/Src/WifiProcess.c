@@ -369,7 +369,7 @@ void saveCharacter(int loc, int lcdPos, int startPos, char type) {
 
         		eepromData[startPos] = characterPos; //makine idsini eeproma kaydet
 
-        		lcd_print(1, writeLoc, machineID); //seçilen karakteri lcd'nin ilk satırına yaz
+        		lcd_print_char(1, writeLoc, selectedChar); //seçilen karakteri lcd'nin ilk satırına yaz
 
         		loc++;
         		writeLoc++;
@@ -385,14 +385,14 @@ void saveCharacter(int loc, int lcdPos, int startPos, char type) {
         			eepromData[startPos] = characterPos;
 
         			lcd_gotoxy(1, writeLoc); //imleci karakterin yazılacağı konuma gönder
-        			lcd_print(1, writeLoc, wifiSSID); //ekrana wifiSSID'yi yazdır
+        			lcd_print_char(1, writeLoc, selectedChar); //ekrana wifiSSID'yi yazdır
         		} else {
         			wifiPass[loc] = selectedChar;
 
         			eepromData[startPos] = characterPos;
 
         			lcd_gotoxy(1, writeLoc); //imleci karakterin yazılacağı konuma gönders
-        			lcd_print(1, writeLoc, wifiPass); //ekrana wifiPASS'i yazdır
+        			lcd_print_char(1, writeLoc, selectedChar); //ekrana wifiPASS'i yazdır
         		}
 
         		lcd_gotoxy(1, cursorLoc); //karakter seçim sırasında ki konumuna imleci geri gönder
