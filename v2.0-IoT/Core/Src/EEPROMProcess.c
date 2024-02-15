@@ -209,8 +209,10 @@ void eepromKontrol() {
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
 	HAL_Delay(100);
-	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
-	HAL_Delay(100);
+	int tempVal = ssidStartPos;
+	for(int i=0; i<20; i++) {
+		wifiSSIDInt[i] = eepromData[tempVal];
+	}
 
 	readFromEEPROM(4);
 }
