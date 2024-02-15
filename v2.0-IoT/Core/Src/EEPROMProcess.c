@@ -207,9 +207,9 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
-	memcpy(wifiSSID, &eepromData[ssidStartPos], wifiCharacterLimit);
-	memcpy(wifiPass, &eepromData[passStartPos], wifiCharacterLimit);
+	memcpy(machineID, &eepromData[idStartPos], 12);
+	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
+	memcpy(wifiPass, (char *)&eepromData[passStartPos], 20);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
