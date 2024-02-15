@@ -248,9 +248,11 @@ void readFromEEPROM(int state) {
 			wifiPass[i] = getCharFromCursorPosition(wifiPassInt[i]);
 		}
 	} else {
+		int machineIDTempLoc = idStartPos;
 		//MachineID Okuma
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			machineID[i] = getIDCharFromCursorPosition(eepromData[i]);
+			machineID[i] = getIDCharFromCursorPosition(eepromData[machineIDTempLoc]);
+			machineIDTempLoc++;
 		}
 	}
 }
