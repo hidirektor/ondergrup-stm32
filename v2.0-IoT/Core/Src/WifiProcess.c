@@ -498,6 +498,7 @@ void convertAndSendData() {
 	}
 	for(int i=0; i<2; i++) {
 		sendMachineData(&huart1, machineID, mergeData());
+		sendMachineData(&huart1, "ipektest", mergeData());
 	}
 	HAL_Delay(500);
 	lcd_clear();
