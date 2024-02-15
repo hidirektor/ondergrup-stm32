@@ -21,6 +21,8 @@ void takeMachineID() {
     int machineIDLoc = 0;
     int writeLoc = 5;
 
+    int eepromPos = idStartPos;
+
     memset(machineID, 0, sizeof(machineID));
     HAL_Delay(100);
 
@@ -81,24 +83,34 @@ void takeMachineID() {
 
         	if(cursorPosition == 3) {
         		machineID[machineIDLoc] = '0';
+        		eepromData[eepromPos] = 0;
         	} else if(cursorPosition == 4) {
         		machineID[machineIDLoc] = '1';
+        		eepromData[eepromPos] = 1;
         	} else if(cursorPosition == 5) {
         		machineID[machineIDLoc] = '2';
+        		eepromData[eepromPos] = 2;
         	} else if(cursorPosition == 6) {
         		machineID[machineIDLoc] = '3';
+        		eepromData[eepromPos] = 3;
         	} else if(cursorPosition == 7) {
         		machineID[machineIDLoc] = '4';
+        		eepromData[eepromPos] = 4;
         	} else if(cursorPosition == 10) {
         		machineID[machineIDLoc] = '5';
+        		eepromData[eepromPos] = 5;
         	} else if(cursorPosition == 11) {
         		machineID[machineIDLoc] = '6';
+        		eepromData[eepromPos] = 6;
         	} else if(cursorPosition == 12) {
         		machineID[machineIDLoc] = '7';
+        		eepromData[eepromPos] = 7;
         	} else if(cursorPosition == 13) {
         		machineID[machineIDLoc] = '8';
+        		eepromData[eepromPos] = 8;
         	} else if(cursorPosition == 14) {
         		machineID[machineIDLoc] = '9';
+        		eepromData[eepromPos] = 9;
         	}
 
         	if(machineIDLoc == machineIDCharacterLimit - 1) {
@@ -109,6 +121,7 @@ void takeMachineID() {
 
         	writeLoc++;
         	machineIDLoc++;
+        	eepromPos++;
 
         	HAL_Delay(150);
         }
@@ -117,12 +130,6 @@ void takeMachineID() {
         	HAL_Delay(50);
 
             if(strlen(machineID) >= 1) {
-
-                machineID[machineIDLoc] = '\0';
-
-                lcd_delete_char(1, 4+machineIDLoc);
-                HAL_Delay(50);
-
                 if(writeLoc > 5) {
                 	writeLoc--;
                 } else if(writeLoc < 5) {
@@ -131,9 +138,16 @@ void takeMachineID() {
 
                 if(machineIDLoc > 0) {
                 	machineIDLoc--;
+                	eepromPos--;
                 } else if(machineIDLoc < 0) {
                 	machineIDLoc = 0;
                 }
+
+                machineID[machineIDLoc] = '\0';
+                eepromData[eepromPos] = '\0';
+
+                lcd_delete_char(1, 4+machineIDLoc);
+                HAL_Delay(50);
             }
 
             HAL_Delay(150);
