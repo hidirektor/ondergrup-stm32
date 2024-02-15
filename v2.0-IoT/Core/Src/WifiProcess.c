@@ -153,6 +153,11 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
+            lcd_clear();
+            lcd_print(1, 1, "Girilen SSID:");
+            lcd_print(2, 1, (char *)wifiSSIDInt);
+            HAL_Delay(5000);
+
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
@@ -241,9 +246,6 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
             wifiSSIDInt[wifiNameLoc] = realCharPos - 1;
-
-            wifiSSID[wifiNameLoc++] = '\0';
-            //wifiSSIDInt[wifiNameLoc++] = '\0';
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
@@ -388,9 +390,6 @@ void takeWifiPass() {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
         	wifiPassInt[wifiPassLoc] = realCharPos - 1;
 
-        	wifiPass[wifiPassLoc++] = '\0';
-        	//wifiPassInt[wifiPassLoc++] = '\0';
-
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
@@ -496,10 +495,9 @@ void convertAndSendData() {
 		lcd_print(1, 1, " Syncronization ");
 		lcd_print(2, 1, "   Started...   ");
 	}
-	for(int i=0; i<2; i++) {
-		sendMachineData(&huart1, machineID, mergeData());
-		sendMachineData(&huart1, "ipektest", mergeData());
-	}
+
+	sendMachineData(&huart1, machineID, mergeData());
+
 	HAL_Delay(500);
 	lcd_clear();
 }
@@ -509,17 +507,14 @@ void iotSetup() {
 		if(strlen(machineID) != machineIDCharacterLimit) {
 			takeMachineID();
 		}
-		HAL_Delay(500);
 
-		if(wifiSSID[0] == '\0') {
+		if(!(strlen(wifiSSID) >= 2)) {
 			takeWifiSSID();
 		}
-		HAL_Delay(500);
 
-		if(wifiPass[0] == '\0') {
+		if(!(strlen(wifiPass) >= 2)) {
 			takeWifiPass();
 		}
-		HAL_Delay(500);
 	}
 
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
