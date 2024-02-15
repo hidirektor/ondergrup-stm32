@@ -222,6 +222,10 @@ char getCharFromCursorPosition(int cursorPosition) {
     return charactersArray[cursorPosition];
 }
 
+char getIDCharFromCursorPosition(uint8_t selectedInt) {
+	return idCharactersArray[selectedInt];
+}
+
 void writeToEEPROM(int state) {
 	if(state == 0) {
 		memset(&eepromData[ssidStartPos], 0, wifiCharacterLimit);
@@ -238,10 +242,15 @@ void readFromEEPROM(int state) {
 		for(int i=0; i<wifiCharacterLimit; i++) {
 			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDInt[i]);
 		}
-	} else {
+	} else if(state == 2) {
 		//Wifi Pass Okuma
 		for(int i=0; i<wifiCharacterLimit; i++) {
 			wifiPass[i] = getCharFromCursorPosition(wifiPassInt[i]);
+		}
+	} else {
+		//MachineID Okuma
+		for(int i=0; i<wifiCharacterLimit; i++) {
+			machineID[i] = getIDCharFromCursorPosition(eepromData[i]);
 		}
 	}
 }

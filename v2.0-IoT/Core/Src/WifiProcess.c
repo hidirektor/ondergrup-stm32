@@ -17,11 +17,11 @@ void takeMachineID() {
 	mainSection:
 	lcd_cursor(1);
 
-    int cursorPosition = 3;
-    int machineIDLoc = 0;
-    int writeLoc = 5;
+	int writeLoc = 5; //lcdnin ilk satırındaki başlangıç karakteri
 
-    int idStart = idStartPos;
+    int cursorPos = 3; //işaretçi konumu
+
+    int idStart = idStartPos; //eepromKonumu
 
     memset(machineID, 0, sizeof(machineID));
     HAL_Delay(100);
@@ -40,30 +40,22 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	/*if(checkMachineID(&huart1, machineID) != 1) {
-        		lcd_clear();
-        		lcd_print(1, 1, "BU ID ILE MAKINE");
-        		lcd_print(2, 1, "OLUSTURAMAZSINIZ");
-        		HAL_Delay(1200);
-        		goto mainSection;
-        	} else {
-        		eepromData[49] = 1;
-        	}*/
-
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
+
+        	readFromEEPROM(3);
 
             break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
         	HAL_Delay(50);
-        	if(cursorPosition == 7) {
-        		cursorPosition = 10;
-        	} else if (cursorPosition == 14) {
-                cursorPosition = 3;
+        	if(cursorPos == 7) {
+        		cursorPos = 10;
+        	} else if (cursorPos == 14) {
+                cursorPos = 3;
             } else {
-            	cursorPosition++;
+            	cursorPos++;
             }
 
         	HAL_Delay(150);
@@ -71,12 +63,12 @@ void takeMachineID() {
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
         	HAL_Delay(50);
-            if (cursorPosition == 3) {
-                cursorPosition = 14;
-            } else if(cursorPosition == 10) {
-            	cursorPosition = 7;
+            if (cursorPos == 3) {
+                cursorPos = 14;
+            } else if(cursorPos == 10) {
+            	cursorPos = 7;
             } else {
-            	cursorPosition--;
+            	cursorPos--;
             }
 
             HAL_Delay(150);
@@ -84,42 +76,31 @@ void takeMachineID() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	HAL_Delay(50);
-        	if(cursorPosition == 3) {
+        	if(cursorPos == 3) {
         		eepromData[idStart] = 0;
-        		machineID[machineIDLoc] = '0';
-        	} else if(cursorPosition == 4) {
+        	} else if(cursorPos == 4) {
         		eepromData[idStart] = 1;
-        		machineID[machineIDLoc] = '1';
-        	} else if(cursorPosition == 5) {
+        	} else if(cursorPos == 5) {
         		eepromData[idStart] = 2;
-        		machineID[machineIDLoc] = '2';
-        	} else if(cursorPosition == 6) {
+        	} else if(cursorPos == 6) {
         		eepromData[idStart] = 3;
-        		machineID[machineIDLoc] = '3';
-        	} else if(cursorPosition == 7) {
+        	} else if(cursorPos == 7) {
         		eepromData[idStart] = 4;
-        		machineID[machineIDLoc] = '4';
-        	} else if(cursorPosition == 10) {
+        	} else if(cursorPos == 10) {
         		eepromData[idStart] = 5;
-        		machineID[machineIDLoc] = '5';
-        	} else if(cursorPosition == 11) {
+        	} else if(cursorPos == 11) {
         		eepromData[idStart] = 6;
-        		machineID[machineIDLoc] = '6';
-        	} else if(cursorPosition == 12) {
+        	} else if(cursorPos == 12) {
         		eepromData[idStart] = 7;
-        		machineID[machineIDLoc] = '7';
-        	} else if(cursorPosition == 13) {
+        	} else if(cursorPos == 13) {
         		eepromData[idStart] = 8;
-        		machineID[machineIDLoc] = '8';
-        	} else if(cursorPosition == 14) {
+        	} else if(cursorPos == 14) {
         		eepromData[idStart] = 9;
-        		machineID[machineIDLoc] = '9';
         	}
 
-        	lcd_print_char(1, writeLoc, machineID[machineIDLoc]);
+        	lcd_print_char(1, writeLoc, getIDCharFromCursorPosition(eepromData[idStart]));
 
         	writeLoc++;
-        	machineIDLoc++;
         	idStart++;
 
         	HAL_Delay(150);
@@ -135,24 +116,18 @@ void takeMachineID() {
             	    writeLoc = 5;
             	}
 
-            	if(machineIDLoc > 0) {
-            	    machineIDLoc--;
-            	    idStart--;
-            	} else if(machineIDLoc < 0) {
-            	    machineIDLoc = 0;
-            	}
+            	idStart--;
 
             	eepromData[idStart] = '\0';
-                machineID[machineIDLoc] = '\0';
 
-                lcd_delete_char(1, 4+machineIDLoc);
+                lcd_delete_char(1, 4+writeLoc);
                 HAL_Delay(50);
             }
 
             HAL_Delay(150);
         }
 
-        lcd_gotoxy(2, cursorPosition);
+        lcd_gotoxy(2, cursorPos);
     }
 }
 
@@ -164,8 +139,8 @@ void takeWifiSSID() {
     HAL_Delay(100);
 
     int realCharPos = 1;
-    cursorPosition = 1;
-    page = 1;
+    int cursorPosition = 1;
+    int page = 1;
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
@@ -319,8 +294,8 @@ void takeWifiPass() {
     HAL_Delay(100);
 
     int realCharPos = 1;
-    cursorPosition = 1;
-    page = 1;
+    int cursorPosition = 1;
+    int page = 1;
     int wifiPassLoc = 0;
     int writeLoc = 7;
 

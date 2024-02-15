@@ -30,9 +30,6 @@ unsigned long timer5 = 0;				// basinc kayit suresi
 unsigned long timer6 = 0;				// lcd update suresi
 unsigned long backLightTimer = 0;
 
-int cursorPosition = 1;
-int page = 1;
-
 uint8_t idKontrol = 0;
 uint8_t safeVal = 0;
 
