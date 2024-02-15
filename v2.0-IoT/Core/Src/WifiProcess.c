@@ -153,10 +153,10 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            lcd_clear();
-            lcd_print(1, 1, "Girilen SSID:");
-            lcd_print(2, 1, (char *)wifiSSIDInt);
-            HAL_Delay(5000);
+            wifiSSIDInt[wifiNameLoc + 1] = '\0';
+
+            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, 20);
+            HAL_Delay(200);
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
@@ -165,9 +165,6 @@ void takeWifiSSID() {
                 HAL_Delay(1200);
                 goto mainSSIDSection;
             }
-
-            //memcpy(&eepromData[ssidStartPos], wifiSSIDInt, strlen(wifiSSIDInt));
-            //HAL_Delay(200);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);

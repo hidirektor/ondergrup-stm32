@@ -1,6 +1,6 @@
 ../Core/Src/WifiProcess.c:16:6:takeMachineID	27
 ../Core/Src/WifiProcess.c:137:6:takeWifiSSID	26
-../Core/Src/WifiProcess.c:284:6:takeWifiPass	26
-../Core/Src/WifiProcess.c:428:7:mergeData	2
-../Core/Src/WifiProcess.c:489:6:convertAndSendData	2
-../Core/Src/WifiProcess.c:504:6:iotSetup	5
+../Core/Src/WifiProcess.c:282:6:takeWifiPass	26
+../Core/Src/WifiProcess.c:426:7:mergeData	2
+../Core/Src/WifiProcess.c:487:6:convertAndSendData	2
+../Core/Src/WifiProcess.c:502:6:iotSetup	5
