@@ -207,62 +207,66 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[idStartPos], 12);
+	//memcpy(machineID, &eepromData[idStartPos], 12);
+	readFromEEPROM(1);
 	HAL_Delay(100);
-	int tempVal = ssidStartPos;
-	for(int i=0; i<20; i++) {
-		wifiSSIDInt[i] = eepromData[tempVal];
-	}
-
-	readFromEEPROM(4);
-}
-
-char getCharFromCursorPosition(int cursorPosition) {
-    return charactersArray[cursorPosition];
-}
-
-char getIDCharFromCursorPosition(uint8_t selectedInt) {
-	return idCharactersArray[selectedInt];
-}
-
-void writeToEEPROM(int state) {
-	if(state == 0) {
-		memset(&eepromData[ssidStartPos], 0, wifiCharacterLimit);
-		strncpy((char *)&eepromData[ssidStartPos], wifiSSID, wifiCharacterLimit);
-	} else {
-		memset(&eepromData[passStartPos], 0, wifiCharacterLimit);
-		strncpy((char *)&eepromData[passStartPos], wifiPass, wifiCharacterLimit);
-	}
+	readFromEEPROM(2);
+	HAL_Delay(100);
+	readFromEEPROM(3);
+	HAL_Delay(200);
+	convertArrays(1);
+	HAL_Delay(50);
+	convertArrays(2);
+	HAL_Delay(50);
+	convertArrays(3);
 }
 
 void readFromEEPROM(int state) {
 	if(state == 1) {
-		int wifiSSIDTempLoc = ssidStartPos;
-		//Wifi SSID Okuma
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(eepromData[wifiSSIDTempLoc]);
-			wifiSSIDTempLoc++;
+		int tempVal = idStartPos;
+
+		for(int i=0; i<machineIDCharacterLimit; i++) {
+			if(eepromData[tempVal] != '\0') {
+				machineIDInt[i] = eepromData[tempVal];
+				tempVal++;
+			}
 		}
 	} else if(state == 2) {
-		int wifiPassTempLoc = passStartPos;
-		//Wifi Pass Okuma
+		int tempVal = ssidStartPos;
+
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPass[i] = getCharFromCursorPosition(eepromData[wifiPassTempLoc]);
-			wifiPassTempLoc++;
+			if(eepromData[tempVal] != '\0') {
+				wifiSSIDInt[i] = eepromData[tempVal];
+				tempVal++;
+			}
 		}
-	} else if(state == 3) {
-		int machineIDTempLoc = idStartPos;
-		//MachineID Okuma
+	} else {
+		int tempVal = passStartPos;
+
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			machineID[i] = getIDCharFromCursorPosition(eepromData[machineIDTempLoc]);
-			machineIDTempLoc++;
+			if(eepromData[tempVal] != '\0') {
+				wifiPassInt[i] = eepromData[tempVal];
+				tempVal++;
+			}
 		}
-	} else if(state == 4) {
-		for(int i=0; i<20; i++) {
+	}
+}
+
+void convertArrays(int state) {
+	if(state == 1) {
+		for(int i=0; i<machineIDCharacterLimit; i++) {
+			machineID[i] = idCharactersArray[machineIDInt[i]];
+		}
+	} else if(state == 2) {
+		int arrLength = sizeof(wifiSSIDInt)/sizeof(wifiSSIDInt[0]);
+
+		for(int i=0; i<arrLength; i++) {
 			wifiSSID[i] = charactersArray[wifiSSIDInt[i]];
 		}
 	} else {
-		for(int i=0; i<20; i++) {
+		int arrLength = sizeof(wifiPassInt)/sizeof(wifiPassInt[0]);
+
+		for(int i=0; i<arrLength; i++) {
 			wifiPass[i] = charactersArray[wifiPassInt[i]];
 		}
 	}

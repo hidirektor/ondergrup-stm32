@@ -13,6 +13,7 @@ char snum[5] = {0};
 char machineID[machineIDCharacterLimit] = {0};
 char wifiSSID[wifiCharacterLimit] = {0};
 char wifiPass[wifiCharacterLimit] = {0};
+uint8_t machineIDInt[machineIDCharacterLimit] = {0};
 uint8_t wifiSSIDInt[wifiCharacterLimit] = {0};
 uint8_t wifiPassInt[wifiCharacterLimit] = {0};
 

@@ -17,6 +17,7 @@ extern char snum[5];
 extern char machineID[machineIDCharacterLimit];
 extern char wifiSSID[wifiCharacterLimit];
 extern char wifiPass[wifiCharacterLimit];
+extern uint8_t machineIDInt[machineIDCharacterLimit];
 extern uint8_t wifiSSIDInt[wifiCharacterLimit];
 extern uint8_t wifiPassInt[wifiCharacterLimit];
 

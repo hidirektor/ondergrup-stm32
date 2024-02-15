@@ -11,9 +11,7 @@
 #include <stdint.h>
 
 void eepromKontrol(void);
-char getCharFromCursorPosition(int cursorPosition);
-char getIDCharFromCursorPosition(uint8_t selectedInt);
-void writeToEEPROM(int state);
 void readFromEEPROM(int state);
+void convertArrays(int state);
 
 #endif /* INC_EEPROMPROCESS_H_ */
