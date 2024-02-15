@@ -110,6 +110,10 @@ void takeMachineID() {
         		eepromData[idStart] = 9;
         	}
 
+        	if(arrayPos == machineIDCharacterLimit-1) {
+        		machineID[machineIDCharacterLimit] = '\0';
+        	}
+
         	lcd_print_char(1, writeLoc, getIDCharFromCursorPosition(eepromData[idStart]));
 
         	writeLoc++;
@@ -167,6 +171,8 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	HAL_Delay(50);
             lcd_cursor(0);
+
+
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
