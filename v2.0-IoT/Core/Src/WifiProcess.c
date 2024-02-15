@@ -531,7 +531,7 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		if(machineID[machineIDCharacterLimit-1] == '\0') {
+		if(strlen(machineID) != machineIDCharacterLimit) {
 			takeMachineID();
 		}
 		HAL_Delay(500);
@@ -547,8 +547,8 @@ void iotSetup() {
 		HAL_Delay(500);
 	}
 
-	ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	HAL_Delay(500);
-	convertAndSendData();
+	//ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	//HAL_Delay(500);
+	//convertAndSendData();
 }
 

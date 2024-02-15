@@ -207,8 +207,8 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
-	HAL_Delay(500);
+	//memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
+	//HAL_Delay(500);
 	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit);
 	HAL_Delay(500);
 	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit);
@@ -216,6 +216,8 @@ void eepromKontrol() {
 	readFromEEPROM(1);
 	HAL_Delay(200);
 	readFromEEPROM(2);
+	HAL_Delay(200);
+	readFromEEPROM(3);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {

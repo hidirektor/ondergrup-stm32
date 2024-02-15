@@ -1731,14 +1731,14 @@ void menu() {
 		}
 
 		lcd_print(2, 1, machineID);
-		lcd_print(2, 1+strlen(machineID), emptyArray);
+		lcd_print(2, 13, "    ");
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID();
 
 			HAL_Delay(250);
 			lcd_print(2, 1, machineID);
-			lcd_print(2, 1+strlen(machineID), emptyArray);
+			lcd_print(2, 13, "    ");
 		}
 	}
 
