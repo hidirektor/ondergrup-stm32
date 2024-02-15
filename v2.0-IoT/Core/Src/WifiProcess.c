@@ -207,6 +207,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
 
     while (!validInput) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
+        	HAL_Delay(50);
             // Kaydetme işlemini bitir
         	if(type == 'M') {
         		if (strlen(machineID) == machineIDCharacterLimit) {
@@ -267,9 +268,12 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         			}
         		}
         	}
+
+        	HAL_Delay(150);
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(type == 'M') {
         		if(cursorLoc == 7) {
         			cursorLoc = 10;
@@ -300,10 +304,11 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         	}
 
         	lcd_gotoxy(2, cursorLoc);
-        	HAL_Delay(200);
+        	HAL_Delay(150);
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(type == 'M') {
         		if(cursorLoc == 10) {
         			cursorLoc = 7;
@@ -335,10 +340,11 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
 
         	lcd_gotoxy(2, cursorLoc);
 
-        	HAL_Delay(200); //Debouncing
+        	HAL_Delay(150); //Debouncing
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(type == 'M') {
         		if(cursorLoc == 3) {
         			characterPos = 0;
@@ -400,10 +406,11 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         		startPos++;
         	}
 
-        	HAL_Delay(200); //Debouncing
+        	HAL_Delay(150); //Debouncing
         }
 
         if (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(type == 'M') {
         		loc--;
         		writeLoc--;
@@ -432,7 +439,7 @@ void saveCharacter(int lcdPos, int eepromStartPos, char type) {
         		lcd_gotoxy(2, cursorLoc);
         	}
 
-        	HAL_Delay(200); //Debouncing
+        	HAL_Delay(150); //Debouncing
         }
     }
 }
