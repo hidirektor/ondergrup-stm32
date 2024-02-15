@@ -48,7 +48,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	HAL_Delay(4000);
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
-	HAL_Delay(4000);
+	HAL_Delay(3000);
 }
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
