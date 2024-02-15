@@ -161,8 +161,8 @@ void takeWifiSSID() {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, strlen(wifiSSIDInt));
-            HAL_Delay(200);
+            //memcpy(&eepromData[ssidStartPos], wifiSSIDInt, strlen(wifiSSIDInt));
+            //HAL_Delay(200);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -243,7 +243,7 @@ void takeWifiSSID() {
             wifiSSIDInt[wifiNameLoc] = realCharPos - 1;
 
             wifiSSID[wifiNameLoc++] = '\0';
-            wifiSSIDInt[wifiNameLoc++] = '\0';
+            //wifiSSIDInt[wifiNameLoc++] = '\0';
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
@@ -307,8 +307,8 @@ void takeWifiPass() {
                 goto mainPASSSection;
             }
 
-            memcpy(&eepromData[passStartPos], wifiPassInt, strlen(wifiPassInt));
-            HAL_Delay(200);
+            //memcpy(&eepromData[passStartPos], wifiPassInt, strlen(wifiPassInt));
+            //HAL_Delay(200);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -389,7 +389,7 @@ void takeWifiPass() {
         	wifiPassInt[wifiPassLoc] = realCharPos - 1;
 
         	wifiPass[wifiPassLoc++] = '\0';
-        	wifiPassInt[wifiPassLoc++] = '\0';
+        	//wifiPassInt[wifiPassLoc++] = '\0';
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
