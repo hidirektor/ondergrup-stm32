@@ -39,8 +39,8 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	memcpy(&eepromData[idStartPos], machineID, 12);
-        	HAL_Delay(200);
+        	//memcpy(&eepromData[idStartPos], machineID, 12);
+        	//HAL_Delay(200);
 
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(500);
@@ -175,8 +175,6 @@ void takeWifiSSID() {
                 HAL_Delay(1200);
                 goto mainSSIDSection;
             }
-
-            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -334,8 +332,6 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
-
-            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
