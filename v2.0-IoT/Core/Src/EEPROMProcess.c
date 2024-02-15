@@ -212,7 +212,11 @@ void eepromKontrol() {
 	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
 	HAL_Delay(100);
 	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
-	HAL_Delay(100);
+	HAL_Delay(300);
+
+	readFromEEPROM(4);
+	HAL_Delay(150);
+	readFromEEPROM(5);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
@@ -257,11 +261,11 @@ void readFromEEPROM(int state) {
 		}
 	} else if(state == 4) {
 		for(int i=0; i<20; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDInt[i]);
+			wifiSSID[i] = charactersArray[wifiSSIDInt[i]];
 		}
 	} else {
 		for(int i=0; i<20; i++) {
-			wifiPass[i] = getCharFromCursorPosition(wifiPassInt[i]);
+			wifiPass[i] = charactersArray[wifiPassInt[i]];
 		}
 	}
 }

@@ -153,9 +153,6 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            wifiSSID[wifiNameLoc] = '\0';
-            wifiSSIDInt[wifiNameLoc] = '\0';
-
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
@@ -164,7 +161,7 @@ void takeWifiSSID() {
                 goto mainSSIDSection;
             }
 
-            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, 20);
+            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, strlen(wifiSSIDInt));
             HAL_Delay(200);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -245,6 +242,9 @@ void takeWifiSSID() {
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
             wifiSSIDInt[wifiNameLoc] = realCharPos - 1;
 
+            wifiSSID[wifiNameLoc++] = '\0';
+            wifiSSIDInt[wifiNameLoc++] = '\0';
+
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
@@ -299,9 +299,6 @@ void takeWifiPass() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            wifiPass[wifiPassLoc] = '\0';
-            wifiPassInt[wifiPassLoc] = '\0';
-
             if(strlen(wifiPass) > 20) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
@@ -310,7 +307,7 @@ void takeWifiPass() {
                 goto mainPASSSection;
             }
 
-            memcpy(&eepromData[passStartPos], wifiPassInt, 20);
+            memcpy(&eepromData[passStartPos], wifiPassInt, strlen(wifiPassInt));
             HAL_Delay(200);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -390,6 +387,9 @@ void takeWifiPass() {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
         	wifiPassInt[wifiPassLoc] = realCharPos - 1;
+
+        	wifiPass[wifiPassLoc++] = '\0';
+        	wifiPassInt[wifiPassLoc++] = '\0';
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
