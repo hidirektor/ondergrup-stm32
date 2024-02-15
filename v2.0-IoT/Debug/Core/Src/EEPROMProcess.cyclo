@@ -1,5 +1,5 @@
 ../Core/Src/EEPROMProcess.c:12:6:eepromKontrol	36
-../Core/Src/EEPROMProcess.c:220:6:getCharFromCursorPosition	1
-../Core/Src/EEPROMProcess.c:224:6:getIDCharFromCursorPosition	1
-../Core/Src/EEPROMProcess.c:228:6:writeToEEPROM	2
-../Core/Src/EEPROMProcess.c:238:6:readFromEEPROM	6
+../Core/Src/EEPROMProcess.c:215:6:getCharFromCursorPosition	1
+../Core/Src/EEPROMProcess.c:219:6:getIDCharFromCursorPosition	1
+../Core/Src/EEPROMProcess.c:223:6:writeToEEPROM	2
+../Core/Src/EEPROMProcess.c:233:6:readFromEEPROM	6

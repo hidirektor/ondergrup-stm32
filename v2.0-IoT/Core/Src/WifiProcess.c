@@ -21,8 +21,6 @@ void takeMachineID() {
     int machineIDLoc = 0;
     int writeLoc = 5;
 
-    int eepromPos = idStartPos;
-
     memset(machineID, 0, sizeof(machineID));
     HAL_Delay(100);
 
@@ -41,8 +39,8 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	//memcpy(&eepromData[idStartPos], machineID, 12);
-        	//HAL_Delay(200);
+        	memcpy(&eepromData[idStartPos], machineID, 12);
+        	HAL_Delay(200);
 
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(500);
@@ -52,7 +50,6 @@ void takeMachineID() {
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
         	HAL_Delay(50);
-
         	if(cursorPosition == 7) {
         		cursorPosition = 10;
         	} else if (cursorPosition == 14) {
@@ -83,34 +80,24 @@ void takeMachineID() {
 
         	if(cursorPosition == 3) {
         		machineID[machineIDLoc] = '0';
-        		eepromData[eepromPos] = 0;
         	} else if(cursorPosition == 4) {
         		machineID[machineIDLoc] = '1';
-        		eepromData[eepromPos] = 1;
         	} else if(cursorPosition == 5) {
         		machineID[machineIDLoc] = '2';
-        		eepromData[eepromPos] = 2;
         	} else if(cursorPosition == 6) {
         		machineID[machineIDLoc] = '3';
-        		eepromData[eepromPos] = 3;
         	} else if(cursorPosition == 7) {
         		machineID[machineIDLoc] = '4';
-        		eepromData[eepromPos] = 4;
         	} else if(cursorPosition == 10) {
         		machineID[machineIDLoc] = '5';
-        		eepromData[eepromPos] = 5;
         	} else if(cursorPosition == 11) {
         		machineID[machineIDLoc] = '6';
-        		eepromData[eepromPos] = 6;
         	} else if(cursorPosition == 12) {
         		machineID[machineIDLoc] = '7';
-        		eepromData[eepromPos] = 7;
         	} else if(cursorPosition == 13) {
         		machineID[machineIDLoc] = '8';
-        		eepromData[eepromPos] = 8;
         	} else if(cursorPosition == 14) {
         		machineID[machineIDLoc] = '9';
-        		eepromData[eepromPos] = 9;
         	}
 
         	if(machineIDLoc == machineIDCharacterLimit - 1) {
@@ -121,7 +108,6 @@ void takeMachineID() {
 
         	writeLoc++;
         	machineIDLoc++;
-        	eepromPos++;
 
         	HAL_Delay(150);
         }
@@ -130,6 +116,12 @@ void takeMachineID() {
         	HAL_Delay(50);
 
             if(strlen(machineID) >= 1) {
+
+                machineID[machineIDLoc] = '\0';
+
+                lcd_delete_char(1, 4+machineIDLoc);
+                HAL_Delay(50);
+
                 if(writeLoc > 5) {
                 	writeLoc--;
                 } else if(writeLoc < 5) {
@@ -138,16 +130,9 @@ void takeMachineID() {
 
                 if(machineIDLoc > 0) {
                 	machineIDLoc--;
-                	eepromPos--;
                 } else if(machineIDLoc < 0) {
                 	machineIDLoc = 0;
                 }
-
-                machineID[machineIDLoc] = '\0';
-                eepromData[eepromPos] = '\0';
-
-                lcd_delete_char(1, 4+machineIDLoc);
-                HAL_Delay(50);
             }
 
             HAL_Delay(150);
@@ -170,17 +155,12 @@ void takeWifiSSID() {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
-    int eepromPos = ssidStartPos;
-
     printTemplate(2, 1);
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	HAL_Delay(50);
             lcd_cursor(0);
-
-            wifiSSID[wifiNameLoc] = '\0';
-            HAL_Delay(10);
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
@@ -189,6 +169,8 @@ void takeWifiSSID() {
                 HAL_Delay(1200);
                 goto mainSSIDSection;
             }
+
+            memcpy(&eepromData[ssidStartPos], (uint8_t *)wifiSSID, strlen(wifiSSID));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -272,13 +254,11 @@ void takeWifiSSID() {
         	HAL_Delay(50);
 
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
-            eepromData[eepromPos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
             wifiNameLoc++;
-            eepromPos++;
 
             HAL_Delay(150);
         }
@@ -295,13 +275,11 @@ void takeWifiSSID() {
 
         		if(wifiNameLoc > 0) {
         			wifiNameLoc--;
-        			eepromPos--;
         		} else if(wifiNameLoc < 0) {
         			wifiNameLoc = 0;
         		}
 
         		wifiSSID[wifiNameLoc] = '\0';
-        		eepromData[eepromPos] = '\0';
 
         		lcd_delete_char(1, 6+wifiNameLoc);
         		HAL_Delay(50);
@@ -327,17 +305,12 @@ void takeWifiPass() {
     int wifiPassLoc = 0;
     int writeLoc = 7;
 
-    int eepromPos = passStartPos;
-
     printTemplate(3, 1);
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	HAL_Delay(50);
             lcd_cursor(0);
-
-            wifiPass[wifiPassLoc] = '\0';
-            HAL_Delay(10);
 
             if(strlen(wifiPass) > 20) {
                 lcd_clear();
@@ -346,6 +319,8 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
+
+            memcpy(&eepromData[passStartPos], (uint8_t *)wifiPass, strlen(wifiPass));
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(500);
@@ -429,13 +404,11 @@ void takeWifiPass() {
         	HAL_Delay(50);
 
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
-        	eepromData[eepromPos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
             wifiPassLoc++;
-            eepromPos++;
 
             HAL_Delay(150);
         }
@@ -452,13 +425,11 @@ void takeWifiPass() {
 
             	if(wifiPassLoc > 0) {
             		wifiPassLoc--;
-            		eepromPos--;
             	} else if(wifiPassLoc < 0) {
             		wifiPassLoc = 0;
             	}
 
             	wifiPass[wifiPassLoc] = '\0';
-            	eepromData[eepromPos] = '\0';
 
             	lcd_delete_char(1, 6+wifiPassLoc);
             	HAL_Delay(50);
