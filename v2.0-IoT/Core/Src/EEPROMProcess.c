@@ -208,6 +208,11 @@ void eepromKontrol() {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
+	HAL_Delay(100);
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
+	HAL_Delay(100);
+	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
+	HAL_Delay(100);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
@@ -243,12 +248,20 @@ void readFromEEPROM(int state) {
 			wifiPass[i] = getCharFromCursorPosition(eepromData[wifiPassTempLoc]);
 			wifiPassTempLoc++;
 		}
-	} else {
+	} else if(state == 3) {
 		int machineIDTempLoc = idStartPos;
 		//MachineID Okuma
 		for(int i=0; i<wifiCharacterLimit; i++) {
 			machineID[i] = getIDCharFromCursorPosition(eepromData[machineIDTempLoc]);
 			machineIDTempLoc++;
+		}
+	} else if(state == 4) {
+		for(int i=0; i<20; i++) {
+			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDInt[i]);
+		}
+	} else {
+		for(int i=0; i<20; i++) {
+			wifiPass[i] = getCharFromCursorPosition(wifiPassInt[i]);
 		}
 	}
 }
