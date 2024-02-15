@@ -3,4 +3,4 @@
 ../Core/Src/WifiProcess.c:298:6:takeWifiPass	26
 ../Core/Src/WifiProcess.c:439:7:mergeData	2
 ../Core/Src/WifiProcess.c:500:6:convertAndSendData	3
-../Core/Src/WifiProcess.c:515:6:iotSetup	2
+../Core/Src/WifiProcess.c:515:6:iotSetup	5
