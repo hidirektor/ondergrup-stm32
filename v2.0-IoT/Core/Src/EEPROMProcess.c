@@ -208,8 +208,6 @@ void eepromKontrol() {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], 12);
-	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], 20);
-	memcpy(wifiPass, (char *)&eepromData[passStartPos], 20);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
