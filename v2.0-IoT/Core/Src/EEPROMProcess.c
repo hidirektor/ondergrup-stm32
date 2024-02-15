@@ -208,14 +208,6 @@ void eepromKontrol() {
 	}
 
 	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
-	HAL_Delay(500);
-	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit);
-	HAL_Delay(500);
-	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit);
-	HAL_Delay(500);
-	readFromEEPROM(1);
-	HAL_Delay(200);
-	readFromEEPROM(2);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
