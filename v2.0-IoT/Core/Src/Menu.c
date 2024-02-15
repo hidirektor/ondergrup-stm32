@@ -1731,15 +1731,14 @@ void menu() {
 		}
 
 		lcd_print(2, 1, machineID);
-		lcd_print(2, 13, "    ");
+		lcd_print(2, 1+strlen(machineID), emptyArray);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID();
 
+			HAL_Delay(250);
 			lcd_print(2, 1, machineID);
-			lcd_print(2, 13, "    ");
-
-			bekle();
+			lcd_print(2, 1+strlen(machineID), emptyArray);
 		}
 	}
 
@@ -1760,10 +1759,9 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
 
+			HAL_Delay(250);
 			lcd_print(2, 1, wifiSSID);
 			lcd_print(2, 1+strlen(wifiSSID), emptyArray);
-
-			bekle();
 		}
 	}
 
@@ -1784,10 +1782,10 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
 
+			HAL_Delay(250);
+
 			lcd_print(2, 1, wifiPass);
 			lcd_print(2, 1+strlen(wifiPass), emptyArray);
-
-			bekle();
 		}
 	}
 

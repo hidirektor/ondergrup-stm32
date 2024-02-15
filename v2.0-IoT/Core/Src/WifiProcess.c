@@ -18,9 +18,9 @@ void takeMachineID() {
 	lcd_cursor(1);
 
 	int writeLoc = 5; //lcdnin ilk satırındaki başlangıç karakteri
-
     int cursorPos = 3; //işaretçi konumu
 
+    int arrayPos = 0;
     int idStart = idStartPos; //eepromKonumu
 
     memset(machineID, 0, sizeof(machineID));
@@ -32,20 +32,22 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
 
-        	if(machineID[11] == '\0' || machineID[12] != '\0') {
-        		lcd_clear();
-        		lcd_print(1, 1, " ID 12 KARAKTER ");
-        		lcd_print(2, 1, " OLMAK ZORUNDA! ");
-        		HAL_Delay(1200);
-        		goto mainSection;
-        	}
-
-        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        	HAL_Delay(1000);
-
         	readFromEEPROM(3);
+        	HAL_Delay(100);
 
-            break;
+        	if(strlen(machineID) != 12) {
+        		lcd_clear();
+        		lcd_print(1, 1, "ID 12 KARAKTER");
+        		lcd_print(2, 1, "OLMAK ZORUNDA!");
+        		HAL_Delay(1200);
+
+        		goto mainSection;
+        	} else {
+            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            	HAL_Delay(1000);
+
+                break;
+        	}
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -77,30 +79,41 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	HAL_Delay(50);
         	if(cursorPos == 3) {
+        		machineID[arrayPos] = '0';
         		eepromData[idStart] = 0;
         	} else if(cursorPos == 4) {
+        		machineID[arrayPos] = '1';
         		eepromData[idStart] = 1;
         	} else if(cursorPos == 5) {
+        		machineID[arrayPos] = '2';
         		eepromData[idStart] = 2;
         	} else if(cursorPos == 6) {
+        		machineID[arrayPos] = '3';
         		eepromData[idStart] = 3;
         	} else if(cursorPos == 7) {
+        		machineID[arrayPos] = '4';
         		eepromData[idStart] = 4;
         	} else if(cursorPos == 10) {
+        		machineID[arrayPos] = '5';
         		eepromData[idStart] = 5;
         	} else if(cursorPos == 11) {
+        		machineID[arrayPos] = '6';
         		eepromData[idStart] = 6;
         	} else if(cursorPos == 12) {
+        		machineID[arrayPos] = '7';
         		eepromData[idStart] = 7;
         	} else if(cursorPos == 13) {
+        		machineID[arrayPos] = '8';
         		eepromData[idStart] = 8;
         	} else if(cursorPos == 14) {
+        		machineID[arrayPos] = '9';
         		eepromData[idStart] = 9;
         	}
 
         	lcd_print_char(1, writeLoc, getIDCharFromCursorPosition(eepromData[idStart]));
 
         	writeLoc++;
+        	arrayPos++;
         	idStart++;
 
         	HAL_Delay(150);
@@ -117,10 +130,12 @@ void takeMachineID() {
             	}
 
             	idStart--;
+            	arrayPos--;
 
+            	machineID[arrayPos] = '\0';
             	eepromData[idStart] = '\0';
 
-                lcd_delete_char(1, 4+writeLoc);
+                lcd_delete_char(1, 4+arrayPos+1);
                 HAL_Delay(50);
             }
 
@@ -159,12 +174,12 @@ void takeWifiSSID() {
                 lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 HAL_Delay(1200);
                 goto mainSSIDSection;
+            } else {
+                HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+                HAL_Delay(1000);
+
+                break;
             }
-
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(1000);
-
-            break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -314,12 +329,12 @@ void takeWifiPass() {
                 lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 HAL_Delay(1200);
                 goto mainPASSSection;
+            } else {
+                HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+                HAL_Delay(1000);
+
+                break;
             }
-
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(1000);
-
-            break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
