@@ -21,6 +21,8 @@ void takeMachineID() {
     int machineIDLoc = 0;
     int writeLoc = 5;
 
+    int idStart = idStartPos;
+
     memset(machineID, 0, sizeof(machineID));
     HAL_Delay(100);
 
@@ -48,16 +50,14 @@ void takeMachineID() {
         		eepromData[49] = 1;
         	}*/
 
-        	memcpy(&eepromData[idStartPos], machineID, 12);
-        	HAL_Delay(200);
-
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        	HAL_Delay(500);
+        	HAL_Delay(1000);
 
             break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(cursorPosition == 7) {
         		cursorPosition = 10;
         	} else if (cursorPosition == 14) {
@@ -70,6 +70,7 @@ void takeMachineID() {
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
+        	HAL_Delay(50);
             if (cursorPosition == 3) {
                 cursorPosition = 14;
             } else if(cursorPosition == 10) {
@@ -82,25 +83,36 @@ void takeMachineID() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
+        	HAL_Delay(50);
         	if(cursorPosition == 3) {
+        		eepromData[idStart] = 0;
         		machineID[machineIDLoc] = '0';
         	} else if(cursorPosition == 4) {
+        		eepromData[idStart] = 1;
         		machineID[machineIDLoc] = '1';
         	} else if(cursorPosition == 5) {
+        		eepromData[idStart] = 2;
         		machineID[machineIDLoc] = '2';
         	} else if(cursorPosition == 6) {
+        		eepromData[idStart] = 3;
         		machineID[machineIDLoc] = '3';
         	} else if(cursorPosition == 7) {
+        		eepromData[idStart] = 4;
         		machineID[machineIDLoc] = '4';
         	} else if(cursorPosition == 10) {
+        		eepromData[idStart] = 5;
         		machineID[machineIDLoc] = '5';
         	} else if(cursorPosition == 11) {
+        		eepromData[idStart] = 6;
         		machineID[machineIDLoc] = '6';
         	} else if(cursorPosition == 12) {
+        		eepromData[idStart] = 7;
         		machineID[machineIDLoc] = '7';
         	} else if(cursorPosition == 13) {
+        		eepromData[idStart] = 8;
         		machineID[machineIDLoc] = '8';
         	} else if(cursorPosition == 14) {
+        		eepromData[idStart] = 9;
         		machineID[machineIDLoc] = '9';
         	}
 
@@ -108,6 +120,7 @@ void takeMachineID() {
 
         	writeLoc++;
         	machineIDLoc++;
+        	idStart++;
 
         	HAL_Delay(150);
         }
@@ -115,22 +128,24 @@ void takeMachineID() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(machineID) >= 1) {
 
+            	if(writeLoc > 5) {
+            	    writeLoc--;
+            	} else if(writeLoc < 5) {
+            	    writeLoc = 5;
+            	}
+
+            	if(machineIDLoc > 0) {
+            	    machineIDLoc--;
+            	    idStart--;
+            	} else if(machineIDLoc < 0) {
+            	    machineIDLoc = 0;
+            	}
+
+            	eepromData[idStart] = '\0';
                 machineID[machineIDLoc] = '\0';
 
                 lcd_delete_char(1, 4+machineIDLoc);
                 HAL_Delay(50);
-
-                if(writeLoc > 5) {
-                	writeLoc--;
-                } else if(writeLoc < 5) {
-                	writeLoc = 5;
-                }
-
-                if(machineIDLoc > 0) {
-                	machineIDLoc--;
-                } else if(machineIDLoc < 0) {
-                	machineIDLoc = 0;
-                }
             }
 
             HAL_Delay(150);
@@ -499,7 +514,7 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		/*if(machineID[machineIDCharacterLimit-1] == '\0') {
+		if(machineID[machineIDCharacterLimit-1] == '\0') {
 			takeMachineID();
 		}
 		HAL_Delay(500);
@@ -512,13 +527,7 @@ void iotSetup() {
 		if(wifiPass[0] == '\0') {
 			takeWifiPass();
 		}
-		HAL_Delay(500);*/
-
-		takeMachineID();
-		HAL_Delay(10);
-		takeWifiSSID();
-		HAL_Delay(10);
-		takeWifiPass();
+		HAL_Delay(500);
 	}
 
 	ESP8266_Init(&huart1, wifiSSID, wifiPass);
