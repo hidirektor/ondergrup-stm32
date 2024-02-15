@@ -207,11 +207,14 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
+	//memcpy(machineID, &eepromData[idStartPos], machineIDCharacterLimit);
+	readFromEEPROM(1);
 	HAL_Delay(200);
-	memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], wifiCharacterLimit);
+	readFromEEPROM(2);
+	//memcpy(wifiSSID, (char *)&eepromData[ssidStartPos], wifiCharacterLimit);
 	HAL_Delay(200);
-	memcpy(wifiPass, (char *)&eepromData[passStartPos], wifiCharacterLimit);
+	readFromEEPROM(3);
+	//memcpy(wifiPass, (char *)&eepromData[passStartPos], wifiCharacterLimit);
 }
 
 char getCharFromCursorPosition(int cursorPosition) {
@@ -234,14 +237,18 @@ void writeToEEPROM(int state) {
 
 void readFromEEPROM(int state) {
 	if(state == 1) {
+		int wifiSSIDTempLoc = ssidStartPos;
 		//Wifi SSID Okuma
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSID[i] = getCharFromCursorPosition(wifiSSIDInt[i]);
+			wifiSSID[i] = getCharFromCursorPosition(eepromData[wifiSSIDTempLoc]);
+			wifiSSIDTempLoc++;
 		}
 	} else if(state == 2) {
+		int wifiPassTempLoc = passStartPos;
 		//Wifi Pass Okuma
 		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPass[i] = getCharFromCursorPosition(wifiPassInt[i]);
+			wifiPass[i] = getCharFromCursorPosition(eepromData[wifiPassTempLoc]);
+			wifiPassTempLoc++;
 		}
 	} else {
 		int machineIDTempLoc = idStartPos;

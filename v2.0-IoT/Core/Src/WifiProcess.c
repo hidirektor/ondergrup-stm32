@@ -156,6 +156,8 @@ void takeWifiSSID() {
     int wifiNameLoc = 0;
     int writeLoc = 7;
 
+    int eepromPos = ssidStartPos;
+
     printTemplate(2, 1);
 
     while (1) {
@@ -258,11 +260,13 @@ void takeWifiSSID() {
         	HAL_Delay(50);
 
             wifiSSID[wifiNameLoc] = getCharFromCursorPosition(realCharPos - 1);
+            eepromData[eepromPos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[wifiNameLoc]);
 
             writeLoc++;
             wifiNameLoc++;
+            eepromPos++;
 
             HAL_Delay(150);
         }
@@ -279,11 +283,13 @@ void takeWifiSSID() {
 
         		if(wifiNameLoc > 0) {
         			wifiNameLoc--;
+        			eepromPos--;
         		} else if(wifiNameLoc < 0) {
         			wifiNameLoc = 0;
         		}
 
         		wifiSSID[wifiNameLoc] = '\0';
+        		eepromData[eepromPos] = '\0';
 
         		lcd_delete_char(1, 6+wifiNameLoc);
         		HAL_Delay(50);
@@ -308,6 +314,8 @@ void takeWifiPass() {
     int page = 1;
     int wifiPassLoc = 0;
     int writeLoc = 7;
+
+    int eepromPos = passStartPos;
 
     printTemplate(3, 1);
 
@@ -411,11 +419,13 @@ void takeWifiPass() {
         	HAL_Delay(50);
 
         	wifiPass[wifiPassLoc] = getCharFromCursorPosition(realCharPos - 1);
+        	eepromData[eepromPos] = realCharPos - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[wifiPassLoc]);
 
             writeLoc++;
             wifiPassLoc++;
+            eepromPos++;
 
             HAL_Delay(150);
         }
@@ -432,11 +442,13 @@ void takeWifiPass() {
 
             	if(wifiPassLoc > 0) {
             		wifiPassLoc--;
+            		eepromPos--;
             	} else if(wifiPassLoc < 0) {
             		wifiPassLoc = 0;
             	}
 
             	wifiPass[wifiPassLoc] = '\0';
+            	eepromData[eepromPos] = '\0';
 
             	lcd_delete_char(1, 6+wifiPassLoc);
             	HAL_Delay(50);
