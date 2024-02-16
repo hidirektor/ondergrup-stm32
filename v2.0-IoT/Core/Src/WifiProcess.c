@@ -189,10 +189,10 @@ void takeWifiSSID() {
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-        	cursorPosition++;
         	if(cursorPosition > 80) {
         		cursorPosition = 1;
         	}
+
             if (cursorPosition == 16) {
             	if(page == 1) {
             		cursorPosition = 1;
@@ -223,10 +223,10 @@ void takeWifiSSID() {
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
-        	cursorPosition--;
         	if(cursorPosition < 1) {
         		cursorPosition = 80;
         	}
+
             if(cursorPosition == 1) {
             	if(page == 1) {
             		cursorPosition = 16;
@@ -342,10 +342,10 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
-        	cursorPosition++;
         	if(cursorPosition > 80) {
         	    cursorPosition = 1;
         	}
+
             if (cursorPosition == 16) {
             	if(page == 1) {
             		cursorPosition = 1;
@@ -376,10 +376,10 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
-        	cursorPosition--;
         	if(cursorPosition < 1) {
         	    cursorPosition = 80;
         	}
+
             if(cursorPosition == 1) {
             	if(page == 1) {
             		cursorPosition = 16;
