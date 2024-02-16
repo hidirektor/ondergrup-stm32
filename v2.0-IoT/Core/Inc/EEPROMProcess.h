@@ -11,7 +11,6 @@
 #include <stdint.h>
 
 void eepromKontrol(void);
-void readFromEEPROM(int state);
 void convertArrays(int state);
 void resetEEPROM4Wifi(int state);
 

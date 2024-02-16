@@ -208,11 +208,11 @@ void eepromKontrol() {
 	}
 
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 50, 12, machineIDInt, 12, 3000);
-	HAL_Delay(1500);
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 62, 20, machineIDInt, 20, 3000);
-	HAL_Delay(1500);
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 83, 20, machineIDInt, 20, 3000);
-	HAL_Delay(1500);
+	HAL_Delay(500);
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 62, 20, wifiSSIDInt, 20, 3000);
+	HAL_Delay(500);
+	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 83, 20, wifiPassInt, 20, 3000);
+	HAL_Delay(500);
 	//memcpy(machineIDInt, &eepromData[idStartPos], 12);
 	//memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
 	//memcpy(wifiPassInt, &eepromData[passStartPos], 20);
@@ -222,31 +222,6 @@ void eepromKontrol() {
 	convertArrays(2);
 	HAL_Delay(50);
 	convertArrays(3);
-}
-
-void readFromEEPROM(int state) {
-	if(state == 1) {
-		int eepromVal = idStartPos;
-
-		for(int i=0; i<machineIDCharacterLimit; i++) {
-			machineIDInt = eepromData[eepromVal];
-			eepromVala++;
-		}
-	} else if(state == 2) {
-		int eepromVal = ssidStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSIDInt[i] = eepromData[eepromVal];
-			eepromVal++;
-		}
-	} else {
-		int eepromVal = passStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPassInt[i] = eepromData[eepromVal];
-			eepromVal++;
-		}
-	}
 }
 
 void convertArrays(int state) {
