@@ -12,5 +12,6 @@
 
 void eepromKontrol(void);
 void convertArrays(int state);
+void resetEEPROM4Wifi(int state);
 
 #endif /* INC_EEPROMPROCESS_H_ */

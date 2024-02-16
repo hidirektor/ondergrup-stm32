@@ -23,6 +23,8 @@ void takeMachineID() {
     int eepromVal = idStartPos; //kullanıcının seçtiği karakteri eeproma aktarmak için kullanılacak olan değişken
 
     memset(machineID, 0, sizeof(machineID));
+    memset(machineIDInt, 0, sizeof(machineIDInt));
+    resetEEPROM4Wifi(1);
     HAL_Delay(100);
 
     printTemplate(1, 0);
@@ -151,6 +153,8 @@ void takeWifiSSID() {
     lcd_cursor(1);
 
     memset(wifiSSID, 0, sizeof(wifiSSID)); //wifiSSID Sıfırlanıyor.
+    memset(wifiSSIDInt, 0, sizeof(wifiSSIDInt)); //wifiSSID Sıfırlanıyor.
+    resetEEPROM4Wifi(2);
     HAL_Delay(100);
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
@@ -302,6 +306,8 @@ void takeWifiPass() {
     lcd_cursor(1);
 
     memset(wifiPass, 0, sizeof(wifiPass));
+    memset(wifiPassInt, 0, sizeof(wifiPassInt));
+    resetEEPROM4Wifi(3);
     HAL_Delay(100);
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
@@ -538,45 +544,48 @@ void printMachineCredentials(int state) {
 	if(state == 1) {
 		int idLength = strlen(machineID);
 
-		if(dilSecim == 0) {
-			lcd_print(1, 1, "MAKINE ID       ");
-		} else {
-			lcd_print(1, 1, "MACHINE ID      ");
-		}
-
+		lcd_print(2, 1, machineID);
 		for(int i=0; i<16-idLength; i++) {
-			lcd_print_char(2, idLength, ' ');
+			lcd_delete_char(2, idLength);
 			idLength++;
 		}
 	} else if(state == 2) {
 		int ssidLength = strlen(wifiSSID);
 
-		lcd_print(1, 1, "WIFI SSID       ");
-
 		if(ssidLength == 16) {
 			lcd_print(2, 1, wifiSSID);
 		} else if(ssidLength < 16) {
 			for(int i=0; i<16-ssidLength; i++) {
-				lcd_print_char(2, ssidLength, ' ');
+				lcd_delete_char(2, ssidLength);
 				ssidLength++;
 			}
 		} else {
+			int lcdVal = 1;
+
 			//Eğer ssid 16'dan büyükse buraya ekle
+			for(int i=0; i<16; i++) {
+				lcd_print_char(2, lcdVal, wifiSSID[i]);
+				lcdVal++;
+			}
 		}
 	} else {
 		int passLength = strlen(wifiPass);
-
-		lcd_print(1, 1, "WIFI PASS       ");
 
 		if(passLength == 16) {
 			lcd_print(2, 1, wifiPass);
 		} else if(passLength < 16) {
 			for(int i=0; i<16-passLength; i++) {
-				lcd_print_char(2, passLength, ' ');
+				lcd_delete_char(2, passLength);
 				passLength++;
 			}
 		} else {
+			int lcdVal = 1;
+
 			//Eğer pass 16'dan büyükse buraya ekle
+			for(int i=0; i<16; i++) {
+				lcd_print_char(2, lcdVal, wifiPass[i]);
+				lcdVal++;
+			}
 		}
 	}
 }

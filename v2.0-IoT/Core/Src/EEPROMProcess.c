@@ -237,3 +237,28 @@ void convertArrays(int state) {
 		}
 	}
 }
+
+void resetEEPROM4Wifi(int state) {
+	if(state == 1) {
+		int eepromVal = idStartPos;
+
+		for(int i=0; i<machineIDCharacterLimit; i++) {
+			eepromData[eepromVal] = '\0';
+			eepromVal++;
+		}
+	} else if(state == 2) {
+		int eepromVal = ssidStartPos;
+
+		for(int i=0; i<wifiCharacterLimit; i++) {
+			eepromData[eepromVal] = '\0';
+			eepromVal++;
+		}
+	} else {
+		int eepromVal = passStartPos;
+
+		for(int i=0; i<wifiCharacterLimit; i++) {
+			eepromData[eepromVal] = '\0';
+			eepromVal++;
+		}
+	}
+}
