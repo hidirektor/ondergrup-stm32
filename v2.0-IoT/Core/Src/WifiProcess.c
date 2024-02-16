@@ -530,3 +530,40 @@ void iotSetup() {
 	//convertAndSendData();
 }
 
+void printWifiCredentials(int state) {
+	if(state == 1) {
+		int idLength = strlen(machineID);
+
+		for(int i=0; i<16-idLength; i++) {
+			lcd_print_char(2, idLength, ' ');
+			idLength++;
+		}
+	} else if(state == 2) {
+		int ssidLength = strlen(wifiSSID);
+
+		if(ssidLength == 16) {
+			lcd_print(2, 1, wifiSSID);
+		} else if(ssidLength < 16) {
+			for(int i=0; i<16-ssidLength; i++) {
+				lcd_print_char(2, ssidLength, ' ');
+				ssidLength++;
+			}
+		} else {
+			//Eğer ssid 16'dan büyükse buraya ekle
+		}
+	} else {
+		int passLength = strlen(wifiPass);
+
+		if(passLength == 16) {
+			lcd_print(2, 1, wifiPass);
+		} else if(passLength < 16) {
+			for(int i=0; i<16-passLength; i++) {
+				lcd_print_char(2, passLength, ' ');
+				passLength++;
+			}
+		} else {
+			//Eğer pass 16'dan büyükse buraya ekle
+		}
+	}
+}
+
