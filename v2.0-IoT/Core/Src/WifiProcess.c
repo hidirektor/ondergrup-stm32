@@ -538,12 +538,20 @@ void printMachineCredentials(int state) {
 	if(state == 1) {
 		int idLength = strlen(machineID);
 
+		if(dilSecim == 0) {
+			lcd_print(1, 1, "MAKINE ID       ");
+		} else {
+			lcd_print(1, 1, "MACHINE ID      ");
+		}
+
 		for(int i=0; i<16-idLength; i++) {
 			lcd_print_char(2, idLength, ' ');
 			idLength++;
 		}
 	} else if(state == 2) {
 		int ssidLength = strlen(wifiSSID);
+
+		lcd_print(1, 1, "WIFI SSID       ");
 
 		if(ssidLength == 16) {
 			lcd_print(2, 1, wifiSSID);
@@ -557,6 +565,8 @@ void printMachineCredentials(int state) {
 		}
 	} else {
 		int passLength = strlen(wifiPass);
+
+		lcd_print(1, 1, "WIFI PASS       ");
 
 		if(passLength == 16) {
 			lcd_print(2, 1, wifiPass);

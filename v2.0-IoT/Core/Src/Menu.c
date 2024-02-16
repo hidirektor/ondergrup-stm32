@@ -1724,11 +1724,6 @@ void menu() {
 	if (menuSayac == 32) {
 		calismaSayModu = 0;
 
-		if(dilSecim == 0) {
-			lcd_print(1, 1, "MAKINE ID       ");
-		} else {
-			lcd_print(1, 1, "MACHINE ID      ");
-		}
 		printMachineCredentials(1);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -1747,7 +1742,6 @@ void menu() {
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
 
-		lcd_print(1, 1, "WIFI SSID       ");
 		printMachineCredentials(2);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -1766,7 +1760,6 @@ void menu() {
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
 
-		lcd_print(1, 1, "WIFI PASS       ");
 		printMachineCredentials(3);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
