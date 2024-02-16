@@ -207,12 +207,9 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	//memcpy(machineID, &eepromData[idStartPos], 12);
-	readFromEEPROM(1);
-	HAL_Delay(100);
-	readFromEEPROM(2);
-	HAL_Delay(100);
-	readFromEEPROM(3);
+	memcpy(machineIDInt, &eepromData[idStartPos], 12);
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
+	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
 	HAL_Delay(200);
 	convertArrays(1);
 	HAL_Delay(50);

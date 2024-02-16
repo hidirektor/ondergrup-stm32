@@ -39,8 +39,6 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	memcpy(&eepromData[idStartPos], machineIDInt, 12);
-
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
 
@@ -178,8 +176,6 @@ void takeWifiSSID() {
             wifiSSID[arrayPosition] = '\0';
             wifiSSIDInt[arrayPosition] = '\0';
             eepromData[eepromVal] = '\0';
-
-            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, 20);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(1000);
@@ -328,12 +324,6 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
-
-            wifiPass[arrayPos] = '\0';
-            wifiPassInt[arrayPos] = '\0';
-            eepromData[eepromVal] = '\0';
-
-            memcpy(&eepromData[passStartPos], wifiPassInt, 20);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(1000);
@@ -535,8 +525,8 @@ void iotSetup() {
 		}
 	}
 
-	ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	HAL_Delay(500);
-	convertAndSendData();
+	//ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	//HAL_Delay(500);
+	//convertAndSendData();
 }
 
