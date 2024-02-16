@@ -17,6 +17,4 @@ void convertAndSendData(void);
 
 void iotSetup(void);
 
-void printMachineCredentials(int state);
-
 #endif /* INC_WIFIPROCESS_H_ */

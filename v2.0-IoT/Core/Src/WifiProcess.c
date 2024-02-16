@@ -38,12 +38,12 @@ void takeMachineID() {
         		lcd_print(2, 1, " OLMAK ZORUNDA! ");
         		HAL_Delay(1200);
         		goto mainSection;
-        	}
+        	} else {
+            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            	HAL_Delay(1000);
 
-        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        	HAL_Delay(1000);
-
-            break;
+            	break;
+            }
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -103,16 +103,15 @@ void takeMachineID() {
         		eepromData[eepromVal] = 9;
         	}
 
-        	if(arrayPos == machineIDCharacterLimit - 1) {
-        		machineID[machineIDCharacterLimit] = '\0';
-        		machineIDInt[machineIDCharacterLimit] = '\0';
-        	}
-
         	lcd_print_char(1, writeLoc, machineID[arrayPos]);
 
         	writeLoc++;
         	arrayPos++;
         	eepromVal++;
+
+        	machineID[machineIDCharacterLimit] = '\0';
+        	machineIDInt[machineIDCharacterLimit] = '\0';
+        	eepromData[eepromVal] = '\0';
 
         	HAL_Delay(150);
         }
@@ -173,12 +172,12 @@ void takeWifiSSID() {
                 lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 HAL_Delay(1250);
                 goto mainSSIDSection;
+            } else {
+            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            	HAL_Delay(1000);
+
+            	break;
             }
-
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(1000);
-
-            break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -324,12 +323,12 @@ void takeWifiPass() {
                 lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 HAL_Delay(1200);
                 goto mainPASSSection;
+            } else {
+            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+            	HAL_Delay(1000);
+
+            	break;
             }
-
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            HAL_Delay(1000);
-
-            break;
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -534,51 +533,3 @@ void iotSetup() {
 	//HAL_Delay(500);
 	//convertAndSendData();
 }
-
-void printMachineCredentials(int state) {
-	if(state == 1) {
-		int idLength = strlen(machineID);
-
-		lcd_print(2, 1, machineID);
-		lcd_print(2, 13, "    ");
-	} else if(state == 2) {
-		int ssidLength = strlen(wifiSSID);
-
-		if(ssidLength == 16) {
-			lcd_print(2, 1, wifiSSID);
-		} else if(ssidLength < 16) {
-			for(int i=0; i<16-ssidLength; i++) {
-				lcd_delete_char(2, ssidLength);
-				ssidLength++;
-			}
-		} else {
-			int lcdVal = 1;
-
-			//Eğer ssid 16'dan büyükse buraya ekle
-			for(int i=0; i<16; i++) {
-				lcd_print_char(2, lcdVal, wifiSSID[i]);
-				lcdVal++;
-			}
-		}
-	} else {
-		int passLength = strlen(wifiPass);
-
-		if(passLength == 16) {
-			lcd_print(2, 1, wifiPass);
-		} else if(passLength < 16) {
-			for(int i=0; i<16-passLength; i++) {
-				lcd_delete_char(2, passLength);
-				passLength++;
-			}
-		} else {
-			int lcdVal = 1;
-
-			//Eğer pass 16'dan büyükse buraya ekle
-			for(int i=0; i<16; i++) {
-				lcd_print_char(2, lcdVal, wifiPass[i]);
-				lcdVal++;
-			}
-		}
-	}
-}
-

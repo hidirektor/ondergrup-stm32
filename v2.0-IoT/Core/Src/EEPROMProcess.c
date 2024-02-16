@@ -208,14 +208,12 @@ void eepromKontrol() {
 	}
 
 	memcpy(machineIDInt, &eepromData[idStartPos], 12);
-	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
-	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
-	HAL_Delay(200);
 	convertArrays(1);
-	HAL_Delay(50);
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
 	convertArrays(2);
-	HAL_Delay(50);
+	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
 	convertArrays(3);
+	HAL_Delay(200);
 }
 
 void convertArrays(int state) {
@@ -223,19 +221,14 @@ void convertArrays(int state) {
 		for(int i=0; i<12; i++) {
 			machineID[i] = idCharactersArray[machineIDInt[i]];
 		}
-		for(int i=12; i<100; i++) {
-			machineID[i] = '\0';
-		}
 	} else if(state == 2) {
 		for(int i=0; i<20; i++) {
 			wifiSSID[i] = charactersArray[wifiSSIDInt[i]];
 		}
-		wifiSSID[wifiCharacterLimit] = '\0';
 	} else {
 		for(int i=0; i<20; i++) {
 			wifiPass[i] = charactersArray[wifiPassInt[i]];
 		}
-		wifiPass[wifiCharacterLimit] = '\0';
 	}
 }
 
