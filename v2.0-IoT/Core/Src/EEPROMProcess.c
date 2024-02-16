@@ -209,17 +209,13 @@ void eepromKontrol() {
 
 	memcpy(machineIDInt, &eepromData[idStartPos], 12);
 	convertArrays(1);
-	/*memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
+	HAL_Delay(250);
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
 	convertArrays(2);
+	HAL_Delay(250);
 	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
-	convertArrays(3);*/
-//	char machineIDTempC[12];
-//	uint8_t machineIDTemp[12];
-//	memcpy(machineIDTemp, &eepromData[idStartPos], 12);
-//	for(int i=0; i<12; i++) {
-//		machineIDTempC[i] = idCharactersArray[machineIDTemp[i]];
-//	}
-	HAL_Delay(200);
+	convertArrays(3);
+	HAL_Delay(250);
 	if(dilSecim == 0) {
 		lcd_print(1, 1, "MAKINE ID       ");
 	} else {
@@ -227,7 +223,45 @@ void eepromKontrol() {
 	}
 	lcd_print(2, 1, machineID);
 	lcd_print(2, 13, "    ");
-	HAL_Delay(10000);
+	HAL_Delay(5000);
+	int ssidLength = strlen(wifiSSID);
+	lcd_print(1, 1, "WIFI SSID       ");
+	if(ssidLength == 16) {
+		lcd_print(2, 1, wifiSSID);
+	} else if(ssidLength < 16) {
+		for(int i=0; i<16-ssidLength; i++) {
+			lcd_delete_char(2, ssidLength);
+			ssidLength++;
+		}
+	} else {
+		int lcdVal = 1;
+
+		//Eğer ssid 16'dan büyükse buraya ekle
+		for(int i=0; i<16; i++) {
+			lcd_print_char(2, lcdVal, wifiSSID[i]);
+			lcdVal++;
+		}
+	}
+	HAL_Delay(5000);
+	int passLength = strlen(wifiPass);
+	lcd_print(1, 1, "WIFI PASS       ");
+	if(passLength == 16) {
+		lcd_print(2, 1, wifiPass);
+	} else if(passLength < 16) {
+		for(int i=0; i<16-passLength; i++) {
+			lcd_delete_char(2, passLength);
+			passLength++;
+		}
+	} else {
+		int lcdVal = 1;
+
+		//Eğer pass 16'dan büyükse buraya ekle
+		for(int i=0; i<16; i++) {
+			lcd_print_char(2, lcdVal, wifiPass[i]);
+			lcdVal++;
+		}
+	}
+	HAL_Delay(5000);
 }
 
 void convertArrays(int state) {

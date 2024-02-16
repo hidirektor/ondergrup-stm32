@@ -1735,11 +1735,6 @@ void menu() {
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID();
 
-			HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(1500);
-			memcpy(machineIDInt, &eepromData[idStartPos], 12);
-			convertArrays(1);
-
 			HAL_Delay(250);
 			lcd_print(2, 1, machineID);
 			lcd_print(2, 13, "    ");
@@ -1770,11 +1765,6 @@ void menu() {
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
-
-			HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(1500);
-			memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
-			convertArrays(2);
 
 			ssidLength = strlen(wifiSSID);
 
@@ -1822,11 +1812,6 @@ void menu() {
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
-
-			HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(1500);
-			memcpy(wifiPassInt, &eepromData[passStartPos], 20);
-			convertArrays(3);
 
 			passLength = strlen(wifiPass);
 
