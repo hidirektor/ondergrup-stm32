@@ -207,13 +207,27 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineIDInt, &eepromData[idStartPos], 12);
+	/*memcpy(machineIDInt, &eepromData[idStartPos], 12);
 	convertArrays(1);
 	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
 	convertArrays(2);
 	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
-	convertArrays(3);
+	convertArrays(3);*/
+	char machineIDTempc[12];
+	uint8_t machineIDTemp[12];
+	memcpy(machineIDTemp, &eepromData[idStartPos], 12);
+	for(int i=0; i<12; i++) {
+		machineIDTempC[i] = idCharactersArray[machineIDTemp[i]];
+	}
 	HAL_Delay(200);
+	if(dilSecim == 0) {
+		lcd_print(1, 1, "MAKINE ID       ");
+	} else {
+		lcd_print(1, 1, "MACHINE ID      ");
+	}
+	lcd_print(2, 1, machineIDTempC);
+	lcd_print(2, 13, "    ");
+	HAL_Delay(10000);
 }
 
 void convertArrays(int state) {
