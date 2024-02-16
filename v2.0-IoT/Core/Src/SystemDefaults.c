@@ -11,7 +11,7 @@ char bufferTX[250];
 
 int idStartPos = 50;
 int ssidStartPos = 62;
-int passStartPos = 82;
+int passStartPos = 83;
 
 char emptyArray[] = "                ";
 char idCharactersArray[] = "0123456789";
