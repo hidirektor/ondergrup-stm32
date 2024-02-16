@@ -4,4 +4,4 @@
 ../Core/Src/WifiProcess.c:447:7:mergeData	2
 ../Core/Src/WifiProcess.c:508:6:convertAndSendData	2
 ../Core/Src/WifiProcess.c:523:6:iotSetup	5
-../Core/Src/WifiProcess.c:543:6:printMachineCredentials	10
+../Core/Src/WifiProcess.c:543:6:printMachineCredentials	12

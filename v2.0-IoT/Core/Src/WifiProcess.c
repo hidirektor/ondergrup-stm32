@@ -11,6 +11,7 @@
 #include "ESP8266.h"
 #include "i2c-lcd.h"
 #include "IoTMenu.h"
+#include "EEPROMProcess.h"
 
 void takeMachineID() {
 	mainSection:
@@ -22,8 +23,8 @@ void takeMachineID() {
     int arrayPos = 0; //kullanıcının seçtiği karakteri diziye aktarırken kullanılacak olan değişken
     int eepromVal = idStartPos; //kullanıcının seçtiği karakteri eeproma aktarmak için kullanılacak olan değişken
 
-    memset(machineID, 0, sizeof(machineID));
-    memset(machineIDInt, 0, sizeof(machineIDInt));
+    //memset(machineID, 0, sizeof(machineID));
+    //memset(machineIDInt, 0, sizeof(machineIDInt));
     resetEEPROM4Wifi(1);
     HAL_Delay(100);
 
@@ -152,8 +153,8 @@ void takeWifiSSID() {
 	mainSSIDSection:
     lcd_cursor(1);
 
-    memset(wifiSSID, 0, sizeof(wifiSSID)); //wifiSSID Sıfırlanıyor.
-    memset(wifiSSIDInt, 0, sizeof(wifiSSIDInt)); //wifiSSID Sıfırlanıyor.
+    //memset(wifiSSID, 0, sizeof(wifiSSID)); //wifiSSID Sıfırlanıyor.
+    //memset(wifiSSIDInt, 0, sizeof(wifiSSIDInt)); //wifiSSID Sıfırlanıyor.
     resetEEPROM4Wifi(2);
     HAL_Delay(100);
 
@@ -305,8 +306,8 @@ void takeWifiPass() {
 	mainPASSSection:
     lcd_cursor(1);
 
-    memset(wifiPass, 0, sizeof(wifiPass));
-    memset(wifiPassInt, 0, sizeof(wifiPassInt));
+    //memset(wifiPass, 0, sizeof(wifiPass));
+    //memset(wifiPassInt, 0, sizeof(wifiPassInt));
     resetEEPROM4Wifi(3);
     HAL_Delay(100);
 

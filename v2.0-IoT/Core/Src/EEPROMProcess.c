@@ -243,6 +243,8 @@ void resetEEPROM4Wifi(int state) {
 		int eepromVal = idStartPos;
 
 		for(int i=0; i<machineIDCharacterLimit; i++) {
+			machineID[i] = '\0';
+			machineIDInt[i] = '\0';
 			eepromData[eepromVal] = '\0';
 			eepromVal++;
 		}
@@ -250,6 +252,8 @@ void resetEEPROM4Wifi(int state) {
 		int eepromVal = ssidStartPos;
 
 		for(int i=0; i<wifiCharacterLimit; i++) {
+			wifiSSID[i] = '\0';
+			wifiSSIDInt[i] = '\0';
 			eepromData[eepromVal] = '\0';
 			eepromVal++;
 		}
@@ -257,6 +261,8 @@ void resetEEPROM4Wifi(int state) {
 		int eepromVal = passStartPos;
 
 		for(int i=0; i<wifiCharacterLimit; i++) {
+			wifiPass[i] = '\0';
+			wifiPassInt[i] = '\0';
 			eepromData[eepromVal] = '\0';
 			eepromVal++;
 		}

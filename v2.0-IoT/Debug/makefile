@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -60,8 +60,8 @@ all: main-build
 main-build: Version_IoT.elf secondary-outputs
 
 # Tool invocations
-Version_IoT.elf Version_IoT.map: $(OBJS) $(USER_OBJS) C:\Users\ipek.sozer2\Documents\GitHub\ondergrup-stm32\v2.0-IoT\STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Version_IoT.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ipek.sozer2\Documents\GitHub\ondergrup-stm32\v2.0-IoT\STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Version_IoT.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Version_IoT.elf Version_IoT.map: $(OBJS) $(USER_OBJS) /Users/hidirektor/Documents/GitHub/ondergrup-stm32/v2.0-IoT/STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Version_IoT.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/Users/hidirektor/Documents/GitHub/ondergrup-stm32/v2.0-IoT/STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Version_IoT.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
