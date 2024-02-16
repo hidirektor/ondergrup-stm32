@@ -223,7 +223,9 @@ void convertArrays(int state) {
 		for(int i=0; i<12; i++) {
 			machineID[i] = idCharactersArray[machineIDInt[i]];
 		}
-		machineID[machineIDCharacterLimit] = '\0';
+		for(int i=12; i<100; i++) {
+			machineID[i] = '\0';
+		}
 	} else if(state == 2) {
 		for(int i=0; i<20; i++) {
 			wifiSSID[i] = charactersArray[wifiSSIDInt[i]];
