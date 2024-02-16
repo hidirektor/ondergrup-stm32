@@ -39,6 +39,8 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
+        	memcpy(&eepromData[idStartPos], machineIDInt, 12);
+
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
 
@@ -104,6 +106,7 @@ void takeMachineID() {
 
         	if(arrayPos == machineIDCharacterLimit - 1) {
         		machineID[machineIDCharacterLimit] = '\0';
+        		machineIDInt[machineIDCharacterLimit] = '\0';
         	}
 
         	lcd_print_char(1, writeLoc, machineID[arrayPos]);
@@ -176,6 +179,8 @@ void takeWifiSSID() {
             wifiSSID[arrayPosition] = '\0';
             wifiSSIDInt[arrayPosition] = '\0';
             eepromData[eepromVal] = '\0';
+
+            memcpy(&eepromData[ssidStartPos], wifiSSIDInt, 20);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(1000);
@@ -310,7 +315,6 @@ void takeWifiPass() {
     int arrayPos = 0; //kullanıcının seçtiği karakteri diziye aktarmak için kullanılacak olan değişken
     int eepromVal = passStartPos; //kullanıcının seçtiği karakteri eeproma aktarırken kullanılacak olan değişken
 
-
     printTemplate(3, 1);
 
     while (1) {
@@ -324,6 +328,12 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             }
+
+            wifiPass[arrayPos] = '\0';
+            wifiPassInt[arrayPos] = '\0';
+            eepromData[eepromVal] = '\0';
+
+            memcpy(&eepromData[passStartPos], wifiPassInt, 20);
 
             HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             HAL_Delay(1000);
@@ -530,7 +540,7 @@ void iotSetup() {
 	//convertAndSendData();
 }
 
-void printWifiCredentials(int state) {
+void printMachineCredentials(int state) {
 	if(state == 1) {
 		int idLength = strlen(machineID);
 

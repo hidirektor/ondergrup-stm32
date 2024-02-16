@@ -218,37 +218,6 @@ void eepromKontrol() {
 	convertArrays(3);
 }
 
-void readFromEEPROM(int state) {
-	if(state == 1) {
-		int tempVal = idStartPos;
-
-		for(int i=0; i<machineIDCharacterLimit; i++) {
-			if(eepromData[tempVal] != '\0') {
-				machineIDInt[i] = eepromData[tempVal];
-				tempVal++;
-			}
-		}
-	} else if(state == 2) {
-		int tempVal = ssidStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			if(eepromData[tempVal] != '\0') {
-				wifiSSIDInt[i] = eepromData[tempVal];
-				tempVal++;
-			}
-		}
-	} else {
-		int tempVal = passStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			if(eepromData[tempVal] != '\0') {
-				wifiPassInt[i] = eepromData[tempVal];
-				tempVal++;
-			}
-		}
-	}
-}
-
 void convertArrays(int state) {
 	if(state == 1) {
 		for(int i=0; i<machineIDCharacterLimit; i++) {

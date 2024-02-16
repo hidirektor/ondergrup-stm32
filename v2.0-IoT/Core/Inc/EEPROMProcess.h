@@ -11,7 +11,6 @@
 #include <stdint.h>
 
 void eepromKontrol(void);
-void readFromEEPROM(int state);
 void convertArrays(int state);
 
 #endif /* INC_EEPROMPROCESS_H_ */

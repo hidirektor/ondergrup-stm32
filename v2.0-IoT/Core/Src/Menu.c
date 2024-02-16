@@ -1729,7 +1729,7 @@ void menu() {
 		} else {
 			lcd_print(1, 1, "MACHINE ID      ");
 		}
-		printWifiCredentials(1);
+		printMachineCredentials(1);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID();
@@ -1740,7 +1740,7 @@ void menu() {
 			convertArrays(1);
 
 			HAL_Delay(250);
-			printWifiCredentials(1);
+			printMachineCredentials(1);
 		}
 	}
 
@@ -1748,7 +1748,7 @@ void menu() {
 		calismaSayModu = 0;
 
 		lcd_print(1, 1, "WIFI SSID       ");
-		printWifiCredentials(2);
+		printMachineCredentials(2);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
@@ -1759,7 +1759,7 @@ void menu() {
 			convertArrays(2);
 
 			HAL_Delay(250);
-			printWifiCredentials(2);
+			printMachineCredentials(2);
 		}
 	}
 
@@ -1767,7 +1767,7 @@ void menu() {
 		calismaSayModu = 0;
 
 		lcd_print(1, 1, "WIFI PASS       ");
-		printWifiCredentials(3);
+		printMachineCredentials(3);
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
@@ -1778,7 +1778,7 @@ void menu() {
 			convertArrays(3);
 
 			HAL_Delay(250);
-			printWifiCredentials(3);
+			printMachineCredentials(3);
 		}
 	}
 
