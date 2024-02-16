@@ -207,15 +207,9 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 50, 12, machineIDInt, 12, 3000);
-	HAL_Delay(500);
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 62, 20, wifiSSIDInt, 20, 3000);
-	HAL_Delay(500);
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 83, 20, wifiPassInt, 20, 3000);
-	HAL_Delay(500);
-	//memcpy(machineIDInt, &eepromData[idStartPos], 12);
-	//memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
-	//memcpy(wifiPassInt, &eepromData[passStartPos], 20);
+	memcpy(machineIDInt, &eepromData[idStartPos], 12);
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], 20);
+	memcpy(wifiPassInt, &eepromData[passStartPos], 20);
 	HAL_Delay(200);
 	convertArrays(1);
 	HAL_Delay(50);
@@ -226,19 +220,15 @@ void eepromKontrol() {
 
 void convertArrays(int state) {
 	if(state == 1) {
-		for(int i=0; i<machineIDCharacterLimit; i++) {
+		for(int i=0; i<12; i++) {
 			machineID[i] = idCharactersArray[machineIDInt[i]];
 		}
 	} else if(state == 2) {
-		int arrLength = sizeof(wifiSSIDInt)/sizeof(wifiSSIDInt[0]);
-
-		for(int i=0; i<arrLength; i++) {
+		for(int i=0; i<20; i++) {
 			wifiSSID[i] = charactersArray[wifiSSIDInt[i]];
 		}
 	} else {
-		int arrLength = sizeof(wifiPassInt)/sizeof(wifiPassInt[0]);
-
-		for(int i=0; i<arrLength; i++) {
+		for(int i=0; i<20; i++) {
 			wifiPass[i] = charactersArray[wifiPassInt[i]];
 		}
 	}
