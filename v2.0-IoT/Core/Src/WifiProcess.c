@@ -16,8 +16,9 @@
 void takeMachineID() {
 	mainSection:
 
-	uint8_t inputMachineID[machineIDCharacterLimit];
 	lcd_cursor(1);
+
+	uint8_t inputMachineID[machineIDCharacterLimit];
 
 	int writeLoc = 5; //kullanıcının seçtiği karkaterin yazılırken başlayacağı karakter değişkeni
 
@@ -164,8 +165,9 @@ void takeMachineID() {
 void takeWifiSSID() {
 	mainSSIDSection:
 
-	uint8_t inputWifiSSID[wifiCharacterLimit];
     lcd_cursor(1);
+
+    uint8_t inputWifiSSID[wifiCharacterLimit];
 
     resetEEPROM4Wifi(2);
     HAL_Delay(100);
@@ -322,8 +324,9 @@ void takeWifiSSID() {
 void takeWifiPass() {
 	mainPASSSection:
 
-	uint8_t inputWifiPass[wifiCharacterLimit];
     lcd_cursor(1);
+
+    uint8_t inputWifiPass[wifiCharacterLimit];
 
     resetEEPROM4Wifi(3);
     HAL_Delay(100);
