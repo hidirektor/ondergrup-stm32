@@ -507,7 +507,7 @@ void convertAndSendData() {
 		lcd_print(2, 1, "   Started...   ");
 	}
 
-	sendMachineData(&huart1, machineID, mergeData());
+	sendMachineData(&huart1, machineID, wifiSSID, wifiPass, mergeData());
 
 	HAL_Delay(500);
 	lcd_clear();
@@ -528,7 +528,33 @@ void iotSetup() {
 		}
 	}
 
-	//ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	//HAL_Delay(500);
-	//convertAndSendData();
+	if(setupCompleted != 1) {
+		takeIDSection:
+		if(checkMachineID(&huart1, machineID) == 1) {
+			setupCompleted = 1;
+			//EEPROMA yazma işlemini başlat
+        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+        	HAL_Delay(1000);
+		} else {
+			if(dilSecim == 1) {
+				//türkçe hata mesajı
+				lcd_print(1, 1, " BU ID MAKINEDE ");
+				lcd_print(2, 1, "  KULLANILAMAZ  ");
+			} else {
+				//ingilizce hata mesajı
+				lcd_print(1, 1, "ID NOT AVAILABLE");
+				lcd_print(2, 1, "FOR THIS MACHINE");
+			}
+
+			HAL_Delay(1250);
+			//Tekrar id alma işlemi
+			takeMachineID();
+			HAL_Delay(200);
+			goto takeIDSection;
+		}
+	}
+
+	ESP8266_Init(&huart1, wifiSSID, wifiPass);
+	HAL_Delay(500);
+	convertAndSendData();
 }

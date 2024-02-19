@@ -30,7 +30,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	HAL_Delay(2000);
 }
 
-void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *machineData) {
+void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
 	char local_txA[200];
 	char local_txB[50];
 	int len;
@@ -40,7 +40,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	HAL_Delay(4000);
 
 	sprintf(local_txA,
-			"GET /api/machine/updateMachineDataRaw?machineID=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, machineData, mainServerWithPort);
+			"GET /api/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
