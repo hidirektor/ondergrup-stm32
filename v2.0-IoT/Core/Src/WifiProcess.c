@@ -14,9 +14,9 @@
 #include "EEPROMProcess.h"
 
 void takeMachineID() {
-	uint8_t inputMachineID[machineIDCharacterLimit];
-
 	mainSection:
+
+	uint8_t inputMachineID[machineIDCharacterLimit];
 	lcd_cursor(1);
 
 	int writeLoc = 5; //kullanıcının seçtiği karkaterin yazılırken başlayacağı karakter değişkeni
@@ -162,9 +162,9 @@ void takeMachineID() {
 }
 
 void takeWifiSSID() {
-	uint8_t inputWifiSSID[wifiCharacterLimit];
-
 	mainSSIDSection:
+
+	uint8_t inputWifiSSID[wifiCharacterLimit];
     lcd_cursor(1);
 
     resetEEPROM4Wifi(2);
@@ -320,9 +320,9 @@ void takeWifiSSID() {
 }
 
 void takeWifiPass() {
-	uint8_t inputWifiPass[wifiCharacterLimit];
-
 	mainPASSSection:
+
+	uint8_t inputWifiPass[wifiCharacterLimit];
     lcd_cursor(1);
 
     resetEEPROM4Wifi(3);
