@@ -5,12 +5,16 @@
  *      Author: hidirektor
  */
 
+#include <stdint.h>
+
 #ifndef INC_WIFIPROCESS_H_
 #define INC_WIFIPROCESS_H_
 
 void takeMachineID(void);
 void takeWifiSSID(void);
 void takeWifiPass(void);
+
+void takeWifiSSIDT(uint8_t *inputArr);
 
 char* mergeData(void);
 void convertAndSendData(void);

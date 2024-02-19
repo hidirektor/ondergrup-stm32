@@ -249,6 +249,24 @@ void convertArrays(int state) {
 	}
 }
 
+void customArrayConvert(const uint8_t *inputArray, int state) {
+	if(state == 1) {
+		// machine ID convert
+		memset(machineID, 0, machineID[0]);
+		int eepromVal = idStartPos;
+
+		for(int i=0; i<machineIDCharacterLimit; i++) {
+			machineID[i] = idCharactersArray[eepromData[eepromVal]];
+
+			eepromVal++;
+		}
+	} else if(state == 2) {
+		//wifi ssid convert
+	} else {
+		//wifi pass convert
+	}
+}
+
 void resetEEPROM4Wifi(int state) {
 	if(state == 1) {
 		int eepromVal = idStartPos;
