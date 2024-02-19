@@ -1752,7 +1752,6 @@ void menu() {
 		calismaSayModu = 0;
 		int ssidLength = strlen(wifiSSID);
 
-		//customArrayConvert(wifiSSIDTemp, 2);
 		convertArrays(2);
 		HAL_Delay(50);
 
@@ -1775,7 +1774,7 @@ void menu() {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeWifiSSIDT(wifiSSIDTemp);
+			takeWifiSSID(wifiSSIDTemp);
 
 			convertArrays(2);
 			HAL_Delay(50);
