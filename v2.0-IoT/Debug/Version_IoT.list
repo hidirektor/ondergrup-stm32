@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00020125  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00016894  00000000  00000000  00020168  2**0
+ 13 .debug_info   000168b2  00000000  00000000  00020168  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 000034ff  00000000  00000000  000369fc  2**0
+ 14 .debug_abbrev 000034ff  00000000  00000000  00036a1a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00001280  00000000  00000000  00039f00  2**3
+ 15 .debug_aranges 00001280  00000000  00000000  00039f20  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 00000e58  00000000  00000000  0003b180  2**0
+ 16 .debug_rnglists 00000e58  00000000  00000000  0003b1a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001c6a5  00000000  00000000  0003bfd8  2**0
+ 17 .debug_macro  0001c6a5  00000000  00000000  0003bff8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0001c26e  00000000  00000000  0005867d  2**0
+ 18 .debug_line   0001c26e  00000000  00000000  0005869d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0009ee3c  00000000  00000000  000748eb  2**0
+ 19 .debug_str    0009ee4b  00000000  00000000  0007490b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00005224  00000000  00000000  00113728  2**2
+ 20 .debug_frame  00005224  00000000  00000000  00113758  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006a  00000000  00000000  0011894c  2**0
+ 21 .debug_line_str 0000006a  00000000  00000000  0011897c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -15366,8 +15366,9 @@ void mainLoop() {
 
 void takeMachineID() {
  8006f70:	b580      	push	{r7, lr}
- 8006f72:	b088      	sub	sp, #32
+ 8006f72:	b08c      	sub	sp, #48	; 0x30
  8006f74:	af04      	add	r7, sp, #16
+	uint8_t inputMachineID[machineIDCharacterLimit];
 	mainSection:
 	lcd_cursor(1);
  8006f76:	2001      	movs	r0, #1
@@ -15375,18 +15376,18 @@ void takeMachineID() {
 
 	int writeLoc = 5; //kullanıcının seçtiği karkaterin yazılırken başlayacağı karakter değişkeni
  8006f7c:	2305      	movs	r3, #5
- 8006f7e:	60fb      	str	r3, [r7, #12]
+ 8006f7e:	61fb      	str	r3, [r7, #28]
 
     int cursorPosition = 3; //kullanıcının seçim yaptığı işaretçinin konumu
  8006f80:	2303      	movs	r3, #3
- 8006f82:	60bb      	str	r3, [r7, #8]
+ 8006f82:	61bb      	str	r3, [r7, #24]
     int arrayPos = 0; //kullanıcının seçtiği karakteri diziye aktarırken kullanılacak olan değişken
  8006f84:	2300      	movs	r3, #0
- 8006f86:	607b      	str	r3, [r7, #4]
+ 8006f86:	617b      	str	r3, [r7, #20]
     int eepromVal = idStartPos; //kullanıcının seçtiği karakteri eeproma aktarmak için kullanılacak olan değişken
  8006f88:	4b99      	ldr	r3, [pc, #612]	; (80071f0 <takeMachineID+0x280>)
  8006f8a:	681b      	ldr	r3, [r3, #0]
- 8006f8c:	603b      	str	r3, [r7, #0]
+ 8006f8c:	613b      	str	r3, [r7, #16]
 
     resetEEPROM4Wifi(1);
  8006f8e:	2001      	movs	r0, #1
@@ -15465,26 +15466,26 @@ void takeMachineID() {
  8007012:	2b01      	cmp	r3, #1
  8007014:	d111      	bne.n	800703a <takeMachineID+0xca>
         	if(cursorPosition == 7) {
- 8007016:	68bb      	ldr	r3, [r7, #8]
+ 8007016:	69bb      	ldr	r3, [r7, #24]
  8007018:	2b07      	cmp	r3, #7
  800701a:	d102      	bne.n	8007022 <takeMachineID+0xb2>
         		cursorPosition = 10;
  800701c:	230a      	movs	r3, #10
- 800701e:	60bb      	str	r3, [r7, #8]
+ 800701e:	61bb      	str	r3, [r7, #24]
  8007020:	e008      	b.n	8007034 <takeMachineID+0xc4>
         	} else if (cursorPosition == 14) {
- 8007022:	68bb      	ldr	r3, [r7, #8]
+ 8007022:	69bb      	ldr	r3, [r7, #24]
  8007024:	2b0e      	cmp	r3, #14
  8007026:	d102      	bne.n	800702e <takeMachineID+0xbe>
                 cursorPosition = 3;
  8007028:	2303      	movs	r3, #3
- 800702a:	60bb      	str	r3, [r7, #8]
+ 800702a:	61bb      	str	r3, [r7, #24]
  800702c:	e002      	b.n	8007034 <takeMachineID+0xc4>
             } else {
             	cursorPosition++;
- 800702e:	68bb      	ldr	r3, [r7, #8]
+ 800702e:	69bb      	ldr	r3, [r7, #24]
  8007030:	3301      	adds	r3, #1
- 8007032:	60bb      	str	r3, [r7, #8]
+ 8007032:	61bb      	str	r3, [r7, #24]
             }
 
         	HAL_Delay(150);
@@ -15500,26 +15501,26 @@ void takeMachineID() {
  8007044:	2b01      	cmp	r3, #1
  8007046:	d111      	bne.n	800706c <takeMachineID+0xfc>
             if (cursorPosition == 3) {
- 8007048:	68bb      	ldr	r3, [r7, #8]
+ 8007048:	69bb      	ldr	r3, [r7, #24]
  800704a:	2b03      	cmp	r3, #3
  800704c:	d102      	bne.n	8007054 <takeMachineID+0xe4>
                 cursorPosition = 14;
  800704e:	230e      	movs	r3, #14
- 8007050:	60bb      	str	r3, [r7, #8]
+ 8007050:	61bb      	str	r3, [r7, #24]
  8007052:	e008      	b.n	8007066 <takeMachineID+0xf6>
             } else if(cursorPosition == 10) {
- 8007054:	68bb      	ldr	r3, [r7, #8]
+ 8007054:	69bb      	ldr	r3, [r7, #24]
  8007056:	2b0a      	cmp	r3, #10
  8007058:	d102      	bne.n	8007060 <takeMachineID+0xf0>
             	cursorPosition = 7;
  800705a:	2307      	movs	r3, #7
- 800705c:	60bb      	str	r3, [r7, #8]
+ 800705c:	61bb      	str	r3, [r7, #24]
  800705e:	e002      	b.n	8007066 <takeMachineID+0xf6>
             } else {
             	cursorPosition--;
- 8007060:	68bb      	ldr	r3, [r7, #8]
+ 8007060:	69bb      	ldr	r3, [r7, #24]
  8007062:	3b01      	subs	r3, #1
- 8007064:	60bb      	str	r3, [r7, #8]
+ 8007064:	61bb      	str	r3, [r7, #24]
             }
 
             HAL_Delay(150);
@@ -15535,131 +15536,131 @@ void takeMachineID() {
  8007076:	2b01      	cmp	r3, #1
  8007078:	d173      	bne.n	8007162 <takeMachineID+0x1f2>
         	if(cursorPosition == 3) {
- 800707a:	68bb      	ldr	r3, [r7, #8]
+ 800707a:	69bb      	ldr	r3, [r7, #24]
  800707c:	2b03      	cmp	r3, #3
  800707e:	d105      	bne.n	800708c <takeMachineID+0x11c>
         		//machineID[arrayPos] = '0';
         		eepromData[eepromVal] = 0;
  8007080:	4a60      	ldr	r2, [pc, #384]	; (8007204 <takeMachineID+0x294>)
- 8007082:	683b      	ldr	r3, [r7, #0]
+ 8007082:	693b      	ldr	r3, [r7, #16]
  8007084:	4413      	add	r3, r2
  8007086:	2200      	movs	r2, #0
  8007088:	701a      	strb	r2, [r3, #0]
  800708a:	e04f      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 4) {
- 800708c:	68bb      	ldr	r3, [r7, #8]
+ 800708c:	69bb      	ldr	r3, [r7, #24]
  800708e:	2b04      	cmp	r3, #4
  8007090:	d105      	bne.n	800709e <takeMachineID+0x12e>
         		//machineID[arrayPos] = '1';
         		eepromData[eepromVal] = 1;
  8007092:	4a5c      	ldr	r2, [pc, #368]	; (8007204 <takeMachineID+0x294>)
- 8007094:	683b      	ldr	r3, [r7, #0]
+ 8007094:	693b      	ldr	r3, [r7, #16]
  8007096:	4413      	add	r3, r2
  8007098:	2201      	movs	r2, #1
  800709a:	701a      	strb	r2, [r3, #0]
  800709c:	e046      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 5) {
- 800709e:	68bb      	ldr	r3, [r7, #8]
+ 800709e:	69bb      	ldr	r3, [r7, #24]
  80070a0:	2b05      	cmp	r3, #5
  80070a2:	d105      	bne.n	80070b0 <takeMachineID+0x140>
         		//machineID[arrayPos] = '2';
         		eepromData[eepromVal] = 2;
  80070a4:	4a57      	ldr	r2, [pc, #348]	; (8007204 <takeMachineID+0x294>)
- 80070a6:	683b      	ldr	r3, [r7, #0]
+ 80070a6:	693b      	ldr	r3, [r7, #16]
  80070a8:	4413      	add	r3, r2
  80070aa:	2202      	movs	r2, #2
  80070ac:	701a      	strb	r2, [r3, #0]
  80070ae:	e03d      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 6) {
- 80070b0:	68bb      	ldr	r3, [r7, #8]
+ 80070b0:	69bb      	ldr	r3, [r7, #24]
  80070b2:	2b06      	cmp	r3, #6
  80070b4:	d105      	bne.n	80070c2 <takeMachineID+0x152>
         		//machineID[arrayPos] = '3';
         		eepromData[eepromVal] = 3;
  80070b6:	4a53      	ldr	r2, [pc, #332]	; (8007204 <takeMachineID+0x294>)
- 80070b8:	683b      	ldr	r3, [r7, #0]
+ 80070b8:	693b      	ldr	r3, [r7, #16]
  80070ba:	4413      	add	r3, r2
  80070bc:	2203      	movs	r2, #3
  80070be:	701a      	strb	r2, [r3, #0]
  80070c0:	e034      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 7) {
- 80070c2:	68bb      	ldr	r3, [r7, #8]
+ 80070c2:	69bb      	ldr	r3, [r7, #24]
  80070c4:	2b07      	cmp	r3, #7
  80070c6:	d105      	bne.n	80070d4 <takeMachineID+0x164>
         		//machineID[arrayPos] = '4';
         		eepromData[eepromVal] = 4;
  80070c8:	4a4e      	ldr	r2, [pc, #312]	; (8007204 <takeMachineID+0x294>)
- 80070ca:	683b      	ldr	r3, [r7, #0]
+ 80070ca:	693b      	ldr	r3, [r7, #16]
  80070cc:	4413      	add	r3, r2
  80070ce:	2204      	movs	r2, #4
  80070d0:	701a      	strb	r2, [r3, #0]
  80070d2:	e02b      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 10) {
- 80070d4:	68bb      	ldr	r3, [r7, #8]
+ 80070d4:	69bb      	ldr	r3, [r7, #24]
  80070d6:	2b0a      	cmp	r3, #10
  80070d8:	d105      	bne.n	80070e6 <takeMachineID+0x176>
         		//machineID[arrayPos] = '5';
         		eepromData[eepromVal] = 5;
  80070da:	4a4a      	ldr	r2, [pc, #296]	; (8007204 <takeMachineID+0x294>)
- 80070dc:	683b      	ldr	r3, [r7, #0]
+ 80070dc:	693b      	ldr	r3, [r7, #16]
  80070de:	4413      	add	r3, r2
  80070e0:	2205      	movs	r2, #5
  80070e2:	701a      	strb	r2, [r3, #0]
  80070e4:	e022      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 11) {
- 80070e6:	68bb      	ldr	r3, [r7, #8]
+ 80070e6:	69bb      	ldr	r3, [r7, #24]
  80070e8:	2b0b      	cmp	r3, #11
  80070ea:	d105      	bne.n	80070f8 <takeMachineID+0x188>
         		//machineID[arrayPos] = '6';
         		eepromData[eepromVal] = 6;
  80070ec:	4a45      	ldr	r2, [pc, #276]	; (8007204 <takeMachineID+0x294>)
- 80070ee:	683b      	ldr	r3, [r7, #0]
+ 80070ee:	693b      	ldr	r3, [r7, #16]
  80070f0:	4413      	add	r3, r2
  80070f2:	2206      	movs	r2, #6
  80070f4:	701a      	strb	r2, [r3, #0]
  80070f6:	e019      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 12) {
- 80070f8:	68bb      	ldr	r3, [r7, #8]
+ 80070f8:	69bb      	ldr	r3, [r7, #24]
  80070fa:	2b0c      	cmp	r3, #12
  80070fc:	d105      	bne.n	800710a <takeMachineID+0x19a>
         		//machineID[arrayPos] = '7';
         		eepromData[eepromVal] = 7;
  80070fe:	4a41      	ldr	r2, [pc, #260]	; (8007204 <takeMachineID+0x294>)
- 8007100:	683b      	ldr	r3, [r7, #0]
+ 8007100:	693b      	ldr	r3, [r7, #16]
  8007102:	4413      	add	r3, r2
  8007104:	2207      	movs	r2, #7
  8007106:	701a      	strb	r2, [r3, #0]
  8007108:	e010      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 13) {
- 800710a:	68bb      	ldr	r3, [r7, #8]
+ 800710a:	69bb      	ldr	r3, [r7, #24]
  800710c:	2b0d      	cmp	r3, #13
  800710e:	d105      	bne.n	800711c <takeMachineID+0x1ac>
         		//machineID[arrayPos] = '8';
         		eepromData[eepromVal] = 8;
  8007110:	4a3c      	ldr	r2, [pc, #240]	; (8007204 <takeMachineID+0x294>)
- 8007112:	683b      	ldr	r3, [r7, #0]
+ 8007112:	693b      	ldr	r3, [r7, #16]
  8007114:	4413      	add	r3, r2
  8007116:	2208      	movs	r2, #8
  8007118:	701a      	strb	r2, [r3, #0]
  800711a:	e007      	b.n	800712c <takeMachineID+0x1bc>
         	} else if(cursorPosition == 14) {
- 800711c:	68bb      	ldr	r3, [r7, #8]
+ 800711c:	69bb      	ldr	r3, [r7, #24]
  800711e:	2b0e      	cmp	r3, #14
  8007120:	d104      	bne.n	800712c <takeMachineID+0x1bc>
         		//machineID[arrayPos] = '9';
         		eepromData[eepromVal] = 9;
  8007122:	4a38      	ldr	r2, [pc, #224]	; (8007204 <takeMachineID+0x294>)
- 8007124:	683b      	ldr	r3, [r7, #0]
+ 8007124:	693b      	ldr	r3, [r7, #16]
  8007126:	4413      	add	r3, r2
  8007128:	2209      	movs	r2, #9
  800712a:	701a      	strb	r2, [r3, #0]
         	}
 
         	lcd_print_char(1, writeLoc, machineID[arrayPos]);
- 800712c:	68fb      	ldr	r3, [r7, #12]
+ 800712c:	69fb      	ldr	r3, [r7, #28]
  800712e:	b2d9      	uxtb	r1, r3
  8007130:	4a31      	ldr	r2, [pc, #196]	; (80071f8 <takeMachineID+0x288>)
- 8007132:	687b      	ldr	r3, [r7, #4]
+ 8007132:	697b      	ldr	r3, [r7, #20]
  8007134:	4413      	add	r3, r2
  8007136:	781b      	ldrb	r3, [r3, #0]
  8007138:	461a      	mov	r2, r3
@@ -15667,22 +15668,22 @@ void takeMachineID() {
  800713c:	f000 fedd 	bl	8007efa <lcd_print_char>
 
         	writeLoc++;
- 8007140:	68fb      	ldr	r3, [r7, #12]
+ 8007140:	69fb      	ldr	r3, [r7, #28]
  8007142:	3301      	adds	r3, #1
- 8007144:	60fb      	str	r3, [r7, #12]
+ 8007144:	61fb      	str	r3, [r7, #28]
         	arrayPos++;
- 8007146:	687b      	ldr	r3, [r7, #4]
+ 8007146:	697b      	ldr	r3, [r7, #20]
  8007148:	3301      	adds	r3, #1
- 800714a:	607b      	str	r3, [r7, #4]
+ 800714a:	617b      	str	r3, [r7, #20]
         	eepromVal++;
- 800714c:	683b      	ldr	r3, [r7, #0]
+ 800714c:	693b      	ldr	r3, [r7, #16]
  800714e:	3301      	adds	r3, #1
- 8007150:	603b      	str	r3, [r7, #0]
+ 8007150:	613b      	str	r3, [r7, #16]
 
         	//machineID[machineIDCharacterLimit] = '\0';
         	eepromData[eepromVal] = '\0';
  8007152:	4a2c      	ldr	r2, [pc, #176]	; (8007204 <takeMachineID+0x294>)
- 8007154:	683b      	ldr	r3, [r7, #0]
+ 8007154:	693b      	ldr	r3, [r7, #16]
  8007156:	4413      	add	r3, r2
  8007158:	2200      	movs	r2, #0
  800715a:	701a      	strb	r2, [r3, #0]
@@ -15707,57 +15708,57 @@ void takeMachineID() {
                 //machineID[arrayPos] = '\0';
                 eepromData[eepromVal] = '\0';
  8007178:	4a22      	ldr	r2, [pc, #136]	; (8007204 <takeMachineID+0x294>)
- 800717a:	683b      	ldr	r3, [r7, #0]
+ 800717a:	693b      	ldr	r3, [r7, #16]
  800717c:	4413      	add	r3, r2
  800717e:	2200      	movs	r2, #0
  8007180:	701a      	strb	r2, [r3, #0]
 
                 if(writeLoc > 5) {
- 8007182:	68fb      	ldr	r3, [r7, #12]
+ 8007182:	69fb      	ldr	r3, [r7, #28]
  8007184:	2b05      	cmp	r3, #5
  8007186:	dd03      	ble.n	8007190 <takeMachineID+0x220>
                 	writeLoc--;
- 8007188:	68fb      	ldr	r3, [r7, #12]
+ 8007188:	69fb      	ldr	r3, [r7, #28]
  800718a:	3b01      	subs	r3, #1
- 800718c:	60fb      	str	r3, [r7, #12]
+ 800718c:	61fb      	str	r3, [r7, #28]
  800718e:	e004      	b.n	800719a <takeMachineID+0x22a>
                 } else if(writeLoc < 5) {
- 8007190:	68fb      	ldr	r3, [r7, #12]
+ 8007190:	69fb      	ldr	r3, [r7, #28]
  8007192:	2b04      	cmp	r3, #4
  8007194:	dc01      	bgt.n	800719a <takeMachineID+0x22a>
                 	writeLoc = 5;
  8007196:	2305      	movs	r3, #5
- 8007198:	60fb      	str	r3, [r7, #12]
+ 8007198:	61fb      	str	r3, [r7, #28]
                 }
 
                 if(arrayPos > 0) {
- 800719a:	687b      	ldr	r3, [r7, #4]
+ 800719a:	697b      	ldr	r3, [r7, #20]
  800719c:	2b00      	cmp	r3, #0
  800719e:	dd06      	ble.n	80071ae <takeMachineID+0x23e>
                 	arrayPos--;
- 80071a0:	687b      	ldr	r3, [r7, #4]
+ 80071a0:	697b      	ldr	r3, [r7, #20]
  80071a2:	3b01      	subs	r3, #1
- 80071a4:	607b      	str	r3, [r7, #4]
+ 80071a4:	617b      	str	r3, [r7, #20]
                 	eepromVal--;
- 80071a6:	683b      	ldr	r3, [r7, #0]
+ 80071a6:	693b      	ldr	r3, [r7, #16]
  80071a8:	3b01      	subs	r3, #1
- 80071aa:	603b      	str	r3, [r7, #0]
+ 80071aa:	613b      	str	r3, [r7, #16]
  80071ac:	e007      	b.n	80071be <takeMachineID+0x24e>
                 } else if(arrayPos < 0) {
- 80071ae:	687b      	ldr	r3, [r7, #4]
+ 80071ae:	697b      	ldr	r3, [r7, #20]
  80071b0:	2b00      	cmp	r3, #0
  80071b2:	da04      	bge.n	80071be <takeMachineID+0x24e>
                 	arrayPos = 0;
  80071b4:	2300      	movs	r3, #0
- 80071b6:	607b      	str	r3, [r7, #4]
+ 80071b6:	617b      	str	r3, [r7, #20]
                 	eepromVal = idStartPos;
  80071b8:	4b0d      	ldr	r3, [pc, #52]	; (80071f0 <takeMachineID+0x280>)
  80071ba:	681b      	ldr	r3, [r3, #0]
- 80071bc:	603b      	str	r3, [r7, #0]
+ 80071bc:	613b      	str	r3, [r7, #16]
                 }
 
                 lcd_delete_char(1, 4+arrayPos);
- 80071be:	687b      	ldr	r3, [r7, #4]
+ 80071be:	697b      	ldr	r3, [r7, #20]
  80071c0:	b2db      	uxtb	r3, r3
  80071c2:	3304      	adds	r3, #4
  80071c4:	b2db      	uxtb	r3, r3
@@ -15775,7 +15776,7 @@ void takeMachineID() {
         }
 
         lcd_gotoxy(2, cursorPosition);
- 80071da:	68bb      	ldr	r3, [r7, #8]
+ 80071da:	69bb      	ldr	r3, [r7, #24]
  80071dc:	b2db      	uxtb	r3, r3
  80071de:	4619      	mov	r1, r3
  80071e0:	2002      	movs	r0, #2
@@ -15785,7 +15786,7 @@ void takeMachineID() {
     }
 }
  80071e8:	bf00      	nop
- 80071ea:	3710      	adds	r7, #16
+ 80071ea:	3720      	adds	r7, #32
  80071ec:	46bd      	mov	sp, r7
  80071ee:	bd80      	pop	{r7, pc}
  80071f0:	20000004 	.word	0x20000004

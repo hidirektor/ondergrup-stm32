@@ -14,6 +14,7 @@
 #include "EEPROMProcess.h"
 
 void takeMachineID() {
+	uint8_t inputMachineID[machineIDCharacterLimit];
 	mainSection:
 	lcd_cursor(1);
 
@@ -39,6 +40,8 @@ void takeMachineID() {
         		HAL_Delay(1200);
         		goto mainSection;
         	} else {
+        		memcpy(inputMachineID, &eepromData[idStartPos], machineIDCharacterLimit);
+
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
 
@@ -73,33 +76,43 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	if(cursorPosition == 3) {
         		//machineID[arrayPos] = '0';
+        		inputMachineID[arrayPos] = 0;
         		eepromData[eepromVal] = 0;
         	} else if(cursorPosition == 4) {
         		//machineID[arrayPos] = '1';
+        		inputMachineID[arrayPos] = 1;
         		eepromData[eepromVal] = 1;
         	} else if(cursorPosition == 5) {
         		//machineID[arrayPos] = '2';
+        		inputMachineID[arrayPos] = 2;
         		eepromData[eepromVal] = 2;
         	} else if(cursorPosition == 6) {
         		//machineID[arrayPos] = '3';
+        		inputMachineID[arrayPos] = 3;
         		eepromData[eepromVal] = 3;
         	} else if(cursorPosition == 7) {
         		//machineID[arrayPos] = '4';
+        		inputMachineID[arrayPos] = 4;
         		eepromData[eepromVal] = 4;
         	} else if(cursorPosition == 10) {
         		//machineID[arrayPos] = '5';
+        		inputMachineID[arrayPos] = 5;
         		eepromData[eepromVal] = 5;
         	} else if(cursorPosition == 11) {
         		//machineID[arrayPos] = '6';
+        		inputMachineID[arrayPos] = 6;
         		eepromData[eepromVal] = 6;
         	} else if(cursorPosition == 12) {
         		//machineID[arrayPos] = '7';
+        		inputMachineID[arrayPos] = 7;
         		eepromData[eepromVal] = 7;
         	} else if(cursorPosition == 13) {
         		//machineID[arrayPos] = '8';
+        		inputMachineID[arrayPos] = 8;
         		eepromData[eepromVal] = 8;
         	} else if(cursorPosition == 14) {
         		//machineID[arrayPos] = '9';
+        		inputMachineID[arrayPos] = 9;
         		eepromData[eepromVal] = 9;
         	}
 
@@ -110,6 +123,7 @@ void takeMachineID() {
         	eepromVal++;
 
         	//machineID[machineIDCharacterLimit] = '\0';
+        	inputMachineID[arrayPos] = '\0';
         	eepromData[eepromVal] = '\0';
 
         	HAL_Delay(150);
@@ -118,6 +132,7 @@ void takeMachineID() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(machineID) >= 1) {
                 //machineID[arrayPos] = '\0';
+            	inputMachineID[arrayPos] = '\0';
                 eepromData[eepromVal] = '\0';
 
                 if(writeLoc > 5) {
