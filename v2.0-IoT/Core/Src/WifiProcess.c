@@ -72,34 +72,34 @@ void takeMachineID() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
         	if(cursorPosition == 3) {
-        		machineID[arrayPos] = '0';
+        		//machineID[arrayPos] = '0';
         		eepromData[eepromVal] = 0;
         	} else if(cursorPosition == 4) {
-        		machineID[arrayPos] = '1';
+        		//machineID[arrayPos] = '1';
         		eepromData[eepromVal] = 1;
         	} else if(cursorPosition == 5) {
-        		machineID[arrayPos] = '2';
+        		//machineID[arrayPos] = '2';
         		eepromData[eepromVal] = 2;
         	} else if(cursorPosition == 6) {
-        		machineID[arrayPos] = '3';
+        		//machineID[arrayPos] = '3';
         		eepromData[eepromVal] = 3;
         	} else if(cursorPosition == 7) {
-        		machineID[arrayPos] = '4';
+        		//machineID[arrayPos] = '4';
         		eepromData[eepromVal] = 4;
         	} else if(cursorPosition == 10) {
-        		machineID[arrayPos] = '5';
+        		//machineID[arrayPos] = '5';
         		eepromData[eepromVal] = 5;
         	} else if(cursorPosition == 11) {
-        		machineID[arrayPos] = '6';
+        		//machineID[arrayPos] = '6';
         		eepromData[eepromVal] = 6;
         	} else if(cursorPosition == 12) {
-        		machineID[arrayPos] = '7';
+        		//machineID[arrayPos] = '7';
         		eepromData[eepromVal] = 7;
         	} else if(cursorPosition == 13) {
-        		machineID[arrayPos] = '8';
+        		//machineID[arrayPos] = '8';
         		eepromData[eepromVal] = 8;
         	} else if(cursorPosition == 14) {
-        		machineID[arrayPos] = '9';
+        		//machineID[arrayPos] = '9';
         		eepromData[eepromVal] = 9;
         	}
 
@@ -109,8 +109,7 @@ void takeMachineID() {
         	arrayPos++;
         	eepromVal++;
 
-        	machineID[machineIDCharacterLimit] = '\0';
-        	machineIDInt[machineIDCharacterLimit] = '\0';
+        	//machineID[machineIDCharacterLimit] = '\0';
         	eepromData[eepromVal] = '\0';
 
         	HAL_Delay(150);
@@ -118,7 +117,7 @@ void takeMachineID() {
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(machineID) >= 1) {
-                machineID[arrayPos] = '\0';
+                //machineID[arrayPos] = '\0';
                 eepromData[eepromVal] = '\0';
 
                 if(writeLoc > 5) {
@@ -249,8 +248,8 @@ void takeWifiSSID() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-        	wifiSSID[arrayPosition] = charactersArray[cursorPosition - 1];
-            wifiSSIDInt[arrayPosition] = cursorPosition - 1;
+        	//wifiSSID[arrayPosition] = charactersArray[cursorPosition - 1];
+            //wifiSSIDInt[arrayPosition] = cursorPosition - 1;
             eepromData[eepromVal] = cursorPosition - 1;
 
             lcd_print_char(1, writeLoc, wifiSSID[arrayPosition]);
@@ -259,8 +258,8 @@ void takeWifiSSID() {
             arrayPosition++;
             eepromVal++;
 
-            wifiSSID[arrayPosition] = '\0';
-            wifiSSIDInt[arrayPosition] = '\0';
+            //wifiSSID[arrayPosition] = '\0';
+            //wifiSSIDInt[arrayPosition] = '\0';
             eepromData[eepromVal] = '\0';
 
             HAL_Delay(150);
@@ -268,8 +267,8 @@ void takeWifiSSID() {
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
-        		wifiSSID[arrayPosition] = '\0';
-        		wifiSSIDInt[arrayPosition] = '\0';
+        		//wifiSSID[arrayPosition] = '\0';
+        		//wifiSSIDInt[arrayPosition] = '\0';
         		eepromData[eepromVal] = '\0';
 
         		if(writeLoc > 7) {
@@ -400,8 +399,8 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-        	wifiPass[arrayPos] = charactersArray[cursorPosition - 1];
-        	wifiPassInt[arrayPos] = cursorPosition - 1;
+        	//wifiPass[arrayPos] = charactersArray[cursorPosition - 1];
+        	//wifiPassInt[arrayPos] = cursorPosition - 1;
         	eepromData[eepromVal] = cursorPosition - 1;
 
             lcd_print_char(1, writeLoc, wifiPass[arrayPos]);
@@ -410,8 +409,8 @@ void takeWifiPass() {
             arrayPos++;
             eepromVal++;
 
-            wifiPass[arrayPos] = '\0';
-            wifiPassInt[arrayPos] = '\0';
+            //wifiPass[arrayPos] = '\0';
+            //wifiPassInt[arrayPos] = '\0';
             eepromData[eepromVal] = '\0';
 
             HAL_Delay(150);
@@ -419,8 +418,8 @@ void takeWifiPass() {
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(wifiPass) >= 1) {
-            	wifiPass[arrayPos] = '\0';
-            	wifiPassInt[arrayPos] = '\0';
+            	//wifiPass[arrayPos] = '\0';
+            	//wifiPassInt[arrayPos] = '\0';
             	eepromData[eepromVal] = '\0';
 
             	writeLoc--;
