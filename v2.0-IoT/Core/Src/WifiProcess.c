@@ -40,7 +40,7 @@ void takeMachineID() {
         		HAL_Delay(1200);
         		goto mainSection;
         	} else {
-        		memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit);
+        		memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
@@ -176,7 +176,7 @@ void takeWifiSSID() {
                 HAL_Delay(1250);
                 goto mainSSIDSection;
             } else {
-            	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit);
+            	memcpy(&eepromData[ssidStartPos], wifiSSIDInt, wifiCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
@@ -254,7 +254,6 @@ void takeWifiSSID() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-        	//wifiSSID[arrayPosition] = charactersArray[cursorPosition - 1];
             wifiSSIDInt[arrayPosition] = cursorPosition - 1;
             eepromData[eepromVal] = cursorPosition - 1;
 
@@ -264,7 +263,6 @@ void takeWifiSSID() {
             arrayPosition++;
             eepromVal++;
 
-            //wifiSSID[arrayPosition] = '\0';
             wifiSSIDInt[arrayPosition] = '\0';
             eepromData[eepromVal] = '\0';
 
@@ -273,7 +271,6 @@ void takeWifiSSID() {
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
-        		//wifiSSID[arrayPosition] = '\0';
         		wifiSSIDInt[arrayPosition] = '\0';
         		eepromData[eepromVal] = '\0';
 
@@ -330,7 +327,7 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             } else {
-            	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit);
+            	memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
@@ -408,7 +405,6 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-        	//wifiPass[arrayPos] = charactersArray[cursorPosition - 1];
         	wifiPassInt[arrayPos] = cursorPosition - 1;
         	eepromData[eepromVal] = cursorPosition - 1;
 
@@ -418,7 +414,6 @@ void takeWifiPass() {
             arrayPos++;
             eepromVal++;
 
-            //wifiPass[arrayPos] = '\0';
             wifiPassInt[arrayPos] = '\0';
             eepromData[eepromVal] = '\0';
 
@@ -427,7 +422,6 @@ void takeWifiPass() {
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
             if(strlen(wifiPass) >= 1) {
-            	//wifiPass[arrayPos] = '\0';
             	wifiPassInt[arrayPos] = '\0';
             	eepromData[eepromVal] = '\0';
 
