@@ -2,3 +2,5 @@
 ../Core/Src/EEPROMProcess.c:221:6:convertArrays	6
 ../Core/Src/EEPROMProcess.c:252:6:customArrayConvert	3
 ../Core/Src/EEPROMProcess.c:270:6:resetEEPROM4Wifi	6
+../Core/Src/EEPROMProcess.c:301:6:readStringFromEEPROM	3
+../Core/Src/EEPROMProcess.c:316:6:writeStringToEEPROM	3

@@ -8,8 +8,8 @@
 #ifndef INC_SYSTEMDEFAULTS_H_
 #define INC_SYSTEMDEFAULTS_H_
 
-#define machineIDCharacterLimit 12
-#define wifiCharacterLimit 20
+#define machineIDCharacterLimit 13
+#define wifiCharacterLimit 21
 #define lcdBacklightSure  6 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 #define demoWifiSSID "ONDERLIFT_PERSONEL"

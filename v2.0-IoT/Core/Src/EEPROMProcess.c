@@ -207,14 +207,17 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
+	/*memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
 	convertArrays(1);
 	HAL_Delay(250);
 	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(2);
 	HAL_Delay(250);
 	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
-	convertArrays(3);
+	convertArrays(3);*/
+	readStringFromEEPROM(idStartPos, 1, machineID, machineIDCharacterLimit, idCharactersArray);
+	readStringFromEEPROM(ssidStartPos, 1, wifiSSID, wifiCharacterLimit, charactersArray);
+	readStringFromEEPROM(passStartPos, 1, wifiPass, wifiCharacterLimit, charactersArray);
 	HAL_Delay(250);
 }
 
@@ -296,4 +299,35 @@ void resetEEPROM4Wifi(int state) {
 			eepromVal++;
 		}
 	}
+}
+
+void readStringFromEEPROM(uint16_t addr, int length, char* buffer, int len, const char* lookupArray) {
+    uint8_t data;
+    for (int i = 0; i < len; i++) {
+        // EEPROM'dan indexi oku
+        HAL_I2C_Mem_Read(&hi2c1, 0xA0, addr + i, length, &data, 1, HAL_MAX_DELAY);
+        // Index'i karşılık gelen karaktere çevir
+        if (data != '\0') {
+            buffer[i] = lookupArray[data];
+        } else {
+            buffer[i] = '\0'; // Null karakter bulunduğunda döngüyü sonlandır
+            break;
+        }
+    }
+}
+
+void writeStringToEEPROM(uint16_t addr, int length, const char* string, int len, const char* lookupArray) {
+    uint8_t data;
+    for (int i = 0; i < len; i++) {
+        // Karakterin lookupArray içindeki indexini bul
+        const char* found = strchr(lookupArray, string[i]);
+        if (found) {
+            data = (uint8_t)(found - lookupArray);
+            // Bulunan indexi EEPROM'a yaz
+            HAL_I2C_Mem_Write(&hi2c1, 0xA0, addr + i, length, &data, 1, HAL_MAX_DELAY);
+        }
+    }
+    // String sonu için null karakter ekleyin
+    data = '\0';
+    HAL_I2C_Mem_Write(&hi2c1, 0xA0, addr + len, length, &data, 1, HAL_MAX_DELAY);
 }

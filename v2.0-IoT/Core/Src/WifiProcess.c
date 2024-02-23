@@ -40,10 +40,13 @@ void takeMachineID() {
         		HAL_Delay(1200);
         		goto mainSection;
         	} else {
-        		memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
+        		/*memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);
+            	HAL_Delay(1000);*/
+
+        		// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
+        		writeStringToEEPROM(idStartPos, 1, machineID, strlen(machineID), idCharactersArray);
 
             	break;
             }
@@ -112,7 +115,7 @@ void takeMachineID() {
         	arrayPos++;
         	eepromVal++;
 
-        	machineID[machineIDCharacterLimit] = '\0';
+        	machineID[arrayPos] = '\0';
         	eepromData[eepromVal] = '\0';
 
         	HAL_Delay(150);
@@ -176,10 +179,13 @@ void takeWifiSSID() {
                 HAL_Delay(1250);
                 goto mainSSIDSection;
             } else {
-            	memcpy(&eepromData[ssidStartPos], wifiSSIDInt, wifiCharacterLimit); //destination, source, size
+            	/*memcpy(&eepromData[ssidStartPos], wifiSSIDInt, wifiCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);
+            	HAL_Delay(1000);*/
+
+            	// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
+            	writeStringToEEPROM(ssidStartPos, 1, wifiSSID, strlen(wifiSSID), charactersArray);
 
             	break;
             }
@@ -327,10 +333,13 @@ void takeWifiPass() {
                 HAL_Delay(1200);
                 goto mainPASSSection;
             } else {
-            	memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
+            	/*memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);
+            	HAL_Delay(1000);*/
+
+            	// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
+            	writeStringToEEPROM(passStartPos, 1, wifiPass, strlen(wifiPass), charactersArray);
 
             	break;
             }
