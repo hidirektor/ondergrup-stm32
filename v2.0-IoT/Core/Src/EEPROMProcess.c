@@ -207,17 +207,38 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	/*memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
+	//memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
+	int idVal = idStartPos;
+	int ssidVal = ssidStartPos;
+	int passVal = passStartPos;
+
+	for(int i=0; i<13; i++) {
+		if(i == 12) {
+			machineIDInt[i] = '\0';
+		}
+		machineIDInt[i] = eepromData[idVal];
+		idVal++;
+	}
 	convertArrays(1);
 	HAL_Delay(250);
-	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
+
+	//memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
+	for(int i=0; i<21; i++) {
+		wifiSSIDInt[i] = eepromData[ssidVal];
+		ssidVal++;
+	}
 	convertArrays(2);
 	HAL_Delay(250);
-	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
-	convertArrays(3);*/
-	readStringFromEEPROM(idStartPos, 1, machineID, machineIDCharacterLimit, idCharactersArray);
-	readStringFromEEPROM(ssidStartPos, 1, wifiSSID, wifiCharacterLimit, charactersArray);
-	readStringFromEEPROM(passStartPos, 1, wifiPass, wifiCharacterLimit, charactersArray);
+
+	//memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
+	for(int i=0; i<21; i++) {
+		wifiPassInt[i] = eepromData[passVal];
+		passVal++;
+	}
+	convertArrays(3);
+	//readStringFromEEPROM(idStartPos, 1, machineID, machineIDCharacterLimit, idCharactersArray);
+	//readStringFromEEPROM(ssidStartPos, 1, wifiSSID, wifiCharacterLimit, charactersArray);
+	//readStringFromEEPROM(passStartPos, 1, wifiPass, wifiCharacterLimit, charactersArray);
 	HAL_Delay(250);
 }
 
