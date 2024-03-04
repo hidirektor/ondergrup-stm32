@@ -16,6 +16,7 @@ void takeWifiPass(void);
 
 char* mergeData(void);
 void convertAndSendData(void);
+char* getCredentials(int type);
 
 void iotSetup(void);
 int checkEEPROM4ID(void);

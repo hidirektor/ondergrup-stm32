@@ -221,10 +221,11 @@ void eepromKontrol() {
 void convertArrays(int state) {
 	if(state == 1) {
 		int eepromVal = idStartPos;
+		int characterPos;
 
 		for(int i=0; i<machineIDCharacterLimit; i++) {
-			machineID[i] = idCharactersArray[eepromData[eepromVal]];
-			machineID[i + 1] = '\0';
+			characterPos = eepromData[eepromVal];
+			machineID[i] = idCharactersArray[characterPos];
 
 			eepromVal++;
 		}
@@ -234,7 +235,6 @@ void convertArrays(int state) {
 		for(int i=0; i<wifiCharacterLimit; i++) {
 			if(eepromData[eepromVal] != 0) {
 				wifiSSID[i] = charactersArray[eepromData[eepromVal]];
-				wifiSSID[i + 1] = '\0';
 
 				eepromVal++;
 			}
@@ -245,7 +245,6 @@ void convertArrays(int state) {
 		for(int i=0; i<wifiCharacterLimit; i++) {
 			if(eepromData[eepromVal] != 0) {
 				wifiPass[i] = charactersArray[eepromData[eepromVal]];
-				wifiPass[i + 1] = '\0';
 
 				eepromVal++;
 			}

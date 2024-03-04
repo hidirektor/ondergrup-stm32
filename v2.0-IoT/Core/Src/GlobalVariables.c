@@ -10,9 +10,9 @@
 
 uint8_t eepromData[110] = {0};
 char snum[5] = {0};
-char machineID[machineIDCharacterLimit] = {0};
-char wifiSSID[wifiCharacterLimit] = {0};
-char wifiPass[wifiCharacterLimit] = {0};
+char machineID[machineIDCharacterLimit];
+char wifiSSID[wifiCharacterLimit];
+char wifiPass[wifiCharacterLimit];
 
 uint8_t setupCompleted = 0;
 

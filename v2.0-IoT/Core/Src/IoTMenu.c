@@ -189,10 +189,6 @@ void printCredentials(int type) {
 		} else if(passLength < 16) {
 			lcd_print(2, 1, "                ");
 			lcd_print(2, 1, wifiPass);
-			/*for(int i=0; i<16-passLength; i++) {
-				lcd_delete_char(2, passLength);
-				passLength++;
-			}*/
 		} else {
 			//Eğer pass 16'dan büyükse kayarak yazdır
 			slideText(wifiPass, 1, 2, 1);

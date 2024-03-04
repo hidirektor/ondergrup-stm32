@@ -433,7 +433,7 @@ void takeWifiPass() {
 }
 
 char* mergeData() {
-	char combinedString[44] = "";
+	char combinedString[45] = "";
 	char temp[10];
 
 	uint8_t uintVariables[] = {
@@ -493,6 +493,113 @@ char* mergeData() {
 	return result;
 }
 
+char* getCredentials(int type) {
+	if(type == 1) {
+		char combinedString[12] = "";
+		char temp[10];
+
+		int startPos = idStartPos;
+
+		uint8_t uintVariables[] = {
+				eepromData[startPos + 0],
+				eepromData[startPos + 1],
+				eepromData[startPos + 2],
+				eepromData[startPos + 3],
+				eepromData[startPos + 4],
+				eepromData[startPos + 5],
+				eepromData[startPos + 6],
+				eepromData[startPos + 7],
+				eepromData[startPos + 8],
+				eepromData[startPos + 9],
+				eepromData[startPos + 10],
+				eepromData[startPos + 11]
+		};
+
+		for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
+			sprintf(temp, "%u", uintVariables[i]);
+			strcat(combinedString, temp);
+		}
+
+		char* result = malloc(strlen(combinedString) + 1);
+		strcpy(result, combinedString);
+		return result;
+	} else if(type == 2) {
+		char combinedString[20] = "";
+		char temp[10];
+
+		int startPos = ssidStartPos;
+
+		uint8_t uintVariables[] = {
+				eepromData[startPos + 0],
+				eepromData[startPos + 1],
+				eepromData[startPos + 2],
+				eepromData[startPos + 3],
+				eepromData[startPos + 4],
+				eepromData[startPos + 5],
+				eepromData[startPos + 6],
+				eepromData[startPos + 7],
+				eepromData[startPos + 8],
+				eepromData[startPos + 9],
+				eepromData[startPos + 10],
+				eepromData[startPos + 11],
+				eepromData[startPos + 12],
+				eepromData[startPos + 13],
+				eepromData[startPos + 14],
+				eepromData[startPos + 15],
+				eepromData[startPos + 16],
+				eepromData[startPos + 17],
+				eepromData[startPos + 18],
+				eepromData[startPos + 19]
+		};
+
+		for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
+			sprintf(temp, "%u", uintVariables[i]);
+			strcat(combinedString, temp);
+		}
+
+		char* result = malloc(strlen(combinedString) + 1);
+		strcpy(result, combinedString);
+		return result;
+	} else {
+		char combinedString[20] = "";
+		char temp[10];
+
+		int startPos = passStartPos;
+
+		uint8_t uintVariables[] = {
+				eepromData[startPos + 0],
+				eepromData[startPos + 1],
+				eepromData[startPos + 2],
+				eepromData[startPos + 3],
+				eepromData[startPos + 4],
+				eepromData[startPos + 5],
+				eepromData[startPos + 6],
+				eepromData[startPos + 7],
+				eepromData[startPos + 8],
+				eepromData[startPos + 9],
+				eepromData[startPos + 10],
+				eepromData[startPos + 11],
+				eepromData[startPos + 12],
+				eepromData[startPos + 13],
+				eepromData[startPos + 14],
+				eepromData[startPos + 15],
+				eepromData[startPos + 16],
+				eepromData[startPos + 17],
+				eepromData[startPos + 18],
+				eepromData[startPos + 19]
+		};
+
+		for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
+			sprintf(temp, "%u", uintVariables[i]);
+			strcat(combinedString, temp);
+		}
+
+		char* result = malloc(strlen(combinedString) + 1);
+		strcpy(result, combinedString);
+		return result;
+	}
+}
+
 void convertAndSendData() {
 	if(dilSecim == 0) {
 		lcd_print(1, 1, "  Veri  Esleme  ");
@@ -502,9 +609,9 @@ void convertAndSendData() {
 		lcd_print(2, 1, "   Started...   ");
 	}
 
-	lcd_print(1, 1, machineID);
-	lcd_print(2, 1, wifiSSID);
-	sendMachineData(&huart1, machineID, wifiSSID, wifiPass, mergeData());
+	for(int i=0; i<2; i++) {
+		sendMachineData(&huart1, machineID, wifiSSID, wifiPass, mergeData());
+	}
 
 	HAL_Delay(500);
 	lcd_clear();

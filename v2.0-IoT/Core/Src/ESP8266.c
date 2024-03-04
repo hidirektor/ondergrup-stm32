@@ -31,7 +31,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 }
 
 void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
-	char local_txA[200];
+	char local_txA[500];
 	char local_txB[50];
 	int len;
 
