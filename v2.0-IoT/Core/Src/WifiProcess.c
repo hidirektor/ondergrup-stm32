@@ -42,13 +42,10 @@ void takeMachineID() {
         		HAL_Delay(1200);
         		goto mainSection;
         	} else {
-        		memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
+        		//memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
-
-        		// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
-        		//writeStringToEEPROM(idStartPos, 1, machineID, strlen(machineID), idCharactersArray);
 
             	break;
             }
@@ -184,9 +181,6 @@ void takeWifiSSID() {
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);
-
-            	// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
-            	//writeStringToEEPROM(ssidStartPos, 1, wifiSSID, strlen(wifiSSID), charactersArray);
 
             	break;
             }
@@ -336,8 +330,8 @@ void takeWifiPass() {
                 HAL_Delay(1250);
                 goto mainPassSection;
             } else {
-            	memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
-            	HAL_Delay(100);
+            	//memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
+            	//HAL_Delay(100);
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
             	HAL_Delay(1000);

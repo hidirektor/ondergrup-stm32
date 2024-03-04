@@ -241,6 +241,7 @@ void convertArrays(int state) {
 
 		for(int i=0; i<12; i++) {
 			machineID[i] = idCharactersArray[eepromData[eepromVal]];
+			machineID[i + 1] = '\0';
 
 			eepromVal++;
 		}
@@ -250,6 +251,7 @@ void convertArrays(int state) {
 
 		for(int i=0; i<20; i++) {
 			wifiSSID[i] = charactersArray[eepromData[eepromVal]];
+			wifiSSID[i + 1] = '\0';
 
 			eepromVal++;
 		}
@@ -259,6 +261,7 @@ void convertArrays(int state) {
 
 		for(int i=0; i<20; i++) {
 			wifiPass[i] = charactersArray[eepromData[eepromVal]];
+			wifiPass[i + 1] = '\0';
 
 			eepromVal++;
 		}
