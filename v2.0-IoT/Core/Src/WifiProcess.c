@@ -24,7 +24,9 @@ void takeMachineID() {
     int arrayPos = 0; //kullanıcının seçtiği karakteri diziye aktarırken kullanılacak olan değişken
     int eepromVal = idStartPos; //kullanıcının seçtiği karakteri eeproma aktarmak için kullanılacak olan değişken
 
-    resetEEPROM4Wifi(1);
+    //resetEEPROM4Wifi(1);
+    memset(machineIDInt, 0, machineIDCharacterLimit*sizeof(*machineIDInt));
+    memset(machineID, 0, machineIDCharacterLimit*sizeof(*machineID));
     HAL_Delay(100);
 
     printTemplate(1, 0);
@@ -40,13 +42,13 @@ void takeMachineID() {
         		HAL_Delay(1200);
         		goto mainSection;
         	} else {
-        		/*memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
+        		memcpy(&eepromData[idStartPos], machineIDInt, machineIDCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);*/
+            	HAL_Delay(1000);
 
         		// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
-        		writeStringToEEPROM(idStartPos, 1, machineID, strlen(machineID), idCharactersArray);
+        		//writeStringToEEPROM(idStartPos, 1, machineID, strlen(machineID), idCharactersArray);
 
             	break;
             }
@@ -115,9 +117,6 @@ void takeMachineID() {
         	arrayPos++;
         	eepromVal++;
 
-        	machineID[arrayPos] = '\0';
-        	eepromData[eepromVal] = '\0';
-
         	HAL_Delay(150);
         }
 
@@ -156,7 +155,9 @@ void takeWifiSSID() {
 
     lcd_cursor(1);
 
-    resetEEPROM4Wifi(2);
+    //resetEEPROM4Wifi(2);
+    memset(wifiSSIDInt, 0, wifiCharacterLimit*sizeof(*wifiSSIDInt));
+    memset(wifiSSID, 0, wifiCharacterLimit*sizeof(*wifiSSID));
     HAL_Delay(100);
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
@@ -179,13 +180,13 @@ void takeWifiSSID() {
                 HAL_Delay(1250);
                 goto mainSSIDSection;
             } else {
-            	/*memcpy(&eepromData[ssidStartPos], wifiSSIDInt, wifiCharacterLimit); //destination, source, size
+            	//memcpy(&eepromData[ssidStartPos], wifiSSIDInt, wifiCharacterLimit); //destination, source, size
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);*/
+            	HAL_Delay(1000);
 
             	// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
-            	writeStringToEEPROM(ssidStartPos, 1, wifiSSID, strlen(wifiSSID), charactersArray);
+            	//writeStringToEEPROM(ssidStartPos, 1, wifiSSID, strlen(wifiSSID), charactersArray);
 
             	break;
             }
@@ -306,40 +307,40 @@ void takeWifiSSID() {
 }
 
 void takeWifiPass() {
-	mainPASSSection:
+	mainPassSection:
 
     lcd_cursor(1);
 
-    resetEEPROM4Wifi(3);
+    //resetEEPROM4Wifi(3);
+    memset(wifiPassInt, 0, wifiCharacterLimit*sizeof(*wifiPassInt));
+    memset(wifiPass, 0, wifiCharacterLimit*sizeof(*wifiPass));
     HAL_Delay(100);
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
-    int writeLoc = 7; //seçilen karakterlerin yazılacağı başlangıç karakteri
+    int writeLoc = 7; //seçilen karakterleri yazdırmaya başlanılacak karakter
 
-    int cursorPosition = 1; //kullanıcının seçim yaparken kullandığı işaretçi değişkeni
-    int arrayPos = 0; //kullanıcının seçtiği karakteri diziye aktarmak için kullanılacak olan değişken
-    int eepromVal = passStartPos; //kullanıcının seçtiği karakteri eeproma aktarırken kullanılacak olan değişken
+    int cursorPosition = 1; //kullanıcının gezindiği işaretçinin değişkeni
+    int arrayPosition = 0; //kullanıcının seçtiği karakteri diziye aktarırken kullanılacak değişken
+    int eepromVal = passStartPos; //kullanıcının seçtiği karakteri eeproma yazarken kullanılacak değişken
 
-    printTemplate(3, 1);
+    printTemplate(2, 1);
 
     while (1) {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(strlen(wifiPass) > 20) {
+            if(strlen(wifiSSID) > 20) {
                 lcd_clear();
                 lcd_print(1, 1, " 20 KARAKTERDEN ");
-                lcd_print(2, 1, "FAZLA PASS OLMAZ");
-                HAL_Delay(1200);
-                goto mainPASSSection;
+                lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                HAL_Delay(1250);
+                goto mainPassSection;
             } else {
-            	/*memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
+            	memcpy(&eepromData[passStartPos], wifiPassInt, wifiCharacterLimit); //destination, source, size
+            	HAL_Delay(100);
 
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);*/
-
-            	// Kullanıcı tarafından girilen veriyi EEPROM'a yaz
-            	writeStringToEEPROM(passStartPos, 1, wifiPass, strlen(wifiPass), charactersArray);
+            	HAL_Delay(1000);
 
             	break;
             }
@@ -347,30 +348,30 @@ void takeWifiPass() {
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
         	if(cursorPosition > 80) {
-        	    cursorPosition = 1;
+        		cursorPosition = 1;
         	}
 
             if (cursorPosition == 16) {
             	if(page == 1) {
             		cursorPosition = 1;
             		page++;
-            		printTemplate(3, 2);
+            		printTemplate(2, 2);
             	} else if(page == 2) {
             		cursorPosition = 1;
             		page++;
-            		printTemplate(3, 3);
+            		printTemplate(2, 3);
             	} else if(page == 3) {
             		cursorPosition = 1;
             		page++;
-            		printTemplate(3, 4);
+            		printTemplate(2, 4);
             	} else if(page == 4) {
             		cursorPosition = 1;
             		page++;
-            		printTemplate(3, 5);
+            		printTemplate(2, 5);
             	} else if(page == 5) {
             		cursorPosition = 1;
             		page = 1;
-            		printTemplate(3, 1);
+            		printTemplate(2, 1);
             	}
             } else {
             	cursorPosition++;
@@ -381,30 +382,30 @@ void takeWifiPass() {
 
         if (HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) == 1) {
         	if(cursorPosition < 1) {
-        	    cursorPosition = 80;
+        		cursorPosition = 80;
         	}
 
             if(cursorPosition == 1) {
             	if(page == 1) {
             		cursorPosition = 16;
             		page = 5;
-            		printTemplate(3, 5);
+            		printTemplate(2, 5);
             	} else if(page == 2) {
             		cursorPosition = 16;
             		page = 1;
-            		printTemplate(3, 1);
+            		printTemplate(2, 1);
             	} else if(page == 3) {
             		cursorPosition = 16;
             		page = 2;
-            		printTemplate(3, 2);
+            		printTemplate(2, 2);
             	} else if(page == 4) {
             		cursorPosition = 16;
             		page = 3;
-            		printTemplate(3, 3);
+            		printTemplate(2, 3);
             	} else if(page == 5) {
             		cursorPosition = 16;
             		page = 4;
-            		printTemplate(3, 4);
+            		printTemplate(2, 4);
             	}
             } else {
             	cursorPosition--;
@@ -414,35 +415,45 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-        	wifiPassInt[arrayPos] = cursorPosition - 1;
-        	eepromData[eepromVal] = cursorPosition - 1;
+            wifiPassInt[arrayPosition] = cursorPosition - 1;
+            eepromData[eepromVal] = cursorPosition - 1;
 
-            lcd_print_char(1, writeLoc, wifiPass[arrayPos]);
+            lcd_print_char(1, writeLoc, charactersArray[cursorPosition - 1]);
 
             writeLoc++;
-            arrayPos++;
+            arrayPosition++;
             eepromVal++;
 
-            wifiPassInt[arrayPos] = '\0';
+            wifiPassInt[arrayPosition] = '\0';
             eepromData[eepromVal] = '\0';
 
             HAL_Delay(150);
         }
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
-            if(strlen(wifiPass) >= 1) {
-            	wifiPassInt[arrayPos] = '\0';
-            	eepromData[eepromVal] = '\0';
+        	if(strlen(wifiSSID) >= 1) {
+        		wifiPassInt[arrayPosition] = '\0';
+        		eepromData[eepromVal] = '\0';
 
-            	writeLoc--;
-            	arrayPos--;
-            	eepromVal--;
+        		if(writeLoc > 7) {
+        			writeLoc--;
+        		} else if(writeLoc < 7) {
+        			writeLoc = 7;
+        		}
 
-            	lcd_delete_char(1, 6+arrayPos);
-            	HAL_Delay(50);
-            }
+        		if(arrayPosition > 0) {
+        			arrayPosition--;
+        			eepromVal--;
+        		} else if(arrayPosition < 0) {
+        			arrayPosition = 0;
+        			eepromVal = passStartPos;
+        		}
 
-            HAL_Delay(150);
+        		lcd_delete_char(1, 6+arrayPosition);
+        		HAL_Delay(50);
+        	}
+
+        	HAL_Delay(150);
         }
 
         lcd_gotoxy(2, cursorPosition);
@@ -526,7 +537,7 @@ void convertAndSendData() {
 }
 
 void iotSetup() {
-	if(iotMode != 0) {
+	/*if(iotMode != 0) {
 		if(strlen(machineID) != machineIDCharacterLimit) {
 			takeMachineID();
 		}
@@ -538,7 +549,7 @@ void iotSetup() {
 		if(!(strlen(wifiPass) >= 2)) {
 			takeWifiPass();
 		}
-	}
+	}*/
 
 	/*if(setupCompleted != 1) {
 		takeIDSection:

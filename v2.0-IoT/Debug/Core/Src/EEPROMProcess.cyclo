@@ -1,6 +1,2 @@
-../Core/Src/EEPROMProcess.c:12:6:eepromKontrol	40
-../Core/Src/EEPROMProcess.c:245:6:convertArrays	6
-../Core/Src/EEPROMProcess.c:276:6:customArrayConvert	3
-../Core/Src/EEPROMProcess.c:294:6:resetEEPROM4Wifi	6
-../Core/Src/EEPROMProcess.c:325:6:readStringFromEEPROM	3
-../Core/Src/EEPROMProcess.c:340:6:writeStringToEEPROM	3
+../Core/Src/EEPROMProcess.c:13:6:eepromKontrol	36
+../Core/Src/EEPROMProcess.c:237:6:convertArrays	6

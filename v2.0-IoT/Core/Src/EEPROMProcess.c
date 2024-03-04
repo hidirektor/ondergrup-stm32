@@ -8,6 +8,7 @@
 #include "EEPROMProcess.h"
 #include "main.h"
 #include "GlobalVariables.h"
+#include "i2c-lcd.h"
 
 void eepromKontrol() {
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -207,39 +208,30 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	//memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
-	int idVal = idStartPos;
-	int ssidVal = ssidStartPos;
-	int passVal = passStartPos;
-
-	for(int i=0; i<13; i++) {
-		if(i == 12) {
-			machineIDInt[i] = '\0';
-		}
-		machineIDInt[i] = eepromData[idVal];
-		idVal++;
-	}
+	memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
 	convertArrays(1);
 	HAL_Delay(250);
 
-	//memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
-	for(int i=0; i<21; i++) {
-		wifiSSIDInt[i] = eepromData[ssidVal];
-		ssidVal++;
-	}
+	lcd_print(1, 1, "TEST ID         ");
+	lcd_print(2, 1, machineID);
+	HAL_Delay(5000);
+
+
+	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(2);
 	HAL_Delay(250);
 
-	//memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
-	for(int i=0; i<21; i++) {
-		wifiPassInt[i] = eepromData[passVal];
-		passVal++;
-	}
+	lcd_print(1, 1, "TEST SSID       ");
+	lcd_print(2, 1, wifiSSID);
+	HAL_Delay(5000);
+
+	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(3);
-	//readStringFromEEPROM(idStartPos, 1, machineID, machineIDCharacterLimit, idCharactersArray);
-	//readStringFromEEPROM(ssidStartPos, 1, wifiSSID, wifiCharacterLimit, charactersArray);
-	//readStringFromEEPROM(passStartPos, 1, wifiPass, wifiCharacterLimit, charactersArray);
 	HAL_Delay(250);
+
+	lcd_print(1, 1, "TEST PASS       ");
+	lcd_print(2, 1, wifiPass);
+	HAL_Delay(5000);
 }
 
 void convertArrays(int state) {
@@ -271,84 +263,4 @@ void convertArrays(int state) {
 			eepromVal++;
 		}
 	}
-}
-
-void customArrayConvert(const uint8_t *inputArray, int state) {
-	if(state == 1) {
-		// machine ID convert
-		memset(machineID, 0, machineID[0]);
-		int eepromVal = idStartPos;
-
-		for(int i=0; i<machineIDCharacterLimit; i++) {
-			machineID[i] = idCharactersArray[eepromData[eepromVal]];
-
-			eepromVal++;
-		}
-	} else if(state == 2) {
-		//wifi ssid convert
-	} else {
-		//wifi pass convert
-	}
-}
-
-void resetEEPROM4Wifi(int state) {
-	if(state == 1) {
-		int eepromVal = idStartPos;
-
-		for(int i=0; i<machineIDCharacterLimit; i++) {
-			machineID[i] = '\0';
-			machineIDInt[i] = '\0';
-			eepromData[eepromVal] = '\0';
-			eepromVal++;
-		}
-	} else if(state == 2) {
-		int eepromVal = ssidStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiSSID[i] = '\0';
-			wifiSSIDInt[i] = '\0';
-			eepromData[eepromVal] = '\0';
-			eepromVal++;
-		}
-	} else {
-		int eepromVal = passStartPos;
-
-		for(int i=0; i<wifiCharacterLimit; i++) {
-			wifiPass[i] = '\0';
-			wifiPassInt[i] = '\0';
-			eepromData[eepromVal] = '\0';
-			eepromVal++;
-		}
-	}
-}
-
-void readStringFromEEPROM(uint16_t addr, int length, char* buffer, int len, const char* lookupArray) {
-    uint8_t data;
-    for (int i = 0; i < len; i++) {
-        // EEPROM'dan indexi oku
-        HAL_I2C_Mem_Read(&hi2c1, 0xA0, addr + i, length, &data, 1, HAL_MAX_DELAY);
-        // Index'i karşılık gelen karaktere çevir
-        if (data != '\0') {
-            buffer[i] = lookupArray[data];
-        } else {
-            buffer[i] = '\0'; // Null karakter bulunduğunda döngüyü sonlandır
-            break;
-        }
-    }
-}
-
-void writeStringToEEPROM(uint16_t addr, int length, const char* string, int len, const char* lookupArray) {
-    uint8_t data;
-    for (int i = 0; i < len; i++) {
-        // Karakterin lookupArray içindeki indexini bul
-        const char* found = strchr(lookupArray, string[i]);
-        if (found) {
-            data = (uint8_t)(found - lookupArray);
-            // Bulunan indexi EEPROM'a yaz
-            HAL_I2C_Mem_Write(&hi2c1, 0xA0, addr + i, length, &data, 1, HAL_MAX_DELAY);
-        }
-    }
-    // String sonu için null karakter ekleyin
-    data = '\0';
-    HAL_I2C_Mem_Write(&hi2c1, 0xA0, addr + len, length, &data, 1, HAL_MAX_DELAY);
 }

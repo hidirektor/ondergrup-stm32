@@ -861,6 +861,10 @@ void mainLoop() {
 			backLightTimer = millis;
 		}
 
+		if(buttonCheck() != 1) {
+			backLightTimer = millis;
+		}
+
 		if(hafizaYaz==1) {
 		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
 		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
@@ -912,7 +916,7 @@ void mainLoop() {
 
 		  lcd_clear();
 
-		  eepromKontrol();
+		  //eepromKontrol();
 		  hafizaOku=1;
 		}
 
