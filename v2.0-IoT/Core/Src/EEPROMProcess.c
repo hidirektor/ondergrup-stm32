@@ -208,62 +208,66 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
+	/*lcd_print(1, 1, "TEST VAL        ");
+	int eepromTest2Val = ssidStartPos;
+	for(int i=0; i<wifiCharacterLimit; i++) {
+		lcd_print(1, 1, "TEST VAL   ");
+		itoa(i, snum, 10);
+		lcd_print(1, 14, snum);
+		itoa(eepromData[eepromTest2Val], snum, 10);
+		lcd_print(2, 1, snum);
+		HAL_Delay(2000);
+		eepromTest2Val++;
+	}*/
+
 	memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
 	convertArrays(1);
 	HAL_Delay(250);
-
-	lcd_print(1, 1, "TEST ID         ");
-	lcd_print(2, 1, machineID);
-	HAL_Delay(5000);
 
 
 	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(2);
 	HAL_Delay(250);
 
-	lcd_print(1, 1, "TEST SSID       ");
-	lcd_print(2, 1, wifiSSID);
-	HAL_Delay(5000);
-
 	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(3);
 	HAL_Delay(250);
-
-	lcd_print(1, 1, "TEST PASS       ");
-	lcd_print(2, 1, wifiPass);
-	HAL_Delay(5000);
 }
 
 void convertArrays(int state) {
 	if(state == 1) {
-		memset(machineID, 0, machineID[0]);
+		//memset(machineID, 0, machineID[0]);
 		int eepromVal = idStartPos;
 
-		for(int i=0; i<12; i++) {
+		for(int i=0; i<machineIDCharacterLimit; i++) {
 			machineID[i] = idCharactersArray[eepromData[eepromVal]];
 			machineID[i + 1] = '\0';
 
 			eepromVal++;
 		}
 	} else if(state == 2) {
-		memset(wifiSSID, 0, wifiSSID[0]);
+		//memset(wifiSSID, 0, wifiSSID[0]);
 		int eepromVal = ssidStartPos;
 
-		for(int i=0; i<20; i++) {
-			wifiSSID[i] = charactersArray[eepromData[eepromVal]];
-			wifiSSID[i + 1] = '\0';
+		for(int i=0; i<wifiCharacterLimit; i++) {
+			if(eepromData[eepromVal] != 0) {
+				wifiSSID[i] = charactersArray[eepromData[eepromVal]];
+				wifiSSID[i + 1] = '\0';
 
-			eepromVal++;
+				eepromVal++;
+			}
 		}
 	} else {
-		memset(wifiPass, 0, wifiPass[0]);
+		//memset(wifiPass, 0, wifiPass[0]);
 		int eepromVal = passStartPos;
 
-		for(int i=0; i<20; i++) {
-			wifiPass[i] = charactersArray[eepromData[eepromVal]];
-			wifiPass[i + 1] = '\0';
+		for(int i=0; i<wifiCharacterLimit; i++) {
+			if(eepromData[eepromVal] != 0) {
+				wifiPass[i] = charactersArray[eepromData[eepromVal]];
+				wifiPass[i + 1] = '\0';
 
-			eepromVal++;
+				eepromVal++;
+			}
 		}
 	}
 }

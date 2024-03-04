@@ -155,6 +155,11 @@ void takeWifiSSID() {
     //resetEEPROM4Wifi(2);
     memset(wifiSSIDInt, 0, wifiCharacterLimit*sizeof(*wifiSSIDInt));
     memset(wifiSSID, 0, wifiCharacterLimit*sizeof(*wifiSSID));
+    int eepromTestVal = ssidStartPos;
+    for(int i=0; i<wifiCharacterLimit; i++) {
+    	eepromData[eepromTestVal] = '\0';
+    	eepromTestVal++;
+    }
     HAL_Delay(100);
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
@@ -255,10 +260,10 @@ void takeWifiSSID() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-            wifiSSIDInt[arrayPosition] = cursorPosition - 1;
-            eepromData[eepromVal] = cursorPosition - 1;
+            wifiSSIDInt[arrayPosition] = cursorPosition;
+            eepromData[eepromVal] = cursorPosition;
 
-            lcd_print_char(1, writeLoc, charactersArray[cursorPosition - 1]);
+            lcd_print_char(1, writeLoc, charactersArray[cursorPosition]);
 
             writeLoc++;
             arrayPosition++;
@@ -409,10 +414,10 @@ void takeWifiPass() {
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
-            wifiPassInt[arrayPosition] = cursorPosition - 1;
-            eepromData[eepromVal] = cursorPosition - 1;
+            wifiPassInt[arrayPosition] = cursorPosition;
+            eepromData[eepromVal] = cursorPosition;
 
-            lcd_print_char(1, writeLoc, charactersArray[cursorPosition - 1]);
+            lcd_print_char(1, writeLoc, charactersArray[cursorPosition]);
 
             writeLoc++;
             arrayPosition++;
