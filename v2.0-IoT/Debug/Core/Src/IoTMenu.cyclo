@@ -1,3 +1,4 @@
 ../Core/Src/IoTMenu.c:10:6:printTemplate	15
 ../Core/Src/IoTMenu.c:94:5:checkSlideVal	6
 ../Core/Src/IoTMenu.c:115:6:slideText	10
+../Core/Src/IoTMenu.c:158:6:printCredentials	3

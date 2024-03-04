@@ -15,6 +15,9 @@
 #define demoWifiSSID "ONDERLIFT_PERSONEL"
 #define demoWifiPass "PersonelOt2022*-"
 
+#define demoWifiSSIDEv "Turna"
+#define demoWifiPassEv "!?azxx!?1962edib1962"
+
 #define mainServer "85.95.231.92"
 #define mainServerWithPort "85.95.231.92:3000"
 extern char bufferTX[250];

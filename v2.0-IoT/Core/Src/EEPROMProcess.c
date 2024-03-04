@@ -208,35 +208,18 @@ void eepromKontrol() {
 		iotMode=0;
 	}
 
-	/*lcd_print(1, 1, "TEST VAL        ");
-	int eepromTest2Val = ssidStartPos;
-	for(int i=0; i<wifiCharacterLimit; i++) {
-		lcd_print(1, 1, "TEST VAL   ");
-		itoa(i, snum, 10);
-		lcd_print(1, 14, snum);
-		itoa(eepromData[eepromTest2Val], snum, 10);
-		lcd_print(2, 1, snum);
-		HAL_Delay(2000);
-		eepromTest2Val++;
-	}*/
-
-	memcpy(machineIDInt, &eepromData[idStartPos], machineIDCharacterLimit); //destination, source, size
 	convertArrays(1);
 	HAL_Delay(250);
 
-
-	memcpy(wifiSSIDInt, &eepromData[ssidStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(2);
 	HAL_Delay(250);
 
-	memcpy(wifiPassInt, &eepromData[passStartPos], wifiCharacterLimit); //destination, source, size
 	convertArrays(3);
 	HAL_Delay(250);
 }
 
 void convertArrays(int state) {
 	if(state == 1) {
-		//memset(machineID, 0, machineID[0]);
 		int eepromVal = idStartPos;
 
 		for(int i=0; i<machineIDCharacterLimit; i++) {
@@ -246,7 +229,6 @@ void convertArrays(int state) {
 			eepromVal++;
 		}
 	} else if(state == 2) {
-		//memset(wifiSSID, 0, wifiSSID[0]);
 		int eepromVal = ssidStartPos;
 
 		for(int i=0; i<wifiCharacterLimit; i++) {
@@ -258,7 +240,6 @@ void convertArrays(int state) {
 			}
 		}
 	} else {
-		//memset(wifiPass, 0, wifiPass[0]);
 		int eepromVal = passStartPos;
 
 		for(int i=0; i<wifiCharacterLimit; i++) {

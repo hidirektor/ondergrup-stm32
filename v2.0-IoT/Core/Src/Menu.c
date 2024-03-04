@@ -1727,13 +1727,7 @@ void menu() {
 		convertArrays(1);
 		HAL_Delay(50);
 
-		if(dilSecim == 0) {
-			lcd_print(1, 1, "MAKINE ID       ");
-		} else {
-			lcd_print(1, 1, "MACHINE ID      ");
-		}
-		lcd_print(2, 1, machineID);
-		lcd_print(2, 13, "    ");
+		printCredentials(1); //ekrana machine id yazdır
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeMachineID();
@@ -1741,9 +1735,7 @@ void menu() {
 			convertArrays(1);
 			HAL_Delay(50);
 
-			HAL_Delay(250);
-			lcd_print(2, 1, machineID);
-			lcd_print(2, 13, "    ");
+			printCredentials(1); //ekrana machine id yazdır
 		}
 	}
 

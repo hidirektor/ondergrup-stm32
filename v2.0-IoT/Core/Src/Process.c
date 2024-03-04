@@ -916,7 +916,7 @@ void mainLoop() {
 
 		  lcd_clear();
 
-		  //eepromKontrol();
+		  eepromKontrol();
 		  hafizaOku=1;
 		}
 
