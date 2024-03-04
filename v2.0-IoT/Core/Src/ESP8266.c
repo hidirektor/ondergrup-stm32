@@ -35,12 +35,16 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	char local_txB[50];
 	int len;
 
+	char subMachineID[13];
+	strncpy(subMachineID, machineID, 12);
+	subMachineID[12] = '\0';
+
 	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(4000);
 
 	sprintf(local_txA,
-			"GET /api/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
+			"GET /api/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
@@ -56,14 +60,18 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	char local_txB[50];
 	int len;
 
-	char bufferRX[200];
+	char bufferRX[2000];
+
+	char subMachineID[13];
+	strncpy(subMachineID, machineID, 12);
+	subMachineID[12] = '\0';
 
 	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(2000);
 
 	sprintf(local_txA,
-			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", machineID, mainServerWithPort);
+			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
@@ -76,7 +84,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
 	HAL_Delay(5000);
 
-	if (strstr(bufferRX, "HTTP/1.1 200 OK") != NULL && strstr(bufferRX, "\"message\": \"Machine ID is available.\"") != NULL) {
+	if (strstr(bufferRX, "available")) {
 	    return 1; // Success
 	}
 

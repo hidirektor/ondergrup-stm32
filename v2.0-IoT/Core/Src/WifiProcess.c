@@ -632,10 +632,11 @@ void iotSetup() {
 		}
 	}
 
-	/*if(setupCompleted != 1) {
+	if(setupCompleted != 1) {
 		takeIDSection:
 		if(checkMachineID(&huart1, machineID) == 1) {
 			setupCompleted = 1;
+			eepromData[104] = setupCompleted;
 			//EEPROMA yazma işlemini başlat
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
@@ -656,7 +657,7 @@ void iotSetup() {
 			HAL_Delay(200);
 			goto takeIDSection;
 		}
-	}*/
+	}
 
 	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
 	HAL_Delay(500);

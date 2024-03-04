@@ -15,7 +15,7 @@ int passStartPos = 83;
 
 char emptyArray[] = "                ";
 char idCharactersArray[] = "0123456789";
-char charactersArray[] = " abcdefghijklmnopqrstuvwxyzABCDEFGHIİJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>? ";
+char charactersArray[] = " abcdefghijklmnopqrstuvwxyzABCDEFGHIİJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?";
 
 int eepromVal[10] = {38, 39, 40, 41, 42, 43, 44, 45, 46, 47};
 int eepromFull[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
