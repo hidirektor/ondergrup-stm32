@@ -167,7 +167,35 @@ void printCredentials(int type) {
 		lcd_print(2, 13, "    ");
 	} else if(type == 2) {
 		//wifi ssid yazdır
+		int ssidLength = strlen(wifiSSID);
+
+		lcd_print(1, 1, "WIFI SSID       ");
+		if(ssidLength == 16) {
+			lcd_print(2, 1, wifiSSID);
+		} else if(ssidLength < 16) {
+			lcd_print(2, 1, "                ");
+			lcd_print(2, 1, wifiSSID);
+		} else {
+			//Eğer ssid 16'dan büyükse kayarak yazdır
+			slideText(wifiSSID, 1, 2, 0);
+		}
 	} else {
 		//wifi pass yazdır
+		int passLength = strlen(wifiPass);
+
+		lcd_print(1, 1, "WIFI PASS       ");
+		if(passLength == 16) {
+			lcd_print(2, 1, wifiPass);
+		} else if(passLength < 16) {
+			lcd_print(2, 1, "                ");
+			lcd_print(2, 1, wifiPass);
+			/*for(int i=0; i<16-passLength; i++) {
+				lcd_delete_char(2, passLength);
+				passLength++;
+			}*/
+		} else {
+			//Eğer pass 16'dan büyükse kayarak yazdır
+			slideText(wifiPass, 1, 2, 1);
+		}
 	}
 }

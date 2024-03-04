@@ -31,7 +31,10 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
 
-        	if(strlen(machineID) != machineIDCharacterLimit) {
+        	if(checkEEPROM4ID() != 1) {
+        		itoa(strlen(machineID), snum, 10);
+        		lcd_print(1, 1, snum);
+        		HAL_Delay(2500);
         		lcd_clear();
         		lcd_print(1, 1, " ID 12 KARAKTER ");
         		lcd_print(2, 1, " OLMAK ZORUNDA! ");
@@ -66,7 +69,7 @@ void takeMachineID() {
             	cursorPosition--;
             }
 
-            HAL_Delay(150);
+            HAL_Delay(250);
         }
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -499,6 +502,8 @@ void convertAndSendData() {
 		lcd_print(2, 1, "   Started...   ");
 	}
 
+	lcd_print(1, 1, machineID);
+	lcd_print(2, 1, wifiSSID);
 	sendMachineData(&huart1, machineID, wifiSSID, wifiPass, mergeData());
 
 	HAL_Delay(500);
@@ -506,8 +511,8 @@ void convertAndSendData() {
 }
 
 void iotSetup() {
-	/*if(iotMode != 0) {
-		if(strlen(machineID) != machineIDCharacterLimit) {
+	if(iotMode != 0) {
+		if(checkEEPROM4ID() != 1) {
 			takeMachineID();
 		}
 
@@ -518,7 +523,7 @@ void iotSetup() {
 		if(!(strlen(wifiPass) >= 2)) {
 			takeWifiPass();
 		}
-	}*/
+	}
 
 	/*if(setupCompleted != 1) {
 		takeIDSection:
@@ -544,9 +549,23 @@ void iotSetup() {
 			HAL_Delay(200);
 			goto takeIDSection;
 		}
+	}*/
+
+	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
+	HAL_Delay(500);
+	convertAndSendData();
+}
+
+int checkEEPROM4ID() {
+	int eepromVal = idStartPos;
+	int returnVal = 1;
+
+	for(int i=0; i<machineIDCharacterLimit; i++) {
+		if(eepromData[eepromVal] == '\0') {
+			returnVal = 0;
+		}
+		eepromVal++;
 	}
 
-	ESP8266_Init(&huart1, wifiSSID, wifiPass);
-	HAL_Delay(500);
-	convertAndSendData();*/
+	return returnVal;
 }

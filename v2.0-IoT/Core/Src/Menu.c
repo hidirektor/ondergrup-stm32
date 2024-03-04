@@ -1743,30 +1743,10 @@ void menu() {
 		calismaSayModu = 0;
 		lcd_backlight(1);
 
-		int ssidLength = strlen(wifiSSID);
-
 		convertArrays(2);
 		HAL_Delay(50);
 
-		lcd_print(1, 1, "WIFI SSID       ");
-		lcd_print(2, 1, "                ");
-		lcd_print(2, 1, wifiSSID);
-		/*if(ssidLength == 16) {
-			lcd_print(2, 1, wifiSSID);
-		} else if(ssidLength < 16) {
-			for(int i=0; i<16-ssidLength; i++) {
-				lcd_delete_char(2, ssidLength);
-				ssidLength++;
-			}
-		} else {
-			int lcdVal = 1;
-
-			//Eğer ssid 16'dan büyükse buraya ekle
-			for(int i=0; i<16; i++) {
-				lcd_print_char(2, lcdVal, wifiSSID[i]);
-				lcdVal++;
-			}
-		}*/
+		printCredentials(2); //ekrana wifi ssid yazdır
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiSSID();
@@ -1774,25 +1754,7 @@ void menu() {
 			convertArrays(2);
 			HAL_Delay(50);
 
-			ssidLength = strlen(wifiSSID);
-
-			HAL_Delay(250);
-			if(ssidLength == 16) {
-				lcd_print(2, 1, wifiSSID);
-			} else if(ssidLength < 16) {
-				for(int i=0; i<16-ssidLength; i++) {
-					lcd_delete_char(2, ssidLength);
-					ssidLength++;
-				}
-			} else {
-				int lcdVal = 1;
-
-				//Eğer ssid 16'dan büyükse buraya ekle
-				for(int i=0; i<16; i++) {
-					lcd_print_char(2, lcdVal, wifiSSID[i]);
-					lcdVal++;
-				}
-			}
+			printCredentials(2); //ekrana wifi ssid yazdır
 		}
 	}
 
@@ -1800,30 +1762,10 @@ void menu() {
 		calismaSayModu = 0;
 		lcd_backlight(1);
 
-		int passLength = strlen(wifiPass);
-
 		convertArrays(3);
 		HAL_Delay(50);
 
-		lcd_print(1, 1, "WIFI PASS       ");
-		lcd_print(2, 1, "                ");
-		lcd_print(2, 1, wifiPass);
-		/*if(passLength == 16) {
-			lcd_print(2, 1, wifiPass);
-		} else if(passLength < 16) {
-			for(int i=0; i<16-passLength; i++) {
-				lcd_delete_char(2, passLength);
-				passLength++;
-			}
-		} else {
-			int lcdVal = 1;
-
-			//Eğer pass 16'dan büyükse buraya ekle
-			for(int i=0; i<16; i++) {
-				lcd_print_char(2, lcdVal, wifiPass[i]);
-				lcdVal++;
-			}
-		}*/
+		printCredentials(3); //ekrana wifi pass yazdır
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			takeWifiPass();
@@ -1831,25 +1773,7 @@ void menu() {
 			convertArrays(3);
 			HAL_Delay(50);
 
-			passLength = strlen(wifiPass);
-
-			HAL_Delay(250);
-			if(passLength == 16) {
-				lcd_print(2, 1, wifiPass);
-			} else if(passLength < 16) {
-				for(int i=0; i<16-passLength; i++) {
-					lcd_delete_char(2, passLength);
-					passLength++;
-				}
-			} else {
-				int lcdVal = 1;
-
-				//Eğer pass 16'dan büyükse buraya ekle
-				for(int i=0; i<16; i++) {
-					lcd_print_char(2, lcdVal, wifiPass[i]);
-					lcdVal++;
-				}
-			}
+			printCredentials(3); //ekrana wifi pass yazdır
 		}
 	}
 

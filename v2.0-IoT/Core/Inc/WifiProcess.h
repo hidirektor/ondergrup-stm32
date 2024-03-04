@@ -18,5 +18,6 @@ char* mergeData(void);
 void convertAndSendData(void);
 
 void iotSetup(void);
+int checkEEPROM4ID(void);
 
 #endif /* INC_WIFIPROCESS_H_ */
