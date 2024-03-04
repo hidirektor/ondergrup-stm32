@@ -22,38 +22,32 @@ void printTemplate(int type, int page) {
 		lcd_print(2, 12, "7");
 		lcd_print(2, 13, "8");
 		lcd_print(2, 14, "9");
-		//lcd_print(1, 5, machineID);
 		lcd_gotoxy(2, 3);
 	} else if(type == 2) {
 		if(page == 1) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			//lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			//lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			//lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "GHIİJKLMNOPQRSTU");
 		} else if(page == 4) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			//lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "VWXYZ0123456789!");
 		} else if(page == 5) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
-			//lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "@#$%^&*()-_+=<>?");
 		}
 	} else if(type == 3) {
@@ -61,31 +55,26 @@ void printTemplate(int type, int page) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			//lcd_print(1, 7, wifiPass);
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			//lcd_print(1, 7, wifiPass);
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			//lcd_print(1, 7, wifiPass);
 			lcd_print(2, 1, "GHIİJKLMNOPQRSTU");
 		} else if(page == 4) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			//lcd_print(1, 7, wifiPass);
 			lcd_print(2, 1, "VWXYZ0123456789!");
 		} else if(page == 5) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "PASS: ");
-			//lcd_print(1, 7, wifiPass);
 			lcd_print(2, 1, "@#$%^&*()-_+=<>?");
 		}
 	}

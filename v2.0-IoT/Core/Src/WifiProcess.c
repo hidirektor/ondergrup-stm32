@@ -632,7 +632,7 @@ void iotSetup() {
 		}
 	}
 
-	if(setupCompleted != 1) {
+	/*if(setupCompleted != 1) {
 		takeIDSection:
 		if(checkMachineID(&huart1, machineID) == 1) {
 			setupCompleted = 1;
@@ -657,7 +657,7 @@ void iotSetup() {
 			HAL_Delay(200);
 			goto takeIDSection;
 		}
-	}
+	}*/
 
 	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
 	HAL_Delay(500);
