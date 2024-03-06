@@ -876,9 +876,9 @@ void mainLoop() {
 		  HAL_Delay(500);
 
 		  hafizaYaz=0;
-		  if(dilSecim==0) {
+		  if(dilSecim == 0) {
 			  lcd_print(2,1,"Data yazildi    ");
-		  } else if(dilSecim==1) {
+		  } else {
 			  lcd_print(2,1,"Data Wrote      ");
 		  }
 
@@ -889,9 +889,9 @@ void mainLoop() {
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
 		  if(ilkOkuma==0) {
 			  lcd_print(1,1,"   **EEPROM**   ");
-			  if(dilSecim==0) {
+			  if(dilSecim == 0) {
 				  lcd_print(2,1,"Data Okunuyor...");
-			  } else if(dilSecim==1) {
+			  } else {
 				  lcd_print(2,1,"Data Reading... ");
 			  }
 			  HAL_Delay(1000);
@@ -901,17 +901,17 @@ void mainLoop() {
 				  HAL_Delay(1000);
 			  }
 
-			  if(dilSecim==0) {
+			  if(dilSecim == 0) {
 				  lcd_print(2,1,"Data Okundu.    ");
-			  } else if(dilSecim==1) {
+			  } else {
 				  lcd_print(2,1,"Data Read.      ");
 			  }
 
 			  ilkOkuma=1;
 		  } else {
-			  if(dilSecim==0) {
+			  if(dilSecim == 0) {
 				  lcd_print(2,1,"Deger Kaydedildi");
-			  } else if(dilSecim==1) {
+			  } else {
 				  lcd_print(2,1,"Value Saved     ");
 			  }
 			  lcd_clear();

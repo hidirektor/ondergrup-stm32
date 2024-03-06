@@ -115,129 +115,141 @@ void menu() {
 	}
 
 	if (menuSayac == 1) {
-		if(dilSecim == 0) {
+		/*if(dilSecim == 0) {
 			lcd_print(1, 1, "HATA KAYIT LiST.");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "ERROR SAVE LiST.");
-		}
+		}*/
+		lcd_print(1, 1, hataKayitListText);
 
 		if(hataGostermeSirasi == 0) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "1.Hata Kodu: ");
 
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "1.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, birHataKoduText);
 			lcd_print(2, 15, "   ");
 			itoa(hataKayit1, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 1) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "2.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "2.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, ikiHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit2, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 2) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "3.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "3.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, ucHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit3, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 3) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "4.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "4.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, dortHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit4, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 4) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "5.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "5.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, besHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit5, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 5) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "6.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "6.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, altiHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit6, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 6) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "7.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "7.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, yediHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit7, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 7) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "8.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "8.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, sekizHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit8, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 8) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "9.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "9.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, dokuzHataKoduText);
 			lcd_print(2, 15, "  ");
 			itoa(hataKayit9, snum, 10);
 			lcd_print(2, 14, snum);
 		}
 
 		if(hataGostermeSirasi == 9) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "10.Hata Kodu: ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "10.Error Code:");
-			}
+			}*/
+			lcd_print(2, 1, onHataKoduText);
 			lcd_print(2, 16, " ");
 			itoa(hataKayit10, snum, 10);
 			lcd_print(2, 15, snum);
 		}
 
 		if(hataGostermeSirasi == 10) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "Silmek icin ent.");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Del. press enter");
-			}
+			}*/
+			lcd_print(2, 1, silmekIcinText);
 		}
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0) && (devirmeYuruyusSecim == 0)) {
@@ -274,24 +286,26 @@ void menu() {
 	}
 
 	if (menuSayac == 2) {
-		if(dilSecim == 0) {
+		/*if(dilSecim == 0) {
 			lcd_print(1, 1, "CALISMA SEKLi   ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "WORKNG PRINCIPLE");
-		}
+		}*/
+		lcd_print(1, 1, calismaSekliText);
 
 		if((devirmeYuruyusSecim == 1) || (devirmeYuruyusSecim == 2)) {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				lcd_print(2, 1, "Dvr Yrys secildi");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Tppng Mobil slct");
-			}
+			}*/
+			lcd_print(2, 1, devirmeYuruyusText);
 		}
 
 		if((calismaSekli == 0) && (devirmeYuruyusSecim == 0)) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Bastikca cal.  ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Deadman Control");
 			}
 		}
@@ -299,7 +313,7 @@ void menu() {
 		if((calismaSekli == 1) && (devirmeYuruyusSecim == 0)) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Bas gonder     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Call & Send    ");
 			}
 		}
@@ -336,14 +350,14 @@ void menu() {
 	if (menuSayac == 3) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "EMNIYET CER.    ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "SAFETY FRAME    ");
 		}
 
 		if(emniyetCercevesi == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(emniyetCercevesi == 1) {
@@ -376,20 +390,20 @@ void menu() {
 	if (menuSayac == 4) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "YAVASLAMA LIMIT ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "SLOW DOWN LIMIT ");
 		}
 
 		if(yavaslamaLimit == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(yavaslamaLimit == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -421,14 +435,14 @@ void menu() {
 	if (menuSayac == 5) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "ALT LIMIT       ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "DOWN LIMIT      ");
 		}
 
 		if(altLimit == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(altLimit == 1) {
@@ -487,7 +501,7 @@ void menu() {
 		} else if(basincSalteri == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -532,13 +546,13 @@ void menu() {
 		} else if(kapiSecimleri == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kat kapisi aktif");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Floor door act  ");
 			}
 		} else if(kapiSecimleri == 2){
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Tabla kapi aktif");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Pltfrm door act ");
 			}
 		} else if(kapiSecimleri == 3){
@@ -581,14 +595,14 @@ void menu() {
 	if (menuSayac == 8) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "KAPI ACMA TIPI  ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "OPEN DOOR TYPE  ");
 		}
 
 		if(kapiAcTipi == 0){
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kapi butonu ESP");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Door Button ESP");
 			}
 		} else if(kapiAcTipi == 1){
@@ -626,7 +640,7 @@ void menu() {
 	if (menuSayac == 9) {
 		if(dilSecim == 0){
 			lcd_print(1, 1, "1.KAT KAPI TiPi ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "1.FLOOR DOOR TYP");
 		}
 
@@ -635,7 +649,7 @@ void menu() {
 		} else if(kapi1Tip == 1) {
 			if(dilSecim == 0){
 				lcd_print(2, 1, "Buton kontrollu");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Button cntrolled");
 			}
 		} else if(kapi1Tip == 2) {
@@ -670,7 +684,7 @@ void menu() {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "1.KAPI AC SURESi");
 			lcd_print(2, 1, "Kac Saniye     ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "1.FLR DR OPN TMR");
 			lcd_print(2, 1, "Seconds        ");
 		}
@@ -704,7 +718,7 @@ void menu() {
 	if (menuSayac == 11) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "2.KAT KAPI TiPi ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "2.FLOOR DOOR TYP");
 		}
 
@@ -713,7 +727,7 @@ void menu() {
 		} else if(kapi2Tip == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Buton kontrollu");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Button cntrolled");
 			}
 		} else if(kapi2Tip == 2) {
@@ -748,7 +762,7 @@ void menu() {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "2.KAPI AC SURESi");
 			lcd_print(2, 1, "Kac Saniye     ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "2.FLR DR OPN TMR");
 			lcd_print(2, 1, "Seconds        ");
 		}
@@ -791,7 +805,7 @@ void menu() {
 		} else if(kapitablaTip == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Buton kontrollu");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Button cntrolled");
 			}
 		} else if(kapitablaTip == 2) {
@@ -825,14 +839,14 @@ void menu() {
 	if (menuSayac == 14) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "TBL KPI AC KONUM");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "PLTFRM DR OP LOC");
 		}
 
 		if(kapiTablaAcKonum == 0) {
 			if(dilSecim == 0){
 				lcd_print(2, 1, "1. Katta ac    ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "1. Floor open  ");
 			}
 		} else if(kapiTablaAcKonum == 1) {
@@ -845,7 +859,7 @@ void menu() {
 		} else if(kapiTablaAcKonum == 2) {
 			if(dilSecim == 0){
 				lcd_print(2, 1, "1.+2. Katta ac  ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "1.+2. Floor open");
 			}
 		} else if(kapiTablaAcKonum == 3) {
@@ -891,7 +905,7 @@ void menu() {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "TABLA KP AC SURE");
 			lcd_print(2, 1, "Kac Saniye     ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "PLTFM DR OPN TMR");
 			lcd_print(2, 1, "Seconds        ");
 		}
@@ -927,20 +941,20 @@ void menu() {
 	if (menuSayac == 16) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "YUKARI YAVAS LMT");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "UPPR SLW DWN LMT");
 		}
 
 		if(yukariYavasLimit == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(yukariYavasLimit == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -972,7 +986,7 @@ void menu() {
 	if (menuSayac == 17) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "DEVIRME-YURUYUS ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "TPPNG-MOBIL PLT ");
 		}
 
@@ -985,13 +999,13 @@ void menu() {
 		} else if(devirmeYuruyusSecim == 1) {
 			if(dilSecim == 0){
 				lcd_print(2, 1, "Yuruyus aktif  ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Drive active   ");
 			}
 		} else if(devirmeYuruyusSecim == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		}
@@ -1034,7 +1048,7 @@ void menu() {
 		if(devirmeYuruyusSecim == 2) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "DEVRM YUKARI SVC");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "TPPNG SWTCH/OPN");
 			}
 		} else if(devirmeYuruyusSecim == 1) {
@@ -1088,7 +1102,7 @@ void menu() {
 		if(devirmeYuruyusSecim == 2) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "DEVIRM ASAGI SVC");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "TPPNG SWTCH/CLSD");
 			}
 		} else if(devirmeYuruyusSecim == 1) {
@@ -1103,13 +1117,13 @@ void menu() {
 		if(devirmeAsagiGeriLimit == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(devirmeAsagiGeriLimit == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -1142,13 +1156,13 @@ void menu() {
 		if(devirmeYuruyusSecim == 1) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "YURUYUS SECiLDi ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "DRIVE SELECTED  ");
 			}
 		} else if(devirmeYuruyusSecim == 2) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "DEVIRME SLN TIPI");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "CYLNDR TYP/TIPPD");
 			}
 		}
@@ -1156,13 +1170,13 @@ void menu() {
 		if(devirmeSilindirTipi == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Tek tesir       ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Single acting  ");
 			}
 		} else if(devirmeSilindirTipi == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Cift tesir      ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Double acting  ");
 			}
 		}
@@ -1194,7 +1208,7 @@ void menu() {
 	if (menuSayac == 21) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "PLATFRM SLN TIPI");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "CYLNDR TYPE/PLT");
 		}
 
@@ -1208,7 +1222,7 @@ void menu() {
 		} else if(platformSilindirTipi == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Cift tesir      ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Double acting  ");
 			}
 		}
@@ -1245,7 +1259,7 @@ void menu() {
 	if (menuSayac == 22) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "YUKARI VALF SURE");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "UP VALVE TIMER  ");
 		}
 
@@ -1287,14 +1301,14 @@ void menu() {
 	if (menuSayac == 23) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "ASAGI VALF SURE ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "DOWN VALVE TIMER");
 		}
 
 		if(asagiValfTmr >= 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kac Saniye     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Second         ");
 			}
 		}
@@ -1330,13 +1344,13 @@ void menu() {
 		if(devirmeYuruyusSecim == 2) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "DVRM YKR VLF SN ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "TIPPD UP VLV TMR");
 			}
 		} else if(devirmeYuruyusSecim == 1) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "iLERi VALF SURE ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "FRWD DRV VLV TMR");
 			}
 		}
@@ -1344,7 +1358,7 @@ void menu() {
 		if(devirmeYukariIleriTmr >= 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kac Saniye     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Second         ");
 			}
 		}
@@ -1380,13 +1394,13 @@ void menu() {
 		if(devirmeYuruyusSecim == 2) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "DVRM ASG VALF SN");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "TPPD DWN VLV TMR");
 			}
 		} else if(devirmeYuruyusSecim == 1) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "GERi VALF SURE  ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "REVERSE VLV TMR ");
 			}
 		}
@@ -1394,7 +1408,7 @@ void menu() {
 		if(devirmeAsagiGeriTmr >= 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kac Saniye     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Second         ");
 			}
 		}
@@ -1429,7 +1443,7 @@ void menu() {
 	if (menuSayac == 26) {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "CALiSMA SURESi  ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "WORKING TIME    ");
 		}
 
@@ -1447,7 +1461,7 @@ void menu() {
 		} else if((makineCalismaTmr >= 10) && (makineCalismaTmr <=  99)) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kac Saniye     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Second         ");
 			}
 
@@ -1456,7 +1470,7 @@ void menu() {
 		} else if(makineCalismaTmr <=  9) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Kac Saniye     ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Second         ");
 			}
 
@@ -1494,13 +1508,13 @@ void menu() {
 		if(buzzer == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(buzzer == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -1535,13 +1549,13 @@ void menu() {
 		if(demoMode == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(demoMode == 1) {
 			if(dilSecim == 0){
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -1580,7 +1594,7 @@ void menu() {
 		if(calismaSayModu == 0) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "Calisma Sayisi  ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "Working Cycle   ");
 			}
 
@@ -1604,7 +1618,7 @@ void menu() {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "Calisma Sayisi  ");
 				lcd_print(2, 1, "Enter'la Sifirla");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(1, 1, "Working Cycle   ");
 				lcd_print(2, 1, "Del. with Enter ");
 			}
@@ -1650,7 +1664,7 @@ void menu() {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, "DIL SECIMI      ");
 			lcd_print(2, 1, "TURKCE          ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, "LANGUAGE SELECT ");
 			lcd_print(2, 1, "ENGLISH         ");
 		}
@@ -1688,13 +1702,13 @@ void menu() {
 		if(iotMode == 0) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Pasif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Passive         ");
 			}
 		} else if(iotMode == 1) {
 			if(dilSecim == 0) {
 				lcd_print(2, 1, "Aktif           ");
-			} else if(dilSecim == 1) {
+			} else {
 				lcd_print(2, 1, "Active          ");
 			}
 		}
@@ -1785,7 +1799,7 @@ void menu() {
 		if(dilSecim == 0) {
 			lcd_print(1, 1, " MENUDEN CIKIS  ");
 			lcd_print(2, 1, "ENTER'A BASINIZ ");
-		} else if(dilSecim == 1) {
+		} else {
 			lcd_print(1, 1, " EXIT THE MENU  ");
 			lcd_print(2, 1, "PUSH ENTER BUTON");
 		}

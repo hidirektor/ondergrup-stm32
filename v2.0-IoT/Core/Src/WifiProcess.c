@@ -33,7 +33,7 @@ void takeMachineID() {
 
         	if(checkEEPROM4ID() != 1) {
         		lcd_clear();
-        		if(dilSecim == 1) {
+        		if(dilSecim == 0) {
         			lcd_print(1, 1, " ID 12 KARAKTER ");
         			lcd_print(2, 1, " OLMAK ZORUNDA! ");
         		} else {
@@ -168,7 +168,7 @@ void takeWifiSSID() {
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
-                if(dilSecim == 1) {
+                if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
                 	lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 } else {
@@ -318,7 +318,7 @@ void takeWifiPass() {
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
-                if(dilSecim == 1) {
+                if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
                 	lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 } else {
@@ -656,7 +656,7 @@ void iotSetup() {
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
 		} else {
-			if(dilSecim == 1) {
+			if(dilSecim == 0) {
 				//türkçe hata mesajı
 				lcd_print(1, 1, " BU ID MAKINEDE ");
 				lcd_print(2, 1, "  KULLANILAMAZ  ");

@@ -81,7 +81,7 @@ char enteraBasinizText[16];
 char hataKoduText[16];
 
 void loadMenuTexts(uint8_t dilSecim) {
-	if(dilSecim == 1) {
+	if(dilSecim == 0) {
 		memcpy(menuyeGirildiText, menuyeGirildiTextTR, 16); //destination, source, size
 		memcpy(ayarlarText, ayarlarTextTR, 16);
 		memcpy(hataKayitListText, hataKayitListTextTR, 16);
