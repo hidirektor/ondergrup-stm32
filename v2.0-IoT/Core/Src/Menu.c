@@ -12,7 +12,7 @@
 #include "i2c-lcd.h"
 #include "WifiProcess.h"
 #include "IoTMenu.h"
-#include "Translation.h"
+#include "TextVariables.h"
 
 void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {
@@ -102,13 +102,16 @@ void menu() {
 	}
 
 	if (menuSayac == 0) {
-		if(dilSecim == 0) {
+		/*if(dilSecim == 0) {
 			lcd_print(1, 1, "MENUYE  GiRDiNiZ");
 			lcd_print(2, 1, "    AYARLAR     ");
 		} else if(dilSecim  ==  1) {
 			lcd_print(1, 1, "ENTERED THE MENU");
 			lcd_print(2, 1, "    SETTINGS    ");
-		}
+		}*/
+
+		lcd_print(1, 1, menuyeGirildiText);
+		lcd_print(2, 1, ayarlarText);
 	}
 
 	if (menuSayac == 1) {

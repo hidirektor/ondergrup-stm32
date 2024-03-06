@@ -6,6 +6,79 @@
  */
 
 #include "TextVariables.h"
+#include "Translation.h"
+#include "string.h"
+
+char menuyeGirildiText[16];
+char ayarlarText[16];
+char hataKayitListText[16];
+char birHataKoduText[16];
+char ikiHataKoduText[16];
+char ucHataKoduText[16];
+char dortHataKoduText[16];
+char besHataKoduText[16];
+char altiHataKoduText[16];
+char yediHataKoduText[16];
+char sekizHataKoduText[16];
+char dokuzHataKoduText[16];
+char onHataKoduText[16];
+char silmekIcinText[16];
+char calismaSekliText[16];
+char devirmeYuruyusText[16];
+char bastikcaCalisanText[16];
+char basGonderText[16];
+char emniyetCercevesiText[16];
+char pasifText[16];
+char aktifText[16];
+char yavaslamaLimitText[16];
+char altLimitText[16];
+char basincSalteriText[16];
+char kapiSecimleriText[16];
+char katKapisiAktifText[16];
+char tablaKapiAktifText[16];
+char katArtiTablaAktifText[16];
+char kapiAcmaTipiText[16];
+char kapiButonuESPText[16];
+char katButonuEXTText[16];
+char birKatKapiTipiText[16];
+char butonKontrolluText[16];
+char birinciKapiAcSuresiText[16];
+char kacSaniyeText[16];
+char ikinciKatKapiTipiText[16];
+char ikinciKapiAcSuresiText[16];
+char tablaKapiTipiText[16];
+char tablaKapiAcKonumText[16];
+char birinciKattaAcText[16];
+char ikinciKattaAcText[16];
+char birVeIkinciKattaAcText[16];
+char tablaKapiAcSureText[16];
+char yukariYavaslamaLimitiText[16];
+char devirmeYuruyusMenuText[16];
+char devirmeAktifText[16];
+char yuruyusAktifText[16];
+char devirmeYukariText[16];
+char yuruyusIleriText[16];
+char devirmeAsagiSivicText[16];
+char yuruyusGeriSivicText[16];
+char yuruyusSecildiText[16];
+char devirmeSilindirTipiText[16];
+char tekTesirText[16];
+char ciftTesirText[16];
+char platformSilindirTipiText[16];
+char yukariValfSureText[16];
+char asagiValfSureText[16];
+char devirmeYukariValfSureText[16];
+char ileriValfSureText[16];
+char devirmeAsagiValfSureText[16];
+char geriValfSureText[16];
+char calismaSuresiText[16];
+char calismaSayisiText[16];
+char enterlaSifirlaText[16];
+char dilSecimText[16];
+char secilenDilText[16];
+char menudenCikisText[16];
+char enteraBasinizText[16];
+char hataKoduText[16];
 
 void loadMenuTexts(uint8_t dilSecim) {
 	if(dilSecim == 1) {
@@ -29,7 +102,7 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(basGonderText, basGonderTextTR, 16);
 		memcpy(emniyetCercevesiText, emniyetCercevesiTextTR, 16);
 		memcpy(pasifText, pasifTextTR, 16);
-		memcpy(akfiText, aktifTextTR, 16);
+		memcpy(aktifText, aktifTextTR, 16);
 		memcpy(yavaslamaLimitText, yavaslamaLimitTextTR, 16);
 		memcpy(altLimitText, altLimitTextTR, 16);
 		memcpy(basincSalteriText, basincSalteriTextTR, 16);
@@ -100,7 +173,7 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(basGonderText, basGonderTextEN, 16);
 		memcpy(emniyetCercevesiText, emniyetCercevesiTextEN, 16);
 		memcpy(pasifText, pasifTextEN, 16);
-		memcpy(akfiText, aktifTextEN, 16);
+		memcpy(aktifText, aktifTextEN, 16);
 		memcpy(yavaslamaLimitText, yavaslamaLimitTextEN, 16);
 		memcpy(altLimitText, altLimitTextEN, 16);
 		memcpy(basincSalteriText, basincSalteriTextEN, 16);
