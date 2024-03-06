@@ -32,13 +32,16 @@ void takeMachineID() {
         	lcd_cursor(0);
 
         	if(checkEEPROM4ID() != 1) {
-        		itoa(strlen(machineID), snum, 10);
-        		lcd_print(1, 1, snum);
-        		HAL_Delay(2500);
         		lcd_clear();
-        		lcd_print(1, 1, " ID 12 KARAKTER ");
-        		lcd_print(2, 1, " OLMAK ZORUNDA! ");
-        		HAL_Delay(1200);
+        		if(dilSecim == 1) {
+        			lcd_print(1, 1, " ID 12 KARAKTER ");
+        			lcd_print(2, 1, " OLMAK ZORUNDA! ");
+        		} else {
+        			lcd_print(1, 1, " ID MUST BE  12 ");
+        			lcd_print(2, 1, "   CHARACTERS   ");
+        		}
+        		HAL_Delay(1250);
+
         		goto mainSection;
         	} else {
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -165,9 +168,15 @@ void takeWifiSSID() {
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
-                lcd_print(1, 1, " 20 KARAKTERDEN ");
-                lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                if(dilSecim == 1) {
+                	lcd_print(1, 1, " 20 KARAKTERDEN ");
+                	lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                } else {
+                	lcd_print(1, 1, "SSID CANT EXCEED");
+                	lcd_print(2, 1, " 20  CHARACTERS ");
+                }
                 HAL_Delay(1250);
+
                 goto mainSSIDSection;
             } else {
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -309,9 +318,15 @@ void takeWifiPass() {
 
             if(strlen(wifiSSID) > 20) {
                 lcd_clear();
-                lcd_print(1, 1, " 20 KARAKTERDEN ");
-                lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                if(dilSecim == 1) {
+                	lcd_print(1, 1, " 20 KARAKTERDEN ");
+                	lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                } else {
+                	lcd_print(1, 1, "PASS CANT EXCEED");
+                	lcd_print(2, 1, " 20  CHARACTERS ");
+                }
                 HAL_Delay(1250);
+
                 goto mainPassSection;
             } else {
             	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -632,7 +647,7 @@ void iotSetup() {
 		}
 	}
 
-	/*if(setupCompleted != 1) {
+	if(setupCompleted != 1) {
 		takeIDSection:
 		if(checkMachineID(&huart1, machineID) == 1) {
 			setupCompleted = 1;
@@ -657,7 +672,7 @@ void iotSetup() {
 			HAL_Delay(200);
 			goto takeIDSection;
 		}
-	}*/
+	}
 
 	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
 	HAL_Delay(500);

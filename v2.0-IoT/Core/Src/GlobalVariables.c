@@ -8,8 +8,8 @@
 #include "GlobalVariables.h"
 
 
-uint8_t eepromData[110] = {0};
-char snum[5] = {0};
+uint8_t eepromData[110];
+char snum[5];
 char machineID[machineIDCharacterLimit];
 char wifiSSID[wifiCharacterLimit];
 char wifiPass[wifiCharacterLimit];

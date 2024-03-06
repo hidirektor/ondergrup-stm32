@@ -8,6 +8,8 @@
 #include "ErrorProcess.h"
 #include "main.h"
 #include "GlobalVariables.h"
+#include "i2c-lcd.h"
+#include "EEPROMProcess.h"
 
 void hata2EEPROM(uint8_t hataKodu) {
 	if(eepromData[eepromHataBaslangic+(indeksSayisi-1)] != 0) {
@@ -25,7 +27,7 @@ void hata2EEPROM(uint8_t hataKodu) {
 
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, eepromHataBaslangic, indeksSayisi, &eepromData[eepromHataBaslangic], indeksSayisi, 3000);
 	HAL_Delay(500);
-	eepromKontrol(1);
+	eepromKontrol();
 }
 
 void hataKoduLcdGoster(uint8_t x) {

@@ -56,7 +56,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 }
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
-	char local_txA[200];
+	char local_txA[500];
 	char local_txB[50];
 	int len;
 
@@ -84,8 +84,8 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
 	HAL_Delay(5000);
 
-	if (strstr(bufferRX, "available")) {
-	    return 1; // Success
+	if (strstr(bufferRX, "HTTP/1.1 200 OK") || strstr(bufferRX, "HTTP/1.0 200 OK")) {
+	    return 1; // Başarılı yanıt
 	}
 
 	return 0; // Yanıt başarısız
