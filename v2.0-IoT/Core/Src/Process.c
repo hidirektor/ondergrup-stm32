@@ -13,6 +13,7 @@
 #include "EEPROMProcess.h"
 #include "WifiProcess.h"
 #include "Menu.h"
+#include "Translation.h"
 
 void lcdUpdate(uint8_t y) {
 	if(y==1) {
@@ -29,8 +30,10 @@ void lcdUpdate(uint8_t y) {
 		lcd_print(2, 6, " ");
 	} else if (y==7) {
 		lcd_clear();
-		lcd_print(1, 4, "ESP-RMK");
-		lcd_print(2, 6, "RUN");
+		lcd_print(1, 1, mainTextGN);
+		lcd_print(2, 1, mainText2GN);
+		//lcd_print(1, 4, "ESP-RMK");
+		//lcd_print(2, 6, "RUN");
 	}
 }
 

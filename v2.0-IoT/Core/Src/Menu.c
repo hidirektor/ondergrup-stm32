@@ -12,6 +12,7 @@
 #include "i2c-lcd.h"
 #include "WifiProcess.h"
 #include "IoTMenu.h"
+#include "Translation.h"
 
 void menu() {
 	if ((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port,butonIleriIn_Pin) == 1) && (butonKontrol == 0)) {

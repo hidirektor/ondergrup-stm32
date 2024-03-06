@@ -9,6 +9,7 @@
 #include "main.h"
 #include "GlobalVariables.h"
 #include "i2c-lcd.h"
+#include "TextVariables.h"
 
 void eepromKontrol() {
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
@@ -216,6 +217,8 @@ void eepromKontrol() {
 
 	convertArrays(3);
 	HAL_Delay(250);
+
+	loadMenuTexts(dilSecim);
 }
 
 void convertArrays(int state) {

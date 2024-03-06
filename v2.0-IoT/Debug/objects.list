@@ -7,6 +7,8 @@
 "./Core/Src/Menu.o"
 "./Core/Src/Process.o"
 "./Core/Src/SystemDefaults.o"
+"./Core/Src/TextVariables.o"
+"./Core/Src/Translation.o"
 "./Core/Src/WifiProcess.o"
 "./Core/Src/i2c-lcd.o"
 "./Core/Src/main.o"
