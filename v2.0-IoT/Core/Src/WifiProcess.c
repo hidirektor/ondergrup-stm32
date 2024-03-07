@@ -12,6 +12,7 @@
 #include "i2c-lcd.h"
 #include "IoTMenu.h"
 #include "EEPROMProcess.h"
+#include "TextVariables.h"
 
 void takeMachineID() {
 	mainSection:
@@ -33,13 +34,15 @@ void takeMachineID() {
 
         	if(checkEEPROM4ID() != 1) {
         		lcd_clear();
-        		if(dilSecim == 0) {
+        		/*if(dilSecim == 0) {
         			lcd_print(1, 1, " ID 12 KARAKTER ");
         			lcd_print(2, 1, " OLMAK ZORUNDA! ");
         		} else {
         			lcd_print(1, 1, " ID MUST BE  12 ");
         			lcd_print(2, 1, "   CHARACTERS   ");
-        		}
+        		}*/
+        		lcd_print(1, 1, mustBe12Text);
+        		lcd_print(2, 1, mustBe122Text);
         		HAL_Delay(1250);
 
         		goto mainSection;
@@ -167,14 +170,16 @@ void takeWifiSSID() {
             lcd_cursor(0);
 
             if(strlen(wifiSSID) > 20) {
-                lcd_clear();
+                /*lcd_clear();
                 if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
                 	lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 } else {
                 	lcd_print(1, 1, "SSID CANT EXCEED");
                 	lcd_print(2, 1, " 20  CHARACTERS ");
-                }
+                }*/
+            	lcd_print(1, 1, ssidExceedErrorText);
+            	lcd_print(2, 1, ssidExceedError2Text);
                 HAL_Delay(1250);
 
                 goto mainSSIDSection;
@@ -317,14 +322,16 @@ void takeWifiPass() {
             lcd_cursor(0);
 
             if(strlen(wifiSSID) > 20) {
-                lcd_clear();
+                /*lcd_clear();
                 if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
-                	lcd_print(2, 1, "FAZLA SSID OLMAZ");
+                	lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 } else {
                 	lcd_print(1, 1, "PASS CANT EXCEED");
                 	lcd_print(2, 1, " 20  CHARACTERS ");
-                }
+                }*/
+            	lcd_print(1, 1, passExceedErrorText);
+            	lcd_print(2, 1, passExceedError2Text);
                 HAL_Delay(1250);
 
                 goto mainPassSection;
@@ -616,13 +623,15 @@ char* getCredentials(int type) {
 }
 
 void convertAndSendData() {
-	if(dilSecim == 0) {
+	/*if(dilSecim == 0) {
 		lcd_print(1, 1, "  Veri  Esleme  ");
 		lcd_print(2, 1, " Baslatildi ... ");
 	} else {
 		lcd_print(1, 1, " Syncronization ");
 		lcd_print(2, 1, "   Started...   ");
-	}
+	}*/
+	lcd_print(1, 1, dataSynchText);
+	lcd_print(2, 1, dataSynch2Text);
 
 	for(int i=0; i<2; i++) {
 		sendMachineData(&huart1, machineID, wifiSSID, wifiPass, mergeData());
@@ -656,7 +665,7 @@ void iotSetup() {
         	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
         	HAL_Delay(1000);
 		} else {
-			if(dilSecim == 0) {
+			/*if(dilSecim == 0) {
 				//türkçe hata mesajı
 				lcd_print(1, 1, " BU ID MAKINEDE ");
 				lcd_print(2, 1, "  KULLANILAMAZ  ");
@@ -664,7 +673,9 @@ void iotSetup() {
 				//ingilizce hata mesajı
 				lcd_print(1, 1, "ID NOT AVAILABLE");
 				lcd_print(2, 1, "FOR THIS MACHINE");
-			}
+			}*/
+			lcd_print(1, 1, mustBeUniqueText);
+			lcd_print(2, 1, mustBeUnique2Text);
 
 			HAL_Delay(1250);
 			//Tekrar id alma işlemi

@@ -164,3 +164,28 @@ char secilenDilTextEN[16] = "ENGLISH        ";
 char menudenCikisTextEN[16] = " EXIT THE MENU  ";
 char enteraBasinizTextEN[16] = "PUSH ENTER BUTON";
 char hataKoduTextEN[16] = "   ERROR CODE   ";
+
+//IoT Messages:
+char dataSynchTextTR[16] = "  Veri  Esleme  ";
+char dataSynch2TextTR[16] = " Baslatildi ... ";
+char mustBeUniqueTextTR[16] = " BU ID MAKINEDE ";
+char mustBeUnique2TextTR[16] = " KULLANILAMAZ ! ";
+char mustBeUniqueTextEN[16] = " THIS ID IS NOT ";
+char mustBeUnique2TextEN[16] = "    AVAILABLE   ";
+
+char dataSynchTextEN[16] = " Syncronization ";
+char dataSynch2TextEN[16] = "   Started...   ";
+char mustBe12TextTR[16] = " ID 12 KARAKTER ";
+char mustBe122TextTR[16] = " OLMAK ZORUNDA! ";
+char mustBe12TextEN[16] = " ID MUST BE  12 ";
+char mustBe122TextEN[16] = "   CHARACTERS   ";
+
+char ssidExceedErrorTextTR[16] = " 20 KARAKTERDEN ";
+char ssidExceedError2TextTR[16] = "FAZLA SSID OLMAZ";
+char ssidExceedErrorTextEN[16] = "SSID CANT EXCEED";
+char ssidExceedError2TextEN[16] = " 20  CHARACTERS ";
+
+char passExceedErrorTextTR[16] = " 20 KARAKTERDEN ";
+char passExceedError2TextTR[16] = "FAZLA PASS OLMAZ";
+char passExceedErrorTextEN[16] = "PASS CANT EXCEED";
+char passExceedError2TextEN[16] = " 20  CHARACTERS ";

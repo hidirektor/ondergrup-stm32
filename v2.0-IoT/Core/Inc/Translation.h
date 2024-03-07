@@ -164,4 +164,30 @@ extern char menudenCikisTextEN[16];
 extern char enteraBasinizTextEN[16];
 extern char hataKoduTextEN[16];
 
+//IoT Messages:
+extern char dataSynchTextTR[16];
+extern char dataSynch2TextTR[16];
+extern char dataSynchTextEN[16];
+extern char dataSynch2TextEN[16];
+
+extern char mustBeUniqueTextTR[16];
+extern char mustBeUnique2TextTR[16];
+extern char mustBeUniqueTextEN[16];
+extern char mustBeUnique2TextEN[16];
+
+extern char mustBe12TextTR[16];
+extern char mustBe122TextTR[16];
+extern char mustBe12TextEN[16];
+extern char mustBe122TextEN[16];
+
+extern char ssidExceedErrorTextTR[16];
+extern char ssidExceedError2TextTR[16];
+extern char ssidExceedErrorTextEN[16];
+extern char ssidExceedError2TextEN[16];
+
+extern char passExceedErrorTextTR[16];
+extern char passExceedError2TextTR[16];
+extern char passExceedErrorTextEN[16];
+extern char passExceedError2TextEN[16];
+
 #endif /* INC_TRANSLATION_H_ */

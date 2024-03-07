@@ -83,5 +83,18 @@ extern char menudenCikisText[16];
 extern char enteraBasinizText[16];
 extern char hataKoduText[16];
 
+//IoT Messages:
+extern char dataSynchText[16];
+extern char dataSynch2Text[16];
+extern char mustBeUniqueText[16];
+extern char mustBeUnique2Text[16];
+extern char mustBe12Text[16];
+extern char mustBe122Text[16];
+extern char ssidExceedErrorText[16];
+extern char ssidExceedError2Text[16];
+extern char passExceedErrorText[16];
+extern char passExceedError2Text[16];
+
+
 
 #endif /* INC_TEXTVARIABLES_H_ */

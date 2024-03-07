@@ -80,6 +80,18 @@ char menudenCikisText[16];
 char enteraBasinizText[16];
 char hataKoduText[16];
 
+//IoT Messages:
+char dataSynchText[16];
+char dataSynch2Text[16];
+char mustBeUniqueText[16];
+char mustBeUnique2Text[16];
+char mustBe12Text[16];
+char mustBe122Text[16];
+char ssidExceedErrorText[16];
+char ssidExceedError2Text[16];
+char passExceedErrorText[16];
+char passExceedError2Text[16];
+
 void loadMenuTexts(uint8_t dilSecim) {
 	if(dilSecim == 0) {
 		memcpy(menuyeGirildiText, menuyeGirildiTextTR, 16); //destination, source, size
@@ -152,6 +164,16 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(menudenCikisText, menudenCikisTextTR, 16);
 		memcpy(enteraBasinizText, enteraBasinizTextTR, 16);
 		memcpy(hataKoduText, hataKoduTextTR, 16);
+		memcpy(dataSynchText, dataSynchTextTR, 16);
+		memcpy(dataSynch2Text, dataSynch2TextTR, 16);
+		memcpy(mustBeUniqueText, mustBeUniqueTextTR, 16);
+		memcpy(mustBeUnique2Text, mustBeUnique2TextTR, 16);
+		memcpy(mustBe12Text, mustBe12TextTR, 16);
+		memcpy(mustBe122Text, mustBe122TextTR, 16);
+		memcpy(ssidExceedErrorText, ssidExceedErrorTextTR, 16);
+		memcpy(ssidExceedError2Text, ssidExceedError2TextTR, 16);
+		memcpy(passExceedErrorText, passExceedErrorTextTR, 16);
+		memcpy(passExceedError2Text, passExceedError2TextTR, 16);
 	} else {
 		memcpy(menuyeGirildiText, menuyeGirildiTextEN, 16); //destination, source, size
 		memcpy(ayarlarText, ayarlarTextEN, 16);
@@ -223,5 +245,15 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(menudenCikisText, menudenCikisTextEN, 16);
 		memcpy(enteraBasinizText, enteraBasinizTextEN, 16);
 		memcpy(hataKoduText, hataKoduTextEN, 16);
+		memcpy(dataSynchText, dataSynchTextEN, 16);
+		memcpy(dataSynch2Text, dataSynch2TextEN, 16);
+		memcpy(mustBeUniqueText, mustBeUniqueTextEN, 16);
+		memcpy(mustBeUnique2Text, mustBeUnique2TextEN, 16);
+		memcpy(mustBe12Text, mustBe12TextEN, 16);
+		memcpy(mustBe122Text, mustBe122TextEN, 16);
+		memcpy(ssidExceedErrorText, ssidExceedErrorTextEN, 16);
+		memcpy(ssidExceedError2Text, ssidExceedError2TextEN, 16);
+		memcpy(passExceedErrorText, passExceedErrorTextEN, 16);
+		memcpy(passExceedError2Text, passExceedError2TextEN, 16);
 	}
 }
