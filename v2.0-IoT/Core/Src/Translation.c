@@ -18,6 +18,7 @@ char prudhomeTextGN[16] = "Prudhome        ";
 char pizzattoTextGN[16] = "Pizzato         ";
 char buzzerTextGN[16] = "BUZZER          ";
 char demoModTextGN[16] = "DEMO MODE      ";
+char iotModTextGN[16] = "IoT MODE        ";
 
 
 //Türkçe Metinler:

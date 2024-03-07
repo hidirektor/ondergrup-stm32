@@ -7,4 +7,4 @@
 ../Core/Src/Process.c:127:6:checkKapiSecimleri	9
 ../Core/Src/Process.c:157:6:checkAktifCalisma	347
 ../Core/Src/Process.c:695:6:checkDemoModCalisma	43
-../Core/Src/Process.c:857:6:mainLoop	35
+../Core/Src/Process.c:857:6:mainLoop	31

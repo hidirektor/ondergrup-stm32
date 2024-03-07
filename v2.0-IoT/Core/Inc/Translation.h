@@ -18,6 +18,7 @@ extern char prudhomeTextGN[16];
 extern char pizzattoTextGN[16];
 extern char buzzerTextGN[16];
 extern char demoModTextGN[16];
+extern char iotModTextGN[16];
 
 //Türkçe Metinler:
 extern char menuyeGirildiTextTR[16];
