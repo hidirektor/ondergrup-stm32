@@ -32,8 +32,6 @@ void lcdUpdate(uint8_t y) {
 		lcd_clear();
 		lcd_print(1, 1, mainTextGN);
 		lcd_print(2, 1, mainText2GN);
-		//lcd_print(1, 4, "ESP-RMK");
-		//lcd_print(2, 6, "RUN");
 	}
 }
 
@@ -926,8 +924,8 @@ void mainLoop() {
 		if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)) {
 			lcd_clear();
 			HAL_Delay(10);
-			lcd_print(1, 1, "    ESP-RMK     ");
-			lcd_print(2, 1, "      RUN       ");
+			lcd_print(1, 1, mainTextGN);
+			lcd_print(2, 1, mainText2GN);
 			mesajYazildi=1;
 		}
 
