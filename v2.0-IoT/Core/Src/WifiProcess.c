@@ -34,15 +34,15 @@ void takeMachineID() {
 
         	if(checkEEPROM4ID() != 1) {
         		lcd_clear();
-        		/*if(dilSecim == 0) {
+        		if(dilSecim == 0) {
         			lcd_print(1, 1, " ID 12 KARAKTER ");
         			lcd_print(2, 1, " OLMAK ZORUNDA! ");
         		} else {
         			lcd_print(1, 1, " ID MUST BE  12 ");
         			lcd_print(2, 1, "   CHARACTERS   ");
-        		}*/
-        		lcd_print(1, 1, mustBe12Text);
-        		lcd_print(2, 1, mustBe122Text);
+        		}
+        		//lcd_print(1, 1, mustBe12Text);
+        		//lcd_print(2, 1, mustBe122Text);
         		HAL_Delay(1250);
 
         		goto mainSection;
@@ -139,7 +139,7 @@ void takeMachineID() {
                 	eepromVal = idStartPos;
                 }
 
-                lcd_delete_char(1, 4+arrayPos);
+                lcd_delete_char(1, 4+arrayPos+1);
                 HAL_Delay(50);
             }
 
@@ -170,16 +170,15 @@ void takeWifiSSID() {
             lcd_cursor(0);
 
             if(strlen(wifiSSID) > 20) {
-                /*lcd_clear();
                 if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
                 	lcd_print(2, 1, "FAZLA SSID OLMAZ");
                 } else {
                 	lcd_print(1, 1, "SSID CANT EXCEED");
                 	lcd_print(2, 1, " 20  CHARACTERS ");
-                }*/
-            	lcd_print(1, 1, ssidExceedErrorText);
-            	lcd_print(2, 1, ssidExceedError2Text);
+                }
+            	//lcd_print(1, 1, ssidExceedErrorText);
+            	//lcd_print(2, 1, ssidExceedError2Text);
                 HAL_Delay(1250);
 
                 goto mainSSIDSection;
@@ -261,6 +260,7 @@ void takeWifiSSID() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             eepromData[eepromVal] = cursorPosition;
+            wifiSSID[arrayPosition] = charactersArray[cursorPosition];
 
             lcd_print_char(1, writeLoc, charactersArray[cursorPosition]);
 
@@ -269,6 +269,7 @@ void takeWifiSSID() {
             eepromVal++;
 
             eepromData[eepromVal] = '\0';
+            wifiSSID[arrayPosition] = '\0';
 
             HAL_Delay(150);
         }
@@ -276,6 +277,7 @@ void takeWifiSSID() {
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
         	if(strlen(wifiSSID) >= 1) {
         		eepromData[eepromVal] = '\0';
+        		wifiSSID[arrayPosition] = '\0';
 
         		if(writeLoc > 7) {
         			writeLoc--;
@@ -291,7 +293,7 @@ void takeWifiSSID() {
         			eepromVal = ssidStartPos;
         		}
 
-        		lcd_delete_char(1, 6+arrayPosition);
+        		lcd_delete_char(1, 6+arrayPosition+1);
         		HAL_Delay(50);
         	}
 
@@ -321,17 +323,16 @@ void takeWifiPass() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
             lcd_cursor(0);
 
-            if(strlen(wifiSSID) > 20) {
-                /*lcd_clear();
+            if(strlen(wifiPass) > 20) {
                 if(dilSecim == 0) {
                 	lcd_print(1, 1, " 20 KARAKTERDEN ");
                 	lcd_print(2, 1, "FAZLA PASS OLMAZ");
                 } else {
                 	lcd_print(1, 1, "PASS CANT EXCEED");
                 	lcd_print(2, 1, " 20  CHARACTERS ");
-                }*/
-            	lcd_print(1, 1, passExceedErrorText);
-            	lcd_print(2, 1, passExceedError2Text);
+                }
+            	//lcd_print(1, 1, passExceedErrorText);
+            	//lcd_print(2, 1, passExceedError2Text);
                 HAL_Delay(1250);
 
                 goto mainPassSection;
@@ -413,6 +414,7 @@ void takeWifiPass() {
 
         if (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
             eepromData[eepromVal] = cursorPosition;
+            wifiPass[arrayPosition] = charactersArray[cursorPosition];
 
             lcd_print_char(1, writeLoc, charactersArray[cursorPosition]);
 
@@ -421,13 +423,15 @@ void takeWifiPass() {
             eepromVal++;
 
             eepromData[eepromVal] = '\0';
+            wifiPass[arrayPosition] = '\0';
 
             HAL_Delay(150);
         }
 
         if(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin) == 1) {
-        	if(strlen(wifiSSID) >= 1) {
+        	if(strlen(wifiPass) >= 1) {
         		eepromData[eepromVal] = '\0';
+        		wifiPass[arrayPosition] = '\0';
 
         		if(writeLoc > 7) {
         			writeLoc--;
@@ -443,7 +447,7 @@ void takeWifiPass() {
         			eepromVal = passStartPos;
         		}
 
-        		lcd_delete_char(1, 6+arrayPosition);
+        		lcd_delete_char(1, 6+arrayPosition+1);
         		HAL_Delay(50);
         	}
 
