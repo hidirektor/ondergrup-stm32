@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 void loadMenuTexts(uint8_t dilSecim);
+void menuVariableFinisher(void);
 
 extern char menuyeGirildiText[16];
 extern char ayarlarText[16];

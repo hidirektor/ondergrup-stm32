@@ -12,6 +12,7 @@
 #include "HardwareTest.h"
 #include "EEPROMProcess.h"
 #include "WifiProcess.h"
+#include "TextVariables.h"
 #include "Translation.h"
 /* USER CODE END Includes */
 
@@ -112,10 +113,11 @@ int main(void)
 
   i2cTest();
   HAL_Delay(100);
-  lcd_print(1, 1, splashTextGN);
-  lcd_print(2, 1, splashText2GN);
-  //lcd_print(1,1,"     RMK-V1     ");
-  //lcd_print(2,1,"ONDTECH ESP CONT");
+  //menuVariableFinisher();
+  //lcd_print(1, 1, splashTextGN);
+  //lcd_print(2, 1, splashText2GN);
+  lcd_print(1,1,"     RMK-V1     ");
+  lcd_print(2,1,"ONDTECH ESP CONT");
   HAL_Delay(1000);
   lcd_clear();
 
