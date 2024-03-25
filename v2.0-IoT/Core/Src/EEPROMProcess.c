@@ -218,7 +218,7 @@ void eepromKontrol() {
 	convertArrays(3);
 	HAL_Delay(250);
 
-	//loadMenuTexts(dilSecim);
+	loadMenuTexts(dilSecim);
 }
 
 void convertArrays(int state) {
