@@ -270,6 +270,9 @@ void menuVariableFinisher(void) {
 	buzzerTextGN[16] = '\0';
 	demoModTextGN[16] = '\0';
 	iotModTextGN[16] = '\0';
+	cycleTextGN[16] = '\0';
+	eepromTextGN[16] = '\0';
+
 	menuyeGirildiText[16] = '\0';
 	ayarlarText[16] = '\0';
 	hataKayitListText[16] = '\0';

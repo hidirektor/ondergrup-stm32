@@ -19,6 +19,8 @@ char pizzattoTextGN[17] = "Pizzato         ";
 char buzzerTextGN[17] = "BUZZER          ";
 char demoModTextGN[17] = "DEMO MODE      ";
 char iotModTextGN[17] = "IoT MODE        ";
+char cycleTextGN[17] = "Cycle      ";
+char eepromTextGN[17] = "   **EEPROM**   ";
 
 
 //Türkçe Metinler:

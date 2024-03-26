@@ -823,8 +823,8 @@ void checkDemoModCalisma() {
 		}
 
 		if (menuGiris==0) {
-			lcd_print(2,1,"Cycle      ");
-			lcd_print(1,1, "    DEMO MODE   ");
+			lcd_print(1, 1, demoModTextGN);
+			lcd_print(2, 1, cycleTextGN);
 			itoa(calismaSayisi10000, snum, 10);
 			lcd_print(2,12,snum);
 			itoa(calismaSayisi1000, snum, 10);
@@ -886,7 +886,7 @@ void mainLoop() {
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
 		  if(ilkOkuma==0) {
-			  lcd_print(1,1,"   **EEPROM**   ");
+			  lcd_print(1, 1, eepromTextGN);
 			  if(dilSecim == 0) {
 				  lcd_print(2,1,"Data Okunuyor...");
 			  } else {
