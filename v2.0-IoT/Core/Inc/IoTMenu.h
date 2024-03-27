@@ -16,5 +16,6 @@ void printTemplate(int type, int page);
 int checkSlideVal(int state);
 void slideText(const char* text, int startPos, int startLine, int state);
 void printCredentials(int type);
+void checkEditMode(void);
 
 #endif /* INC_IOTMENU_H_ */

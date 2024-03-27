@@ -14,6 +14,7 @@
 #include "WifiProcess.h"
 #include "Menu.h"
 #include "Translation.h"
+#include "TextVariables.h"
 
 void lcdUpdate(uint8_t y) {
 	if(y==1) {
@@ -32,6 +33,14 @@ void lcdUpdate(uint8_t y) {
 		lcd_clear();
 		lcd_print(1, 1, mainTextGN);
 		lcd_print(2, 1, mainText2GN);
+	}
+}
+
+void checkLCDBacklight() {
+	if(millis - backLightTimer >= lcdBacklightSure*10) {
+		lcd_backlight(0);
+	} else {
+		lcd_backlight(1);
 	}
 }
 
@@ -81,14 +90,6 @@ uint8_t buttonCheck(void) {
 		return 1;
 	}
 	return 0;
-}
-
-void checkLCDBacklight() {
-	if(millis - backLightTimer >= lcdBacklightSure*10) {
-		lcd_backlight(0);
-	} else {
-		lcd_backlight(1);
-	}
 }
 
 void checkBasincSalteri() {
@@ -862,7 +863,7 @@ void mainLoop() {
 			backLightTimer = millis;
 		}
 
-		if(buttonCheck() != 1) {
+		if(buttonCheck() == 1) {
 			backLightTimer = millis;
 		}
 
@@ -874,11 +875,7 @@ void mainLoop() {
 		  HAL_Delay(500);
 
 		  hafizaYaz=0;
-		  if(dilSecim == 0) {
-			  lcd_print(2,1,"Data yazildi    ");
-		  } else {
-			  lcd_print(2,1,"Data Wrote      ");
-		  }
+		  lcd_print(2, 1, dataYazildiText);
 
 		  HAL_Delay(1000);
 		  lcd_clear();
@@ -887,11 +884,7 @@ void mainLoop() {
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
 		  if(ilkOkuma==0) {
 			  lcd_print(1, 1, eepromTextGN);
-			  if(dilSecim == 0) {
-				  lcd_print(2,1,"Data Okunuyor...");
-			  } else {
-				  lcd_print(2,1,"Data Reading... ");
-			  }
+			  lcd_print(2, 1, dataOkunuyorText);
 			  HAL_Delay(1000);
 
 			  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
@@ -899,19 +892,11 @@ void mainLoop() {
 				  HAL_Delay(1000);
 			  }
 
-			  if(dilSecim == 0) {
-				  lcd_print(2,1,"Data Okundu.    ");
-			  } else {
-				  lcd_print(2,1,"Data Read.      ");
-			  }
+			  lcd_print(2, 1, dataOkunduText);
 
 			  ilkOkuma=1;
 		  } else {
-			  if(dilSecim == 0) {
-				  lcd_print(2,1,"Deger Kaydedildi");
-			  } else {
-				  lcd_print(2,1,"Value Saved     ");
-			  }
+			  lcd_print(2, 1, degerKaydedildiText);
 			  lcd_clear();
 		  }
 

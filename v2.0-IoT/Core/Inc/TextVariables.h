@@ -96,6 +96,16 @@ extern char ssidExceedError2Text[17];
 extern char passExceedErrorText[17];
 extern char passExceedError2Text[17];
 
+//EEPROM Messages:
+extern char dataYazildiText[17];
+extern char dataOkunuyorText[17];
+extern char dataOkunduText[17];
+extern char degerKaydedildiText[17];
 
+//ErrorCode Messages:
+extern char errorCodeText[17];
+
+//Hardware texts:
+extern char machineIDText[17];
 
 #endif /* INC_TEXTVARIABLES_H_ */

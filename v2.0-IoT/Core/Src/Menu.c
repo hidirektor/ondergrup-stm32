@@ -1275,6 +1275,7 @@ void menu() {
 			if(dilSecim > 1) {
 				dilSecim = 0;
 			}
+			loadMenuTexts(dilSecim);
 
 			bekle();
 		}
@@ -1285,6 +1286,7 @@ void menu() {
 		   	if(dilSecim > 0) {
 		   		dilSecim = 1;
 		   	}
+		   	loadMenuTexts(dilSecim);
 
 			bekle();
 		}

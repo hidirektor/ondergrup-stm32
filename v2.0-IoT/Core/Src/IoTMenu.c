@@ -6,6 +6,7 @@
  */
 
 #include "IoTMenu.h"
+#include "TextVariables.h"
 
 void printTemplate(int type, int page) {
 	HAL_Delay(200);
@@ -163,11 +164,7 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 void printCredentials(int type) {
 	if(type == 1) {
 		//machine id yazdır
-		if(dilSecim == 0) {
-			lcd_print(1, 1, "MAKINE ID       ");
-		} else {
-			lcd_print(1, 1, "MACHINE ID      ");
-		}
+		lcd_print(1, 1, machineIDText);
 		lcd_print(2, 1, machineID);
 		lcd_print(2, 13, "    ");
 	} else if(type == 2) {

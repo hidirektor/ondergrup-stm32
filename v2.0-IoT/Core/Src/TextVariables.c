@@ -92,6 +92,18 @@ char ssidExceedError2Text[17];
 char passExceedErrorText[17];
 char passExceedError2Text[17];
 
+//EEPROM Messages:
+char dataYazildiText[17];
+char dataOkunuyorText[17];
+char dataOkunduText[17];
+char degerKaydedildiText[17];
+
+//Error Code:
+char errorCodeText[17];
+
+//Hardware texts:
+char machineIDText[17];
+
 void loadMenuTexts(uint8_t dilSecim) {
 	if(dilSecim == 0) {
 		memcpy(menuyeGirildiText, menuyeGirildiTextTR, 17); //destination, source, size
@@ -174,6 +186,12 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(ssidExceedError2Text, ssidExceedError2TextTR, 17);
 		memcpy(passExceedErrorText, passExceedErrorTextTR, 17);
 		memcpy(passExceedError2Text, passExceedError2TextTR, 17);
+		memcpy(dataYazildiText, dataYazildiTextTR, 17);
+		memcpy(dataOkunuyorText, dataOkunuyorTextTR, 17);
+		memcpy(dataOkunduText, dataOkunduTextTR, 17);
+		memcpy(degerKaydedildiText, degerKaydedildiTextTR, 17);
+		memcpy(errorCodeText, errorCodeTextTR, 17);
+		memcpy(machineIDText, machineIDTextTR, 17);
 	} else {
 		memcpy(menuyeGirildiText, menuyeGirildiTextEN, 17); //destination, source, size
 		memcpy(ayarlarText, ayarlarTextEN, 17);
@@ -255,6 +273,12 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(ssidExceedError2Text, ssidExceedError2TextEN, 17);
 		memcpy(passExceedErrorText, passExceedErrorTextEN, 17);
 		memcpy(passExceedError2Text, passExceedError2TextEN, 17);
+		memcpy(dataYazildiText, dataYazildiTextEN, 17);
+		memcpy(dataOkunuyorText, dataOkunuyorTextEN, 17);
+		memcpy(dataOkunduText, dataOkunduTextEN, 17);
+		memcpy(degerKaydedildiText, degerKaydedildiTextEN, 17);
+		memcpy(errorCodeText, errorCodeTextEN, 17);
+		memcpy(machineIDText, machineIDTextEN, 17);
 	}
 	menuVariableFinisher();
 }
@@ -355,4 +379,16 @@ void menuVariableFinisher(void) {
 	ssidExceedError2Text[16] = '\0';
 	passExceedErrorText[16] = '\0';
 	passExceedError2Text[16] = '\0';
+
+	//Eeprom Messages:
+	dataYazildiText[16] = '\0';
+	dataOkunuyorText[16] = '\0';
+	dataOkunduText[16] = '\0';
+	degerKaydedildiText[16] = '\0';
+
+	//Error Code Messages:
+	errorCodeText[16] = '\0';
+
+	//Hardware texts:
+	machineIDText[16] = '\0';
 }

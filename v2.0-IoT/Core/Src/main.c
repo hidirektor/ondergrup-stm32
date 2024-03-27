@@ -1,7 +1,6 @@
 /* USER CODE BEGIN Header */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <IoTMenu.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -14,6 +13,7 @@
 #include "WifiProcess.h"
 #include "TextVariables.h"
 #include "Translation.h"
+#include "i2c-lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +34,13 @@ UART_HandleTypeDef huart1;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+CAN_HandleTypeDef hcan;
+
+I2C_HandleTypeDef hi2c1;
+
+TIM_HandleTypeDef htim1;
+
+UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
@@ -46,7 +53,6 @@ static void MX_CAN_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
-
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
 
@@ -64,6 +70,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesm
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
@@ -95,6 +102,7 @@ int main(void)
   HAL_Delay(10);
   lcd_init();
   HAL_Delay(10);
+
   HAL_TIM_Base_Start_IT(&htim1);
   while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
   while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);

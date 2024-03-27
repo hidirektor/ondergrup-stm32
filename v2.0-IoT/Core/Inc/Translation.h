@@ -192,4 +192,25 @@ extern char passExceedError2TextTR[17];
 extern char passExceedErrorTextEN[17];
 extern char passExceedError2TextEN[17];
 
+//EEPROM Metinleri
+extern char dataYazildiTextTR[17];
+extern char dataYazildiTextEN[17];
+
+extern char dataOkunuyorTextTR[17];
+extern char dataOkunuyorTextEN[17];
+
+extern char dataOkunduTextTR[17];
+extern char dataOkunduTextEN[17];
+
+extern char degerKaydedildiTextTR[17];
+extern char degerKaydedildiTextEN[17];
+
+//ErrorCode Metinleri
+extern char errorCodeTextTR[17];
+extern char errorCodeTextEN[17];
+
+//Hardware Metinleri:
+extern char machineIDTextTR[17];
+extern char machineIDTextEN[17];
+
 #endif /* INC_TRANSLATION_H_ */

@@ -10,8 +10,8 @@
 
 void lcdUpdate(uint8_t);
 void bekle(void);
-uint8_t buttonCheck(void);
 void checkLCDBacklight(void);
+uint8_t buttonCheck(void);
 void checkBasincSalteri(void);
 void checkBasGonder(void);
 void checkKapiSecimleri(void);

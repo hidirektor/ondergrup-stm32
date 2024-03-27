@@ -191,3 +191,24 @@ char passExceedErrorTextTR[17] = " 20 KARAKTERDEN ";
 char passExceedError2TextTR[17] = "FAZLA PASS OLMAZ";
 char passExceedErrorTextEN[17] = "PASS CANT EXCEED";
 char passExceedError2TextEN[17] = " 20  CHARACTERS ";
+
+//EEPROM Messages:
+char dataYazildiTextTR[17] = "Data yazildi    ";
+char dataYazildiTextEN[17] = "Data Wrote      ";
+
+char dataOkunuyorTextTR[17] = "Data Okunuyor...";
+char dataOkunuyorTextEN[17] = "Data Reading... ";
+
+char dataOkunduTextTR[17] = "Data Okundu.    ";
+char dataOkunduTextEN[17] = "Data Read.      ";
+
+char degerKaydedildiTextTR[17] = "Deger Kaydedildi";
+char degerKaydedildiTextEN[17] = "Value Saved     ";
+
+//Error List:
+char errorCodeTextTR[17] = "   HATA KODU";
+char errorCodeTextEN[17] = "   ERROR CODE";
+
+//Hardware Test:
+char machineIDTextTR[17] = "MAKINE ID       ";
+char machineIDTextEN[17] = "MACHINE ID      ";

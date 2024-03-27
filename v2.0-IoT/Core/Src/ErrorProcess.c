@@ -10,6 +10,7 @@
 #include "GlobalVariables.h"
 #include "i2c-lcd.h"
 #include "EEPROMProcess.h"
+#include "TextVariables.h"
 
 void hata2EEPROM(uint8_t hataKodu) {
 	if(eepromData[eepromHataBaslangic+(indeksSayisi-1)] != 0) {
@@ -32,51 +33,27 @@ void hata2EEPROM(uint8_t hataKodu) {
 
 void hataKoduLcdGoster(uint8_t x) {
 	if(x==1) {
-		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 1, "1");
 		lcd_print(2, 7, "          ");
 	} else if(x==2){
-		if(dilSecim==0){
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 2, "2");
 		lcd_print(2, 7, "          ");
 	} else if(x==3) {
-		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 3, "3");
 		lcd_print(2, 7, "          ");
 	} else if(x==4){
-		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 4, "4");
 		lcd_print(2, 7, "          ");
 	} else if(x==5) {
-		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 5, "5");
 		lcd_print(2, 7, "          ");
 	} else if(x==6) {
-		if(dilSecim==0) {
-			lcd_print(1, 1, "   HATA KODU");
-		} else if(dilSecim==1) {
-			lcd_print(1, 1, "   ERROR CODE");
-		}
+		lcd_print(1, 1, errorCodeText);
 		lcd_print(2, 6, "6");
 		lcd_print(2, 7, "          ");
 	}

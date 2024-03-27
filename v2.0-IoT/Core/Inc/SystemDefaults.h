@@ -10,7 +10,7 @@
 
 #define machineIDCharacterLimit 12
 #define wifiCharacterLimit 20
-#define lcdBacklightSure  6 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
+#define lcdBacklightSure  1 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 #define demoWifiSSID "ONDERLIFT_PERSONEL"
 #define demoWifiPass "PersonelOt2022*-"
