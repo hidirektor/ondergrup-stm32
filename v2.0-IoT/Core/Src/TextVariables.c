@@ -108,6 +108,8 @@ char machineIDText[17];
 char idConfirmationText[17];
 char idConfirmationSubText[17];
 
+char wifiConfirmationText[17];
+
 void loadMenuTexts(uint8_t dilSecim) {
 	if(dilSecim == 0) {
 		memcpy(menuyeGirildiText, menuyeGirildiTextTR, 17); //destination, source, size
@@ -198,6 +200,7 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(machineIDText, machineIDTextTR, 17);
 		memcpy(idConfirmationText, idConfirmationTextTR, 17);
 		memcpy(idConfirmationSubText, idConfirmationSubTextTR, 17);
+		memcpy(wifiConfirmationText, wifiConfirmationTextTR, 17);
 	} else {
 		memcpy(menuyeGirildiText, menuyeGirildiTextEN, 17); //destination, source, size
 		memcpy(ayarlarText, ayarlarTextEN, 17);
@@ -287,6 +290,7 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(machineIDText, machineIDTextEN, 17);
 		memcpy(idConfirmationText, idConfirmationTextEN, 17);
 		memcpy(idConfirmationSubText, idConfirmationSubTextEN, 17);
+		memcpy(wifiConfirmationText, wifiConfirmationTextEN, 17);
 	}
 	menuVariableFinisher();
 }
@@ -403,4 +407,6 @@ void menuVariableFinisher(void) {
 	//Confirmation Texts:
 	idConfirmationText[16] = '\0';
 	idConfirmationSubText[16] = '\0';
+
+	wifiConfirmationText[16] = '\0';
 }

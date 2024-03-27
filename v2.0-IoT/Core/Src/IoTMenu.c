@@ -29,26 +29,31 @@ void printTemplate(int type, int page) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "abcdefghijklmnop");
 		} else if(page == 2) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "qrstuvwxyzABCDEF");
 		} else if(page == 3) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "GHIİJKLMNOPQRSTU");
 		} else if(page == 4) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "VWXYZ0123456789!");
 		} else if(page == 5) {
 			lcd_clear();
 			HAL_Delay(100);
 			lcd_print(1, 1, "SSID: ");
+			lcd_print(1, 7, wifiSSID);
 			lcd_print(2, 1, "@#$%^&*()-_+=<>?");
 		}
 	} else if(type == 3) {

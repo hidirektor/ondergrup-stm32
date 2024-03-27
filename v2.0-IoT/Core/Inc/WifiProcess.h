@@ -12,6 +12,7 @@
 
 void takeMachineIDWithConfirmation(void);
 void takeMachineID(void);
+uint8_t ssidConfirmation(void);
 void takeWifiSSID(void);
 void takeWifiPass(void);
 

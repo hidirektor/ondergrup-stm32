@@ -112,4 +112,6 @@ extern char machineIDText[17];
 extern char idConfirmationText[17];
 extern char idConfirmationSubText[17];
 
+extern char wifiConfirmationText[17];
+
 #endif /* INC_TEXTVARIABLES_H_ */

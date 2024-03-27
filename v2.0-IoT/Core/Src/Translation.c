@@ -219,3 +219,6 @@ char idConfirmationTextEN[17] = "ID  CONFIRMATION";
 
 char idConfirmationSubTextTR[17] = "  YUKARI BASIN  ";
 char idConfirmationSubTextEN[17] = "PRESS UP  BUTTON";
+
+char wifiConfirmationTextTR[17] = "ONAY: YUKARI BTN";
+char wifiConfirmationTextEN[17] = "CONFRM: PRESS UP";

@@ -220,4 +220,7 @@ extern char idConfirmationTextEN[17];
 extern char idConfirmationSubTextTR[17];
 extern char idConfirmationSubTextEN[17];
 
+extern char wifiConfirmationTextTR[17];
+extern char wifiConfirmationTextEN[17];
+
 #endif /* INC_TRANSLATION_H_ */

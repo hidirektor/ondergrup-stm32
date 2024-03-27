@@ -1,5 +1,5 @@
 ../Core/Src/IoTMenu.c:11:6:printTemplate	15
-../Core/Src/IoTMenu.c:84:5:checkSlideVal	6
-../Core/Src/IoTMenu.c:105:6:slideText	14
-../Core/Src/IoTMenu.c:164:6:printCredentials	7
-../Core/Src/IoTMenu.c:201:6:checkEditMode	3
+../Core/Src/IoTMenu.c:89:5:checkSlideVal	6
+../Core/Src/IoTMenu.c:110:6:slideText	14
+../Core/Src/IoTMenu.c:169:6:printCredentials	7
+../Core/Src/IoTMenu.c:206:6:checkEditMode	3
