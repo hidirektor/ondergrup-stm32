@@ -57,6 +57,10 @@ void menu() {
 			menuSayac = 26;
 		}
 
+		if(menuSayac == 33 && iotMode == 0) {
+			menuSayac = 35;
+		}
+
 		bekle();
 	}
 
@@ -97,6 +101,10 @@ void menu() {
 
 		if((menuSayac == 25) && (devirmeYuruyusSecim == 0)) {
 			menuSayac = 23;
+		}
+
+		if(menuSayac == 34 && iotMode == 0) {
+			menuSayac = 32;
 		}
 
 		bekle();
