@@ -212,3 +212,10 @@ char errorCodeTextEN[17] = "   ERROR CODE";
 //Hardware Test:
 char machineIDTextTR[17] = "MAKINE ID       ";
 char machineIDTextEN[17] = "MACHINE ID      ";
+
+//Confirmation Texts:
+char idConfirmationTextTR[17] = "ID DEGISIM ONAYI";
+char idConfirmationTextEN[17] = "ID  CONFIRMATION";
+
+char idConfirmationSubTextTR[17] = "  YUKARI BASIN  ";
+char idConfirmationSubTextEN[17] = "PRESS UP  BUTTON";

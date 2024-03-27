@@ -14,6 +14,27 @@
 #include "EEPROMProcess.h"
 #include "TextVariables.h"
 
+
+void takeMachineIDWithConfirmation() {
+	HAL_Delay(500);
+	int confirmationVal = 0;
+	while(confirmationVal == 0) {
+		lcd_print(1, 1, idConfirmationText);
+		lcd_print(2, 1, idConfirmationSubText);
+
+		if((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin)) == 1) {
+			confirmationVal = 1;
+		}
+	}
+
+	takeMachineID();
+
+	convertArrays(1);
+	HAL_Delay(50);
+
+	printCredentials(1); //Ekrana makine id'si yazdır.
+}
+
 void takeMachineID() {
 	mainSection:
 

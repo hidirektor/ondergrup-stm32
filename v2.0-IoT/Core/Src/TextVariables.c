@@ -104,6 +104,10 @@ char errorCodeText[17];
 //Hardware texts:
 char machineIDText[17];
 
+//Confirmation Texts:
+char idConfirmationText[17];
+char idConfirmationSubText[17];
+
 void loadMenuTexts(uint8_t dilSecim) {
 	if(dilSecim == 0) {
 		memcpy(menuyeGirildiText, menuyeGirildiTextTR, 17); //destination, source, size
@@ -192,6 +196,8 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(degerKaydedildiText, degerKaydedildiTextTR, 17);
 		memcpy(errorCodeText, errorCodeTextTR, 17);
 		memcpy(machineIDText, machineIDTextTR, 17);
+		memcpy(idConfirmationText, idConfirmationTextTR, 17);
+		memcpy(idConfirmationSubText, idConfirmationSubTextTR, 17);
 	} else {
 		memcpy(menuyeGirildiText, menuyeGirildiTextEN, 17); //destination, source, size
 		memcpy(ayarlarText, ayarlarTextEN, 17);
@@ -279,6 +285,8 @@ void loadMenuTexts(uint8_t dilSecim) {
 		memcpy(degerKaydedildiText, degerKaydedildiTextEN, 17);
 		memcpy(errorCodeText, errorCodeTextEN, 17);
 		memcpy(machineIDText, machineIDTextEN, 17);
+		memcpy(idConfirmationText, idConfirmationTextEN, 17);
+		memcpy(idConfirmationSubText, idConfirmationSubTextEN, 17);
 	}
 	menuVariableFinisher();
 }
@@ -391,4 +399,8 @@ void menuVariableFinisher(void) {
 
 	//Hardware texts:
 	machineIDText[16] = '\0';
+
+	//Confirmation Texts:
+	idConfirmationText[16] = '\0';
+	idConfirmationSubText[16] = '\0';
 }

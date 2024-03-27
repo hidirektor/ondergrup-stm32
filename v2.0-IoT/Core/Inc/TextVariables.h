@@ -108,4 +108,8 @@ extern char errorCodeText[17];
 //Hardware texts:
 extern char machineIDText[17];
 
+//Confirmation Texts:
+extern char idConfirmationText[17];
+extern char idConfirmationSubText[17];
+
 #endif /* INC_TEXTVARIABLES_H_ */

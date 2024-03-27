@@ -213,4 +213,11 @@ extern char errorCodeTextEN[17];
 extern char machineIDTextTR[17];
 extern char machineIDTextEN[17];
 
+//Confirmation texts:
+extern char idConfirmationTextTR[17];
+extern char idConfirmationTextEN[17];
+
+extern char idConfirmationSubTextTR[17];
+extern char idConfirmationSubTextEN[17];
+
 #endif /* INC_TRANSLATION_H_ */

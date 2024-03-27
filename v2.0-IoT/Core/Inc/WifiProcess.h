@@ -10,6 +10,7 @@
 #ifndef INC_WIFIPROCESS_H_
 #define INC_WIFIPROCESS_H_
 
+void takeMachineIDWithConfirmation(void);
 void takeMachineID(void);
 void takeWifiSSID(void);
 void takeWifiPass(void);

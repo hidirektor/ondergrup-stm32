@@ -1342,18 +1342,12 @@ void menu() {
 		printCredentials(1); //ekrana machine id yazdır
 
 		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
-			takeMachineID();
-
-			convertArrays(1);
-			HAL_Delay(50);
-
-			printCredentials(1); //ekrana machine id yazdır
+			takeMachineIDWithConfirmation();
 		}
 	}
 
 	if (menuSayac == 33) {
 		calismaSayModu = 0;
-		lcd_backlight(1);
 
 		convertArrays(2);
 		HAL_Delay(50);
@@ -1373,7 +1367,6 @@ void menu() {
 
 	if (menuSayac == 34) {
 		calismaSayModu = 0;
-		lcd_backlight(1);
 
 		convertArrays(3);
 		HAL_Delay(50);
