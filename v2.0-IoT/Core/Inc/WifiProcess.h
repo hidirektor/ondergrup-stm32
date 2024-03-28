@@ -14,6 +14,7 @@ void takeMachineIDWithConfirmation(void);
 void takeMachineID(void);
 uint8_t ssidConfirmation(void);
 void takeWifiSSID(void);
+uint8_t passConfirmation(void);
 void takeWifiPass(void);
 
 char* mergeData(void);

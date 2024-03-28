@@ -165,6 +165,8 @@ void takeMachineID() {
 
 uint8_t ssidConfirmation() {
 	int loopVal = 1;
+	lcd_print(1, 1, "                ");
+
 	while(loopVal == 1) {
 		lcd_print(2, 1, wifiConfirmationText);
 		if(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
@@ -213,6 +215,8 @@ void takeWifiSSID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	if(ssidConfirmation() == 0) {
         		goto mainSSIDSection;
+        	} else {
+        		break;
         	}
         }
 
@@ -334,6 +338,39 @@ void takeWifiSSID() {
     }
 }
 
+uint8_t passConfirmation() {
+	int loopVal = 1;
+	lcd_print(1, 1, "                ");
+
+	while(loopVal == 1) {
+		lcd_print(2, 1, wifiConfirmationText);
+		if(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) == 1) {
+			loopVal = 0;
+		}
+
+		if(strlen(wifiPass) > 16) {
+			slideText(wifiPass, 1, 1, 1);
+		} else {
+			lcd_print(1, 1, wifiPass);
+		}
+	}
+
+    lcd_cursor(0);
+
+    if(strlen(wifiPass) > 20) {
+    	lcd_print(1, 1, passExceedErrorText);
+    	lcd_print(2, 1, passExceedError2Text);
+        HAL_Delay(1250);
+
+        return 0;
+    } else {
+    	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+    	HAL_Delay(1000);
+
+    	return 1;
+    }
+}
+
 void takeWifiPass() {
 	mainPassSection:
 
@@ -350,22 +387,13 @@ void takeWifiPass() {
     printTemplate(3, 1);
 
     while (1) {
-        if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
-            lcd_cursor(0);
-
-            if(strlen(wifiPass) > 20) {
-            	lcd_print(1, 1, passExceedErrorText);
-            	lcd_print(2, 1, passExceedError2Text);
-                HAL_Delay(1250);
-
-                goto mainPassSection;
-            } else {
-            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);
-
-            	break;
-            }
-        }
+    	if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
+    	    if(passConfirmation() == 0) {
+    	        goto mainPassSection;
+    	    } else {
+    	        break;
+    	    }
+    	}
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
         	if(cursorPosition > 80) {
