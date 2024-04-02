@@ -220,6 +220,17 @@ void takeWifiSSID() {
         	}
         }
 
+        //Experimanetal section:
+        if(strlen(wifiSSID) > 10) {
+        	while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) != 1) ||
+        			(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin) != 1) ||
+					(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) != 1) ||
+					(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin) != 1) ||
+					(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin)) != 1) {
+        		slideText(wifiSSID, 7, 1, 0);
+        	}
+        }
+
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
         	if(cursorPosition > 80) {
         		cursorPosition = 1;
@@ -393,6 +404,17 @@ void takeWifiPass() {
     	    } else {
     	        break;
     	    }
+    	}
+
+    	//Experimental Section:
+    	if(strlen(wifiPass) > 10) {
+    		while((HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin)) != 1 ||
+    				(HAL_GPIO_ReadPin(butonGeriIn_GPIO_Port, butonGeriIn_Pin)) != 1 ||
+					(HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) != 1 ||
+					(HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port, butonYukariIn_Pin)) != 1 ||
+					(HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port, butonAsagiIn_Pin)) != 1)) {
+    			slideText(wifiPass, 7, 1, 0);
+    		}
     	}
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
