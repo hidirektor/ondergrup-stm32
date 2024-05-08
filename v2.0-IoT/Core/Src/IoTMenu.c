@@ -121,10 +121,6 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 			menuSayac = checkSlideVal(state);
 			break;
 		}
-		checkEditMode();
-		if(editMode == 1) {
-			break;
-		}
 
 		for(int z=0; z < uzunluk; z++) {
 			if(checkSlideVal(state) > 0) {
@@ -132,10 +128,7 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 				mainLoopVal = 0;
 				break;
 			}
-			checkEditMode();
-			if(editMode == 1) {
-				break;
-			}
+
 			for(int i=startPos + z; i < uzunluk + startPos; i++) {
 				if(checkSlideVal(state) > 0) {
 					menuSayac = checkSlideVal(state);
@@ -143,10 +136,7 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 					mainLoopVal = 0;
 					break;
 				}
-				checkEditMode();
-				if(editMode == 1) {
-					break;
-				}
+
 				lcd_print_char(startLine, i-z, text[i-startPos]);
 				HAL_Delay(30);
 			}
@@ -158,10 +148,7 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 					mainLoopVal = 0;
 					break;
 				}
-				checkEditMode();
-				if(editMode == 1) {
-					break;
-				}
+
 			    if(j >= startPos) {
 			    	lcd_print_char(startLine, j, ' ');
 			    	HAL_Delay(30);
@@ -205,11 +192,5 @@ void printCredentials(int type) {
 			//Eğer pass 16'dan büyükse kayarak yazdır
 			slideText(wifiPass, 1, 2, 1);
 		}
-	}
-}
-
-void checkEditMode(void) {
-	if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1)) {
-		editMode = 1;
 	}
 }

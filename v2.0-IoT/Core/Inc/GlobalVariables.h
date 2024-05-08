@@ -34,8 +34,6 @@ extern unsigned long backLightTimer;
 extern int cursorPosition;
 extern int page;
 
-extern int editMode;
-
 extern uint8_t idKontrol;
 extern uint8_t safeVal;
 

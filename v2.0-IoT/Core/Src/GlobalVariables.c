@@ -31,8 +31,6 @@ unsigned long backLightTimer = 0;
 uint8_t idKontrol = 0;
 uint8_t safeVal = 0;
 
-int editMode = 0;
-
 uint8_t x = 0;
 uint8_t y = 0;
 uint8_t calismaSayisi = 0; //
