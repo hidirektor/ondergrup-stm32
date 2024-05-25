@@ -5,7 +5,6 @@
  *      Author: hidirektor
  */
 
-
 #include "JSONParser.h"
 #include <algorithm>
 #include <sstream>

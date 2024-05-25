@@ -91,12 +91,25 @@ bool ESP8266::downloadNewVersion(UART_HandleTypeDef *huart, const string& versio
     sendCommand(huart, "AT+CIPSEND=" + to_string(downloadCmd.length()) + "\r\n", 4000);
     sendCommand(huart, downloadCmd, 3000);
 
-    HAL_UART_Receive_IT(huart, buffer, bufferSize);
-    HAL_Delay(5000);
+    memset(buffer, 0, bufferSize); // reset Buffer
+    HAL_UART_Receive(huart, buffer, bufferSize, HAL_MAX_DELAY);
 
-    // Dosya başarıyla indirildiğini kontrol et
-    return true;
+    if (strstr((char*)buffer, "HTTP/1.1 200 OK") != NULL || strstr((char*)buffer, "HTTP/1.0 200 OK") != NULL) {
+        char* dataStart = strstr((char*)buffer, "\r\n\r\n");
+        if (dataStart != NULL) {
+            dataStart += 4; // "\r\n\r\n" atla
+            int dataSize = bufferSize - (dataStart - (char*)buffer);
+
+            if (dataSize > 0 && dataSize <= bufferSize) {
+                memmove(buffer, dataStart, dataSize); // Data to buffer
+                return true;
+            }
+        }
+    }
+
+    return false; // Download error
 }
+
 
 bool ESP8266::verifyCRC(uint8_t* data, int size, const string& expectedCRC) {
     CRC_HandleTypeDef hcrc;
@@ -117,7 +130,7 @@ void ESP8266::updateFirmware(UART_HandleTypeDef *huart, uint8_t* data, int size)
     }
     HAL_FLASH_Lock();
 
-    // İşlem tamamlandığında sistemi yeniden başlat
+    // Reset system
     NVIC_SystemReset();
 }
 
