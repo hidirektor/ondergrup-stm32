@@ -727,15 +727,15 @@ void iotSetup() {
 
 			//HAL_Delay(1250);
 			//Tekrar id alma işlemi
-			//takeMachineID();
+			//takeMachineID();s
 			//HAL_Delay(200);
 			//goto takeIDSection;
 		//}
 	//}
 
-	//ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
+	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
 	HAL_Delay(500);
-	//convertAndSendData();
+	convertAndSendData();
 }
 
 int checkEEPROM4ID() {

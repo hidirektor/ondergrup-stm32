@@ -15,6 +15,9 @@ void eepromKontrol() {
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
 	HAL_Delay(1500);
 
+	//Sürekli sıfırlama işlemi yapıyor
+	//firstSetup();
+
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
 	emniyetCercevesi = eepromData[2];
@@ -219,6 +222,22 @@ void eepromKontrol() {
 	HAL_Delay(250);
 
 	loadMenuTexts(dilSecim);
+}
+
+void firstSetup() {
+	//EEPROM ilk kez takıldıysa standart sistem verilerini yükle:
+	if (eepromData[0] == 0xFF) {
+		memset(eepromData, 0, 110);
+
+		//Default değerleri eeproma kaydet:
+		HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+		HAL_Delay(1000);
+
+		lcd_print(1, 1, "LUTFEN  KURULUMU");
+		lcd_print(2, 1, "   TAMAMLAYIN   ");
+		HAL_Delay(500);
+		lcd_clear();
+	}
 }
 
 void convertArrays(int state) {

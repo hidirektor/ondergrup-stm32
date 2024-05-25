@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 void eepromKontrol(void);
+void firstSetup(void);
 void convertArrays(int state);
 
 #endif /* INC_EEPROMPROCESS_H_ */

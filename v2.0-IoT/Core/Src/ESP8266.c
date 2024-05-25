@@ -20,7 +20,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	HAL_Delay(2000);
 
 	char str[100];
-	strcpy(str, "AT+CWJAP_DEF=\"");
+	strcpy(str, "AT+CWJAP=\"");
 	strcat(str, wifiSS);
 	strcat(str, "\",\"");
 	strcat(str, wifiPA);
