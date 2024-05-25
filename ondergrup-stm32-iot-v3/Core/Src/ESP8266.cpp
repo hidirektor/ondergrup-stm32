@@ -6,6 +6,8 @@
  */
 
 #include "ESP8266.h"
+#include "JSONParser.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -61,11 +63,66 @@ bool ESP8266::checkMachineID(UART_HandleTypeDef *huart, const string& machineID)
     return false; // Yanıt başarısız
 }
 
+bool ESP8266::checkForUpdate(UART_HandleTypeDef *huart, const string& currentVersion, string& newVersion, int& fileSize, string& crc) {
+    string checkUpdateCmd = "GET /api/update/checkUpdates HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(currentVersion.length()) + "\r\n\r\n" + "{\"currentVersion\":\"" + currentVersion + "\"}\r\n";
+    sendCommand(huart, "AT+CIPSEND=" + to_string(checkUpdateCmd.length()) + "\r\n", 4000);
+    sendCommand(huart, checkUpdateCmd, 3000);
+
+    char bufferRX[2000];
+    HAL_UART_Receive_IT(huart, (uint8_t*) bufferRX, sizeof(bufferRX));
+    HAL_Delay(5000);
+
+    JSONParser parser;
+    if (parser.parse(bufferRX)) {
+        bool updateAvailable = parser.getBool("updateAvailable");
+        if (updateAvailable) {
+            newVersion = parser.getString("update.version");
+            fileSize = parser.getInt("update.fileSize");
+            crc = parser.getString("update.crc");
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool ESP8266::downloadNewVersion(UART_HandleTypeDef *huart, const string& versionCode, uint8_t* buffer, int bufferSize) {
+    string downloadCmd = "GET /api/update/downloadNewVersion HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(versionCode.length()) + "\r\n\r\n" + "{\"versionCode\":\"" + versionCode + "\"}\r\n";
+    sendCommand(huart, "AT+CIPSEND=" + to_string(downloadCmd.length()) + "\r\n", 4000);
+    sendCommand(huart, downloadCmd, 3000);
+
+    HAL_UART_Receive_IT(huart, buffer, bufferSize);
+    HAL_Delay(5000);
+
+    // Dosya başarıyla indirildiğini kontrol et
+    return true;
+}
+
+bool ESP8266::verifyCRC(uint8_t* data, int size, const string& expectedCRC) {
+    CRC_HandleTypeDef hcrc;
+    hcrc.Instance = CRC;
+    uint32_t crc = HAL_CRC_Calculate(&hcrc, (uint32_t*)data, size / 4);
+    stringstream ss;
+    ss << hex << setw(8) << setfill('0') << crc;
+    return ss.str() == expectedCRC;
+}
+
+void ESP8266::updateFirmware(UART_HandleTypeDef *huart, uint8_t* data, int size) {
+    HAL_FLASH_Unlock();
+    uint32_t Address = 0x08008000;  // Başlangıç adresi
+    for (int i = 0; i < size; i += 2) {
+        uint16_t data16 = data[i] | (data[i + 1] << 8);
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, Address, data16);
+        Address += 2;
+    }
+    HAL_FLASH_Lock();
+
+    // İşlem tamamlandığında sistemi yeniden başlat
+    NVIC_SystemReset();
+}
+
 void ESP8266::sendCommand(UART_HandleTypeDef *huart, const string& command, uint32_t delayMs) {
     sprintf(bufferTX, "%s", command.c_str());
     HAL_UART_Transmit_IT(huart, (uint8_t*) bufferTX, strlen(bufferTX));
     HAL_Delay(delayMs);
 }
-
-
-

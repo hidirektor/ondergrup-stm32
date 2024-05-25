@@ -10,6 +10,7 @@
 
 #include "stm32f1xx_hal.h"
 #include "SystemDefaults.h"
+#include "JSONParser.h"
 #include <string>
 #include <cstring>
 
@@ -27,6 +28,10 @@ public:
     void init(UART_HandleTypeDef *huart, const string& ssid, const string& password);
     void sendMachineData(UART_HandleTypeDef *huart, const string& machineID, const string& machineData);
     bool checkMachineID(UART_HandleTypeDef *huart, const string& machineID);
+    bool checkForUpdate(UART_HandleTypeDef *huart, const string& currentVersion, string& newVersion, int& fileSize, string& crc);
+    bool downloadNewVersion(UART_HandleTypeDef *huart, const string& versionCode, uint8_t* buffer, int bufferSize);
+    bool verifyCRC(uint8_t* data, int size, const string& expectedCRC);
+    void updateFirmware(UART_HandleTypeDef *huart, uint8_t* data, int size);
 
 private:
     ESP8266() = default;
@@ -35,4 +40,3 @@ private:
 };
 
 #endif /* INC_ESP8266_H_ */
-
