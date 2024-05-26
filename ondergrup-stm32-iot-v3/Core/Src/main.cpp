@@ -18,9 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "ESP8266.h"
-#include "Util.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -53,7 +50,16 @@ TIM_HandleTypeDef htim1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+GlobalVariables& globalVars = GlobalVariables::getInstance();
+SystemDefaults& systemDefaults = SystemDefaults::getInstance();
+EEPROMProcess& eepromProcess = EEPROMProcess::getInstance();
+Translation& translation = Translation::getInstance();
+TextVariables& textVars = TextVariables::getInstance();
+ESP8266& esp = ESP8266::getInstance();
+I2CLCD& lcd = I2CLCD::getInstance(hi2c1, 0x27);
+Process& process = Process::getInstance();
+WifiProcess& wifiProcess = WifiProcess::getInstance();
+ErrorProcess& errorProcess = ErrorProcess::getInstance();
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,7 +76,9 @@ static void MX_CRC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesmesinde islem yapmak için */
+	globalVars.millis=globalVars.millis+1;
+}
 /* USER CODE END 0 */
 
 /**
@@ -108,11 +116,46 @@ int main(void)
   MX_USART1_UART_Init();
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
-  ESP8266& esp = ESP8266::getInstance();
   esp.init(&huart1, "yourSSID", "yourPassword");
 
   //Update
   checkAndUpdateFirmware(&huart1);
+
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+  HAL_Delay(10);
+  lcd.init();
+  HAL_Delay(10);
+
+  HAL_TIM_Base_Start_IT(&htim1);
+  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
+
+  HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(motorIkinciHizOut_GPIO_Port, motorIkinciHizOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(asagiValfOut_GPIO_Port, asagiValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(yavaslamaValfOut_GPIO_Port, yavaslamaValfOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(devirmeYukariIleriOut_GPIO_Port, devirmeYukariIleriOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(devirmeAsagiGeriOut_GPIO_Port, devirmeAsagiGeriOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(kapi1Out_GPIO_Port, kapi1Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(kapi2Out_GPIO_Port, kapi2Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
+
+  i2cTest();
+  HAL_Delay(100);
+  lcd.print(1, 1, translation.splashTextGN.c_str());
+  lcd.print(2, 1, translation.splashText2GN.c_str());
+  HAL_Delay(1000);
+  lcd.clear();
+
+  eepromProcess.epromKontrol();
+  HAL_Delay(500);
+
+  globalVars.backLightTimer = globalVars.millis;
+
+  iotMenu.iotSetup();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -120,7 +163,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  process.mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

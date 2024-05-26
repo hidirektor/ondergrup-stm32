@@ -6,8 +6,7 @@
  */
 
 #include "Util.h"
-#include "ESP8266.h"
-#include "SystemDefaults.h"
+#include "main.h"
 #include <string>
 
 void checkAndUpdateFirmware(UART_HandleTypeDef *huart1) {
@@ -24,7 +23,7 @@ void checkAndUpdateFirmware(UART_HandleTypeDef *huart1) {
             if (esp.verifyCRC(firmwareBuffer, fileSize, crc)) {
                 // Update flags
                 HAL_FLASH_Unlock();
-                HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, UPDATE_FLAG_ADDRESS, 0xDEADBEEF);
+                HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, systemDefaults.UPDATE_FLAG_ADDRESS, 0xDEADBEEF);
                 HAL_FLASH_Lock();
 
                 // New firmware

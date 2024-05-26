@@ -6,6 +6,7 @@
  */
 
 #include "ESP8266.h"
+#include "main.h"
 #include "JSONParser.h"
 #include <iomanip>
 
@@ -29,11 +30,11 @@ void ESP8266::init(UART_HandleTypeDef *huart, const string& ssid, const string& 
 void ESP8266::sendMachineData(UART_HandleTypeDef *huart, const string& machineID, const string& machineData) {
     string subMachineID = machineID.substr(0, 12);
 
-    string connectCmd = "AT+CIPSTART=\"TCP\",\"" + MAIN_SERVER + "\"," + to_string(MAIN_SERVER_PORT) + "\r\n";
+    string connectCmd = "AT+CIPSTART=\"TCP\",\"" + systemDefaults.MAIN_SERVER + "\"," + to_string(systemDefaults.MAIN_SERVER_PORT) + "\r\n";
     sendCommand(huart, connectCmd, 4000);
 
     string getDataCmd = "GET /api/machine/updateMachineDataRaw?machineID=" + subMachineID +
-                        "&machineData=" + machineData + " HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\n\r\n";
+                        "&machineData=" + machineData + " HTTP/1.0\r\nHost: " + systemDefaults.MAIN_SERVER_WITH_PORT + "\r\n\r\n";
     string sendCmd = "AT+CIPSEND=" + to_string(getDataCmd.length()) + "\r\n";
 
     sendCommand(huart, sendCmd, 4000);
@@ -43,10 +44,10 @@ void ESP8266::sendMachineData(UART_HandleTypeDef *huart, const string& machineID
 bool ESP8266::checkMachineID(UART_HandleTypeDef *huart, const string& machineID) {
     string subMachineID = machineID.substr(0, 12);
 
-    string connectCmd = "AT+CIPSTART=\"TCP\",\"" + MAIN_SERVER + "\"," + to_string(MAIN_SERVER_PORT) + "\r\n";
+    string connectCmd = "AT+CIPSTART=\"TCP\",\"" + systemDefaults.MAIN_SERVER + "\"," + to_string(systemDefaults.MAIN_SERVER_PORT) + "\r\n";
     sendCommand(huart, connectCmd, 2000);
 
-    string checkIDCmd = "GET /api/machine/checkMachineID?machineID=" + subMachineID + " HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\n\r\n";
+    string checkIDCmd = "GET /api/machine/checkMachineID?machineID=" + subMachineID + " HTTP/1.0\r\nHost: " + systemDefaults.MAIN_SERVER_WITH_PORT + "\r\n\r\n";
     string sendCmd = "AT+CIPSEND=" + to_string(checkIDCmd.length()) + "\r\n";
 
     sendCommand(huart, sendCmd, 4000);
@@ -64,7 +65,7 @@ bool ESP8266::checkMachineID(UART_HandleTypeDef *huart, const string& machineID)
 }
 
 bool ESP8266::checkForUpdate(UART_HandleTypeDef *huart, const string& currentVersion, string& newVersion, int& fileSize, string& crc) {
-    string checkUpdateCmd = "GET /api/update/checkUpdates HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(currentVersion.length()) + "\r\n\r\n" + "{\"currentVersion\":\"" + currentVersion + "\"}\r\n";
+    string checkUpdateCmd = "GET /api/update/checkUpdates HTTP/1.0\r\nHost: " + systemDefaults.MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(currentVersion.length()) + "\r\n\r\n" + "{\"currentVersion\":\"" + currentVersion + "\"}\r\n";
     sendCommand(huart, "AT+CIPSEND=" + to_string(checkUpdateCmd.length()) + "\r\n", 4000);
     sendCommand(huart, checkUpdateCmd, 3000);
 
@@ -87,7 +88,7 @@ bool ESP8266::checkForUpdate(UART_HandleTypeDef *huart, const string& currentVer
 }
 
 bool ESP8266::downloadNewVersion(UART_HandleTypeDef *huart, const string& versionCode, uint8_t* buffer, int bufferSize) {
-    string downloadCmd = "GET /api/update/downloadNewVersion HTTP/1.0\r\nHost: " + MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(versionCode.length()) + "\r\n\r\n" + "{\"versionCode\":\"" + versionCode + "\"}\r\n";
+    string downloadCmd = "GET /api/update/downloadNewVersion HTTP/1.0\r\nHost: " + systemDefaults.MAIN_SERVER_WITH_PORT + "\r\nContent-Type: application/json\r\nContent-Length: " + to_string(versionCode.length()) + "\r\n\r\n" + "{\"versionCode\":\"" + versionCode + "\"}\r\n";
     sendCommand(huart, "AT+CIPSEND=" + to_string(downloadCmd.length()) + "\r\n", 4000);
     sendCommand(huart, downloadCmd, 3000);
 

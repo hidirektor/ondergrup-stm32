@@ -23,7 +23,7 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C" {
+//extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -31,17 +31,44 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "GlobalVariables.h"
+#include "SystemDefaults.h"
+#include "EEPROMProcess.h"
+#include "ErrorProcess.h"
+#include "ESP8266.h"
+#include "Process.h"
+#include "HardwareTest.h"
+#include "WifiProcess.h"
+#include "TextVariables.h"
+#include "Translation.h"
+#include "LCD.h"
+#include "Util.h"
+#include "IoTMenu.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+extern CAN_HandleTypeDef hcan;
 
+extern I2C_HandleTypeDef hi2c1;
+
+extern TIM_HandleTypeDef htim1;
+
+extern UART_HandleTypeDef huart1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern GlobalVariables& globalVars;
+extern SystemDefaults& systemDefaults;
+extern EEPROMProcess& eepromProcess;
+extern Translation& translation;
+extern TextVariables& textVars;
+extern ESP8266& esp;
+extern I2CLCD& lcd;
+extern Process& process;
+extern WifiProcess& wifiProcess;
+extern ErrorProcess& errorProcess;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -133,7 +160,7 @@ void Error_Handler(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
-}
+//}
 #endif
 
 #endif /* __MAIN_H */
