@@ -34,13 +34,6 @@ UART_HandleTypeDef huart1;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-CAN_HandleTypeDef hcan;
-
-I2C_HandleTypeDef hi2c1;
-
-TIM_HandleTypeDef htim1;
-
-UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
@@ -72,6 +65,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -140,7 +134,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  mainLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
