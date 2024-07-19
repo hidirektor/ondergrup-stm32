@@ -36,11 +36,7 @@ uint8_t lcdBacklightSure = 60;
 uint8_t x = 0;
 uint8_t y = 0;
 uint8_t calismaSayisi = 0;
-uint8_t calismaSayisi1 = 0;
-uint8_t calismaSayisi10 = 0;
-uint8_t calismaSayisi100 = 2;
-uint8_t calismaSayisi1000 = 1;
-uint8_t calismaSayisi10000 = 0;
+uint8_t calismaSayisiDemo = 0;
 uint8_t menuSayac = 0;
 uint8_t durakSayisi = 0;
 uint8_t calismaSekli = 0;
@@ -1699,12 +1695,6 @@ void menu(void) {
 	}
 
 	if (menuSayac == 29) {
-		if(calismaSayisi1 == 0 && calismaSayisi10 == 0 && calismaSayisi100 == 0 && calismaSayisi1000 == 0 && calismaSayisi10000 == 0) {
-			calismaSayisiYar = 0;
-		} else {
-			calismaSayisiYar = 1;
-		}
-
 		if(calismaSayModu == 0) {
 			if(dilSecim == 0) {
 				lcd_print(1, 1, "Calisma Sayisi  ");
@@ -1712,20 +1702,8 @@ void menu(void) {
 				lcd_print(1, 1, "Working Cycle   ");
 			}
 
-			itoa(calismaSayisi10000, snum, 10);
-			lcd_print(2, 12, snum);
-
-			itoa(calismaSayisi1000, snum, 10);
-			lcd_print(2, 13, snum);
-
-			itoa(calismaSayisi100, snum, 10);
-			lcd_print(2, 14, snum);
-
-			itoa(calismaSayisi10, snum, 10);
-			lcd_print(2, 15, snum);
-
-			itoa(calismaSayisi1, snum, 10);
-			lcd_print(2, 16, snum);
+			itoa(calismaSayisi, snum, 10);
+			lcd_print(2, 11, snum);
 
 			lcd_print(2, 1, "           ");
 		} else if(calismaSayModu == 1) {
@@ -1757,16 +1735,9 @@ void menu(void) {
 		}
 
 		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)&&(calismaSayModu==1)) {
-			eepromData[32] = 0;
-			eepromData[31] = 0;
-			eepromData[30] = 0;
-			eepromData[29] = 0;
+			eepromData[27] = 0;
 			eepromData[28] = 0;
-			calismaSayisi10000 = 0;
-			calismaSayisi1000 = 0;
-			calismaSayisi100 = 0;
-			calismaSayisi10 = 0;
-			calismaSayisi1 = 0;
+			calismaSayisi = 0;
 			calismaSayModu = 0;
 			hafizaYaz = 1;
 		}

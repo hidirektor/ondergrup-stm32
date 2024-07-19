@@ -192,11 +192,7 @@ void eepromKontrol(void) {
 	buzzer = eepromData[25];
 	demoMode = eepromData[26];
 	calismaSayisi = eepromData[27];
-	calismaSayisi1 = eepromData[28];
-	calismaSayisi10 = eepromData[29];
-	calismaSayisi100 = eepromData[30];
-	calismaSayisi1000 = eepromData[31];
-	calismaSayisi10000 = eepromData[32];
+	calismaSayisi = eepromData[28];
 	dilSecim = eepromData[33];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
@@ -212,25 +208,6 @@ void eepromKontrol(void) {
 	hataKayit9 = eepromData[45];
 	hataKayit10 = eepromData[46];
 
-	if(calismaSayisi10000>9) {
-	    calismaSayisi10000=0;
-	}
-
-	if(calismaSayisi1000>9) {
-	    calismaSayisi1000=0;
-	}
-
-	if(calismaSayisi100>9) {
-	    calismaSayisi100=0;
-	}
-
-	if(calismaSayisi10>9) {
-	    calismaSayisi10=0;
-	}
-
-	if(calismaSayisi1>9) {
-	    calismaSayisi1=0;
-	}
 /*
 	if(acilStop1>0) {
 		acilStop1=0;
@@ -1123,28 +1100,8 @@ int main(void)
 
 
 
-	  				calismaSayisi1=calismaSayisi1+1;
-	  				if(calismaSayisi1>9) {
-	  				  	calismaSayisi1=0;
-	  				  	calismaSayisi10=calismaSayisi10+1;
-	  				}
-	  				if(calismaSayisi10>9) {
-	  				  	calismaSayisi10=0;
-	  				  	calismaSayisi100=calismaSayisi100+1;
-	  				}
-	  				if(calismaSayisi100>9) {
-	  				  	calismaSayisi100=0;
-	  				  	calismaSayisi1000=calismaSayisi1000+1;
-	  				}
-	  				if(calismaSayisi1000>9) {
-	  				  	calismaSayisi1000=0;
-	  				  	calismaSayisi10000=calismaSayisi10000+1;
-	  				}
-	  				eepromData[32]=calismaSayisi10000;
-	  				eepromData[31]=calismaSayisi1000;
-	  				eepromData[30]=calismaSayisi100;
-	  				eepromData[29]=calismaSayisi10;
-	  				eepromData[28]=calismaSayisi1;
+	  				calismaSayisi++;
+	  				eepromData[27]=calismaSayisi;
 
 	  				hafizaYaz=1;
 
@@ -1379,49 +1336,18 @@ int main(void)
 
 	  			if((demoYukariCalis==1) && (demoCalismaSayisiYar==1)) {
 	  				//mesajYazildi=0;
-	  				calismaSayisi1=calismaSayisi1+1;
+	  				calismaSayisiDemo++;
 
-	  				if(calismaSayisi1>9) {
-	  					calismaSayisi1=0;
-	  					calismaSayisi10=calismaSayisi10+1;
-	  				}
-
-	  				if(calismaSayisi10>9) {
-	  					calismaSayisi10=0;
-	  					calismaSayisi100=calismaSayisi100+1;
-	  				}
-
-	  				if(calismaSayisi100>9) {
-	  					calismaSayisi100=0;
-	  					calismaSayisi1000=calismaSayisi1000+1;
-	  				}
-
-	  				if(calismaSayisi1000>9) {
-	  					calismaSayisi1000=0;
-	  					calismaSayisi10000=calismaSayisi10000+1;
-	  				}
-	  				eepromData[32]=calismaSayisi10000;
-	  				eepromData[31]=calismaSayisi1000;
-	  				eepromData[30]=calismaSayisi100;
-	  				eepromData[29]=calismaSayisi10;
-	  				eepromData[28]=calismaSayisi1;
+	  				eepromData[28]=calismaSayisiDemo;
 	  				hafizaYaz=1;
 	  		   		//mesajYazildi=0;
 	  				demoCalismaSayisiYar=0;
 	  			}
 
 	  			if (menuGiris==0) {
-	  				lcd_print(2,1,"Cycle      ");
+	  				lcd_print(2,1,"Cycle     ");
 	  				lcd_print(1,1, "    DEMO MODE   ");
-	  				itoa(calismaSayisi10000, snum, 10);
-	  				lcd_print(2,12,snum);
-	  				itoa(calismaSayisi1000, snum, 10);
-	  				lcd_print(2,13,snum);
-	  				itoa(calismaSayisi100, snum, 10);
-	  				lcd_print(2,14,snum);
-	  				itoa(calismaSayisi10, snum, 10);
-	  				lcd_print(2,15,snum);
-	  				itoa(calismaSayisi1, snum, 10);
+	  				itoa(calismaSayisiDemo, snum, 11);
 	  				lcd_print(2,16,snum);
 	  				mesajYazildi=1;
 	  			}
