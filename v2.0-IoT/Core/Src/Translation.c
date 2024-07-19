@@ -11,7 +11,7 @@
 //Genel Metinler:
 char splashTextGN[17] = "     RMK-V1     ";
 char splashText2GN[17] = "ONDTECH ESP CONT";
-char mainTextGN[17] = "    ESP-RMK     ";
+char mainTextGN[17] = "     ESP-XL     ";
 char mainText2GN[17] = "      RUN       ";
 char ondSafetyTextGN[17] = "OND Safety      ";
 char prudhomeTextGN[17] = "Prudhome        ";

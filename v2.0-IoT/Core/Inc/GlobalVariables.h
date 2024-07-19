@@ -137,5 +137,7 @@ extern bool tablakapisivicihatasi;
 extern bool cercevesasagicalisma;
 extern bool HataMakineCalisiyorkapi;
 extern bool HataMakineCalisiyortabla;
+extern bool EmnCerHataMakYukariCalis;
+extern bool EmnStopVar;
 
 #endif /* INC_GLOBALVARIABLES_H_ */

@@ -131,3 +131,5 @@ bool tablakapisivicihatasi = 0;
 bool cercevesasagicalisma = 0;
 bool HataMakineCalisiyorkapi = 0;
 bool HataMakineCalisiyortabla = 0;
+bool EmnCerHataMakYukariCalis = 0;
+bool EmnStopVar = 0;
