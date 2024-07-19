@@ -6,7 +6,9 @@
  */
 
 #include "Util.h"
-#include "main.h"
+
+#include "Instance.h"
+
 #include <string>
 
 void checkAndUpdateFirmware(UART_HandleTypeDef *huart1) {

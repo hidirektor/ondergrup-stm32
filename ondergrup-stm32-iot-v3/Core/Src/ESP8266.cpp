@@ -6,7 +6,7 @@
  */
 
 #include "ESP8266.h"
-#include "main.h"
+#include "Instance.h"
 #include "JSONParser.h"
 #include <iomanip>
 

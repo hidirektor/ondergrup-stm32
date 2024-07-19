@@ -126,12 +126,24 @@ void lcdUpdate(uint8_t y) {
 		lcd_print(2, 6, " ");
 	} else if (y==7) {
 		lcd_clear();
-		lcd_print(1, 1, "    ESP-RMK     ");
+		lcd_print(1, 1, "     ESP-XL     ");
 		lcd_print(2, 1, "      RUN       ");
 	}
 }
 
 void hataKoduLcdGoster(uint8_t x) {
+	HAL_GPIO_WritePin(asagiValfOut_GPIO_Port, asagiValfOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(yavaslamaValfOut_GPIO_Port, yavaslamaValfOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(motorIkinciHizOut_GPIO_Port, motorIkinciHizOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(devirmeYukariIleriOut_GPIO_Port, devirmeYukariIleriOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(devirmeAsagiGeriOut_GPIO_Port, devirmeAsagiGeriOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(kapi1Out_GPIO_Port, kapi1Out_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(kapi2Out_GPIO_Port, kapi2Out_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(tablaKapiOut_GPIO_Port, tablaKapiOut_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(buzzerOut_GPIO_Port, buzzerOut_Pin, GPIO_PIN_RESET);
+
 	if(x==1) {
 		if(dilSecim==0) {
 			lcd_print(1, 1, "   HATA KODU    ");
@@ -186,7 +198,6 @@ void hataKoduLcdGoster(uint8_t x) {
 void eepromKontrol(void) {
 	HAL_I2C_Mem_Read(&hi2c1,0xA0,0,63,eepromData,63,3000);
 	HAL_Delay(1000);
-
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
 	emniyetCercevesi = eepromData[2];
@@ -255,8 +266,8 @@ void eepromKontrol(void) {
 	if(calismaSayisi1>9) {
 	    calismaSayisi1=0;
 	}
-
-	/*if(acilStop1>0) {
+/*
+	if(acilStop1>0) {
 		acilStop1=0;
 	}*/
 
@@ -308,8 +319,8 @@ void eepromKontrol(void) {
 	    kapitablaTip=1;
 	}
 
-	if(kapiTablaAcKonum>2) {
-	    kapiTablaAcKonum=2;
+	if(kapiTablaAcKonum>3) {
+	    kapiTablaAcKonum=3;
 	}
 
 	if(kapiTablaAcSure>5) {
@@ -481,7 +492,7 @@ int main(void) {
 
   i2cTest();
   HAL_Delay(100);
-  lcd_print(1,1,"     RMK-V1     ");
+  lcd_print(1,1,"   ESP-XL-V1    ");
   lcd_print(2,1,"ONDTECH ESP CONT");
   HAL_Delay(1000);
   lcd_clear();
@@ -632,6 +643,7 @@ void mainTask(void *pvParameters) {
 
 		  HAL_Delay(1000);
 		  lcd_clear();
+		  mesajYazildi=0;
 		}
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
@@ -669,18 +681,19 @@ void mainTask(void *pvParameters) {
 		  hafizaOku=1;
 		}
 
-		if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)) {
-			lcd_clear();
-			HAL_Delay(10);
-			lcd_print(1, 1, "    ESP-RMK     ");
-			lcd_print(2, 1, "      RUN       ");
-			mesajYazildi=1;
-		}
-
 		if ((menuGiris==0) && (HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin)==1) && (HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin)==1)) {
 			menuGiris=1;
 			lcd_clear();
 		}
+
+		if((menuGiris==0)&&(mesajYazildi==0)&&(demoMode==0)) {
+					lcd_clear();
+					HAL_Delay(10);
+					lcd_print(1, 1, "     ESP-XL     ");
+					lcd_print(2, 1, "      RUN       ");
+
+					mesajYazildi=1;
+				}
 
 		if(menuGiris==1) {
 			menu();
@@ -695,6 +708,11 @@ void mainTask(void *pvParameters) {
 		} else {
 			stopVar=0;
 		}
+		if(HAL_GPIO_ReadPin(acilStop1In_GPIO_Port, acilStop1In_Pin)==0 && EmnCerHataMakYukariCalis==1) {
+					EmnStopVar=1;
+				} else {
+					EmnStopVar=0;
+				}
 
 		/****************************************  BASINC SALTERI ********************************************/
 		if(basincSalteri==0) {
@@ -760,7 +778,8 @@ void mainTask(void *pvParameters) {
 		/*MOTOR CALISIYOR*/
 
 		if(demoMode==0 && menuGiris==0) {
-			if(((yukarimotorcalisiyor)||(devmotoryukaricalisiyor)||((asagivalfcalisiyor)&&(butonKontrol2==0)&&(platformSilindirTipi==1))||((devmotorasagicalisiyor)&&(devirmeSilindirTipi)==1))&&(stopVar)&&(kapiSivicVar)) {
+			if(((yukarimotorcalisiyor)||(devmotoryukaricalisiyor)||((asagivalfcalisiyor)&&(butonKontrol2==0)&&(platformSilindirTipi==1))
+					||((devmotorasagicalisiyor)&&(devirmeSilindirTipi)==1))&&((stopVar)||(EmnStopVar))&&(kapiSivicVar)) {
 
 				HAL_GPIO_WritePin(motorOut_GPIO_Port, motorOut_Pin, GPIO_PIN_SET);
 				motorcalisiyor=1;
@@ -772,7 +791,7 @@ void mainTask(void *pvParameters) {
 
 			/*YUKARI ÇALISMA*/
 
-			if((menuGiris==0) && (stopVar) && (kapiSivicVar)																			/********* motor calısması ***********/
+			if((menuGiris==0) && ((EmnStopVar)||(stopVar)) && (kapiSivicVar)																			/********* motor calısması ***********/
 						&& ((HAL_GPIO_ReadPin(yukariStartIn_GPIO_Port, yukariStartIn_Pin)==0)||(basgondercalisyukari))
 						&& (HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==0)
 						&& (basincVar)
@@ -802,12 +821,12 @@ void mainTask(void *pvParameters) {
 
 			// yukari valf timer calisması
 
-			if((yukarivalfcalisiyor==1)&&(((HAL_GPIO_ReadPin(yukariStartIn_GPIO_Port, yukariStartIn_Pin)==1)&&(basgondercalisyukari==0))||(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1))&&(stopVar)&&(kapiSivicVar)&&(basincVar)&&(butonKontrol3==0)) {
+			if((yukarivalfcalisiyor==1)&&(((HAL_GPIO_ReadPin(yukariStartIn_GPIO_Port, yukariStartIn_Pin)==1)&&(basgondercalisyukari==0))||(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1))&&((stopVar)||(EmnStopVar))&&(kapiSivicVar)&&(basincVar)&&(butonKontrol3==0)) {
 				timer2=millis;
 				butonKontrol3=1;
 			}
 
-			if((((millis-timer2 >= yukariValfTmr)&&(butonKontrol3==1))||((stopVar==0)||(kapiSivicVar==0)||(basincVar==0)))) {
+			if((((millis-timer2 >= yukariValfTmr)&&(butonKontrol3==1))||(((stopVar==0)&&(EmnStopVar==0))||(kapiSivicVar==0)||(basincVar==0)))) {
 				HAL_GPIO_WritePin(yukariValfOut_GPIO_Port, yukariValfOut_Pin, GPIO_PIN_RESET);
 				yukarivalfcalisiyor=0;
 				butonKontrol3=0;
@@ -1075,7 +1094,7 @@ void mainTask(void *pvParameters) {
 
 			//   kapi tabla kontrol ***
 
-			if((kapiTablaAcKonum==0 || kapiTablaAcKonum==2)
+			if((kapiTablaAcKonum==0 || kapiTablaAcKonum==2)	//tabla ac konum 0=kat1, 1=kat2, 2=kat1 + kat2
 					&&((HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1)||!(altLimit))
 					&&(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==0)) {
 
@@ -1115,8 +1134,12 @@ void mainTask(void *pvParameters) {
 
 			if((kapitablaTip==0)&&((kapiSecimleri==2)||(kapiSecimleri==3))
 					&&((kapiTablaAcKonumKat1==1)||(kapiTablaAcKonumKat2==1))
-					&&(((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==0)&&(kapiAcTipi==0))
-					||(kapiactablaesp1)==1 || (kapiactablaesp2)==1)
+					&&((((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==0)
+							||((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==0)
+							&& (HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1 ))
+							||((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==0)
+							&&(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1)))
+					&&(kapiAcTipi==0))||(kapiactablaesp1)==1 || (kapiactablaesp2)==1)
 					&&(makineStop==1)
 					&&(butonKontrol==0)) {
 
@@ -1134,8 +1157,12 @@ void mainTask(void *pvParameters) {
 			if((kapitablaTip==1)&&((kapiSecimleri==2)||(kapiSecimleri==3))
 
 					&&((kapiTablaAcKonumKat1==1)||(kapiTablaAcKonumKat2==1))
-					&&(((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==0)&&(kapiAcTipi==0))
-					||(kapiactablaesp1)==1 || (kapiactablaesp2)==1)
+					&&((((HAL_GPIO_ReadPin(kapiTablaAcButonIn_GPIO_Port, kapiTablaAcButonIn_Pin)==0)
+							||((HAL_GPIO_ReadPin(kapi1AcButonIn_GPIO_Port, kapi1AcButonIn_Pin)==0)
+							&& (HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1 ))
+							||((HAL_GPIO_ReadPin(kapi2AcButonIn_GPIO_Port, kapi2AcButonIn_Pin)==0)
+							&&(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1)))
+							&&(kapiAcTipi==0))||(kapiactablaesp1)==1 || (kapiactablaesp2)==1)
 					&&(makineStop==1)) {
 
 				kapiTablabutonkontrol=1;
@@ -1166,6 +1193,7 @@ void mainTask(void *pvParameters) {
 
 			if(((CalismaSayisiYukari==1)&&(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1)&&(altLimit==0)&&(makineStop==1))
 					||((CalismaSayisiAsagi==1)&&((HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1)&&(altLimit))&&(makineStop==1))) {
+
 
 
 				calismaSayisi1=calismaSayisi1+1;
@@ -1225,7 +1253,7 @@ void mainTask(void *pvParameters) {
 
 			/************************************ Emniyet Çerçevesi Hatasi ***************************************************/
 
-			if(cerceveVar==0 && (HAL_GPIO_ReadPin(asagiStartIn_GPIO_Port, asagiStartIn_Pin)==0 || cercevesasagicalisma)&& (emniyetCercevesi==1)) {
+			if(cerceveVar==0 && (HAL_GPIO_ReadPin(asagiStartIn_GPIO_Port, asagiStartIn_Pin)==0 || cercevesasagicalisma)&& (emniyetCercevesi==1)&&(emniyetCercevesihatasi==0)) {
 				hataVar=1;
 				hataKoduLcdGoster(2);
 				hata2EEPROM(2);
@@ -1238,7 +1266,7 @@ void mainTask(void *pvParameters) {
 
 			/************************************ BASINC ASIRI YUK HATASI **************************************************/
 
-			if(basincVar==0 && basincSalteri==1 && motorcalisiyor==1 && HAL_GPIO_ReadPin(basincSalteriIn_GPIO_Port, basincSalteriIn_Pin)==1) {
+			if(basincVar==0 && basincSalteri==1 && motorcalisiyor==1 && HAL_GPIO_ReadPin(basincSalteriIn_GPIO_Port, basincSalteriIn_Pin)==1 && basinchatasi==0) {
 				hataVar=1;
 				hataKoduLcdGoster(3);
 				hata2EEPROM(3);
@@ -1249,7 +1277,7 @@ void mainTask(void *pvParameters) {
 			}
 
 			/************************************ KAPI SİVİÇ HATASI **************************************************/
-			if((startBasili || HataMakineCalisiyorkapi) && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
+			if((startBasili || HataMakineCalisiyorkapi) && HAL_GPIO_ReadPin(kapiSiviciIn_GPIO_Port, kapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3) && katkapisivicihatasi==0) {
 				hataVar=1;
 				hataKoduLcdGoster(4);
 				hata2EEPROM(4);
@@ -1263,7 +1291,7 @@ void mainTask(void *pvParameters) {
 
 			/************************************ TABLA KAPI SİVİÇ HATASI **************************************************/
 
-			if((startBasili || HataMakineCalisiyortabla)&& HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3)) {
+			if((startBasili || HataMakineCalisiyortabla)&& HAL_GPIO_ReadPin(tablaKapiSiviciIn_GPIO_Port, tablaKapiSiviciIn_Pin)==1 && (kapiSecimleri==1 || kapiSecimleri==3) && tablakapisivicihatasi==0) {
 
 				hataVar=1;
 				hataKoduLcdGoster(5);
@@ -1277,7 +1305,7 @@ void mainTask(void *pvParameters) {
 
 			/************************************ MAX CALİSMA HATASI BASLANGIC ******************************************/
 
-			if((motorcalisiyor)||(asagivalfcalisiyor)||(devmotorasagicalisiyor)) {
+			if(((motorcalisiyor)||(asagivalfcalisiyor)||(devmotorasagicalisiyor)) && (maksimumcalismahatasi==0)) {
 			    if(millis-timer4>=makineCalismaTmr) {
 				  	hataVar=1;
 				  	hataKoduLcdGoster(6);
@@ -1308,6 +1336,15 @@ void mainTask(void *pvParameters) {
 				lcdUpdate(7);
 			}
 
+			if(hataVar==1 && acilstophatasi==0 && emniyetCercevesihatasi==1 && basinchatasi==0
+					&& katkapisivicihatasi==0 && tablakapisivicihatasi==0 && maksimumcalismahatasi==0)
+			{
+				EmnCerHataMakYukariCalis=1;
+			}
+			else if(emniyetCercevesihatasi==0)
+			{
+				EmnCerHataMakYukariCalis=0;
+			}
 
 			/************************************ HATA LCD GÖSTERME ************************************************************/
 		} 		// aktif calisma son parantez.

@@ -14,8 +14,10 @@
  */
 
 #include "Process.h"
-#include "main.h"
+
+#include "Instance.h"
 #include "Menu.h"
+#include "main.h"
 
 void Process::lcdUpdate(uint8_t y) {
     if (y == 1) {

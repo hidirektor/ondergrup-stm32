@@ -140,7 +140,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  mainLoop();
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -7,7 +7,13 @@
 
 
 #include "IoTMenu.h"
+#include "Instance.h"
 #include "main.h"
+
+IoTMenu& IoTMenu::getInstance() {
+    static IoTMenu instance;
+    return instance;
+}
 
 void IoTMenu::printTemplate(int type, int page) {
     HAL_Delay(200);

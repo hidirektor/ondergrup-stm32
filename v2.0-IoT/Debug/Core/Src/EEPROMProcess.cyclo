@@ -1,3 +1,3 @@
-../Core/Src/EEPROMProcess.c:14:6:eepromKontrol	36
-../Core/Src/EEPROMProcess.c:227:6:firstSetup	2
-../Core/Src/EEPROMProcess.c:243:6:convertArrays	8
+../Core/Src/EEPROMProcess.c:14:6:eepromKontrol	31
+../Core/Src/EEPROMProcess.c:203:6:firstSetup	2
+../Core/Src/EEPROMProcess.c:219:6:convertArrays	8

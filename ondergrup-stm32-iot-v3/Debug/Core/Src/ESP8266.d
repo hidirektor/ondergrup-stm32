@@ -27,13 +27,13 @@ Core/Src/ESP8266.o: ../Core/Src/ESP8266.cpp ../Core/Inc/ESP8266.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Core/Inc/SystemDefaults.h ../Core/Inc/JSONParser.h ../Core/Inc/main.h \
- ../Core/Inc/GlobalVariables.h ../Core/Inc/EEPROMProcess.h \
- ../Core/Inc/ErrorProcess.h ../Core/Inc/ESP8266.h ../Core/Inc/Process.h \
- ../Core/Inc/HardwareTest.h ../Core/Inc/WifiProcess.h \
- ../Core/Inc/TextVariables.h ../Core/Inc/Translation.h ../Core/Inc/LCD.h \
- ../Core/Inc/Util.h ../Core/Inc/IoTMenu.h ../Core/Inc/main.h \
- ../Core/Inc/JSONParser.h
+ ../Core/Inc/SystemDefaults.h ../Core/Inc/JSONParser.h \
+ ../Core/Inc/Instance.h ../Core/Inc/GlobalVariables.h \
+ ../Core/Inc/EEPROMProcess.h ../Core/Inc/ErrorProcess.h \
+ ../Core/Inc/ESP8266.h ../Core/Inc/Process.h ../Core/Inc/HardwareTest.h \
+ ../Core/Inc/WifiProcess.h ../Core/Inc/TextVariables.h \
+ ../Core/Inc/Translation.h ../Core/Inc/LCD.h ../Core/Inc/Util.h \
+ ../Core/Inc/IoTMenu.h ../Core/Inc/JSONParser.h
 ../Core/Inc/ESP8266.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -65,7 +65,7 @@ Core/Src/ESP8266.o: ../Core/Src/ESP8266.cpp ../Core/Inc/ESP8266.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 ../Core/Inc/SystemDefaults.h:
 ../Core/Inc/JSONParser.h:
-../Core/Inc/main.h:
+../Core/Inc/Instance.h:
 ../Core/Inc/GlobalVariables.h:
 ../Core/Inc/EEPROMProcess.h:
 ../Core/Inc/ErrorProcess.h:
@@ -78,5 +78,4 @@ Core/Src/ESP8266.o: ../Core/Src/ESP8266.cpp ../Core/Inc/ESP8266.h \
 ../Core/Inc/LCD.h:
 ../Core/Inc/Util.h:
 ../Core/Inc/IoTMenu.h:
-../Core/Inc/main.h:
 ../Core/Inc/JSONParser.h:

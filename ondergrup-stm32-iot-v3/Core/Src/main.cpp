@@ -20,7 +20,8 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Instance.h"
+#include "HardwareTest.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,16 +51,7 @@ TIM_HandleTypeDef htim1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-GlobalVariables& globalVars = GlobalVariables::getInstance();
-SystemDefaults& systemDefaults = SystemDefaults::getInstance();
-EEPROMProcess& eepromProcess = EEPROMProcess::getInstance();
-Translation& translation = Translation::getInstance();
-TextVariables& textVars = TextVariables::getInstance();
-ESP8266& esp = ESP8266::getInstance();
-I2CLCD& lcd = I2CLCD::getInstance(hi2c1, 0x27);
-Process& process = Process::getInstance();
-WifiProcess& wifiProcess = WifiProcess::getInstance();
-ErrorProcess& errorProcess = ErrorProcess::getInstance();
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -155,7 +147,7 @@ int main(void)
 
   globalVars.backLightTimer = globalVars.millis;
 
-  iotMenu.iotSetup();
+  wifiProcess.iotSetup();
   /* USER CODE END 2 */
 
   /* Infinite loop */

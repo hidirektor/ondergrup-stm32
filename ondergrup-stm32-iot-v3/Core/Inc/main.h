@@ -31,19 +31,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "GlobalVariables.h"
-#include "SystemDefaults.h"
-#include "EEPROMProcess.h"
-#include "ErrorProcess.h"
-#include "ESP8266.h"
-#include "Process.h"
-#include "HardwareTest.h"
-#include "WifiProcess.h"
-#include "TextVariables.h"
-#include "Translation.h"
-#include "LCD.h"
-#include "Util.h"
-#include "IoTMenu.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -59,16 +47,7 @@ extern UART_HandleTypeDef huart1;
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-extern GlobalVariables& globalVars;
-extern SystemDefaults& systemDefaults;
-extern EEPROMProcess& eepromProcess;
-extern Translation& translation;
-extern TextVariables& textVars;
-extern ESP8266& esp;
-extern I2CLCD& lcd;
-extern Process& process;
-extern WifiProcess& wifiProcess;
-extern ErrorProcess& errorProcess;
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

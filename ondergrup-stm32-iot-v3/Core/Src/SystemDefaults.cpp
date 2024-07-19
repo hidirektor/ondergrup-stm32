@@ -7,13 +7,18 @@
 
 
 #include "SystemDefaults.h"
+
+#include "Instance.h"
 #include "main.h"
+
+#include <array>
+#include <cstdint>
 
 std::array<char, 250> systemDefaults.bufferTX;
 
-int systemDefaults.idStartPos = 50;
-int systemDefaults.ssidStartPos = 62;
-int systemDefaults.passStartPos = 83;
+systemDefaults.idStartPos = 50;
+systemDefaults.ssidStartPos = 62;
+systemDefaults.passStartPos = 83;
 
 std::string systemDefaults.emptyArray = "                ";
 std::string systemDefaults.idCharactersArray = "0123456789";

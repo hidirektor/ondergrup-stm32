@@ -45,11 +45,7 @@ void eepromKontrol() {
 	buzzer = eepromData[25];
 	demoMode = eepromData[26];
 	calismaSayisi = eepromData[27];
-	calismaSayisi1 = eepromData[28];
-	calismaSayisi10 = eepromData[29];
-	calismaSayisi100 = eepromData[30];
-	calismaSayisi1000 = eepromData[31];
-	calismaSayisi10000 = eepromData[32];
+	calismaSayisiDemo = eepromData[28];
 	dilSecim = eepromData[33];
 	iotMode = eepromData[48];
 	kapiTablaAcKonum = eepromData[34];
@@ -67,26 +63,6 @@ void eepromKontrol() {
 	hataKayit10 = eepromData[47];
 
 	setupCompleted = eepromData[104];
-
-	if(calismaSayisi10000>9) {
-	    calismaSayisi10000=0;
-	}
-
-	if(calismaSayisi1000>9) {
-	    calismaSayisi1000=0;
-	}
-
-	if(calismaSayisi100>9) {
-	    calismaSayisi100=0;
-	}
-
-	if(calismaSayisi10>9) {
-	    calismaSayisi10=0;
-	}
-
-	if(calismaSayisi1>9) {
-	    calismaSayisi1=0;
-	}
 
 	/*if(acilStop1>0) {
 		acilStop1=0;

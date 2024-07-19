@@ -6,9 +6,9 @@
  */
 
 #include "Menu.h"
+
+#include "Instance.h"
 #include "main.h"
-#include "WifiProcess.h"
-#include "IoTMenu.h"
 
 namespace {
     void handleMenuIncrease();

@@ -1,6 +1,6 @@
 ../Core/Inc/TextVariables.h:120:5:TextVariables::TextVariables()	16	static
 ../Core/Inc/TextVariables.h:14:7:TextVariables::~TextVariables()	16	static
-../Core/Src/TextVariables.cpp:14:26:void __tcf_1()	8	static
-../Core/Src/TextVariables.cpp:13:16:static TextVariables& TextVariables::getInstance()	8	static
-../Core/Src/TextVariables.cpp:18:6:void TextVariables::loadMenuTexts(uint8_t)	16	static
-../Core/Src/TextVariables.cpp:203:6:void TextVariables::menuVariableFinisher()	16	static
+../Core/Src/TextVariables.cpp:17:26:void __tcf_1()	8	static
+../Core/Src/TextVariables.cpp:16:16:static TextVariables& TextVariables::getInstance()	8	static
+../Core/Src/TextVariables.cpp:21:6:void TextVariables::loadMenuTexts(uint8_t)	16	static
+../Core/Src/TextVariables.cpp:206:6:void TextVariables::menuVariableFinisher()	16	static

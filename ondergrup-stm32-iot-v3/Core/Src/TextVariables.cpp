@@ -7,7 +7,10 @@
 
 
 #include "TextVariables.h"
+
+#include "Instance.h"
 #include "main.h"
+
 #include <cstring>
 
 TextVariables& TextVariables::getInstance() {

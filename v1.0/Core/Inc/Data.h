@@ -99,11 +99,11 @@ bool butonKontrol2 = 0;
 bool butonKontrol3 = 0;
 bool butonKontrol4 = 0;
 bool butonKontrol5 = 0;
-bool mesajYazildi = 0;
-bool yukarimotorcalisiyor = 0;
+uint8_t mesajYazildi = 0;
+uint8_t yukarimotorcalisiyor = 0;
 bool devmotoryukaricalisiyor = 0;
 bool devmotorasagicalisiyor = 0;
-bool asagivalfcalisiyor = 0;
+uint8_t asagivalfcalisiyor = 0;
 bool yukarivalfcalisiyor = 0;
 bool devyukarivalfcalisiyor = 0;
 bool devasagivalfcalisiyor = 0;
@@ -140,6 +140,9 @@ bool tablakapisivicihatasi = 0;
 bool cercevesasagicalisma = 0;
 bool HataMakineCalisiyorkapi = 0;
 bool HataMakineCalisiyortabla = 0;
+bool EmnCerHataMakYukariCalis = 0;
+bool EmnStopVar = 0;
+char *deneme;
 
 //Menü için text değişkenleri
 char *mainText;
@@ -471,7 +474,7 @@ void menu(void) {
 			}
 		}
 
-		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0) && (devirmeYuruyusSecim == 0)) {
+		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0)) {
 			hataGostermeSirasi = hataGostermeSirasi + 1;
 
 			if(hataGostermeSirasi > 10) {
@@ -480,7 +483,7 @@ void menu(void) {
 			bekle();
 		}
 
-		if ((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0) && (devirmeYuruyusSecim == 0)) {
+		if ((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			hataGostermeSirasi = hataGostermeSirasi - 1;
 
 	    	if(hataGostermeSirasi > 11) {
@@ -865,7 +868,7 @@ void menu(void) {
 			lcd_print(2, 1, "Prudhome        ");
 		} else if(kapi1Tip == 1) {
 			if(dilSecim == 0){
-				lcd_print(2, 1, "Buton kontrollu");
+				lcd_print(2, 1, "Buton kontrollu ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "Button cntrolled");
 			}
@@ -943,7 +946,7 @@ void menu(void) {
 			lcd_print(2, 1, "Prudhome        ");
 		} else if(kapi2Tip == 1) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "Buton kontrollu");
+				lcd_print(2, 1, "Buton kontrollu ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "Button cntrolled");
 			}
@@ -1021,7 +1024,7 @@ void menu(void) {
 			lcd_print(2, 1, "Prudhome        ");
 		} else if(kapitablaTip == 1) {
 			if(dilSecim == 0) {
-				lcd_print(2, 1, "Buton kontrollu");
+				lcd_print(2, 1, "Buton kontrollu ");
 			} else if(dilSecim == 1) {
 				lcd_print(2, 1, "Button cntrolled");
 			}
@@ -1859,7 +1862,7 @@ void menu(void) {
 			bekle();
 		}
 
-		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)) {
+		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)&&(calismaSayModu==1)) {
 			eepromData[32] = 0;
 			eepromData[31] = 0;
 			eepromData[30] = 0;

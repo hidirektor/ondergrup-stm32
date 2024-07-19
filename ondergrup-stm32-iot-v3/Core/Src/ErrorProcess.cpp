@@ -6,6 +6,7 @@
  */
 
 #include "ErrorProcess.h"
+#include "Instance.h"
 #include "main.h"
 
 ErrorProcess& ErrorProcess::getInstance() {

@@ -52,6 +52,12 @@ default.size.stdout \
 OBJDUMP_LIST += \
 Version_IoT.list \
 
+OBJCOPY_HEX += \
+Version_IoT.hex \
+
+OBJCOPY_BIN += \
+Version_IoT.bin \
+
 
 # All Target
 all: main-build
@@ -75,12 +81,22 @@ Version_IoT.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+Version_IoT.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "Version_IoT.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Version_IoT.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Version_IoT.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) Version_IoT.elf Version_IoT.list Version_IoT.map default.size.stdout
+	-$(RM) Version_IoT.bin Version_IoT.elf Version_IoT.hex Version_IoT.list Version_IoT.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

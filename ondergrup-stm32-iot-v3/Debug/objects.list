@@ -3,6 +3,7 @@
 "./Core/Src/ErrorProcess.o"
 "./Core/Src/GlobalVariables.o"
 "./Core/Src/HardwareTest.o"
+"./Core/Src/Instance.o"
 "./Core/Src/IoTMenu.o"
 "./Core/Src/JSONParser.o"
 "./Core/Src/LCD.o"

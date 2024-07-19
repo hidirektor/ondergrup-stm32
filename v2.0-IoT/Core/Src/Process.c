@@ -545,28 +545,8 @@ void checkAktifCalisma() {
 
 		if(((CalismaSayisiYukari==1)&&(HAL_GPIO_ReadPin(ustLimitIn_GPIO_Port, ustLimitIn_Pin)==1)&&(altLimit==0)&&(makineStop==1))
 				||((CalismaSayisiAsagi==1)&&((HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1)&&(altLimit))&&(makineStop==1))) {
-			calismaSayisi1=calismaSayisi1+1;
-			if(calismaSayisi1>9) {
-			  	calismaSayisi1=0;
-			  	calismaSayisi10=calismaSayisi10+1;
-			}
-			if(calismaSayisi10>9) {
-			  	calismaSayisi10=0;
-			  	calismaSayisi100=calismaSayisi100+1;
-			}
-			if(calismaSayisi100>9) {
-			  	calismaSayisi100=0;
-			  	calismaSayisi1000=calismaSayisi1000+1;
-			}
-			if(calismaSayisi1000>9) {
-			  	calismaSayisi1000=0;
-			  	calismaSayisi10000=calismaSayisi10000+1;
-			}
-			eepromData[32]=calismaSayisi10000;
-			eepromData[31]=calismaSayisi1000;
-			eepromData[30]=calismaSayisi100;
-			eepromData[29]=calismaSayisi10;
-			eepromData[28]=calismaSayisi1;
+			calismaSayisi++;
+			eepromData[27]=calismaSayisi;
 
 			hafizaYaz=1;
 
@@ -792,32 +772,9 @@ void checkDemoModCalisma() {
 
 		if((demoYukariCalis==1) && (demoCalismaSayisiYar==1)) {
 			//mesajYazildi=0;
-			calismaSayisi1=calismaSayisi1+1;
+			calismaSayisiDemo++;
 
-			if(calismaSayisi1>9) {
-				calismaSayisi1=0;
-				calismaSayisi10=calismaSayisi10+1;
-			}
-
-			if(calismaSayisi10>9) {
-				calismaSayisi10=0;
-				calismaSayisi100=calismaSayisi100+1;
-			}
-
-			if(calismaSayisi100>9) {
-				calismaSayisi100=0;
-				calismaSayisi1000=calismaSayisi1000+1;
-			}
-
-			if(calismaSayisi1000>9) {
-				calismaSayisi1000=0;
-				calismaSayisi10000=calismaSayisi10000+1;
-			}
-			eepromData[32]=calismaSayisi10000;
-			eepromData[31]=calismaSayisi1000;
-			eepromData[30]=calismaSayisi100;
-			eepromData[29]=calismaSayisi10;
-			eepromData[28]=calismaSayisi1;
+			eepromData[28]=calismaSayisiDemo;
 			hafizaYaz=1;
 		 		//mesajYazildi=0;
 			demoCalismaSayisiYar=0;
@@ -826,15 +783,7 @@ void checkDemoModCalisma() {
 		if (menuGiris==0) {
 			lcd_print(1, 1, demoModTextGN);
 			lcd_print(2, 1, cycleTextGN);
-			itoa(calismaSayisi10000, snum, 10);
-			lcd_print(2,12,snum);
-			itoa(calismaSayisi1000, snum, 10);
-			lcd_print(2,13,snum);
-			itoa(calismaSayisi100, snum, 10);
-			lcd_print(2,14,snum);
-			itoa(calismaSayisi10, snum, 10);
-			lcd_print(2,15,snum);
-			itoa(calismaSayisi1, snum, 10);
+			itoa(calismaSayisiDemo, snum, 10);
 			lcd_print(2,16,snum);
 			mesajYazildi=1;
 		}

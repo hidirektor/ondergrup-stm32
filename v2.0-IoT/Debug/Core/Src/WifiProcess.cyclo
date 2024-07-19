@@ -5,7 +5,7 @@
 ../Core/Src/WifiProcess.c:341:9:passConfirmation	5
 ../Core/Src/WifiProcess.c:374:6:takeWifiPass	26
 ../Core/Src/WifiProcess.c:512:7:mergeData	2
-../Core/Src/WifiProcess.c:573:7:getCredentials	6
-../Core/Src/WifiProcess.c:680:6:convertAndSendData	2
-../Core/Src/WifiProcess.c:692:6:iotSetup	5
-../Core/Src/WifiProcess.c:741:5:checkEEPROM4ID	3
+../Core/Src/WifiProcess.c:570:7:getCredentials	6
+../Core/Src/WifiProcess.c:677:6:convertAndSendData	2
+../Core/Src/WifiProcess.c:689:6:iotSetup	5
+../Core/Src/WifiProcess.c:738:5:checkEEPROM4ID	3

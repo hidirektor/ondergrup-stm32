@@ -9,7 +9,7 @@
 #define INC_ENANSLATE_H_
 
 //Genel Metinler:
-char mainTextGN[16] = "    ESP-RMK     ";
+char mainTextGN[16] = "     ESP-XL     ";
 char mainText2GN[16] = "      RUN       ";
 char ondSafetyTextGN[16] = "OND Safety      ";
 char prudhomeTextGN[16] = "Prudhome        ";

@@ -8,14 +8,9 @@
 #ifndef INC_IOTMENU_H_
 #define INC_IOTMENU_H_
 
-#include "main.h"
-
 class IoTMenu {
 public:
-    static IoTMenu& getInstance() {
-        static IoTMenu instance;
-        return instance;
-    }
+	static IoTMenu& getInstance();
 
     void printTemplate(int type, int page);
     int checkSlideVal(int state);

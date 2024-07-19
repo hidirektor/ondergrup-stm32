@@ -7,6 +7,7 @@
 
 
 #include "EEPROMProcess.h"
+#include "Instance.h"
 #include "main.h"
 
 #include <cstdint>

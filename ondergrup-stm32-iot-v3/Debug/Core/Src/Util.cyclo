@@ -1,2 +1,2 @@
 ../Drivers/CMSIS/Include/core_cm3.h:1762:34:void __NVIC_SystemReset()	1
-../Core/Src/Util.cpp:12:6:void checkAndUpdateFirmware(UART_HandleTypeDef*)	8
+../Core/Src/Util.cpp:14:6:void checkAndUpdateFirmware(UART_HandleTypeDef*)	8

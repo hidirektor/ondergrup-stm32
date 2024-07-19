@@ -1,7 +1,8 @@
-../Core/Src/IoTMenu.cpp:12:6:void IoTMenu::printTemplate(int, int)	32	static
-../Core/Src/IoTMenu.cpp:95:5:int IoTMenu::checkSlideVal(int)	16	static
-../Core/Src/IoTMenu.cpp:114:6:void IoTMenu::slideText(const char*, int, int, int)	56	static
-../Core/Src/IoTMenu.cpp:158:6:void IoTMenu::printCredentials(int)	40	static
+../Core/Src/IoTMenu.cpp:13:10:static IoTMenu& IoTMenu::getInstance()	4	static
+../Core/Src/IoTMenu.cpp:18:6:void IoTMenu::printTemplate(int, int)	32	static
+../Core/Src/IoTMenu.cpp:101:5:int IoTMenu::checkSlideVal(int)	16	static
+../Core/Src/IoTMenu.cpp:120:6:void IoTMenu::slideText(const char*, int, int, int)	56	static
+../Core/Src/IoTMenu.cpp:164:6:void IoTMenu::printCredentials(int)	40	static
 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.macos64_1.0.100.202403111906/tools/arm-none-eabi/include/c++/12.3.1/array:283:7:std::array<_Tp, _Nm>::value_type* std::array<_Tp, _Nm>::data() [with _Tp = char; unsigned int _Nm = 20]	16	static
 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.macos64_1.0.100.202403111906/tools/arm-none-eabi/include/c++/12.3.1/array:283:7:std::array<_Tp, _Nm>::value_type* std::array<_Tp, _Nm>::data() [with _Tp = char; unsigned int _Nm = 12]	16	static
 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.macos64_1.0.100.202403111906/tools/arm-none-eabi/include/c++/12.3.1/array:64:7:static constexpr _Tp* std::__array_traits<_Tp, _Nm>::_S_ptr(const _Tp (&)[_Nm]) [with _Tp = char; unsigned int _Nm = 20]	16	static

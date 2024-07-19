@@ -7,6 +7,8 @@
 
 
 #include "WifiProcess.h"
+
+#include "Instance.h"
 #include "main.h"
 
 #include <cstring>
