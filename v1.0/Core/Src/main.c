@@ -7,27 +7,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define TX_BUFFER_SIZE 128
-#define RX_BUFFER_SIZE 128
 
-volatile uint8_t RxBuffer[RX_BUFFER_SIZE];
-volatile uint8_t TxBuffer[TX_BUFFER_SIZE];
-volatile uint8_t RxByte;
-volatile uint8_t RxBufferIndex;
-volatile uint8_t RxComplete;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define SSID2 "ONDERLIFT_PERSONEL"
-#define PASSWORD2 "PersonelOt2022*-"
-#define SSID3 "iPhone SE (2nd generation)"
-#define PASSWORD3 "asdasd009912"
-#define SSID "L0V3"
-#define PASSWORD "12k55W3%"
 
-char machineID[] = "123";
-char machineData[] = "12134210110212101010012100001020";
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -244,8 +229,6 @@ void eepromKontrol(void) {
 	hataKayit8 = eepromData[44];
 	hataKayit9 = eepromData[45];
 	hataKayit10 = eepromData[46];
-
-	loadMenuTexts(dilSecim);
 
 	if(calismaSayisi10000>9) {
 	    calismaSayisi10000=0;
