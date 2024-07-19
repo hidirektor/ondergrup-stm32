@@ -1,8 +1,0 @@
-../Core/Src/HardwareTest.cpp:12:6:void HardwareTest::i2cTest()	16	static
-../Core/Src/HardwareTest.cpp:45:6:void HardwareTest::initGPIO()	32	static
-../Core/Src/HardwareTest.cpp:54:6:void HardwareTest::setPinHigh(GPIO_TypeDef*, uint16_t)	24	static
-../Core/Src/HardwareTest.cpp:58:6:void HardwareTest::setPinLow(GPIO_TypeDef*, uint16_t)	24	static
-../Core/Src/HardwareTest.cpp:62:6:void HardwareTest::waitForPinHigh(GPIO_TypeDef*, uint16_t)	24	static
-../Core/Src/HardwareTest.cpp:66:6:void HardwareTest::waitForPinLow(GPIO_TypeDef*, uint16_t)	24	static
-../Core/Src/HardwareTest.cpp:70:6:void HardwareTest::deinitGPIO()	32	static
-../Core/Src/HardwareTest.cpp:79:6:void HardwareTest::resetI2C()	16	static

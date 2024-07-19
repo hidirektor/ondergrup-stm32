@@ -1,5 +1,0 @@
-../Core/Inc/Translation.h:13:7:Translation::~Translation()	1
-../Core/Src/Translation.cpp:12:24:void __tcf_0()	1
-../Core/Src/Translation.cpp:11:14:static Translation& Translation::getInstance()	3
-../Core/Src/Translation.cpp:16:1:Translation::Translation()	1
-../Core/Src/Translation.cpp:20:6:void Translation::initializeTexts()	1
