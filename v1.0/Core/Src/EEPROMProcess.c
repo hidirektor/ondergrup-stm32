@@ -15,9 +15,6 @@ void eepromKontrol() {
 	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
 	HAL_Delay(1500);
 
-	//Sürekli sıfırlama işlemi yapıyor
-	//firstSetup();
-
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
 	emniyetCercevesi = eepromData[2];
@@ -46,6 +43,8 @@ void eepromKontrol() {
 	demoMode = eepromData[26];
 	calismaSayisi = eepromData[27];
 	calismaSayisiDemo = eepromData[28];
+	calismaCount = eepromData[29];
+	calismaCountDemo = eepromData[30];
 	dilSecim = eepromData[33];
 	iotMode = eepromData[48];
 	kapiTablaAcKonum = eepromData[34];

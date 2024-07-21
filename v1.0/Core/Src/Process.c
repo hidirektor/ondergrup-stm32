@@ -573,7 +573,12 @@ void checkAktifCalisma() {
 
 
 					calismaSayisi++;
-					eepromData[27]=calismaSayisi;
+					if(calismaSayisi == 255) {
+						calismaSayisi = 0;
+						calismaCount++;
+					}
+					eepromData[27] = calismaSayisi;
+					eepromData[29] = calismaCount;
 
 					hafizaYaz=1;
 
@@ -1126,7 +1131,12 @@ void checkDemoModCalisma() {
 
 
 					calismaSayisiDemo++;
-					eepromData[28]=calismaSayisiDemo;
+					if(calismaSayisiDemo == 255) {
+						calismaSayisiDemo = 0;
+						calismaCountDemo++;
+					}
+					eepromData[28] = calismaSayisiDemo;
+					eepromData[30] = calismaCountDemo;
 
 					hafizaYaz=1;
 

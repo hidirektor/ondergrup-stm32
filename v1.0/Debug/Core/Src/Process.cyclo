@@ -5,6 +5,6 @@
 ../Core/Src/Process.c:94:6:checkBasincSalteri	5
 ../Core/Src/Process.c:111:6:checkBasGonder	9
 ../Core/Src/Process.c:125:6:checkKapiSecimleri	9
-../Core/Src/Process.c:155:6:checkAktifCalisma	368
-../Core/Src/Process.c:709:6:checkDemoModCalisma	406
-../Core/Src/Process.c:1393:6:mainLoop	29
+../Core/Src/Process.c:155:6:checkAktifCalisma	369
+../Core/Src/Process.c:714:6:checkDemoModCalisma	407
+../Core/Src/Process.c:1403:6:mainLoop	29

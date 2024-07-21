@@ -8,10 +8,10 @@
 #include "GlobalVariables.h"
 
 
-uint64_t eepromData[110];
+uint8_t eepromData[110];
 char snum[5];
 
-uint64_t kaydedilenDeger = 0;
+uint8_t kaydedilenDeger = 0;
 
 unsigned long millis = 0;
 unsigned long timer = 0;
@@ -23,60 +23,64 @@ unsigned long timer5 = 0;				// basinc kayit suresi
 unsigned long timer6 = 0;				// lcd update suresi
 unsigned long backLightTimer = 0;
 
-uint64_t idKontrol = 0;
-uint64_t safeVal = 0;
+uint8_t idKontrol = 0;
+uint8_t safeVal = 0;
 
-uint64_t x = 0;
-uint64_t y = 0;
-uint64_t calismaSayisi = 0;
-uint64_t calismaSayisiDemo = 0;
+uint8_t x = 0;
+uint8_t y = 0;
+
+uint8_t calismaSayisi = 0;
+uint8_t calismaSayisiDemo = 0;
+uint8_t calismaCount = 0;
+uint8_t calismaCountDemo = 0;
+
 //Menü içi parametreler
-uint64_t menuSayac = 0;
-uint64_t durakSayisi = 0;
-uint64_t calismaSekli = 0;
-uint64_t hataGostermeSirasi = 0;
-uint64_t basincVar = 0;
-uint64_t basincVartmr = 0;
-uint64_t emniyetCercevesi = 0;
-uint64_t yavaslamaLimit = 0;
-uint64_t altLimit = 0;
-uint64_t basincSalteri = 0;
-uint64_t kapiSecimleri = 0;
-uint64_t kapi1Tip = 0;
-uint64_t kapi2Tip = 0;
-uint64_t kapitablaTip = 0;
-uint64_t kapiAcTipi = 0;
-uint64_t kapiTablaAcKonum = 0;
-uint64_t yukariYavasLimit = 0;
-uint64_t devirmeYuruyusSecim = 0;
-uint64_t devirmeYukariIleriLimit = 0;
-uint64_t devirmeAsagiGeriLimit = 0;
-uint64_t devirmeSilindirTipi = 0;
-uint64_t platformSilindirTipi = 0;
-uint64_t yukariValfTmr = 0;
-uint64_t asagiValfTmr = 0;
-uint64_t devirmeYukariIleriTmr = 0;
-uint64_t devirmeAsagiGeriTmr = 0;
-uint64_t makineCalismaTmr = 0;
-uint64_t kapi1AcSure = 0;
-uint64_t kapi2AcSure = 0;
-uint64_t kapiTablaAcSure = 0;
-uint64_t buzzer = 0;
-uint64_t menuGiris = 0;
-uint64_t demoMode = 0;
-uint64_t iotMode = 0;
-uint64_t calismaSayModu = 0;
-uint64_t dilSecim = 0;
-uint64_t hataKayit1 = 0;
-uint64_t hataKayit2 = 0;
-uint64_t hataKayit3 = 0;
-uint64_t hataKayit4 = 0;
-uint64_t hataKayit5 = 0;
-uint64_t hataKayit6 = 0;
-uint64_t hataKayit7 = 0;
-uint64_t hataKayit8 = 0;
-uint64_t hataKayit9 = 0;
-uint64_t hataKayit10 = 0;
+uint8_t menuSayac = 0;
+uint8_t durakSayisi = 0;
+uint8_t calismaSekli = 0;
+uint8_t hataGostermeSirasi = 0;
+uint8_t basincVar = 0;
+uint8_t basincVartmr = 0;
+uint8_t emniyetCercevesi = 0;
+uint8_t yavaslamaLimit = 0;
+uint8_t altLimit = 0;
+uint8_t basincSalteri = 0;
+uint8_t kapiSecimleri = 0;
+uint8_t kapi1Tip = 0;
+uint8_t kapi2Tip = 0;
+uint8_t kapitablaTip = 0;
+uint8_t kapiAcTipi = 0;
+uint8_t kapiTablaAcKonum = 0;
+uint8_t yukariYavasLimit = 0;
+uint8_t devirmeYuruyusSecim = 0;
+uint8_t devirmeYukariIleriLimit = 0;
+uint8_t devirmeAsagiGeriLimit = 0;
+uint8_t devirmeSilindirTipi = 0;
+uint8_t platformSilindirTipi = 0;
+uint8_t yukariValfTmr = 0;
+uint8_t asagiValfTmr = 0;
+uint8_t devirmeYukariIleriTmr = 0;
+uint8_t devirmeAsagiGeriTmr = 0;
+uint8_t makineCalismaTmr = 0;
+uint8_t kapi1AcSure = 0;
+uint8_t kapi2AcSure = 0;
+uint8_t kapiTablaAcSure = 0;
+uint8_t buzzer = 0;
+uint8_t menuGiris = 0;
+uint8_t demoMode = 0;
+uint8_t iotMode = 0;
+uint8_t calismaSayModu = 0;
+uint8_t dilSecim = 0;
+uint8_t hataKayit1 = 0;
+uint8_t hataKayit2 = 0;
+uint8_t hataKayit3 = 0;
+uint8_t hataKayit4 = 0;
+uint8_t hataKayit5 = 0;
+uint8_t hataKayit6 = 0;
+uint8_t hataKayit7 = 0;
+uint8_t hataKayit8 = 0;
+uint8_t hataKayit9 = 0;
+uint8_t hataKayit10 = 0;
 bool hafizaYaz = 0;
 bool hafizaOku = 0;
 bool ilkOkuma = 0;

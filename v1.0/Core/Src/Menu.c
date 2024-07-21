@@ -1199,12 +1199,17 @@ void menu() {
 	if (menuSayac == 29) {
 		if(calismaSayModu == 0) {
 			lcd_print(1, 1, calismaSayisiText);
+			int finalCount = 0;
 
 			if(demoMode == 1) {
-				itoa(calismaSayisiDemo, snum, 10);
+				finalCount += calismaCountDemo * 255; //sıfır durumu da dahil ediliyor
+				finalCount += calismaSayisiDemo;
 			} else {
-				itoa(calismaSayisi, snum, 10);
+				finalCount += calismaCount * 255; //sıfır durumu da dahil ediliyor
+				finalCount += calismaSayisi;
 			}
+
+			itoa(finalCount, snum, 10);
 			lcd_print(2, 16, snum);
 
 			lcd_print(2, 1, "           ");
