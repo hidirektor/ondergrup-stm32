@@ -1,2 +1,2 @@
 ../Core/Src/EEPROMProcess.c:14:6:eepromKontrol	31
-../Core/Src/EEPROMProcess.c:191:6:firstSetup	2
+../Core/Src/EEPROMProcess.c:191:6:eepromFillWithDefault	2

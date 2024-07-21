@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   000196cf  00000000  00000000  00043fa3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0009f824  00000000  00000000  0005d672  2**0
+ 18 .debug_str    0009f82f  00000000  00000000  0005d672  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000fce96  2**0
+ 19 .comment      00000043  00000000  00000000  000fcea1  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004744  00000000  00000000  000fcedc  2**2
+ 20 .debug_frame  00004744  00000000  00000000  000fcee4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000066  00000000  00000000  00101620  2**0
+ 21 .debug_line_str 00000066  00000000  00000000  00101628  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -259,74 +259,74 @@ void eepromKontrol() {
  800033e:	f893 2021 	ldrb.w	r2, [r3, #33]	@ 0x21
  8000342:	4b77      	ldr	r3, [pc, #476]	@ (8000520 <eepromKontrol+0x2fc>)
  8000344:	701a      	strb	r2, [r3, #0]
-	iotMode = eepromData[48];
+	kapiTablaAcKonum = eepromData[34];
  8000346:	4b56      	ldr	r3, [pc, #344]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000348:	f893 2030 	ldrb.w	r2, [r3, #48]	@ 0x30
+ 8000348:	f893 2022 	ldrb.w	r2, [r3, #34]	@ 0x22
  800034c:	4b75      	ldr	r3, [pc, #468]	@ (8000524 <eepromKontrol+0x300>)
  800034e:	701a      	strb	r2, [r3, #0]
-	kapiTablaAcKonum = eepromData[34];
+	calismaSayModu = eepromData[35];
  8000350:	4b53      	ldr	r3, [pc, #332]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000352:	f893 2022 	ldrb.w	r2, [r3, #34]	@ 0x22
+ 8000352:	f893 2023 	ldrb.w	r2, [r3, #35]	@ 0x23
  8000356:	4b74      	ldr	r3, [pc, #464]	@ (8000528 <eepromKontrol+0x304>)
  8000358:	701a      	strb	r2, [r3, #0]
-	calismaSayModu = eepromData[35];
+	kapiAcTipi = eepromData[36];
  800035a:	4b51      	ldr	r3, [pc, #324]	@ (80004a0 <eepromKontrol+0x27c>)
- 800035c:	f893 2023 	ldrb.w	r2, [r3, #35]	@ 0x23
+ 800035c:	f893 2024 	ldrb.w	r2, [r3, #36]	@ 0x24
  8000360:	4b72      	ldr	r3, [pc, #456]	@ (800052c <eepromKontrol+0x308>)
  8000362:	701a      	strb	r2, [r3, #0]
-	kapiAcTipi = eepromData[36];
+	hataKayit1 = eepromData[38];
  8000364:	4b4e      	ldr	r3, [pc, #312]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000366:	f893 2024 	ldrb.w	r2, [r3, #36]	@ 0x24
+ 8000366:	f893 2026 	ldrb.w	r2, [r3, #38]	@ 0x26
  800036a:	4b71      	ldr	r3, [pc, #452]	@ (8000530 <eepromKontrol+0x30c>)
  800036c:	701a      	strb	r2, [r3, #0]
-	hataKayit1 = eepromData[38];
+	hataKayit2 = eepromData[39];
  800036e:	4b4c      	ldr	r3, [pc, #304]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000370:	f893 2026 	ldrb.w	r2, [r3, #38]	@ 0x26
+ 8000370:	f893 2027 	ldrb.w	r2, [r3, #39]	@ 0x27
  8000374:	4b6f      	ldr	r3, [pc, #444]	@ (8000534 <eepromKontrol+0x310>)
  8000376:	701a      	strb	r2, [r3, #0]
-	hataKayit2 = eepromData[39];
+	hataKayit3 = eepromData[40];
  8000378:	4b49      	ldr	r3, [pc, #292]	@ (80004a0 <eepromKontrol+0x27c>)
- 800037a:	f893 2027 	ldrb.w	r2, [r3, #39]	@ 0x27
+ 800037a:	f893 2028 	ldrb.w	r2, [r3, #40]	@ 0x28
  800037e:	4b6e      	ldr	r3, [pc, #440]	@ (8000538 <eepromKontrol+0x314>)
  8000380:	701a      	strb	r2, [r3, #0]
-	hataKayit3 = eepromData[40];
+	hataKayit4 = eepromData[41];
  8000382:	4b47      	ldr	r3, [pc, #284]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000384:	f893 2028 	ldrb.w	r2, [r3, #40]	@ 0x28
+ 8000384:	f893 2029 	ldrb.w	r2, [r3, #41]	@ 0x29
  8000388:	4b6c      	ldr	r3, [pc, #432]	@ (800053c <eepromKontrol+0x318>)
  800038a:	701a      	strb	r2, [r3, #0]
-	hataKayit4 = eepromData[41];
+	hataKayit5 = eepromData[42];
  800038c:	4b44      	ldr	r3, [pc, #272]	@ (80004a0 <eepromKontrol+0x27c>)
- 800038e:	f893 2029 	ldrb.w	r2, [r3, #41]	@ 0x29
+ 800038e:	f893 202a 	ldrb.w	r2, [r3, #42]	@ 0x2a
  8000392:	4b6b      	ldr	r3, [pc, #428]	@ (8000540 <eepromKontrol+0x31c>)
  8000394:	701a      	strb	r2, [r3, #0]
-	hataKayit5 = eepromData[42];
+	hataKayit6 = eepromData[43];
  8000396:	4b42      	ldr	r3, [pc, #264]	@ (80004a0 <eepromKontrol+0x27c>)
- 8000398:	f893 202a 	ldrb.w	r2, [r3, #42]	@ 0x2a
+ 8000398:	f893 202b 	ldrb.w	r2, [r3, #43]	@ 0x2b
  800039c:	4b69      	ldr	r3, [pc, #420]	@ (8000544 <eepromKontrol+0x320>)
  800039e:	701a      	strb	r2, [r3, #0]
-	hataKayit6 = eepromData[43];
+	hataKayit7 = eepromData[44];
  80003a0:	4b3f      	ldr	r3, [pc, #252]	@ (80004a0 <eepromKontrol+0x27c>)
- 80003a2:	f893 202b 	ldrb.w	r2, [r3, #43]	@ 0x2b
+ 80003a2:	f893 202c 	ldrb.w	r2, [r3, #44]	@ 0x2c
  80003a6:	4b68      	ldr	r3, [pc, #416]	@ (8000548 <eepromKontrol+0x324>)
  80003a8:	701a      	strb	r2, [r3, #0]
-	hataKayit7 = eepromData[44];
+	hataKayit8 = eepromData[45];
  80003aa:	4b3d      	ldr	r3, [pc, #244]	@ (80004a0 <eepromKontrol+0x27c>)
- 80003ac:	f893 202c 	ldrb.w	r2, [r3, #44]	@ 0x2c
+ 80003ac:	f893 202d 	ldrb.w	r2, [r3, #45]	@ 0x2d
  80003b0:	4b66      	ldr	r3, [pc, #408]	@ (800054c <eepromKontrol+0x328>)
  80003b2:	701a      	strb	r2, [r3, #0]
-	hataKayit8 = eepromData[45];
+	hataKayit9 = eepromData[46];
  80003b4:	4b3a      	ldr	r3, [pc, #232]	@ (80004a0 <eepromKontrol+0x27c>)
- 80003b6:	f893 202d 	ldrb.w	r2, [r3, #45]	@ 0x2d
+ 80003b6:	f893 202e 	ldrb.w	r2, [r3, #46]	@ 0x2e
  80003ba:	4b65      	ldr	r3, [pc, #404]	@ (8000550 <eepromKontrol+0x32c>)
  80003bc:	701a      	strb	r2, [r3, #0]
-	hataKayit9 = eepromData[46];
+	hataKayit10 = eepromData[47];
  80003be:	4b38      	ldr	r3, [pc, #224]	@ (80004a0 <eepromKontrol+0x27c>)
- 80003c0:	f893 202e 	ldrb.w	r2, [r3, #46]	@ 0x2e
+ 80003c0:	f893 202f 	ldrb.w	r2, [r3, #47]	@ 0x2f
  80003c4:	4b63      	ldr	r3, [pc, #396]	@ (8000554 <eepromKontrol+0x330>)
  80003c6:	701a      	strb	r2, [r3, #0]
-	hataKayit10 = eepromData[47];
+	iotMode = eepromData[48];
  80003c8:	4b35      	ldr	r3, [pc, #212]	@ (80004a0 <eepromKontrol+0x27c>)
- 80003ca:	f893 202f 	ldrb.w	r2, [r3, #47]	@ 0x2f
+ 80003ca:	f893 2030 	ldrb.w	r2, [r3, #48]	@ 0x30
  80003ce:	4b62      	ldr	r3, [pc, #392]	@ (8000558 <eepromKontrol+0x334>)
  80003d0:	701a      	strb	r2, [r3, #0]
 
@@ -401,12 +401,12 @@ void eepromKontrol() {
 	}
 
 	if(kapiAcTipi>1) {
- 8000426:	4b42      	ldr	r3, [pc, #264]	@ (8000530 <eepromKontrol+0x30c>)
+ 8000426:	4b41      	ldr	r3, [pc, #260]	@ (800052c <eepromKontrol+0x308>)
  8000428:	781b      	ldrb	r3, [r3, #0]
  800042a:	2b01      	cmp	r3, #1
  800042c:	d902      	bls.n	8000434 <eepromKontrol+0x210>
 	    kapiAcTipi=0;
- 800042e:	4b40      	ldr	r3, [pc, #256]	@ (8000530 <eepromKontrol+0x30c>)
+ 800042e:	4b3f      	ldr	r3, [pc, #252]	@ (800052c <eepromKontrol+0x308>)
  8000430:	2200      	movs	r2, #0
  8000432:	701a      	strb	r2, [r3, #0]
 	}
@@ -467,12 +467,12 @@ void eepromKontrol() {
 	}
 
 	if(kapiTablaAcKonum>2) {
- 800047a:	4b2b      	ldr	r3, [pc, #172]	@ (8000528 <eepromKontrol+0x304>)
+ 800047a:	4b2a      	ldr	r3, [pc, #168]	@ (8000524 <eepromKontrol+0x300>)
  800047c:	781b      	ldrb	r3, [r3, #0]
  800047e:	2b02      	cmp	r3, #2
  8000480:	d902      	bls.n	8000488 <eepromKontrol+0x264>
 	    kapiTablaAcKonum=2;
- 8000482:	4b29      	ldr	r3, [pc, #164]	@ (8000528 <eepromKontrol+0x304>)
+ 8000482:	4b28      	ldr	r3, [pc, #160]	@ (8000524 <eepromKontrol+0x300>)
  8000484:	2202      	movs	r2, #2
  8000486:	701a      	strb	r2, [r3, #0]
 	}
@@ -527,20 +527,20 @@ void eepromKontrol() {
  8000518:	20000d9a 	.word	0x20000d9a
  800051c:	20000d9b 	.word	0x20000d9b
  8000520:	20000dbd 	.word	0x20000dbd
- 8000524:	20000dbb 	.word	0x20000dbb
- 8000528:	20000da9 	.word	0x20000da9
- 800052c:	20000dbc 	.word	0x20000dbc
- 8000530:	20000da8 	.word	0x20000da8
- 8000534:	20000dbe 	.word	0x20000dbe
- 8000538:	20000dbf 	.word	0x20000dbf
- 800053c:	20000dc0 	.word	0x20000dc0
- 8000540:	20000dc1 	.word	0x20000dc1
- 8000544:	20000dc2 	.word	0x20000dc2
- 8000548:	20000dc3 	.word	0x20000dc3
- 800054c:	20000dc4 	.word	0x20000dc4
- 8000550:	20000dc5 	.word	0x20000dc5
- 8000554:	20000dc6 	.word	0x20000dc6
- 8000558:	20000dc7 	.word	0x20000dc7
+ 8000524:	20000da9 	.word	0x20000da9
+ 8000528:	20000dbc 	.word	0x20000dbc
+ 800052c:	20000da8 	.word	0x20000da8
+ 8000530:	20000dbe 	.word	0x20000dbe
+ 8000534:	20000dbf 	.word	0x20000dbf
+ 8000538:	20000dc0 	.word	0x20000dc0
+ 800053c:	20000dc1 	.word	0x20000dc1
+ 8000540:	20000dc2 	.word	0x20000dc2
+ 8000544:	20000dc3 	.word	0x20000dc3
+ 8000548:	20000dc4 	.word	0x20000dc4
+ 800054c:	20000dc5 	.word	0x20000dc5
+ 8000550:	20000dc6 	.word	0x20000dc6
+ 8000554:	20000dc7 	.word	0x20000dc7
+ 8000558:	20000dbb 	.word	0x20000dbb
 	    yukariYavasLimit=0;
  800055c:	4b39      	ldr	r3, [pc, #228]	@ (8000644 <eepromKontrol+0x420>)
  800055e:	2200      	movs	r2, #0

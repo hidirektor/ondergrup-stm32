@@ -46,7 +46,6 @@ void eepromKontrol() {
 	calismaCount = eepromData[29];
 	calismaCountDemo = eepromData[30];
 	dilSecim = eepromData[33];
-	iotMode = eepromData[48];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
 	kapiAcTipi = eepromData[36];
@@ -60,6 +59,7 @@ void eepromKontrol() {
 	hataKayit8 = eepromData[45];
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
+	iotMode = eepromData[48];
 
 	/*if(acilStop1>0) {
 		acilStop1=0;
@@ -188,7 +188,7 @@ void eepromKontrol() {
 	loadMenuTexts(dilSecim);
 }
 
-void firstSetup() {
+void eepromFillWithDefault() {
 	//EEPROM ilk kez takıldıysa standart sistem verilerini yükle:
 	if (eepromData[0] == 0xFF) {
 		memset(eepromData, 0, 110);
