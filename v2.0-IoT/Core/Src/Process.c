@@ -1420,17 +1420,7 @@ void mainLoop() {
 		}
 
 		if(hafizaYaz==1) {
-		  while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
-		  while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
-
-		  HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-		  HAL_Delay(500);
-
-		  hafizaYaz=0;
-		  lcd_print(2, 1, dataYazildiText);
-
-		  HAL_Delay(1000);
-		  lcd_clear();
+			saveEEPROM();
 		}
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {
