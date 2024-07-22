@@ -1,6 +1,7 @@
 #include "ESP8266.h"
 
 #include "SystemDefaults.h"
+#include "GlobalVariables.h"
 
 void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
 	sprintf(bufferTX, "AT+RESTORE\r\n");
@@ -20,6 +21,42 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	HAL_Delay(2000);
 
 	char str[100];
+	strcpy(str, "AT+CWJAP_DEF=\"");
+	strcat(str, wifiSS);
+	strcat(str, "\",\"");
+	strcat(str, wifiPA);
+	strcat(str, "\"\r\n");
+	sprintf(bufferTX, "%s", str);
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	HAL_Delay(2000);
+}
+
+void ESP8266_Init_AP(UART_HandleTypeDef *huart1) {
+	sprintf(bufferTX, "AT+RESTORE\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	HAL_Delay(1000);
+
+	sprintf(bufferTX, "AT+RST\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	HAL_Delay(1000);
+
+	sprintf(bufferTX, "AT\r\n");
+	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+	HAL_Delay(2000);
+
+    // SoftAP + Client
+    sprintf(bufferTX, "AT+CWMODE=2\r\n");
+    HAL_UART_Transmit_IT(huart1, (uint8_t *)bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+
+    //AP Name
+    sprintf(bufferTX, "AT+CWSAP=\"%s\",\"%s\",5,3\r\n", apSSID, apPassword);
+    HAL_UART_Transmit_IT(huart1, (uint8_t *)bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+}
+
+void connectWifiNetwork(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA) {
+	char str[100];
 	strcpy(str, "AT+CWJAP=\"");
 	strcat(str, wifiSS);
 	strcat(str, "\",\"");
@@ -28,6 +65,28 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	sprintf(bufferTX, "%s", str);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
 	HAL_Delay(2000);
+}
+
+void startWebServer(UART_HandleTypeDef *huart1) {
+    // Start the TCP on 2805
+    sprintf(bufferTX, "AT+CIPMUX=1\r\n");
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+    sprintf(bufferTX, "AT+CIPSERVER=1,2805\r\n");
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+
+    sprintf(bufferTX, "AT+CIPSEND=0,50");
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+
+    sprintf(bufferTX, "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nHello from ESP8266 AP mode!");
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
+
+    sprintf(bufferTX, "AT+CIPCLOSE=0");
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
 }
 
 void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {

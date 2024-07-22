@@ -1,3 +1,6 @@
-../Core/Src/ESP8266.c:5:6:ESP8266_Init	1
-../Core/Src/ESP8266.c:33:6:sendMachineData	1
-../Core/Src/ESP8266.c:58:5:checkMachineID	3
+../Core/Src/ESP8266.c:6:6:ESP8266_Init	1
+../Core/Src/ESP8266.c:34:6:ESP8266_Init_AP	1
+../Core/Src/ESP8266.c:58:6:connectWifiNetwork	1
+../Core/Src/ESP8266.c:70:6:startWebServer	1
+../Core/Src/ESP8266.c:92:6:sendMachineData	1
+../Core/Src/ESP8266.c:117:5:checkMachineID	3

@@ -161,34 +161,19 @@ void slideText(const char* text, int startPos, int startLine, int state) {
 void printCredentials(int type) {
 	if(type == 1) {
 		//machine id yazdır
-		lcd_print(1, 1, machineIDText);
 		lcd_print(2, 1, machineID);
 		lcd_print(2, 13, "    ");
 	} else if(type == 2) {
 		//wifi ssid yazdır
-		int ssidLength = strlen(wifiSSID);
-
 		lcd_print(1, 1, "WIFI SSID       ");
-		if(ssidLength == 16 || ssidLength < 16) {
-			lcd_print(2, 1, wifiSSID);
-		} else if(ssidLength > 16) {
-			//Eğer ssid 16'dan büyükse kayarak yazdır
-			slideText(wifiSSID, 1, 2, 0);
-		} else {
-			lcd_print(2, 1, "                ");
-		}
+
+		lcd_print(2, 1, "                ");
+		lcd_print(2, 1, wifiSSID);
 	} else {
 		//wifi pass yazdır
-		int passLength = strlen(wifiPass);
-
 		lcd_print(1, 1, "WIFI PASS       ");
-		if(passLength == 16 || passLength < 16) {
-			lcd_print(2, 1, wifiPass);
-		} else if(passLength > 16) {
-			//Eğer pass 16'dan büyükse kayarak yazdır
-			slideText(wifiPass, 1, 2, 1);
-		} else {
-			lcd_print(2, 1, "                ");
-		}
+
+		lcd_print(2, 1, "                ");
+		lcd_print(2, 1, wifiPass);
 	}
 }

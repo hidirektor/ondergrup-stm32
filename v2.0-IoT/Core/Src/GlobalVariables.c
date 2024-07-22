@@ -8,7 +8,7 @@
 #include "GlobalVariables.h"
 
 
-uint64_t eepromData[110];
+uint8_t eepromData[110];
 char snum[5];
 char machineID[machineIDCharacterLimit];
 char wifiSSID[wifiCharacterLimit];
@@ -33,8 +33,11 @@ uint8_t safeVal = 0;
 
 uint8_t x = 0;
 uint8_t y = 0;
-uint64_t calismaSayisi = 0;
-uint64_t calismaSayisiDemo = 0;
+
+uint8_t calismaSayisi = 0;
+uint8_t calismaSayisiDemo = 0;
+uint8_t calismaCount = 0;
+uint8_t calismaCountDemo = 0;
 //Menü içi parametreler
 uint8_t menuSayac = 0;
 uint8_t durakSayisi = 0;

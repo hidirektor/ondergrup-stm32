@@ -7,6 +7,10 @@
 #include "string.h"
 
 void ESP8266_Init(UART_HandleTypeDef *huart, const char *wifiSS, const char *wifiPA);
+void ESP8266_Init_AP(UART_HandleTypeDef *huart1);
+void connectWifiNetwork(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wifiPA);
+void startWebServer(UART_HandleTypeDef *huart1);
+
 void sendMachineData(UART_HandleTypeDef *huart, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData);
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID);
 

@@ -9,8 +9,11 @@
 #define INC_SYSTEMDEFAULTS_H_
 
 #define machineIDCharacterLimit 12
-#define wifiCharacterLimit 20
+#define wifiCharacterLimit 16
 #define lcdBacklightSure  6 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
+
+#define apSSID "OnderGrup_IoT"
+#define apPassword "ondergrupIoT"
 
 #define demoWifiSSID "ONDERLIFT_PERSONEL"
 #define demoWifiPass "PersonelOt2022*-"
@@ -20,7 +23,9 @@
 
 #define mainServer "85.95.231.92"
 #define mainServerWithPort "85.95.231.92:3000"
+
 extern char bufferTX[250];
+extern char bufferRX[250];
 
 extern int idStartPos;
 extern int ssidStartPos;

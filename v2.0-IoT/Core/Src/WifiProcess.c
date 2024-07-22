@@ -173,11 +173,7 @@ uint8_t ssidConfirmation() {
 			loopVal = 0;
 		}
 
-		if(strlen(wifiSSID) > 16) {
-			slideText(wifiSSID, 1, 1, 1);
-		} else {
-			lcd_print(1, 1, wifiSSID);
-		}
+		lcd_print(1, 1, wifiSSID);
 	}
 
     lcd_cursor(0);
@@ -309,10 +305,6 @@ void takeWifiSSID() {
         		eepromData[eepromVal] = '\0';
         		wifiSSID[arrayPosition] = '\0';
 
-        		//if(strlen(wifiSSID) > 10) {
-        		    //slideTextInput(wifiSSID, 7, 1, 1);
-        		//}
-
         		if(writeLoc > 7) {
         			writeLoc--;
         		} else if(writeLoc < 7) {
@@ -348,11 +340,7 @@ uint8_t passConfirmation() {
 			loopVal = 0;
 		}
 
-		if(strlen(wifiPass) > 16) {
-			slideText(wifiPass, 1, 1, 1);
-		} else {
-			lcd_print(1, 1, wifiPass);
-		}
+		lcd_print(1, 1, wifiPass);
 	}
 
     lcd_cursor(0);
@@ -688,51 +676,42 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		if(checkEEPROM4ID() != 1) {
-			takeMachineID();
-		}
+		if(setupCompleted != 1) {
+			/*takeIDSection:
+			if(checkMachineID(&huart1, machineID) == 1) {
+				setupCompleted = 1;
+				eepromData[104] = setupCompleted;
+				//EEPROMA yazma işlemini başlat
+	        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+	        	HAL_Delay(1500);
+			} else {
+				lcd_print(1, 1, mustBeUniqueText);
+				lcd_print(2, 1, mustBeUnique2Text);
 
-		if(!(strlen(wifiSSID) >= 2)) {
-			takeWifiSSID();
-		}
+				HAL_Delay(1250);
+				//Tekrar id alma işlemi
+				takeMachineID();
+				HAL_Delay(200);
+				goto takeIDSection;
+			}*/
+		} else {
+			if(checkEEPROM4ID() != 1) {
+				takeMachineID();
+			}
 
-		if(!(strlen(wifiPass) >= 2)) {
-			takeWifiPass();
+			if(!(strlen(wifiSSID) >= 2)) {
+				takeWifiSSID();
+			}
+
+			if(!(strlen(wifiPass) >= 2)) {
+				takeWifiPass();
+			}
+
+			ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
+			HAL_Delay(500);
+			convertAndSendData();
 		}
 	}
-
-	//if(setupCompleted != 1) {
-		//takeIDSection:
-		//if(checkMachineID(&huart1, machineID) == 1) {
-			//setupCompleted = 1;
-			//eepromData[104] = setupCompleted;
-			//EEPROMA yazma işlemini başlat
-        	//HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        	//HAL_Delay(1000);
-		//} else {
-			/*if(dilSecim == 0) {
-				//türkçe hata mesajı
-				lcd_print(1, 1, " BU ID MAKINEDE ");
-				lcd_print(2, 1, "  KULLANILAMAZ  ");
-			} else {
-				//ingilizce hata mesajı
-				lcd_print(1, 1, "ID NOT AVAILABLE");
-				lcd_print(2, 1, "FOR THIS MACHINE");
-			}*/
-			//lcd_print(1, 1, mustBeUniqueText);
-			//lcd_print(2, 1, mustBeUnique2Text);
-
-			//HAL_Delay(1250);
-			//Tekrar id alma işlemi
-			//takeMachineID();s
-			//HAL_Delay(200);
-			//goto takeIDSection;
-		//}
-	//}
-
-	ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
-	HAL_Delay(500);
-	convertAndSendData();
 }
 
 int checkEEPROM4ID() {

@@ -8,6 +8,7 @@
 #include "SystemDefaults.h"
 
 char bufferTX[250];
+char bufferRX[250];
 
 int idStartPos = 50;
 int ssidStartPos = 62;

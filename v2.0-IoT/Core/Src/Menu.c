@@ -1209,12 +1209,17 @@ void menu() {
 	if (menuSayac == 29) {
 		if(calismaSayModu == 0) {
 			lcd_print(1, 1, calismaSayisiText);
+			int finalCount = 0;
 
 			if(demoMode == 1) {
-				itoa(calismaSayisiDemo, snum, 10);
+				finalCount += calismaCountDemo * 255; //sıfır durumu da dahil ediliyor
+				finalCount += calismaSayisiDemo;
 			} else {
-				itoa(calismaSayisi, snum, 10);
+				finalCount += calismaCount * 255; //sıfır durumu da dahil ediliyor
+				finalCount += calismaSayisi;
 			}
+
+			itoa(finalCount, snum, 10);
 			lcd_print(2, 16, snum);
 
 			lcd_print(2, 1, "           ");
@@ -1326,6 +1331,7 @@ void menu() {
 
 	if (menuSayac == 32) {
 		calismaSayModu = 0;
+		lcd_print(1, 1, machineIDText);
 
 		convertArrays(1);
 		HAL_Delay(50);
@@ -1380,8 +1386,19 @@ void menu() {
 		if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) {
 			menuGiris = 0;
 
-			while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
-			while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY);
+			uint32_t startTick = HAL_GetTick();
+			while (HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF) {
+			    if (HAL_GetTick() - startTick > 1000) {  // 1 saniye zaman aşımı
+			        break;
+			    }
+			}
+
+			startTick = HAL_GetTick();
+			while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY) {
+			    if (HAL_GetTick() - startTick > 1000) {  // 1 saniye zaman aşımı
+			        break;
+			    }
+			}
 
 			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
 			HAL_Delay(1200);

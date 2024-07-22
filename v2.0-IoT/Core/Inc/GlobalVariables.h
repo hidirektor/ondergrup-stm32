@@ -12,8 +12,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-extern uint64_t eepromData[110];
+extern uint8_t eepromData[110];
 extern char snum[5];
+
 extern char machineID[machineIDCharacterLimit];
 extern char wifiSSID[wifiCharacterLimit];
 extern char wifiPass[wifiCharacterLimit];
@@ -39,8 +40,11 @@ extern uint8_t safeVal;
 
 extern uint8_t x;
 extern uint8_t y;
-extern uint64_t calismaSayisi;
-extern uint64_t calismaSayisiDemo;
+
+extern uint8_t calismaSayisi;
+extern uint8_t calismaSayisiDemo;
+extern uint8_t calismaCount;
+extern uint8_t calismaCountDemo;
 //Menü içi parametreler
 extern uint8_t menuSayac;
 extern uint8_t durakSayisi;

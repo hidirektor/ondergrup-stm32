@@ -46,8 +46,9 @@ void eepromKontrol() {
 	demoMode = eepromData[26];
 	calismaSayisi = eepromData[27];
 	calismaSayisiDemo = eepromData[28];
+	calismaCount = eepromData[29];
+	calismaCountDemo = eepromData[30];
 	dilSecim = eepromData[33];
-	iotMode = eepromData[48];
 	kapiTablaAcKonum = eepromData[34];
 	calismaSayModu = eepromData[35];
 	kapiAcTipi = eepromData[36];
@@ -61,6 +62,7 @@ void eepromKontrol() {
 	hataKayit8 = eepromData[45];
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
+	iotMode = eepromData[48];
 
 	setupCompleted = eepromData[104];
 

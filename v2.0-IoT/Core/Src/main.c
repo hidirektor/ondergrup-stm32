@@ -125,6 +125,7 @@ int main(void)
 
   backLightTimer = millis;
 
+  //IoT Section:
   iotSetup();
 
   /* USER CODE END 2 */
