@@ -10,9 +10,9 @@
 
 #include <stdint.h>
 
-#define PAGE_SIZE 64  // EEPROM sayfa boyutu, örneğin 64 byte. EEPROM'un veri sayfasını kontrol edin.
+#define PAGE_SIZE 64  // EEPROM Page Size
 #define EEPROM_ADDR 0xA0  // EEPROM adresi
-#define EEPROM_SIZE 256   // EEPROM'un toplam kapasitesi
+#define EEPROM_SIZE 256   // EEPROM Size
 
 void eepromKontrol(void);
 void firstSetup(void);

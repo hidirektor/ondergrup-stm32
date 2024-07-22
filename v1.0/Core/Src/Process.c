@@ -1421,7 +1421,7 @@ void mainLoop() {
 
 		if(hafizaYaz == 1) {
 			hafizaYaz = 0;
-			saveEEPROM();
+			saveEEPROM(1);
 		}
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {

@@ -15,7 +15,9 @@
 extern uint8_t eepromData[110];
 extern char snum[5];
 
+extern uint8_t setupCompleted;
 extern uint8_t kaydedilenDeger;
+
 extern unsigned long millis;
 extern unsigned long timer;
 extern unsigned long timer1;

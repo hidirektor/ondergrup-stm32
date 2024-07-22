@@ -11,6 +11,7 @@
 uint8_t eepromData[110];
 char snum[5];
 
+uint8_t setupCompleted = 0;
 uint8_t kaydedilenDeger = 0;
 
 unsigned long millis = 0;

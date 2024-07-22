@@ -18,6 +18,7 @@ void eepromKontrol() {
 	//Sürekli sıfırlama işlemi yapıyor
 	//firstSetup();
 
+	setupCompleted = eepromData[0];
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
 	emniyetCercevesi = eepromData[2];
@@ -191,11 +192,12 @@ void eepromKontrol() {
 }
 
 void firstSetup() {
-    if (eepromData[0] == 0xFF) {
+    if (setupCompleted != 1) {
         memset(eepromData, 0, 48);
 
         memset(&eepromData[38], 0, 10);
 
+        eepromData[0] = 1;
         eepromData[9] = 4;
         eepromData[11] = 4;
         eepromData[13] = 4;
@@ -206,8 +208,7 @@ void firstSetup() {
         eepromData[23] = 60;
         eepromData[24] = 60;
 
-        HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        HAL_Delay(1000);
+        EEPROM_Write(0, 0, eepromData, 110);
     }
 }
 
@@ -218,20 +219,81 @@ void resetEEPROM() {
     HAL_Delay(1000);
 }
 
-void saveEEPROM() {
-    HAL_StatusTypeDef status;
+void saveEEPROM(int resultText) {
+	EEPROM_Write(0, 0, eepromData, 110);
 
-    status = HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-
-    if (status != HAL_OK) {
-        lcd_print(2, 1, "Hata: EEPROM    ");
-        return;
+    if(resultText == 1) {
+    	lcd_print(2, 1, dataYazildiText);
     }
-
-    lcd_print(2, 1, dataYazildiText);
 
     // Ekranı temizle
     HAL_Delay(500);
     lcd_clear();
 }
 
+void EEPROM_Write(uint16_t page, uint16_t offset, uint8_t *data, uint16_t size) {
+    HAL_StatusTypeDef status;
+
+    int paddrposition = log(PAGE_SIZE) / log(2);
+
+    uint16_t startPage = page;
+    uint16_t endPage = page + ((size + offset) / PAGE_SIZE);
+
+    uint16_t numofpages = (endPage - startPage) + 1;
+    uint16_t pos = 0;
+
+    for (int i = 0; i < numofpages; i++) {
+        uint16_t MemAddress = (startPage << paddrposition) | offset;
+        uint16_t bytesremaining = PAGE_SIZE - offset;
+        if (bytesremaining > size) {
+            bytesremaining = size;
+        }
+
+        status = HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, MemAddress, I2C_MEMADD_SIZE_16BIT, &data[pos], bytesremaining, 1000);
+        if (status != HAL_OK) {
+            lcd_print(2, 1, "Hata: EEPROM    ");
+            return;
+        }
+
+        startPage += 1;
+        offset = 0;
+        size -= bytesremaining;
+        pos += bytesremaining;
+
+        HAL_Delay(5);
+    }
+}
+
+void EEPROM_Read(uint16_t page, uint16_t offset, uint8_t *data, uint16_t size) {
+    HAL_StatusTypeDef status;
+
+    int paddrposition = log(PAGE_SIZE) / log(2);
+
+    uint16_t startPage = page;
+    uint16_t endPage = page + ((size + offset) / PAGE_SIZE);
+
+    uint16_t numofpages = (endPage - startPage) + 1;
+    uint16_t pos = 0;
+
+    for (int i = 0; i < numofpages; i++) {
+        uint16_t MemAddress = (startPage << paddrposition) | offset;
+        uint16_t bytesremaining = PAGE_SIZE - offset;
+        if (bytesremaining > size) {
+            bytesremaining = size;
+        }
+
+        status = HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, MemAddress, I2C_MEMADD_SIZE_16BIT, &data[pos], bytesremaining, 1000);
+        if (status != HAL_OK) {
+            lcd_print(2, 1, "Hata: EEPROM Okuma");
+            return;
+        }
+
+        // Sayfa ve offset güncelleme
+        startPage += 1;
+        offset = 0;
+        size -= bytesremaining;
+        pos += bytesremaining;
+
+        HAL_Delay(5);
+    }
+}

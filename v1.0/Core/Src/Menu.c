@@ -1303,7 +1303,7 @@ void menu() {
 			    }
 			}
 
-			saveEEPROM();
+			saveEEPROM(0);
 
 			lcd_clear();
 			HAL_Delay(500);

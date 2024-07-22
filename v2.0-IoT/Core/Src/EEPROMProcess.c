@@ -203,7 +203,7 @@ void eepromKontrol() {
 }
 
 void firstSetup() {
-    if (eepromData[0] == 0xFF) {
+    if (setupCompleted != 1) {
         memset(eepromData, 0, 110);
 
         eepromData[0] = 1;
@@ -217,8 +217,7 @@ void firstSetup() {
         eepromData[23] = 60;
         eepromData[24] = 60;
 
-        HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-        HAL_Delay(1000);
+        EEPROM_Write(0, 0, eepromData, 110);
     }
 }
 
