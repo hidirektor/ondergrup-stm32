@@ -1419,8 +1419,9 @@ void mainLoop() {
 			backLightTimer = millis;
 		}
 
-		if(hafizaYaz==1) {
-		  saveEEPROM();
+		if(hafizaYaz == 1) {
+			hafizaYaz = 0;
+			saveEEPROM();
 		}
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {

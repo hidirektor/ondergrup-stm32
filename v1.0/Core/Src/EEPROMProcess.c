@@ -16,7 +16,7 @@ void eepromKontrol() {
 	HAL_Delay(1500);
 
 	//Sürekli sıfırlama işlemi yapıyor
-	firstSetup();
+	//firstSetup();
 
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
@@ -220,6 +220,11 @@ void resetEEPROM() {
 
 void saveEEPROM() {
 	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-	HAL_Delay(1500);
+	HAL_Delay(1000);
+
+	lcd_print(2, 1, dataYazildiText);
+
+	HAL_Delay(500);
+	lcd_clear();
 }
 

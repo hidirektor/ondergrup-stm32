@@ -12,6 +12,7 @@
 
 void loadMenuTexts(uint8_t dilSecim);
 void menuVariableFinisher(void);
+void resetMenuTexts(void);
 
 extern char menuyeGirildiText[17];
 extern char ayarlarText[17];
