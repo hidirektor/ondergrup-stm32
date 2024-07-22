@@ -12,8 +12,7 @@
 #include "TextVariables.h"
 
 void eepromKontrol() {
-	HAL_I2C_Mem_Read(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-	HAL_Delay(1000);
+	EEPROM_Read(0, 0, eepromData, 110);
 
 	//Sürekli sıfırlama işlemi yapıyor
 	//firstSetup();
@@ -293,17 +292,14 @@ void EEPROM_Read(uint16_t page, uint16_t offset, uint8_t *data, uint16_t size) {
 
         status = HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, MemAddress, I2C_MEMADD_SIZE_16BIT, &data[pos], bytesremaining, 1000);
         if (status != HAL_OK) {
-            lcd_print(2, 1, "Hata: EEPROM Okuma");
+            lcd_print(2, 1, "Hata: EEPROM OKU");
             return;
         }
 
-        // Sayfa ve offset güncelleme
         startPage += 1;
         offset = 0;
         size -= bytesremaining;
         pos += bytesremaining;
-
-        HAL_Delay(5);
     }
 }
 
