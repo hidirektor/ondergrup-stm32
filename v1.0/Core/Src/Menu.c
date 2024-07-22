@@ -1303,6 +1303,8 @@ void menu() {
 			    }
 			}
 
+			saveEEPROM();
+
 			lcd_clear();
 			HAL_Delay(500);
 			NVIC_SystemReset();

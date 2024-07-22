@@ -219,12 +219,19 @@ void resetEEPROM() {
 }
 
 void saveEEPROM() {
-	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-	HAL_Delay(1000);
+    HAL_StatusTypeDef status;
 
-	lcd_print(2, 1, dataYazildiText);
+    status = HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
 
-	HAL_Delay(500);
-	lcd_clear();
+    if (status != HAL_OK) {
+        lcd_print(2, 1, "Hata: EEPROM    ");
+        return;
+    }
+
+    lcd_print(2, 1, dataYazildiText);
+
+    // Ekranı temizle
+    HAL_Delay(500);
+    lcd_clear();
 }
 

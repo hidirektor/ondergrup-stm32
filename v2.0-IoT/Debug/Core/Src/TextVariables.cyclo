@@ -1,2 +1,3 @@
 ../Core/Src/TextVariables.c:113:6:loadMenuTexts	2
 ../Core/Src/TextVariables.c:298:6:menuVariableFinisher	1
+../Core/Src/TextVariables.c:414:6:resetMenuTexts	1

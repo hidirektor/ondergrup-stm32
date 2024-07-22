@@ -1370,12 +1370,11 @@ void checkDemoModCalisma() {
 				}
 
 				if((demoYukariCalis==1) && (demoCalismaSayisiYar==1)) {
-
 					calismaSayisiDemo++;
 					if(calismaSayisi == 255) {
 							calismaSayisi = 0;
 							calismaCount++;
-				}
+					}
 					eepromData[28] = calismaSayisiDemo;
 					eepromData[30] = calismaCountDemo;
 
@@ -1420,7 +1419,8 @@ void mainLoop() {
 		}
 
 		if(hafizaYaz==1) {
-			saveEEPROM();
+			hafizaYaz = 0;
+			saveEEPROM(1);
 		}
 
 		if((hafizaOku==0)&&(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_READY)) {

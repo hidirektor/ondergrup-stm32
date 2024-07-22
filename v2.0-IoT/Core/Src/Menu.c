@@ -1399,8 +1399,7 @@ void menu() {
 			    }
 			}
 
-			HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-			HAL_Delay(1200);
+			saveEEPROM(0);
 
 			lcd_clear();
 			HAL_Delay(500);

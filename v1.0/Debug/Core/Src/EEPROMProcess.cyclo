@@ -1,4 +1,4 @@
 ../Core/Src/EEPROMProcess.c:14:6:eepromKontrol	31
 ../Core/Src/EEPROMProcess.c:193:6:firstSetup	2
 ../Core/Src/EEPROMProcess.c:214:6:resetEEPROM	1
-../Core/Src/EEPROMProcess.c:221:6:saveEEPROM	1
+../Core/Src/EEPROMProcess.c:221:6:saveEEPROM	2
