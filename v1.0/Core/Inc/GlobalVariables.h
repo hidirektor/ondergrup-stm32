@@ -34,6 +34,8 @@ extern uint8_t calismaSayisiDemo;
 extern uint8_t calismaCount;
 extern uint8_t calismaCountDemo;
 
+extern int finalCount;
+
 //Menü içi parametreler
 extern uint8_t menuSayac;
 extern uint8_t durakSayisi;

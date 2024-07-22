@@ -10,8 +10,6 @@
 #include "GlobalVariables.h"
 #include "EEPROMProcess.h"
 #include "i2c-lcd.h"
-#include "WifiProcess.h"
-#include "IoTMenu.h"
 #include "TextVariables.h"
 #include "Translation.h"
 
@@ -1207,9 +1205,9 @@ void menu() {
 	}
 
 	if (menuSayac == 29) {
+		finalCount=0;
 		if(calismaSayModu == 0) {
 			lcd_print(1, 1, calismaSayisiText);
-			int finalCount = 0;
 
 			if(demoMode == 1) {
 				finalCount += calismaCountDemo * 255; //sıfır durumu da dahil ediliyor
@@ -1220,7 +1218,7 @@ void menu() {
 			}
 
 			itoa(finalCount, snum, 10);
-			lcd_print(2, 16, snum);
+			lcd_print(2, 10, snum);
 
 			lcd_print(2, 1, "           ");
 		} else if(calismaSayModu == 1) {
@@ -1228,7 +1226,7 @@ void menu() {
 			lcd_print(2, 1, enterlaSifirlaText);
 		}
 
-		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0) && (calismaSayisiYar == 1)) {
+		if ((HAL_GPIO_ReadPin(butonYukariIn_GPIO_Port,butonYukariIn_Pin) == 1) && (butonKontrol == 0)) {
 			calismaSayModu = calismaSayModu + 1;
 
 			if(calismaSayModu > 1){
@@ -1237,7 +1235,7 @@ void menu() {
 			bekle();
 		}
 
-		if ((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0) && (calismaSayisiYar == 1)) {
+		if ((HAL_GPIO_ReadPin(butonAsagiIn_GPIO_Port,butonAsagiIn_Pin) == 1) && (butonKontrol == 0)) {
 			calismaSayModu = calismaSayModu - 1;
 
 		   	if(calismaSayModu > 0) {
@@ -1248,11 +1246,11 @@ void menu() {
 
 		if ((HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port,butonEnterIn_Pin) == 1) && (butonKontrol == 0)) {
 			if(demoMode == 1) {
-				calismaSayisiDemo = 0;
 				eepromData[28] = 0;
+				eepromData[30] = 0;
 			} else {
-				calismaSayisi = 0;
 				eepromData[27] = 0;
+				eepromData[29] = 0;
 			}
 			calismaSayModu = 0;
 			hafizaYaz = 1;

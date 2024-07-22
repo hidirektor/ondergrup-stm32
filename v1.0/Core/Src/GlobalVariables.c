@@ -34,6 +34,8 @@ uint8_t calismaSayisiDemo = 0;
 uint8_t calismaCount = 0;
 uint8_t calismaCountDemo = 0;
 
+int finalCount = 0;
+
 //Menü içi parametreler
 uint8_t menuSayac = 0;
 uint8_t durakSayisi = 0;

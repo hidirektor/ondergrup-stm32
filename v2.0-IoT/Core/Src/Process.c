@@ -11,7 +11,6 @@
 #include "i2c-lcd.h"
 #include "ErrorProcess.h"
 #include "EEPROMProcess.h"
-#include "WifiProcess.h"
 #include "Menu.h"
 #include "Translation.h"
 #include "TextVariables.h"
@@ -573,8 +572,13 @@ void checkAktifCalisma() {
 
 
 
-					calismaSayisi++;
-					eepromData[27]=calismaSayisi;
+					calismaSayisi=calismaSayisi+254;
+					if(calismaSayisi == 255) {
+						calismaSayisi = 0;
+						calismaCount++;
+					}
+					eepromData[27] = calismaSayisi;
+					eepromData[29] = calismaCount;
 
 					hafizaYaz=1;
 
@@ -1126,8 +1130,13 @@ void checkDemoModCalisma() {
 						||((CalismaSayisiAsagi==1)&&((HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1)&&(altLimit))&&(makineStop==1))) {
 
 
-					calismaSayisiDemo++;
-					eepromData[28]=calismaSayisiDemo;
+					calismaSayisi++;
+					if(calismaSayisi == 255) {
+						calismaSayisi = 0;
+						calismaCount++;
+					}
+					eepromData[27] = calismaSayisi;
+					eepromData[29] = calismaCount;
 
 					hafizaYaz=1;
 
@@ -1363,7 +1372,12 @@ void checkDemoModCalisma() {
 				if((demoYukariCalis==1) && (demoCalismaSayisiYar==1)) {
 
 					calismaSayisiDemo++;
-					eepromData[28]=calismaSayisiDemo;
+					if(calismaSayisi == 255) {
+							calismaSayisi = 0;
+							calismaCount++;
+				}
+					eepromData[28] = calismaSayisiDemo;
+					eepromData[30] = calismaCountDemo;
 
 					hafizaYaz=1;
 					demoCalismaSayisiYar=0;

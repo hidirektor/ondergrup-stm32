@@ -572,7 +572,7 @@ void checkAktifCalisma() {
 
 
 
-					calismaSayisi++;
+					calismaSayisi=calismaSayisi+254;
 					if(calismaSayisi == 255) {
 						calismaSayisi = 0;
 						calismaCount++;
@@ -1130,13 +1130,13 @@ void checkDemoModCalisma() {
 						||((CalismaSayisiAsagi==1)&&((HAL_GPIO_ReadPin(altLimitIn_GPIO_Port, altLimitIn_Pin)==1)&&(altLimit))&&(makineStop==1))) {
 
 
-					calismaSayisiDemo++;
-					if(calismaSayisiDemo == 255) {
-						calismaSayisiDemo = 0;
-						calismaCountDemo++;
+					calismaSayisi++;
+					if(calismaSayisi == 255) {
+						calismaSayisi = 0;
+						calismaCount++;
 					}
-					eepromData[28] = calismaSayisiDemo;
-					eepromData[30] = calismaCountDemo;
+					eepromData[27] = calismaSayisi;
+					eepromData[29] = calismaCount;
 
 					hafizaYaz=1;
 
@@ -1372,7 +1372,12 @@ void checkDemoModCalisma() {
 				if((demoYukariCalis==1) && (demoCalismaSayisiYar==1)) {
 
 					calismaSayisiDemo++;
-					eepromData[28]=calismaSayisiDemo;
+					if(calismaSayisi == 255) {
+							calismaSayisi = 0;
+							calismaCount++;
+				}
+					eepromData[28] = calismaSayisiDemo;
+					eepromData[30] = calismaCountDemo;
 
 					hafizaYaz=1;
 					demoCalismaSayisiYar=0;
