@@ -9,5 +9,6 @@
 #define INC_MENU_H_
 
 void menu(void);
+void displayCycleOnLCD(int cycleCount);
 
 #endif /* INC_MENU_H_ */

@@ -12,6 +12,8 @@
 
 void eepromKontrol(void);
 void firstSetup(void);
+void resetEEPROM(void);
+void saveEEPROM(void);
 void convertArrays(int state);
 
 #endif /* INC_EEPROMPROCESS_H_ */

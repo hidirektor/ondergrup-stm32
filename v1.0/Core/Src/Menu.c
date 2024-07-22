@@ -1209,10 +1209,7 @@ void menu() {
 				finalCount += calismaSayisi;
 			}
 
-			itoa(finalCount, snum, 10);
-			lcd_print(2, 10, snum);
-
-			lcd_print(2, 1, "           ");
+			displayCycleOnLCD(finalCount);
 		} else if(calismaSayModu == 1) {
 			lcd_print(1, 1, calismaSayisiText);
 			lcd_print(2, 1, enterlaSifirlaText);
@@ -1312,4 +1309,24 @@ void menu() {
 			NVIC_SystemReset();
 		}
 	}
+}
+
+void displayCycleOnLCD(int finalCount) {
+    int padding, i;
+
+    itoa(finalCount, snum, 10);
+
+    int length = strlen(snum);
+
+    padding = (16 - length) / 2;
+
+    char displayLine[17];
+    memset(displayLine, ' ', 16);
+    displayLine[16] = '\0'; // Null terminator
+
+    for (i = 0; i < length; i++) {
+        displayLine[padding + i] = snum[i];
+    }
+
+    lcd_print(2, 1, displayLine);
 }

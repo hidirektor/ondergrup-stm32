@@ -11,6 +11,8 @@
 #include <stdint.h>
 
 void eepromKontrol(void);
-void eepromFillWithDefault(void);
+void firstSetup(void);
+void resetEEPROM(void);
+void saveEEPROM(void);
 
 #endif /* INC_EEPROMPROCESS_H_ */

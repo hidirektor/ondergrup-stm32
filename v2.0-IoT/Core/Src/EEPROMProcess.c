@@ -16,7 +16,10 @@ void eepromKontrol() {
 	HAL_Delay(1500);
 
 	//Sürekli sıfırlama işlemi yapıyor
-	//firstSetup();
+	firstSetup();
+
+	setupCompleted = eepromData[0];
+	iotMode = eepromData[48];
 
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];
@@ -62,9 +65,6 @@ void eepromKontrol() {
 	hataKayit8 = eepromData[45];
 	hataKayit9 = eepromData[46];
 	hataKayit10 = eepromData[47];
-	iotMode = eepromData[48];
-
-	setupCompleted = eepromData[104];
 
 	/*if(acilStop1>0) {
 		acilStop1=0;
@@ -203,19 +203,36 @@ void eepromKontrol() {
 }
 
 void firstSetup() {
-	//EEPROM ilk kez takıldıysa standart sistem verilerini yükle:
-	if (eepromData[0] == 0xFF) {
-		memset(eepromData, 0, 110);
+    if (eepromData[0] == 0xFF) {
+        memset(eepromData, 0, 48);
 
-		//Default değerleri eeproma kaydet:
-		HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-		HAL_Delay(1000);
+        memset(&eepromData[38], 0, 10);
 
-		lcd_print(1, 1, "LUTFEN  KURULUMU");
-		lcd_print(2, 1, "   TAMAMLAYIN   ");
-		HAL_Delay(500);
-		lcd_clear();
-	}
+        eepromData[9] = 4;
+        eepromData[11] = 4;
+        eepromData[13] = 4;
+
+        eepromData[20] = 60;
+        eepromData[21] = 60;
+        eepromData[22] = 60;
+        eepromData[23] = 60;
+        eepromData[24] = 60;
+
+        HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+        HAL_Delay(1000);
+    }
+}
+
+void resetEEPROM() {
+    memset(eepromData, 0, sizeof(eepromData));
+
+    HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, sizeof(eepromData), eepromData, sizeof(eepromData), 3000);
+    HAL_Delay(1000);
+}
+
+void saveEEPROM() {
+	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
+	HAL_Delay(1500);
 }
 
 void convertArrays(int state) {
