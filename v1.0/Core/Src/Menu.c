@@ -1237,9 +1237,13 @@ void menu() {
 			if(demoMode == 1) {
 				eepromData[28] = 0;
 				eepromData[30] = 0;
+				calismaSayisiDemo = 0;
+				calismaCountDemo = 0;
 			} else {
 				eepromData[27] = 0;
 				eepromData[29] = 0;
+				calismaSayisi = 0;
+				calismaCount = 0;
 			}
 			calismaSayModu = 0;
 			hafizaYaz = 1;

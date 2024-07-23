@@ -1270,6 +1270,7 @@ void menu() {
 			if(dilSecim > 1) {
 				dilSecim = 0;
 			}
+			resetMenuTexts();
 			loadMenuTexts(dilSecim);
 
 			bekle();
@@ -1281,6 +1282,7 @@ void menu() {
 		   	if(dilSecim > 0) {
 		   		dilSecim = 1;
 		   	}
+		   	resetMenuTexts();
 		   	loadMenuTexts(dilSecim);
 
 			bekle();
