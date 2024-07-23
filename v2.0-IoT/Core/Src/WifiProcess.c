@@ -676,14 +676,13 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		if(setupCompleted != 1) {
-			/*takeIDSection:
+		/*takeIDSection:
+		if(idVerifyVal != 1) {
 			if(checkMachineID(&huart1, machineID) == 1) {
-				setupCompleted = 1;
-				eepromData[104] = setupCompleted;
+				idVerifyVal = 1;
+				eepromData[49] = idVerifyVal;
 				//EEPROMA yazma işlemini başlat
-	        	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-	        	HAL_Delay(1500);
+			    saveEEPROM(0);
 			} else {
 				lcd_print(1, 1, mustBeUniqueText);
 				lcd_print(2, 1, mustBeUnique2Text);
@@ -693,24 +692,24 @@ void iotSetup() {
 				takeMachineID();
 				HAL_Delay(200);
 				goto takeIDSection;
-			}*/
-		} else {
-			if(checkEEPROM4ID() != 1) {
-				takeMachineID();
 			}
+		}*/
 
-			if(!(strlen(wifiSSID) >= 2)) {
-				takeWifiSSID();
-			}
-
-			if(!(strlen(wifiPass) >= 2)) {
-				takeWifiPass();
-			}
-
-			ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
-			HAL_Delay(500);
-			convertAndSendData();
+		if(checkEEPROM4ID() != 1) {
+			takeMachineID();
 		}
+
+		if(!(strlen(wifiSSID) >= 2)) {
+			takeWifiSSID();
+		}
+
+		if(!(strlen(wifiPass) >= 2)) {
+			takeWifiPass();
+		}
+
+		ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
+		HAL_Delay(500);
+		convertAndSendData();
 	}
 }
 

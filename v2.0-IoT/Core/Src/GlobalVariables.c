@@ -73,7 +73,6 @@ uint8_t kapiTablaAcSure = 0;
 uint8_t buzzer = 0;
 uint8_t menuGiris = 0;
 uint8_t demoMode = 0;
-uint8_t iotMode = 0;
 uint8_t calismaSayModu = 0;
 uint8_t dilSecim = 0;
 uint8_t hataKayit1 = 0;
@@ -86,6 +85,10 @@ uint8_t hataKayit7 = 0;
 uint8_t hataKayit8 = 0;
 uint8_t hataKayit9 = 0;
 uint8_t hataKayit10 = 0;
+
+uint8_t iotMode = 0;
+uint8_t idVerifyVal = 0;
+
 bool hafizaYaz = 0;
 bool hafizaOku = 0;
 bool ilkOkuma = 0;

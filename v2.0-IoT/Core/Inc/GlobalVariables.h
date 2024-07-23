@@ -20,8 +20,8 @@ extern char wifiSSID[wifiCharacterLimit];
 extern char wifiPass[wifiCharacterLimit];
 
 extern uint8_t setupCompleted;
-
 extern uint8_t kaydedilenDeger;
+
 extern unsigned long millis;
 extern unsigned long timer;
 extern unsigned long timer1;
@@ -46,6 +46,7 @@ extern uint8_t calismaSayisiDemo;
 extern uint8_t calismaCount;
 extern uint8_t calismaCountDemo;
 extern int finalCount;
+
 //Menü içi parametreler
 extern uint8_t menuSayac;
 extern uint8_t durakSayisi;
@@ -80,7 +81,6 @@ extern uint8_t kapiTablaAcSure;
 extern uint8_t buzzer;
 extern uint8_t menuGiris;
 extern uint8_t demoMode;
-extern uint8_t iotMode;
 extern uint8_t calismaSayModu;
 extern uint8_t dilSecim;
 extern uint8_t hataKayit1;
@@ -93,6 +93,10 @@ extern uint8_t hataKayit7;
 extern uint8_t hataKayit8;
 extern uint8_t hataKayit9;
 extern uint8_t hataKayit10;
+
+extern uint8_t iotMode;
+extern uint8_t idVerifyVal;
+
 extern bool hafizaYaz;
 extern bool hafizaOku;
 extern bool ilkOkuma;
