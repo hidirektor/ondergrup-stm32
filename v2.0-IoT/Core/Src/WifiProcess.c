@@ -60,8 +60,7 @@ void takeMachineID() {
 
         		goto mainSection;
         	} else {
-            	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-            	HAL_Delay(1000);
+        		saveEEPROM(1);
 
             	break;
             }
@@ -185,8 +184,7 @@ uint8_t ssidConfirmation() {
 
         return 0;
     } else {
-    	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-    	HAL_Delay(1000);
+    	saveEEPROM(1);
 
     	return 1;
     }
@@ -352,8 +350,7 @@ uint8_t passConfirmation() {
 
         return 0;
     } else {
-    	HAL_I2C_Mem_Write(&hi2c1, 0xA0, 0, 110, eepromData, 110, 3000);
-    	HAL_Delay(1000);
+    	saveEEPROM(1);
 
     	return 1;
     }

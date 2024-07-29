@@ -15,7 +15,7 @@ void eepromKontrol() {
 	EEPROM_Read(0, 0, eepromData, 110);
 
 	//Sürekli sıfırlama işlemi yapıyor
-	firstSetup();
+	//firstSetup();
 
 	setupCompleted = eepromData[0];
 	iotMode = eepromData[48];

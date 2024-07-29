@@ -89,7 +89,7 @@ void startWebServer(UART_HandleTypeDef *huart1) {
     HAL_Delay(2000);
 }
 
-void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
 	char local_txA[500];
 	char local_txB[50];
 	int len;
@@ -113,6 +113,39 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
 	HAL_Delay(3000);
 }
+
+void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+    char bufferTX[500];
+    char local_txB[50];
+    char json_data[300];
+    int len;
+
+    // JSON verisini manuel olarak oluşturma
+    snprintf(json_data, sizeof(json_data),
+             "{\"machineID\":\"%s\",\"updateData\":%s}",
+             machineID, machineData);
+
+    sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(4000);
+
+    snprintf(bufferTX, sizeof(bufferTX),
+             "POST /api/v2/machine/updateMachineData HTTP/1.0\r\n"
+             "Host: %s\r\n"
+             "Content-Type: application/json\r\n"
+             "Content-Length: %d\r\n\r\n"
+             "%s",
+             mainServerWithPort, strlen(json_data), json_data);
+    len = strlen(bufferTX);
+    sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
+
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
+    HAL_Delay(4000);
+
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(3000);
+}
+
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
 	char local_txA[500];
