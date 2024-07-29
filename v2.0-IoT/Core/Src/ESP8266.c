@@ -103,7 +103,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	HAL_Delay(4000);
 
 	sprintf(local_txA,
-			"GET /api/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
+			"GET /api/v2/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
