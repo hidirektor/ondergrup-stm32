@@ -37,15 +37,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0001c8ae  00000000  00000000  0002fac4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001cbde  00000000  00000000  0004c372  2**0
+ 17 .debug_line   0001d688  00000000  00000000  0004c372  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000a05e7  00000000  00000000  00068f50  2**0
+ 18 .debug_str    000a05e7  00000000  00000000  000699fa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00109537  2**0
+ 19 .comment      00000043  00000000  00000000  00109fe1  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000054e8  00000000  00000000  0010957c  2**2
+ 20 .debug_frame  000054e8  00000000  00000000  0010a024  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006a  00000000  00000000  0010ea64  2**0
+ 21 .debug_line_str 00000067  00000000  00000000  0010f50c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1260,7 +1260,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	sprintf(bufferTX, "AT+RESTORE\r\n");
  80009b8:	4948      	ldr	r1, [pc, #288]	@ (8000adc <ESP8266_Init+0x130>)
  80009ba:	4849      	ldr	r0, [pc, #292]	@ (8000ae0 <ESP8266_Init+0x134>)
- 80009bc:	f00c fff6 	bl	800d9ac <siprintf>
+ 80009bc:	f00d f838 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  80009c0:	4847      	ldr	r0, [pc, #284]	@ (8000ae0 <ESP8266_Init+0x134>)
  80009c2:	f7ff fc2f 	bl	8000224 <strlen>
@@ -1277,7 +1277,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	sprintf(bufferTX, "AT+RST\r\n");
  80009dc:	4941      	ldr	r1, [pc, #260]	@ (8000ae4 <ESP8266_Init+0x138>)
  80009de:	4840      	ldr	r0, [pc, #256]	@ (8000ae0 <ESP8266_Init+0x134>)
- 80009e0:	f00c ffe4 	bl	800d9ac <siprintf>
+ 80009e0:	f00d f826 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  80009e4:	483e      	ldr	r0, [pc, #248]	@ (8000ae0 <ESP8266_Init+0x134>)
  80009e6:	f7ff fc1d 	bl	8000224 <strlen>
@@ -1294,7 +1294,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	sprintf(bufferTX, "AT\r\n");
  8000a00:	4939      	ldr	r1, [pc, #228]	@ (8000ae8 <ESP8266_Init+0x13c>)
  8000a02:	4837      	ldr	r0, [pc, #220]	@ (8000ae0 <ESP8266_Init+0x134>)
- 8000a04:	f00c ffd2 	bl	800d9ac <siprintf>
+ 8000a04:	f00d f814 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  8000a08:	4835      	ldr	r0, [pc, #212]	@ (8000ae0 <ESP8266_Init+0x134>)
  8000a0a:	f7ff fc0b 	bl	8000224 <strlen>
@@ -1311,7 +1311,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
 	sprintf(bufferTX, "AT+CWMODE=1\r\n");
  8000a24:	4931      	ldr	r1, [pc, #196]	@ (8000aec <ESP8266_Init+0x140>)
  8000a26:	482e      	ldr	r0, [pc, #184]	@ (8000ae0 <ESP8266_Init+0x134>)
- 8000a28:	f00c ffc0 	bl	800d9ac <siprintf>
+ 8000a28:	f00d f802 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  8000a2c:	482c      	ldr	r0, [pc, #176]	@ (8000ae0 <ESP8266_Init+0x134>)
  8000a2e:	f7ff fbf9 	bl	8000224 <strlen>
@@ -1341,7 +1341,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
  8000a5e:	f107 0314 	add.w	r3, r7, #20
  8000a62:	68b9      	ldr	r1, [r7, #8]
  8000a64:	4618      	mov	r0, r3
- 8000a66:	f00d f803 	bl	800da70 <strcat>
+ 8000a66:	f00d f80b 	bl	800da80 <strcat>
 	strcat(str, "\",\"");
  8000a6a:	f107 0314 	add.w	r3, r7, #20
  8000a6e:	4618      	mov	r0, r3
@@ -1357,7 +1357,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
  8000a84:	f107 0314 	add.w	r3, r7, #20
  8000a88:	6879      	ldr	r1, [r7, #4]
  8000a8a:	4618      	mov	r0, r3
- 8000a8c:	f00c fff0 	bl	800da70 <strcat>
+ 8000a8c:	f00c fff8 	bl	800da80 <strcat>
 	strcat(str, "\"\r\n");
  8000a90:	f107 0314 	add.w	r3, r7, #20
  8000a94:	4618      	mov	r0, r3
@@ -1374,7 +1374,7 @@ void ESP8266_Init(UART_HandleTypeDef *huart1, const char *wifiSS, const char *wi
  8000aae:	461a      	mov	r2, r3
  8000ab0:	4912      	ldr	r1, [pc, #72]	@ (8000afc <ESP8266_Init+0x150>)
  8000ab2:	480b      	ldr	r0, [pc, #44]	@ (8000ae0 <ESP8266_Init+0x134>)
- 8000ab4:	f00c ff7a 	bl	800d9ac <siprintf>
+ 8000ab4:	f00c ffbc 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  8000ab8:	4809      	ldr	r0, [pc, #36]	@ (8000ae0 <ESP8266_Init+0x134>)
  8000aba:	f7ff fbb3 	bl	8000224 <strlen>
@@ -1435,7 +1435,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000b38:	f107 00a4 	add.w	r0, r7, #164	@ 0xa4
  8000b3c:	220c      	movs	r2, #12
  8000b3e:	6819      	ldr	r1, [r3, #0]
- 8000b40:	f00c ffa5 	bl	800da8e <strncpy>
+ 8000b40:	f00c ffad 	bl	800da9e <strncpy>
 	subMachineID[12] = '\0';
  8000b44:	f507 63d9 	add.w	r3, r7, #1736	@ 0x6c8
  8000b48:	f2a3 6324 	subw	r3, r3, #1572	@ 0x624
@@ -1446,7 +1446,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000b50:	4a9d      	ldr	r2, [pc, #628]	@ (8000dc8 <sendMachineData+0x2c8>)
  8000b52:	499e      	ldr	r1, [pc, #632]	@ (8000dcc <sendMachineData+0x2cc>)
  8000b54:	489e      	ldr	r0, [pc, #632]	@ (8000dd0 <sendMachineData+0x2d0>)
- 8000b56:	f00c ff29 	bl	800d9ac <siprintf>
+ 8000b56:	f00c ff6b 	bl	800da30 <siprintf>
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  8000b5a:	489d      	ldr	r0, [pc, #628]	@ (8000dd0 <sendMachineData+0x2d0>)
  8000b5c:	f7ff fb62 	bl	8000224 <strlen>
@@ -1457,8 +1457,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000b6c:	4998      	ldr	r1, [pc, #608]	@ (8000dd0 <sendMachineData+0x2d0>)
  8000b6e:	6818      	ldr	r0, [r3, #0]
  8000b70:	f00c f8d8 	bl	800cd24 <HAL_UART_Transmit_IT>
-	HAL_Delay(4000);
- 8000b74:	f44f 607a 	mov.w	r0, #4000	@ 0xfa0
+	HAL_Delay(1000);
+ 8000b74:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
  8000b78:	f009 f808 	bl	8009b8c <HAL_Delay>
 
 	sprintf(local_txA,
@@ -1699,7 +1699,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000d4e:	4662      	mov	r2, ip
  8000d50:	4940      	ldr	r1, [pc, #256]	@ (8000e54 <sendMachineData+0x354>)
  8000d52:	4628      	mov	r0, r5
- 8000d54:	f00c fe2a 	bl	800d9ac <siprintf>
+ 8000d54:	f00c fe6c 	bl	800da30 <siprintf>
 
 	len = strlen(local_txA);
  8000d58:	f107 03e8 	add.w	r3, r7, #232	@ 0xe8
@@ -1712,7 +1712,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000d6c:	f8d7 26c4 	ldr.w	r2, [r7, #1732]	@ 0x6c4
  8000d70:	4939      	ldr	r1, [pc, #228]	@ (8000e58 <sendMachineData+0x358>)
  8000d72:	4618      	mov	r0, r3
- 8000d74:	f00c fe1a 	bl	800d9ac <siprintf>
+ 8000d74:	f00c fe5c 	bl	800da30 <siprintf>
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
  8000d78:	f107 03b4 	add.w	r3, r7, #180	@ 0xb4
@@ -1725,8 +1725,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000d8e:	f2a3 632c 	subw	r3, r3, #1580	@ 0x62c
  8000d92:	6818      	ldr	r0, [r3, #0]
  8000d94:	f00b ffc6 	bl	800cd24 <HAL_UART_Transmit_IT>
-	HAL_Delay(4000);
- 8000d98:	f44f 607a 	mov.w	r0, #4000	@ 0xfa0
+	HAL_Delay(2000);
+ 8000d98:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8000d9c:	f008 fef6 	bl	8009b8c <HAL_Delay>
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
@@ -1740,8 +1740,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000db6:	f2a3 632c 	subw	r3, r3, #1580	@ 0x62c
  8000dba:	6818      	ldr	r0, [r3, #0]
  8000dbc:	f00b ffb2 	bl	800cd24 <HAL_UART_Transmit_IT>
-	HAL_Delay(3000);
- 8000dc0:	f640 30b8 	movw	r0, #3000	@ 0xbb8
+	HAL_Delay(2000);
+ 8000dc0:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8000dc4:	e04a      	b.n	8000e5c <sendMachineData+0x35c>
  8000dc6:	bf00      	nop
  8000dc8:	0800e430 	.word	0x0800e430
@@ -1791,7 +1791,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 
 08000e6c <checkMachineID>:
     HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
-    HAL_Delay(3000);
+    HAL_Delay(15000);
 }
 
 
@@ -1816,7 +1816,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000e90:	f107 000c 	add.w	r0, r7, #12
  8000e94:	220c      	movs	r2, #12
  8000e96:	6819      	ldr	r1, [r3, #0]
- 8000e98:	f00c fdf9 	bl	800da8e <strncpy>
+ 8000e98:	f00c fe01 	bl	800da9e <strncpy>
     subMachineID[12] = '\0';
  8000e9c:	f607 2318 	addw	r3, r7, #2584	@ 0xa18
  8000ea0:	f6a3 230c 	subw	r3, r3, #2572	@ 0xa0c
@@ -1827,7 +1827,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000ea8:	4a40      	ldr	r2, [pc, #256]	@ (8000fac <checkMachineID+0x140>)
  8000eaa:	4941      	ldr	r1, [pc, #260]	@ (8000fb0 <checkMachineID+0x144>)
  8000eac:	4841      	ldr	r0, [pc, #260]	@ (8000fb4 <checkMachineID+0x148>)
- 8000eae:	f00c fd7d 	bl	800d9ac <siprintf>
+ 8000eae:	f00c fdbf 	bl	800da30 <siprintf>
     HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
  8000eb2:	4840      	ldr	r0, [pc, #256]	@ (8000fb4 <checkMachineID+0x148>)
  8000eb4:	f7ff f9b6 	bl	8000224 <strlen>
@@ -1847,7 +1847,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000ed8:	f507 6002 	add.w	r0, r7, #2080	@ 0x820
  8000edc:	4b36      	ldr	r3, [pc, #216]	@ (8000fb8 <checkMachineID+0x14c>)
  8000ede:	4937      	ldr	r1, [pc, #220]	@ (8000fbc <checkMachineID+0x150>)
- 8000ee0:	f00c fd64 	bl	800d9ac <siprintf>
+ 8000ee0:	f00c fda6 	bl	800da30 <siprintf>
             "GET /api/v2/machine/checkMachineIDRaw?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, mainServerWithPort);
     len = strlen(local_txA);
  8000ee4:	f507 6302 	add.w	r3, r7, #2080	@ 0x820
@@ -1860,7 +1860,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000ef8:	f8d7 2a14 	ldr.w	r2, [r7, #2580]	@ 0xa14
  8000efc:	4930      	ldr	r1, [pc, #192]	@ (8000fc0 <checkMachineID+0x154>)
  8000efe:	4618      	mov	r0, r3
- 8000f00:	f00c fd54 	bl	800d9ac <siprintf>
+ 8000f00:	f00c fd96 	bl	800da30 <siprintf>
 
     HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
  8000f04:	f207 73ec 	addw	r3, r7, #2028	@ 0x7ec
@@ -1907,7 +1907,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000f72:	f107 031c 	add.w	r3, r7, #28
  8000f76:	4913      	ldr	r1, [pc, #76]	@ (8000fc4 <checkMachineID+0x158>)
  8000f78:	4618      	mov	r0, r3
- 8000f7a:	f00c fd9b 	bl	800dab4 <strstr>
+ 8000f7a:	f00c fda3 	bl	800dac4 <strstr>
  8000f7e:	4603      	mov	r3, r0
  8000f80:	2b00      	cmp	r3, #0
  8000f82:	d001      	beq.n	8000f88 <checkMachineID+0x11c>
@@ -1918,7 +1918,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
  8000f88:	f107 031c 	add.w	r3, r7, #28
  8000f8c:	490e      	ldr	r1, [pc, #56]	@ (8000fc8 <checkMachineID+0x15c>)
  8000f8e:	4618      	mov	r0, r3
- 8000f90:	f00c fd90 	bl	800dab4 <strstr>
+ 8000f90:	f00c fd98 	bl	800dac4 <strstr>
  8000f94:	4603      	mov	r3, r0
  8000f96:	2b00      	cmp	r3, #0
  8000f98:	d001      	beq.n	8000f9e <checkMachineID+0x132>
@@ -1928,7 +1928,7 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
     }
 
     return -1;
- 8000f9e:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 8000f9e:	f04f 33ff 	mov.w	r3, #4294967295
 }
  8000fa2:	4618      	mov	r0, r3
  8000fa4:	f607 2718 	addw	r7, r7, #2584	@ 0xa18
@@ -8873,7 +8873,7 @@ void displayCycleOnLCD(int finalCount) {
  8004026:	2210      	movs	r2, #16
  8004028:	2120      	movs	r1, #32
  800402a:	4618      	mov	r0, r3
- 800402c:	f009 fd58 	bl	800dae0 <memset>
+ 800402c:	f009 fd20 	bl	800da70 <memset>
     displayLine[16] = '\0'; // Null terminator
  8004030:	2300      	movs	r3, #0
  8004032:	763b      	strb	r3, [r7, #24]
@@ -16587,427 +16587,427 @@ void resetMenuTexts() {
  8007b58:	2211      	movs	r2, #17
  8007b5a:	2100      	movs	r1, #0
  8007b5c:	48d3      	ldr	r0, [pc, #844]	@ (8007eac <resetMenuTexts+0x358>)
- 8007b5e:	f005 ffbf 	bl	800dae0 <memset>
+ 8007b5e:	f005 ff87 	bl	800da70 <memset>
     memset(ayarlarText, 0, 17);
  8007b62:	2211      	movs	r2, #17
  8007b64:	2100      	movs	r1, #0
  8007b66:	48d2      	ldr	r0, [pc, #840]	@ (8007eb0 <resetMenuTexts+0x35c>)
- 8007b68:	f005 ffba 	bl	800dae0 <memset>
+ 8007b68:	f005 ff82 	bl	800da70 <memset>
     memset(hataKayitListText, 0, 17);
  8007b6c:	2211      	movs	r2, #17
  8007b6e:	2100      	movs	r1, #0
  8007b70:	48d0      	ldr	r0, [pc, #832]	@ (8007eb4 <resetMenuTexts+0x360>)
- 8007b72:	f005 ffb5 	bl	800dae0 <memset>
+ 8007b72:	f005 ff7d 	bl	800da70 <memset>
     memset(birHataKoduText, 0, 17);
  8007b76:	2211      	movs	r2, #17
  8007b78:	2100      	movs	r1, #0
  8007b7a:	48cf      	ldr	r0, [pc, #828]	@ (8007eb8 <resetMenuTexts+0x364>)
- 8007b7c:	f005 ffb0 	bl	800dae0 <memset>
+ 8007b7c:	f005 ff78 	bl	800da70 <memset>
     memset(ikiHataKoduText, 0, 17);
  8007b80:	2211      	movs	r2, #17
  8007b82:	2100      	movs	r1, #0
  8007b84:	48cd      	ldr	r0, [pc, #820]	@ (8007ebc <resetMenuTexts+0x368>)
- 8007b86:	f005 ffab 	bl	800dae0 <memset>
+ 8007b86:	f005 ff73 	bl	800da70 <memset>
     memset(ucHataKoduText, 0, 17);
  8007b8a:	2211      	movs	r2, #17
  8007b8c:	2100      	movs	r1, #0
  8007b8e:	48cc      	ldr	r0, [pc, #816]	@ (8007ec0 <resetMenuTexts+0x36c>)
- 8007b90:	f005 ffa6 	bl	800dae0 <memset>
+ 8007b90:	f005 ff6e 	bl	800da70 <memset>
     memset(dortHataKoduText, 0, 17);
  8007b94:	2211      	movs	r2, #17
  8007b96:	2100      	movs	r1, #0
  8007b98:	48ca      	ldr	r0, [pc, #808]	@ (8007ec4 <resetMenuTexts+0x370>)
- 8007b9a:	f005 ffa1 	bl	800dae0 <memset>
+ 8007b9a:	f005 ff69 	bl	800da70 <memset>
     memset(besHataKoduText, 0, 17);
  8007b9e:	2211      	movs	r2, #17
  8007ba0:	2100      	movs	r1, #0
  8007ba2:	48c9      	ldr	r0, [pc, #804]	@ (8007ec8 <resetMenuTexts+0x374>)
- 8007ba4:	f005 ff9c 	bl	800dae0 <memset>
+ 8007ba4:	f005 ff64 	bl	800da70 <memset>
     memset(altiHataKoduText, 0, 17);
  8007ba8:	2211      	movs	r2, #17
  8007baa:	2100      	movs	r1, #0
  8007bac:	48c7      	ldr	r0, [pc, #796]	@ (8007ecc <resetMenuTexts+0x378>)
- 8007bae:	f005 ff97 	bl	800dae0 <memset>
+ 8007bae:	f005 ff5f 	bl	800da70 <memset>
     memset(yediHataKoduText, 0, 17);
  8007bb2:	2211      	movs	r2, #17
  8007bb4:	2100      	movs	r1, #0
  8007bb6:	48c6      	ldr	r0, [pc, #792]	@ (8007ed0 <resetMenuTexts+0x37c>)
- 8007bb8:	f005 ff92 	bl	800dae0 <memset>
+ 8007bb8:	f005 ff5a 	bl	800da70 <memset>
     memset(sekizHataKoduText, 0, 17);
  8007bbc:	2211      	movs	r2, #17
  8007bbe:	2100      	movs	r1, #0
  8007bc0:	48c4      	ldr	r0, [pc, #784]	@ (8007ed4 <resetMenuTexts+0x380>)
- 8007bc2:	f005 ff8d 	bl	800dae0 <memset>
+ 8007bc2:	f005 ff55 	bl	800da70 <memset>
     memset(dokuzHataKoduText, 0, 17);
  8007bc6:	2211      	movs	r2, #17
  8007bc8:	2100      	movs	r1, #0
  8007bca:	48c3      	ldr	r0, [pc, #780]	@ (8007ed8 <resetMenuTexts+0x384>)
- 8007bcc:	f005 ff88 	bl	800dae0 <memset>
+ 8007bcc:	f005 ff50 	bl	800da70 <memset>
     memset(onHataKoduText, 0, 17);
  8007bd0:	2211      	movs	r2, #17
  8007bd2:	2100      	movs	r1, #0
  8007bd4:	48c1      	ldr	r0, [pc, #772]	@ (8007edc <resetMenuTexts+0x388>)
- 8007bd6:	f005 ff83 	bl	800dae0 <memset>
+ 8007bd6:	f005 ff4b 	bl	800da70 <memset>
     memset(silmekIcinText, 0, 17);
  8007bda:	2211      	movs	r2, #17
  8007bdc:	2100      	movs	r1, #0
  8007bde:	48c0      	ldr	r0, [pc, #768]	@ (8007ee0 <resetMenuTexts+0x38c>)
- 8007be0:	f005 ff7e 	bl	800dae0 <memset>
+ 8007be0:	f005 ff46 	bl	800da70 <memset>
     memset(calismaSekliText, 0, 17);
  8007be4:	2211      	movs	r2, #17
  8007be6:	2100      	movs	r1, #0
  8007be8:	48be      	ldr	r0, [pc, #760]	@ (8007ee4 <resetMenuTexts+0x390>)
- 8007bea:	f005 ff79 	bl	800dae0 <memset>
+ 8007bea:	f005 ff41 	bl	800da70 <memset>
     memset(devirmeYuruyusText, 0, 17);
  8007bee:	2211      	movs	r2, #17
  8007bf0:	2100      	movs	r1, #0
  8007bf2:	48bd      	ldr	r0, [pc, #756]	@ (8007ee8 <resetMenuTexts+0x394>)
- 8007bf4:	f005 ff74 	bl	800dae0 <memset>
+ 8007bf4:	f005 ff3c 	bl	800da70 <memset>
     memset(bastikcaCalisanText, 0, 17);
  8007bf8:	2211      	movs	r2, #17
  8007bfa:	2100      	movs	r1, #0
  8007bfc:	48bb      	ldr	r0, [pc, #748]	@ (8007eec <resetMenuTexts+0x398>)
- 8007bfe:	f005 ff6f 	bl	800dae0 <memset>
+ 8007bfe:	f005 ff37 	bl	800da70 <memset>
     memset(basGonderText, 0, 17);
  8007c02:	2211      	movs	r2, #17
  8007c04:	2100      	movs	r1, #0
  8007c06:	48ba      	ldr	r0, [pc, #744]	@ (8007ef0 <resetMenuTexts+0x39c>)
- 8007c08:	f005 ff6a 	bl	800dae0 <memset>
+ 8007c08:	f005 ff32 	bl	800da70 <memset>
     memset(emniyetCercevesiText, 0, 17);
  8007c0c:	2211      	movs	r2, #17
  8007c0e:	2100      	movs	r1, #0
  8007c10:	48b8      	ldr	r0, [pc, #736]	@ (8007ef4 <resetMenuTexts+0x3a0>)
- 8007c12:	f005 ff65 	bl	800dae0 <memset>
+ 8007c12:	f005 ff2d 	bl	800da70 <memset>
     memset(pasifText, 0, 17);
  8007c16:	2211      	movs	r2, #17
  8007c18:	2100      	movs	r1, #0
  8007c1a:	48b7      	ldr	r0, [pc, #732]	@ (8007ef8 <resetMenuTexts+0x3a4>)
- 8007c1c:	f005 ff60 	bl	800dae0 <memset>
+ 8007c1c:	f005 ff28 	bl	800da70 <memset>
     memset(aktifText, 0, 17);
  8007c20:	2211      	movs	r2, #17
  8007c22:	2100      	movs	r1, #0
  8007c24:	48b5      	ldr	r0, [pc, #724]	@ (8007efc <resetMenuTexts+0x3a8>)
- 8007c26:	f005 ff5b 	bl	800dae0 <memset>
+ 8007c26:	f005 ff23 	bl	800da70 <memset>
     memset(yavaslamaLimitText, 0, 17);
  8007c2a:	2211      	movs	r2, #17
  8007c2c:	2100      	movs	r1, #0
  8007c2e:	48b4      	ldr	r0, [pc, #720]	@ (8007f00 <resetMenuTexts+0x3ac>)
- 8007c30:	f005 ff56 	bl	800dae0 <memset>
+ 8007c30:	f005 ff1e 	bl	800da70 <memset>
     memset(altLimitText, 0, 17);
  8007c34:	2211      	movs	r2, #17
  8007c36:	2100      	movs	r1, #0
  8007c38:	48b2      	ldr	r0, [pc, #712]	@ (8007f04 <resetMenuTexts+0x3b0>)
- 8007c3a:	f005 ff51 	bl	800dae0 <memset>
+ 8007c3a:	f005 ff19 	bl	800da70 <memset>
     memset(basincSalteriText, 0, 17);
  8007c3e:	2211      	movs	r2, #17
  8007c40:	2100      	movs	r1, #0
  8007c42:	48b1      	ldr	r0, [pc, #708]	@ (8007f08 <resetMenuTexts+0x3b4>)
- 8007c44:	f005 ff4c 	bl	800dae0 <memset>
+ 8007c44:	f005 ff14 	bl	800da70 <memset>
     memset(kapiSecimleriText, 0, 17);
  8007c48:	2211      	movs	r2, #17
  8007c4a:	2100      	movs	r1, #0
  8007c4c:	48af      	ldr	r0, [pc, #700]	@ (8007f0c <resetMenuTexts+0x3b8>)
- 8007c4e:	f005 ff47 	bl	800dae0 <memset>
+ 8007c4e:	f005 ff0f 	bl	800da70 <memset>
     memset(katKapisiAktifText, 0, 17);
  8007c52:	2211      	movs	r2, #17
  8007c54:	2100      	movs	r1, #0
  8007c56:	48ae      	ldr	r0, [pc, #696]	@ (8007f10 <resetMenuTexts+0x3bc>)
- 8007c58:	f005 ff42 	bl	800dae0 <memset>
+ 8007c58:	f005 ff0a 	bl	800da70 <memset>
     memset(tablaKapiAktifText, 0, 17);
  8007c5c:	2211      	movs	r2, #17
  8007c5e:	2100      	movs	r1, #0
  8007c60:	48ac      	ldr	r0, [pc, #688]	@ (8007f14 <resetMenuTexts+0x3c0>)
- 8007c62:	f005 ff3d 	bl	800dae0 <memset>
+ 8007c62:	f005 ff05 	bl	800da70 <memset>
     memset(katArtiTablaAktifText, 0, 17);
  8007c66:	2211      	movs	r2, #17
  8007c68:	2100      	movs	r1, #0
  8007c6a:	48ab      	ldr	r0, [pc, #684]	@ (8007f18 <resetMenuTexts+0x3c4>)
- 8007c6c:	f005 ff38 	bl	800dae0 <memset>
+ 8007c6c:	f005 ff00 	bl	800da70 <memset>
     memset(kapiAcmaTipiText, 0, 17);
  8007c70:	2211      	movs	r2, #17
  8007c72:	2100      	movs	r1, #0
  8007c74:	48a9      	ldr	r0, [pc, #676]	@ (8007f1c <resetMenuTexts+0x3c8>)
- 8007c76:	f005 ff33 	bl	800dae0 <memset>
+ 8007c76:	f005 fefb 	bl	800da70 <memset>
     memset(kapiButonuESPText, 0, 17);
  8007c7a:	2211      	movs	r2, #17
  8007c7c:	2100      	movs	r1, #0
  8007c7e:	48a8      	ldr	r0, [pc, #672]	@ (8007f20 <resetMenuTexts+0x3cc>)
- 8007c80:	f005 ff2e 	bl	800dae0 <memset>
+ 8007c80:	f005 fef6 	bl	800da70 <memset>
     memset(katButonuEXTText, 0, 17);
  8007c84:	2211      	movs	r2, #17
  8007c86:	2100      	movs	r1, #0
  8007c88:	48a6      	ldr	r0, [pc, #664]	@ (8007f24 <resetMenuTexts+0x3d0>)
- 8007c8a:	f005 ff29 	bl	800dae0 <memset>
+ 8007c8a:	f005 fef1 	bl	800da70 <memset>
     memset(birKatKapiTipiText, 0, 17);
  8007c8e:	2211      	movs	r2, #17
  8007c90:	2100      	movs	r1, #0
  8007c92:	48a5      	ldr	r0, [pc, #660]	@ (8007f28 <resetMenuTexts+0x3d4>)
- 8007c94:	f005 ff24 	bl	800dae0 <memset>
+ 8007c94:	f005 feec 	bl	800da70 <memset>
     memset(butonKontrolluText, 0, 17);
  8007c98:	2211      	movs	r2, #17
  8007c9a:	2100      	movs	r1, #0
  8007c9c:	48a3      	ldr	r0, [pc, #652]	@ (8007f2c <resetMenuTexts+0x3d8>)
- 8007c9e:	f005 ff1f 	bl	800dae0 <memset>
+ 8007c9e:	f005 fee7 	bl	800da70 <memset>
     memset(birinciKapiAcSuresiText, 0, 17);
  8007ca2:	2211      	movs	r2, #17
  8007ca4:	2100      	movs	r1, #0
  8007ca6:	48a2      	ldr	r0, [pc, #648]	@ (8007f30 <resetMenuTexts+0x3dc>)
- 8007ca8:	f005 ff1a 	bl	800dae0 <memset>
+ 8007ca8:	f005 fee2 	bl	800da70 <memset>
     memset(kacSaniyeText, 0, 17);
  8007cac:	2211      	movs	r2, #17
  8007cae:	2100      	movs	r1, #0
  8007cb0:	48a0      	ldr	r0, [pc, #640]	@ (8007f34 <resetMenuTexts+0x3e0>)
- 8007cb2:	f005 ff15 	bl	800dae0 <memset>
+ 8007cb2:	f005 fedd 	bl	800da70 <memset>
     memset(ikinciKatKapiTipiText, 0, 17);
  8007cb6:	2211      	movs	r2, #17
  8007cb8:	2100      	movs	r1, #0
  8007cba:	489f      	ldr	r0, [pc, #636]	@ (8007f38 <resetMenuTexts+0x3e4>)
- 8007cbc:	f005 ff10 	bl	800dae0 <memset>
+ 8007cbc:	f005 fed8 	bl	800da70 <memset>
     memset(ikinciKapiAcSuresiText, 0, 17);
  8007cc0:	2211      	movs	r2, #17
  8007cc2:	2100      	movs	r1, #0
  8007cc4:	489d      	ldr	r0, [pc, #628]	@ (8007f3c <resetMenuTexts+0x3e8>)
- 8007cc6:	f005 ff0b 	bl	800dae0 <memset>
+ 8007cc6:	f005 fed3 	bl	800da70 <memset>
     memset(tablaKapiTipiText, 0, 17);
  8007cca:	2211      	movs	r2, #17
  8007ccc:	2100      	movs	r1, #0
  8007cce:	489c      	ldr	r0, [pc, #624]	@ (8007f40 <resetMenuTexts+0x3ec>)
- 8007cd0:	f005 ff06 	bl	800dae0 <memset>
+ 8007cd0:	f005 fece 	bl	800da70 <memset>
     memset(tablaKapiAcKonumText, 0, 17);
  8007cd4:	2211      	movs	r2, #17
  8007cd6:	2100      	movs	r1, #0
  8007cd8:	489a      	ldr	r0, [pc, #616]	@ (8007f44 <resetMenuTexts+0x3f0>)
- 8007cda:	f005 ff01 	bl	800dae0 <memset>
+ 8007cda:	f005 fec9 	bl	800da70 <memset>
     memset(birinciKattaAcText, 0, 17);
  8007cde:	2211      	movs	r2, #17
  8007ce0:	2100      	movs	r1, #0
  8007ce2:	4899      	ldr	r0, [pc, #612]	@ (8007f48 <resetMenuTexts+0x3f4>)
- 8007ce4:	f005 fefc 	bl	800dae0 <memset>
+ 8007ce4:	f005 fec4 	bl	800da70 <memset>
     memset(ikinciKattaAcText, 0, 17);
  8007ce8:	2211      	movs	r2, #17
  8007cea:	2100      	movs	r1, #0
  8007cec:	4897      	ldr	r0, [pc, #604]	@ (8007f4c <resetMenuTexts+0x3f8>)
- 8007cee:	f005 fef7 	bl	800dae0 <memset>
+ 8007cee:	f005 febf 	bl	800da70 <memset>
     memset(birVeIkinciKattaAcText, 0, 17);
  8007cf2:	2211      	movs	r2, #17
  8007cf4:	2100      	movs	r1, #0
  8007cf6:	4896      	ldr	r0, [pc, #600]	@ (8007f50 <resetMenuTexts+0x3fc>)
- 8007cf8:	f005 fef2 	bl	800dae0 <memset>
+ 8007cf8:	f005 feba 	bl	800da70 <memset>
     memset(tablaKapiAcSureText, 0, 17);
  8007cfc:	2211      	movs	r2, #17
  8007cfe:	2100      	movs	r1, #0
  8007d00:	4894      	ldr	r0, [pc, #592]	@ (8007f54 <resetMenuTexts+0x400>)
- 8007d02:	f005 feed 	bl	800dae0 <memset>
+ 8007d02:	f005 feb5 	bl	800da70 <memset>
     memset(yukariYavaslamaLimitiText, 0, 17);
  8007d06:	2211      	movs	r2, #17
  8007d08:	2100      	movs	r1, #0
  8007d0a:	4893      	ldr	r0, [pc, #588]	@ (8007f58 <resetMenuTexts+0x404>)
- 8007d0c:	f005 fee8 	bl	800dae0 <memset>
+ 8007d0c:	f005 feb0 	bl	800da70 <memset>
     memset(devirmeYuruyusMenuText, 0, 17);
  8007d10:	2211      	movs	r2, #17
  8007d12:	2100      	movs	r1, #0
  8007d14:	4891      	ldr	r0, [pc, #580]	@ (8007f5c <resetMenuTexts+0x408>)
- 8007d16:	f005 fee3 	bl	800dae0 <memset>
+ 8007d16:	f005 feab 	bl	800da70 <memset>
     memset(devirmeAktifText, 0, 17);
  8007d1a:	2211      	movs	r2, #17
  8007d1c:	2100      	movs	r1, #0
  8007d1e:	4890      	ldr	r0, [pc, #576]	@ (8007f60 <resetMenuTexts+0x40c>)
- 8007d20:	f005 fede 	bl	800dae0 <memset>
+ 8007d20:	f005 fea6 	bl	800da70 <memset>
     memset(yuruyusAktifText, 0, 17);
  8007d24:	2211      	movs	r2, #17
  8007d26:	2100      	movs	r1, #0
  8007d28:	488e      	ldr	r0, [pc, #568]	@ (8007f64 <resetMenuTexts+0x410>)
- 8007d2a:	f005 fed9 	bl	800dae0 <memset>
+ 8007d2a:	f005 fea1 	bl	800da70 <memset>
     memset(devirmeYukariText, 0, 17);
  8007d2e:	2211      	movs	r2, #17
  8007d30:	2100      	movs	r1, #0
  8007d32:	488d      	ldr	r0, [pc, #564]	@ (8007f68 <resetMenuTexts+0x414>)
- 8007d34:	f005 fed4 	bl	800dae0 <memset>
+ 8007d34:	f005 fe9c 	bl	800da70 <memset>
     memset(yuruyusIleriText, 0, 17);
  8007d38:	2211      	movs	r2, #17
  8007d3a:	2100      	movs	r1, #0
  8007d3c:	488b      	ldr	r0, [pc, #556]	@ (8007f6c <resetMenuTexts+0x418>)
- 8007d3e:	f005 fecf 	bl	800dae0 <memset>
+ 8007d3e:	f005 fe97 	bl	800da70 <memset>
     memset(devirmeAsagiSivicText, 0, 17);
  8007d42:	2211      	movs	r2, #17
  8007d44:	2100      	movs	r1, #0
  8007d46:	488a      	ldr	r0, [pc, #552]	@ (8007f70 <resetMenuTexts+0x41c>)
- 8007d48:	f005 feca 	bl	800dae0 <memset>
+ 8007d48:	f005 fe92 	bl	800da70 <memset>
     memset(yuruyusGeriSivicText, 0, 17);
  8007d4c:	2211      	movs	r2, #17
  8007d4e:	2100      	movs	r1, #0
  8007d50:	4888      	ldr	r0, [pc, #544]	@ (8007f74 <resetMenuTexts+0x420>)
- 8007d52:	f005 fec5 	bl	800dae0 <memset>
+ 8007d52:	f005 fe8d 	bl	800da70 <memset>
     memset(yuruyusSecildiText, 0, 17);
  8007d56:	2211      	movs	r2, #17
  8007d58:	2100      	movs	r1, #0
  8007d5a:	4887      	ldr	r0, [pc, #540]	@ (8007f78 <resetMenuTexts+0x424>)
- 8007d5c:	f005 fec0 	bl	800dae0 <memset>
+ 8007d5c:	f005 fe88 	bl	800da70 <memset>
     memset(devirmeSilindirTipiText, 0, 17);
  8007d60:	2211      	movs	r2, #17
  8007d62:	2100      	movs	r1, #0
  8007d64:	4885      	ldr	r0, [pc, #532]	@ (8007f7c <resetMenuTexts+0x428>)
- 8007d66:	f005 febb 	bl	800dae0 <memset>
+ 8007d66:	f005 fe83 	bl	800da70 <memset>
     memset(tekTesirText, 0, 17);
  8007d6a:	2211      	movs	r2, #17
  8007d6c:	2100      	movs	r1, #0
  8007d6e:	4884      	ldr	r0, [pc, #528]	@ (8007f80 <resetMenuTexts+0x42c>)
- 8007d70:	f005 feb6 	bl	800dae0 <memset>
+ 8007d70:	f005 fe7e 	bl	800da70 <memset>
     memset(ciftTesirText, 0, 17);
  8007d74:	2211      	movs	r2, #17
  8007d76:	2100      	movs	r1, #0
  8007d78:	4882      	ldr	r0, [pc, #520]	@ (8007f84 <resetMenuTexts+0x430>)
- 8007d7a:	f005 feb1 	bl	800dae0 <memset>
+ 8007d7a:	f005 fe79 	bl	800da70 <memset>
     memset(platformSilindirTipiText, 0, 17);
  8007d7e:	2211      	movs	r2, #17
  8007d80:	2100      	movs	r1, #0
  8007d82:	4881      	ldr	r0, [pc, #516]	@ (8007f88 <resetMenuTexts+0x434>)
- 8007d84:	f005 feac 	bl	800dae0 <memset>
+ 8007d84:	f005 fe74 	bl	800da70 <memset>
     memset(yukariValfSureText, 0, 17);
  8007d88:	2211      	movs	r2, #17
  8007d8a:	2100      	movs	r1, #0
  8007d8c:	487f      	ldr	r0, [pc, #508]	@ (8007f8c <resetMenuTexts+0x438>)
- 8007d8e:	f005 fea7 	bl	800dae0 <memset>
+ 8007d8e:	f005 fe6f 	bl	800da70 <memset>
     memset(asagiValfSureText, 0, 17);
  8007d92:	2211      	movs	r2, #17
  8007d94:	2100      	movs	r1, #0
  8007d96:	487e      	ldr	r0, [pc, #504]	@ (8007f90 <resetMenuTexts+0x43c>)
- 8007d98:	f005 fea2 	bl	800dae0 <memset>
+ 8007d98:	f005 fe6a 	bl	800da70 <memset>
     memset(devirmeYukariValfSureText, 0, 17);
  8007d9c:	2211      	movs	r2, #17
  8007d9e:	2100      	movs	r1, #0
  8007da0:	487c      	ldr	r0, [pc, #496]	@ (8007f94 <resetMenuTexts+0x440>)
- 8007da2:	f005 fe9d 	bl	800dae0 <memset>
+ 8007da2:	f005 fe65 	bl	800da70 <memset>
     memset(ileriValfSureText, 0, 17);
  8007da6:	2211      	movs	r2, #17
  8007da8:	2100      	movs	r1, #0
  8007daa:	487b      	ldr	r0, [pc, #492]	@ (8007f98 <resetMenuTexts+0x444>)
- 8007dac:	f005 fe98 	bl	800dae0 <memset>
+ 8007dac:	f005 fe60 	bl	800da70 <memset>
     memset(devirmeAsagiValfSureText, 0, 17);
  8007db0:	2211      	movs	r2, #17
  8007db2:	2100      	movs	r1, #0
  8007db4:	4879      	ldr	r0, [pc, #484]	@ (8007f9c <resetMenuTexts+0x448>)
- 8007db6:	f005 fe93 	bl	800dae0 <memset>
+ 8007db6:	f005 fe5b 	bl	800da70 <memset>
     memset(geriValfSureText, 0, 17);
  8007dba:	2211      	movs	r2, #17
  8007dbc:	2100      	movs	r1, #0
  8007dbe:	4878      	ldr	r0, [pc, #480]	@ (8007fa0 <resetMenuTexts+0x44c>)
- 8007dc0:	f005 fe8e 	bl	800dae0 <memset>
+ 8007dc0:	f005 fe56 	bl	800da70 <memset>
     memset(calismaSuresiText, 0, 17);
  8007dc4:	2211      	movs	r2, #17
  8007dc6:	2100      	movs	r1, #0
  8007dc8:	4876      	ldr	r0, [pc, #472]	@ (8007fa4 <resetMenuTexts+0x450>)
- 8007dca:	f005 fe89 	bl	800dae0 <memset>
+ 8007dca:	f005 fe51 	bl	800da70 <memset>
     memset(calismaSayisiText, 0, 17);
  8007dce:	2211      	movs	r2, #17
  8007dd0:	2100      	movs	r1, #0
  8007dd2:	4875      	ldr	r0, [pc, #468]	@ (8007fa8 <resetMenuTexts+0x454>)
- 8007dd4:	f005 fe84 	bl	800dae0 <memset>
+ 8007dd4:	f005 fe4c 	bl	800da70 <memset>
     memset(enterlaSifirlaText, 0, 17);
  8007dd8:	2211      	movs	r2, #17
  8007dda:	2100      	movs	r1, #0
  8007ddc:	4873      	ldr	r0, [pc, #460]	@ (8007fac <resetMenuTexts+0x458>)
- 8007dde:	f005 fe7f 	bl	800dae0 <memset>
+ 8007dde:	f005 fe47 	bl	800da70 <memset>
     memset(dilSecimText, 0, 17);
  8007de2:	2211      	movs	r2, #17
  8007de4:	2100      	movs	r1, #0
  8007de6:	4872      	ldr	r0, [pc, #456]	@ (8007fb0 <resetMenuTexts+0x45c>)
- 8007de8:	f005 fe7a 	bl	800dae0 <memset>
+ 8007de8:	f005 fe42 	bl	800da70 <memset>
     memset(secilenDilText, 0, 17);
  8007dec:	2211      	movs	r2, #17
  8007dee:	2100      	movs	r1, #0
  8007df0:	4870      	ldr	r0, [pc, #448]	@ (8007fb4 <resetMenuTexts+0x460>)
- 8007df2:	f005 fe75 	bl	800dae0 <memset>
+ 8007df2:	f005 fe3d 	bl	800da70 <memset>
     memset(menudenCikisText, 0, 17);
  8007df6:	2211      	movs	r2, #17
  8007df8:	2100      	movs	r1, #0
  8007dfa:	486f      	ldr	r0, [pc, #444]	@ (8007fb8 <resetMenuTexts+0x464>)
- 8007dfc:	f005 fe70 	bl	800dae0 <memset>
+ 8007dfc:	f005 fe38 	bl	800da70 <memset>
     memset(enteraBasinizText, 0, 17);
  8007e00:	2211      	movs	r2, #17
  8007e02:	2100      	movs	r1, #0
  8007e04:	486d      	ldr	r0, [pc, #436]	@ (8007fbc <resetMenuTexts+0x468>)
- 8007e06:	f005 fe6b 	bl	800dae0 <memset>
+ 8007e06:	f005 fe33 	bl	800da70 <memset>
     memset(hataKoduText, 0, 17);
  8007e0a:	2211      	movs	r2, #17
  8007e0c:	2100      	movs	r1, #0
  8007e0e:	486c      	ldr	r0, [pc, #432]	@ (8007fc0 <resetMenuTexts+0x46c>)
- 8007e10:	f005 fe66 	bl	800dae0 <memset>
+ 8007e10:	f005 fe2e 	bl	800da70 <memset>
     memset(dataSynchText, 0, 17);
  8007e14:	2211      	movs	r2, #17
  8007e16:	2100      	movs	r1, #0
  8007e18:	486a      	ldr	r0, [pc, #424]	@ (8007fc4 <resetMenuTexts+0x470>)
- 8007e1a:	f005 fe61 	bl	800dae0 <memset>
+ 8007e1a:	f005 fe29 	bl	800da70 <memset>
     memset(dataSynch2Text, 0, 17);
  8007e1e:	2211      	movs	r2, #17
  8007e20:	2100      	movs	r1, #0
  8007e22:	4869      	ldr	r0, [pc, #420]	@ (8007fc8 <resetMenuTexts+0x474>)
- 8007e24:	f005 fe5c 	bl	800dae0 <memset>
+ 8007e24:	f005 fe24 	bl	800da70 <memset>
     memset(mustBeUniqueText, 0, 17);
  8007e28:	2211      	movs	r2, #17
  8007e2a:	2100      	movs	r1, #0
  8007e2c:	4867      	ldr	r0, [pc, #412]	@ (8007fcc <resetMenuTexts+0x478>)
- 8007e2e:	f005 fe57 	bl	800dae0 <memset>
+ 8007e2e:	f005 fe1f 	bl	800da70 <memset>
     memset(mustBeUnique2Text, 0, 17);
  8007e32:	2211      	movs	r2, #17
  8007e34:	2100      	movs	r1, #0
  8007e36:	4866      	ldr	r0, [pc, #408]	@ (8007fd0 <resetMenuTexts+0x47c>)
- 8007e38:	f005 fe52 	bl	800dae0 <memset>
+ 8007e38:	f005 fe1a 	bl	800da70 <memset>
     memset(mustBe12Text, 0, 17);
  8007e3c:	2211      	movs	r2, #17
  8007e3e:	2100      	movs	r1, #0
  8007e40:	4864      	ldr	r0, [pc, #400]	@ (8007fd4 <resetMenuTexts+0x480>)
- 8007e42:	f005 fe4d 	bl	800dae0 <memset>
+ 8007e42:	f005 fe15 	bl	800da70 <memset>
     memset(mustBe122Text, 0, 17);
  8007e46:	2211      	movs	r2, #17
  8007e48:	2100      	movs	r1, #0
  8007e4a:	4863      	ldr	r0, [pc, #396]	@ (8007fd8 <resetMenuTexts+0x484>)
- 8007e4c:	f005 fe48 	bl	800dae0 <memset>
+ 8007e4c:	f005 fe10 	bl	800da70 <memset>
     memset(ssidExceedErrorText, 0, 17);
  8007e50:	2211      	movs	r2, #17
  8007e52:	2100      	movs	r1, #0
  8007e54:	4861      	ldr	r0, [pc, #388]	@ (8007fdc <resetMenuTexts+0x488>)
- 8007e56:	f005 fe43 	bl	800dae0 <memset>
+ 8007e56:	f005 fe0b 	bl	800da70 <memset>
     memset(ssidExceedError2Text, 0, 17);
  8007e5a:	2211      	movs	r2, #17
  8007e5c:	2100      	movs	r1, #0
  8007e5e:	4860      	ldr	r0, [pc, #384]	@ (8007fe0 <resetMenuTexts+0x48c>)
- 8007e60:	f005 fe3e 	bl	800dae0 <memset>
+ 8007e60:	f005 fe06 	bl	800da70 <memset>
     memset(passExceedErrorText, 0, 17);
  8007e64:	2211      	movs	r2, #17
  8007e66:	2100      	movs	r1, #0
  8007e68:	485e      	ldr	r0, [pc, #376]	@ (8007fe4 <resetMenuTexts+0x490>)
- 8007e6a:	f005 fe39 	bl	800dae0 <memset>
+ 8007e6a:	f005 fe01 	bl	800da70 <memset>
     memset(passExceedError2Text, 0, 17);
  8007e6e:	2211      	movs	r2, #17
  8007e70:	2100      	movs	r1, #0
  8007e72:	485d      	ldr	r0, [pc, #372]	@ (8007fe8 <resetMenuTexts+0x494>)
- 8007e74:	f005 fe34 	bl	800dae0 <memset>
+ 8007e74:	f005 fdfc 	bl	800da70 <memset>
     memset(dataYazildiText, 0, 17);
  8007e78:	2211      	movs	r2, #17
  8007e7a:	2100      	movs	r1, #0
  8007e7c:	485b      	ldr	r0, [pc, #364]	@ (8007fec <resetMenuTexts+0x498>)
- 8007e7e:	f005 fe2f 	bl	800dae0 <memset>
+ 8007e7e:	f005 fdf7 	bl	800da70 <memset>
     memset(dataOkunuyorText, 0, 17);
  8007e82:	2211      	movs	r2, #17
  8007e84:	2100      	movs	r1, #0
  8007e86:	485a      	ldr	r0, [pc, #360]	@ (8007ff0 <resetMenuTexts+0x49c>)
- 8007e88:	f005 fe2a 	bl	800dae0 <memset>
+ 8007e88:	f005 fdf2 	bl	800da70 <memset>
     memset(dataOkunduText, 0, 17);
  8007e8c:	2211      	movs	r2, #17
  8007e8e:	2100      	movs	r1, #0
  8007e90:	4858      	ldr	r0, [pc, #352]	@ (8007ff4 <resetMenuTexts+0x4a0>)
- 8007e92:	f005 fe25 	bl	800dae0 <memset>
+ 8007e92:	f005 fded 	bl	800da70 <memset>
     memset(degerKaydedildiText, 0, 17);
  8007e96:	2211      	movs	r2, #17
  8007e98:	2100      	movs	r1, #0
  8007e9a:	4857      	ldr	r0, [pc, #348]	@ (8007ff8 <resetMenuTexts+0x4a4>)
- 8007e9c:	f005 fe20 	bl	800dae0 <memset>
+ 8007e9c:	f005 fde8 	bl	800da70 <memset>
     memset(errorCodeText, 0, 17);
  8007ea0:	2211      	movs	r2, #17
  8007ea2:	2100      	movs	r1, #0
  8007ea4:	4855      	ldr	r0, [pc, #340]	@ (8007ffc <resetMenuTexts+0x4a8>)
- 8007ea6:	f005 fe1b 	bl	800dae0 <memset>
+ 8007ea6:	f005 fde3 	bl	800da70 <memset>
  8007eaa:	e0a9      	b.n	8008000 <resetMenuTexts+0x4ac>
  8007eac:	20001220 	.word	0x20001220
  8007eb0:	20001234 	.word	0x20001234
@@ -17098,22 +17098,22 @@ void resetMenuTexts() {
  8008000:	2211      	movs	r2, #17
  8008002:	2100      	movs	r1, #0
  8008004:	4809      	ldr	r0, [pc, #36]	@ (800802c <resetMenuTexts+0x4d8>)
- 8008006:	f005 fd6b 	bl	800dae0 <memset>
+ 8008006:	f005 fd33 	bl	800da70 <memset>
     memset(idConfirmationText, 0, 17);
  800800a:	2211      	movs	r2, #17
  800800c:	2100      	movs	r1, #0
  800800e:	4808      	ldr	r0, [pc, #32]	@ (8008030 <resetMenuTexts+0x4dc>)
- 8008010:	f005 fd66 	bl	800dae0 <memset>
+ 8008010:	f005 fd2e 	bl	800da70 <memset>
     memset(idConfirmationSubText, 0, 17);
  8008014:	2211      	movs	r2, #17
  8008016:	2100      	movs	r1, #0
  8008018:	4806      	ldr	r0, [pc, #24]	@ (8008034 <resetMenuTexts+0x4e0>)
- 800801a:	f005 fd61 	bl	800dae0 <memset>
+ 800801a:	f005 fd29 	bl	800da70 <memset>
     memset(wifiConfirmationText, 0, 17);
  800801e:	2211      	movs	r2, #17
  8008020:	2100      	movs	r1, #0
  8008022:	4805      	ldr	r0, [pc, #20]	@ (8008038 <resetMenuTexts+0x4e4>)
- 8008024:	f005 fd5c 	bl	800dae0 <memset>
+ 8008024:	f005 fd24 	bl	800da70 <memset>
 }
  8008028:	bf00      	nop
  800802a:	bd80      	pop	{r7, pc}
@@ -17206,7 +17206,7 @@ void takeMachineID() {
  80080b4:	220c      	movs	r2, #12
  80080b6:	2100      	movs	r1, #0
  80080b8:	48a6      	ldr	r0, [pc, #664]	@ (8008354 <takeMachineID+0x2ac>)
- 80080ba:	f005 fd11 	bl	800dae0 <memset>
+ 80080ba:	f005 fcd9 	bl	800da70 <memset>
 
 	int writeLoc = 5; //kullanıcının seçtiği karkaterin yazılırken başlayacağı karakter değişkeni
  80080be:	2305      	movs	r3, #5
@@ -17789,7 +17789,7 @@ void takeWifiSSID() {
  8008464:	2210      	movs	r2, #16
  8008466:	2100      	movs	r1, #0
  8008468:	48a4      	ldr	r0, [pc, #656]	@ (80086fc <takeWifiSSID+0x2a4>)
- 800846a:	f005 fb39 	bl	800dae0 <memset>
+ 800846a:	f005 fb01 	bl	800da70 <memset>
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
  800846e:	2301      	movs	r3, #1
@@ -18339,7 +18339,7 @@ void takeWifiPass() {
  80087bc:	2210      	movs	r2, #16
  80087be:	2100      	movs	r1, #0
  80087c0:	48a4      	ldr	r0, [pc, #656]	@ (8008a54 <takeWifiPass+0x2a4>)
- 80087c2:	f005 f98d 	bl	800dae0 <memset>
+ 80087c2:	f005 f955 	bl	800da70 <memset>
 
     int page = 1; //wifi karakterleri için sayfa değişkeni
  80087c6:	2301      	movs	r3, #1
@@ -18795,7 +18795,7 @@ char* mergeData() {
  8008a7a:	2229      	movs	r2, #41	@ 0x29
  8008a7c:	2100      	movs	r1, #0
  8008a7e:	4618      	mov	r0, r3
- 8008a80:	f005 f82e 	bl	800dae0 <memset>
+ 8008a80:	f004 fff6 	bl	800da70 <memset>
 	char temp[10];
 
 	uint8_t uintVariables[] = {
@@ -18962,13 +18962,13 @@ char* mergeData() {
  8008bae:	f107 032c 	add.w	r3, r7, #44	@ 0x2c
  8008bb2:	4933      	ldr	r1, [pc, #204]	@ (8008c80 <mergeData+0x214>)
  8008bb4:	4618      	mov	r0, r3
- 8008bb6:	f004 fef9 	bl	800d9ac <siprintf>
+ 8008bb6:	f004 ff3b 	bl	800da30 <siprintf>
 	    strcat(combinedString, temp);
  8008bba:	f107 022c 	add.w	r2, r7, #44	@ 0x2c
  8008bbe:	f107 0338 	add.w	r3, r7, #56	@ 0x38
  8008bc2:	4611      	mov	r1, r2
  8008bc4:	4618      	mov	r0, r3
- 8008bc6:	f004 ff53 	bl	800da70 <strcat>
+ 8008bc6:	f004 ff5b 	bl	800da80 <strcat>
 	for (int i = 0; i < sizeof(uintVariables) / sizeof(uintVariables[0]); ++i) {
  8008bca:	6efb      	ldr	r3, [r7, #108]	@ 0x6c
  8008bcc:	3301      	adds	r3, #1
@@ -20072,7 +20072,7 @@ void SystemClock_Config(void)
  8009336:	2228      	movs	r2, #40	@ 0x28
  8009338:	2100      	movs	r1, #0
  800933a:	4618      	mov	r0, r3
- 800933c:	f004 fbd0 	bl	800dae0 <memset>
+ 800933c:	f004 fb98 	bl	800da70 <memset>
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  8009340:	1d3b      	adds	r3, r7, #4
  8009342:	2200      	movs	r2, #0
@@ -21457,7 +21457,7 @@ void *_sbrk(ptrdiff_t incr)
  8009a3a:	220c      	movs	r2, #12
  8009a3c:	601a      	str	r2, [r3, #0]
     return (void *)-1;
- 8009a3e:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 8009a3e:	f04f 33ff 	mov.w	r3, #4294967295
  8009a42:	e009      	b.n	8009a58 <_sbrk+0x54>
   }
 
@@ -21687,7 +21687,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
     HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
  8009b28:	2200      	movs	r2, #0
  8009b2a:	6879      	ldr	r1, [r7, #4]
- 8009b2c:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 8009b2c:	f04f 30ff 	mov.w	r0, #4294967295
  8009b30:	f000 fa23 	bl	8009f7a <HAL_NVIC_SetPriority>
     uwTickPrio = TickPriority;
  8009b34:	4a06      	ldr	r2, [pc, #24]	@ (8009b50 <HAL_InitTick+0x5c>)
@@ -21778,7 +21778,7 @@ __weak void HAL_Delay(uint32_t Delay)
   /* Add a freq to guarantee minimum wait */
   if (wait < HAL_MAX_DELAY)
  8009b9e:	68fb      	ldr	r3, [r7, #12]
- 8009ba0:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
+ 8009ba0:	f1b3 3fff 	cmp.w	r3, #4294967295
  8009ba4:	d005      	beq.n	8009bb2 <HAL_Delay+0x26>
   {
     wait += (uint32_t)(uwTickFreq);
@@ -22340,7 +22340,7 @@ HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan)
  8009eec:	2300      	movs	r3, #0
  8009eee:	617b      	str	r3, [r7, #20]
            ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
- 8009ef0:	f04f 32ff 	mov.w	r2, #4294967295	@ 0xffffffff
+ 8009ef0:	f04f 32ff 	mov.w	r2, #4294967295
  8009ef4:	69bb      	ldr	r3, [r7, #24]
  8009ef6:	fa02 f303 	lsl.w	r3, r2, r3
  8009efa:	43da      	mvns	r2, r3
@@ -22349,7 +22349,7 @@ HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan)
  8009f00:	697b      	ldr	r3, [r7, #20]
  8009f02:	409a      	lsls	r2, r3
            ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
- 8009f04:	f04f 31ff 	mov.w	r1, #4294967295	@ 0xffffffff
+ 8009f04:	f04f 31ff 	mov.w	r1, #4294967295
  8009f08:	697b      	ldr	r3, [r7, #20]
  8009f0a:	fa01 f303 	lsl.w	r3, r1, r3
  8009f0e:	43d9      	mvns	r1, r3
@@ -22393,7 +22393,7 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
  8009f3c:	6053      	str	r3, [r2, #4]
   NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
  8009f3e:	210f      	movs	r1, #15
- 8009f40:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 8009f40:	f04f 30ff 	mov.w	r0, #4294967295
  8009f44:	f7ff ff90 	bl	8009e68 <__NVIC_SetPriority>
   SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
  8009f48:	4b05      	ldr	r3, [pc, #20]	@ (8009f60 <SysTick_Config+0x40>)
@@ -26528,7 +26528,7 @@ static HAL_StatusTypeDef I2C_WaitOnFlagUntilTimeout(I2C_HandleTypeDef *hi2c, uin
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
  800b7a6:	683b      	ldr	r3, [r7, #0]
- 800b7a8:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
+ 800b7a8:	f1b3 3fff 	cmp.w	r3, #4294967295
  800b7ac:	d044      	beq.n	800b838 <I2C_WaitOnFlagUntilTimeout+0xa4>
     {
       if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
@@ -26731,7 +26731,7 @@ static HAL_StatusTypeDef I2C_WaitOnMasterAddressFlagUntilTimeout(I2C_HandleTypeD
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
  800b8f0:	687b      	ldr	r3, [r7, #4]
- 800b8f2:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
+ 800b8f2:	f1b3 3fff 	cmp.w	r3, #4294967295
  800b8f6:	d041      	beq.n	800b97c <I2C_WaitOnMasterAddressFlagUntilTimeout+0xf4>
     {
       if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
@@ -26885,7 +26885,7 @@ static HAL_StatusTypeDef I2C_WaitOnTXEFlagUntilTimeout(I2C_HandleTypeDef *hi2c, 
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
  800b9e6:	68bb      	ldr	r3, [r7, #8]
- 800b9e8:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
+ 800b9e8:	f1b3 3fff 	cmp.w	r3, #4294967295
  800b9ec:	d028      	beq.n	800ba40 <I2C_WaitOnTXEFlagUntilTimeout+0x78>
     {
       if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
@@ -26987,7 +26987,7 @@ static HAL_StatusTypeDef I2C_WaitOnBTFFlagUntilTimeout(I2C_HandleTypeDef *hi2c, 
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
  800ba76:	68bb      	ldr	r3, [r7, #8]
- 800ba78:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
+ 800ba78:	f1b3 3fff 	cmp.w	r3, #4294967295
  800ba7c:	d028      	beq.n	800bad0 <I2C_WaitOnBTFFlagUntilTimeout+0x78>
     {
       if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
@@ -32318,7 +32318,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800d82c:	2101      	movs	r1, #1
  800d82e:	4240      	negs	r0, r0
  800d830:	4421      	add	r1, r4
- 800d832:	f000 f8db 	bl	800d9ec <__utoa>
+ 800d832:	f000 f8bb 	bl	800d9ac <__utoa>
  800d836:	e7f1      	b.n	800d81c <__itoa+0x10>
  800d838:	2100      	movs	r1, #0
  800d83a:	e7f9      	b.n	800d830 <__itoa+0x24>
@@ -32348,7 +32348,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800d866:	f000 f943 	bl	800daf0 <_sbrk_r>
  800d86a:	1c43      	adds	r3, r0, #1
  800d86c:	d103      	bne.n	800d876 <sbrk_aligned+0x26>
- 800d86e:	f04f 34ff 	mov.w	r4, #4294967295	@ 0xffffffff
+ 800d86e:	f04f 34ff 	mov.w	r4, #4294967295
  800d872:	4620      	mov	r0, r4
  800d874:	bd70      	pop	{r4, r5, r6, pc}
  800d876:	1cc4      	adds	r4, r0, #3
@@ -32478,163 +32478,163 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800d994:	4801      	ldr	r0, [pc, #4]	@ (800d99c <__malloc_lock+0x8>)
  800d996:	f000 b8e5 	b.w	800db64 <__retarget_lock_acquire_recursive>
  800d99a:	bf00      	nop
- 800d99c:	20001b68 	.word	0x20001b68
+ 800d99c:	20001b6c 	.word	0x20001b6c
 
 0800d9a0 <__malloc_unlock>:
  800d9a0:	4801      	ldr	r0, [pc, #4]	@ (800d9a8 <__malloc_unlock+0x8>)
  800d9a2:	f000 b8e0 	b.w	800db66 <__retarget_lock_release_recursive>
  800d9a6:	bf00      	nop
- 800d9a8:	20001b68 	.word	0x20001b68
+ 800d9a8:	20001b6c 	.word	0x20001b6c
 
-0800d9ac <siprintf>:
- 800d9ac:	b40e      	push	{r1, r2, r3}
- 800d9ae:	f06f 4100 	mvn.w	r1, #2147483648	@ 0x80000000
- 800d9b2:	b500      	push	{lr}
- 800d9b4:	b09c      	sub	sp, #112	@ 0x70
- 800d9b6:	ab1d      	add	r3, sp, #116	@ 0x74
- 800d9b8:	9002      	str	r0, [sp, #8]
- 800d9ba:	9006      	str	r0, [sp, #24]
- 800d9bc:	9107      	str	r1, [sp, #28]
- 800d9be:	9104      	str	r1, [sp, #16]
- 800d9c0:	4808      	ldr	r0, [pc, #32]	@ (800d9e4 <siprintf+0x38>)
- 800d9c2:	4909      	ldr	r1, [pc, #36]	@ (800d9e8 <siprintf+0x3c>)
- 800d9c4:	f853 2b04 	ldr.w	r2, [r3], #4
- 800d9c8:	9105      	str	r1, [sp, #20]
- 800d9ca:	6800      	ldr	r0, [r0, #0]
- 800d9cc:	a902      	add	r1, sp, #8
- 800d9ce:	9301      	str	r3, [sp, #4]
- 800d9d0:	f000 f976 	bl	800dcc0 <_svfiprintf_r>
- 800d9d4:	2200      	movs	r2, #0
- 800d9d6:	9b02      	ldr	r3, [sp, #8]
- 800d9d8:	701a      	strb	r2, [r3, #0]
- 800d9da:	b01c      	add	sp, #112	@ 0x70
- 800d9dc:	f85d eb04 	ldr.w	lr, [sp], #4
- 800d9e0:	b003      	add	sp, #12
- 800d9e2:	4770      	bx	lr
- 800d9e4:	20000f80 	.word	0x20000f80
- 800d9e8:	ffff0208 	.word	0xffff0208
+0800d9ac <__utoa>:
+ 800d9ac:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 800d9ae:	b08b      	sub	sp, #44	@ 0x2c
+ 800d9b0:	4605      	mov	r5, r0
+ 800d9b2:	460b      	mov	r3, r1
+ 800d9b4:	466e      	mov	r6, sp
+ 800d9b6:	4c1d      	ldr	r4, [pc, #116]	@ (800da2c <__utoa+0x80>)
+ 800d9b8:	f104 0c20 	add.w	ip, r4, #32
+ 800d9bc:	4637      	mov	r7, r6
+ 800d9be:	6820      	ldr	r0, [r4, #0]
+ 800d9c0:	6861      	ldr	r1, [r4, #4]
+ 800d9c2:	3408      	adds	r4, #8
+ 800d9c4:	c703      	stmia	r7!, {r0, r1}
+ 800d9c6:	4564      	cmp	r4, ip
+ 800d9c8:	463e      	mov	r6, r7
+ 800d9ca:	d1f7      	bne.n	800d9bc <__utoa+0x10>
+ 800d9cc:	7921      	ldrb	r1, [r4, #4]
+ 800d9ce:	6820      	ldr	r0, [r4, #0]
+ 800d9d0:	7139      	strb	r1, [r7, #4]
+ 800d9d2:	1e91      	subs	r1, r2, #2
+ 800d9d4:	2922      	cmp	r1, #34	@ 0x22
+ 800d9d6:	6038      	str	r0, [r7, #0]
+ 800d9d8:	f04f 0100 	mov.w	r1, #0
+ 800d9dc:	d904      	bls.n	800d9e8 <__utoa+0x3c>
+ 800d9de:	7019      	strb	r1, [r3, #0]
+ 800d9e0:	460b      	mov	r3, r1
+ 800d9e2:	4618      	mov	r0, r3
+ 800d9e4:	b00b      	add	sp, #44	@ 0x2c
+ 800d9e6:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 800d9e8:	1e58      	subs	r0, r3, #1
+ 800d9ea:	4684      	mov	ip, r0
+ 800d9ec:	fbb5 f7f2 	udiv	r7, r5, r2
+ 800d9f0:	fb02 5617 	mls	r6, r2, r7, r5
+ 800d9f4:	3628      	adds	r6, #40	@ 0x28
+ 800d9f6:	446e      	add	r6, sp
+ 800d9f8:	f816 6c28 	ldrb.w	r6, [r6, #-40]
+ 800d9fc:	460c      	mov	r4, r1
+ 800d9fe:	f80c 6f01 	strb.w	r6, [ip, #1]!
+ 800da02:	462e      	mov	r6, r5
+ 800da04:	42b2      	cmp	r2, r6
+ 800da06:	463d      	mov	r5, r7
+ 800da08:	f101 0101 	add.w	r1, r1, #1
+ 800da0c:	d9ee      	bls.n	800d9ec <__utoa+0x40>
+ 800da0e:	2200      	movs	r2, #0
+ 800da10:	545a      	strb	r2, [r3, r1]
+ 800da12:	1919      	adds	r1, r3, r4
+ 800da14:	1aa5      	subs	r5, r4, r2
+ 800da16:	42aa      	cmp	r2, r5
+ 800da18:	dae3      	bge.n	800d9e2 <__utoa+0x36>
+ 800da1a:	f810 5f01 	ldrb.w	r5, [r0, #1]!
+ 800da1e:	780e      	ldrb	r6, [r1, #0]
+ 800da20:	3201      	adds	r2, #1
+ 800da22:	7006      	strb	r6, [r0, #0]
+ 800da24:	f801 5901 	strb.w	r5, [r1], #-1
+ 800da28:	e7f4      	b.n	800da14 <__utoa+0x68>
+ 800da2a:	bf00      	nop
+ 800da2c:	0800ee06 	.word	0x0800ee06
 
-0800d9ec <__utoa>:
- 800d9ec:	b5f0      	push	{r4, r5, r6, r7, lr}
- 800d9ee:	b08b      	sub	sp, #44	@ 0x2c
- 800d9f0:	4605      	mov	r5, r0
- 800d9f2:	460b      	mov	r3, r1
- 800d9f4:	466e      	mov	r6, sp
- 800d9f6:	4c1d      	ldr	r4, [pc, #116]	@ (800da6c <__utoa+0x80>)
- 800d9f8:	f104 0c20 	add.w	ip, r4, #32
- 800d9fc:	4637      	mov	r7, r6
- 800d9fe:	6820      	ldr	r0, [r4, #0]
- 800da00:	6861      	ldr	r1, [r4, #4]
- 800da02:	3408      	adds	r4, #8
- 800da04:	c703      	stmia	r7!, {r0, r1}
- 800da06:	4564      	cmp	r4, ip
- 800da08:	463e      	mov	r6, r7
- 800da0a:	d1f7      	bne.n	800d9fc <__utoa+0x10>
- 800da0c:	7921      	ldrb	r1, [r4, #4]
- 800da0e:	6820      	ldr	r0, [r4, #0]
- 800da10:	7139      	strb	r1, [r7, #4]
- 800da12:	1e91      	subs	r1, r2, #2
- 800da14:	2922      	cmp	r1, #34	@ 0x22
- 800da16:	6038      	str	r0, [r7, #0]
- 800da18:	f04f 0100 	mov.w	r1, #0
- 800da1c:	d904      	bls.n	800da28 <__utoa+0x3c>
- 800da1e:	7019      	strb	r1, [r3, #0]
- 800da20:	460b      	mov	r3, r1
- 800da22:	4618      	mov	r0, r3
- 800da24:	b00b      	add	sp, #44	@ 0x2c
- 800da26:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 800da28:	1e58      	subs	r0, r3, #1
- 800da2a:	4684      	mov	ip, r0
- 800da2c:	fbb5 f7f2 	udiv	r7, r5, r2
- 800da30:	fb02 5617 	mls	r6, r2, r7, r5
- 800da34:	3628      	adds	r6, #40	@ 0x28
- 800da36:	446e      	add	r6, sp
- 800da38:	f816 6c28 	ldrb.w	r6, [r6, #-40]
- 800da3c:	460c      	mov	r4, r1
- 800da3e:	f80c 6f01 	strb.w	r6, [ip, #1]!
- 800da42:	462e      	mov	r6, r5
- 800da44:	42b2      	cmp	r2, r6
- 800da46:	463d      	mov	r5, r7
- 800da48:	f101 0101 	add.w	r1, r1, #1
- 800da4c:	d9ee      	bls.n	800da2c <__utoa+0x40>
- 800da4e:	2200      	movs	r2, #0
- 800da50:	545a      	strb	r2, [r3, r1]
- 800da52:	1919      	adds	r1, r3, r4
- 800da54:	1aa5      	subs	r5, r4, r2
- 800da56:	42aa      	cmp	r2, r5
- 800da58:	dae3      	bge.n	800da22 <__utoa+0x36>
- 800da5a:	f810 5f01 	ldrb.w	r5, [r0, #1]!
- 800da5e:	780e      	ldrb	r6, [r1, #0]
- 800da60:	3201      	adds	r2, #1
- 800da62:	7006      	strb	r6, [r0, #0]
- 800da64:	f801 5901 	strb.w	r5, [r1], #-1
- 800da68:	e7f4      	b.n	800da54 <__utoa+0x68>
- 800da6a:	bf00      	nop
- 800da6c:	0800ee06 	.word	0x0800ee06
+0800da30 <siprintf>:
+ 800da30:	b40e      	push	{r1, r2, r3}
+ 800da32:	f06f 4100 	mvn.w	r1, #2147483648	@ 0x80000000
+ 800da36:	b500      	push	{lr}
+ 800da38:	b09c      	sub	sp, #112	@ 0x70
+ 800da3a:	ab1d      	add	r3, sp, #116	@ 0x74
+ 800da3c:	9002      	str	r0, [sp, #8]
+ 800da3e:	9006      	str	r0, [sp, #24]
+ 800da40:	9107      	str	r1, [sp, #28]
+ 800da42:	9104      	str	r1, [sp, #16]
+ 800da44:	4808      	ldr	r0, [pc, #32]	@ (800da68 <siprintf+0x38>)
+ 800da46:	4909      	ldr	r1, [pc, #36]	@ (800da6c <siprintf+0x3c>)
+ 800da48:	f853 2b04 	ldr.w	r2, [r3], #4
+ 800da4c:	9105      	str	r1, [sp, #20]
+ 800da4e:	6800      	ldr	r0, [r0, #0]
+ 800da50:	a902      	add	r1, sp, #8
+ 800da52:	9301      	str	r3, [sp, #4]
+ 800da54:	f000 f934 	bl	800dcc0 <_svfiprintf_r>
+ 800da58:	2200      	movs	r2, #0
+ 800da5a:	9b02      	ldr	r3, [sp, #8]
+ 800da5c:	701a      	strb	r2, [r3, #0]
+ 800da5e:	b01c      	add	sp, #112	@ 0x70
+ 800da60:	f85d eb04 	ldr.w	lr, [sp], #4
+ 800da64:	b003      	add	sp, #12
+ 800da66:	4770      	bx	lr
+ 800da68:	20000f80 	.word	0x20000f80
+ 800da6c:	ffff0208 	.word	0xffff0208
 
-0800da70 <strcat>:
- 800da70:	4602      	mov	r2, r0
- 800da72:	b510      	push	{r4, lr}
- 800da74:	7814      	ldrb	r4, [r2, #0]
- 800da76:	4613      	mov	r3, r2
- 800da78:	3201      	adds	r2, #1
- 800da7a:	2c00      	cmp	r4, #0
- 800da7c:	d1fa      	bne.n	800da74 <strcat+0x4>
- 800da7e:	3b01      	subs	r3, #1
- 800da80:	f811 2b01 	ldrb.w	r2, [r1], #1
- 800da84:	f803 2f01 	strb.w	r2, [r3, #1]!
- 800da88:	2a00      	cmp	r2, #0
- 800da8a:	d1f9      	bne.n	800da80 <strcat+0x10>
- 800da8c:	bd10      	pop	{r4, pc}
+0800da70 <memset>:
+ 800da70:	4603      	mov	r3, r0
+ 800da72:	4402      	add	r2, r0
+ 800da74:	4293      	cmp	r3, r2
+ 800da76:	d100      	bne.n	800da7a <memset+0xa>
+ 800da78:	4770      	bx	lr
+ 800da7a:	f803 1b01 	strb.w	r1, [r3], #1
+ 800da7e:	e7f9      	b.n	800da74 <memset+0x4>
 
-0800da8e <strncpy>:
- 800da8e:	4603      	mov	r3, r0
- 800da90:	b510      	push	{r4, lr}
- 800da92:	3901      	subs	r1, #1
- 800da94:	b132      	cbz	r2, 800daa4 <strncpy+0x16>
- 800da96:	f811 4f01 	ldrb.w	r4, [r1, #1]!
- 800da9a:	3a01      	subs	r2, #1
- 800da9c:	f803 4b01 	strb.w	r4, [r3], #1
- 800daa0:	2c00      	cmp	r4, #0
- 800daa2:	d1f7      	bne.n	800da94 <strncpy+0x6>
- 800daa4:	2100      	movs	r1, #0
- 800daa6:	441a      	add	r2, r3
- 800daa8:	4293      	cmp	r3, r2
- 800daaa:	d100      	bne.n	800daae <strncpy+0x20>
- 800daac:	bd10      	pop	{r4, pc}
- 800daae:	f803 1b01 	strb.w	r1, [r3], #1
- 800dab2:	e7f9      	b.n	800daa8 <strncpy+0x1a>
+0800da80 <strcat>:
+ 800da80:	4602      	mov	r2, r0
+ 800da82:	b510      	push	{r4, lr}
+ 800da84:	7814      	ldrb	r4, [r2, #0]
+ 800da86:	4613      	mov	r3, r2
+ 800da88:	3201      	adds	r2, #1
+ 800da8a:	2c00      	cmp	r4, #0
+ 800da8c:	d1fa      	bne.n	800da84 <strcat+0x4>
+ 800da8e:	3b01      	subs	r3, #1
+ 800da90:	f811 2b01 	ldrb.w	r2, [r1], #1
+ 800da94:	f803 2f01 	strb.w	r2, [r3, #1]!
+ 800da98:	2a00      	cmp	r2, #0
+ 800da9a:	d1f9      	bne.n	800da90 <strcat+0x10>
+ 800da9c:	bd10      	pop	{r4, pc}
 
-0800dab4 <strstr>:
- 800dab4:	780a      	ldrb	r2, [r1, #0]
- 800dab6:	b570      	push	{r4, r5, r6, lr}
- 800dab8:	b96a      	cbnz	r2, 800dad6 <strstr+0x22>
- 800daba:	bd70      	pop	{r4, r5, r6, pc}
- 800dabc:	429a      	cmp	r2, r3
- 800dabe:	d109      	bne.n	800dad4 <strstr+0x20>
- 800dac0:	460c      	mov	r4, r1
- 800dac2:	4605      	mov	r5, r0
- 800dac4:	f814 3f01 	ldrb.w	r3, [r4, #1]!
- 800dac8:	2b00      	cmp	r3, #0
- 800daca:	d0f6      	beq.n	800daba <strstr+0x6>
- 800dacc:	f815 6f01 	ldrb.w	r6, [r5, #1]!
- 800dad0:	429e      	cmp	r6, r3
- 800dad2:	d0f7      	beq.n	800dac4 <strstr+0x10>
- 800dad4:	3001      	adds	r0, #1
- 800dad6:	7803      	ldrb	r3, [r0, #0]
+0800da9e <strncpy>:
+ 800da9e:	4603      	mov	r3, r0
+ 800daa0:	b510      	push	{r4, lr}
+ 800daa2:	3901      	subs	r1, #1
+ 800daa4:	b132      	cbz	r2, 800dab4 <strncpy+0x16>
+ 800daa6:	f811 4f01 	ldrb.w	r4, [r1, #1]!
+ 800daaa:	3a01      	subs	r2, #1
+ 800daac:	f803 4b01 	strb.w	r4, [r3], #1
+ 800dab0:	2c00      	cmp	r4, #0
+ 800dab2:	d1f7      	bne.n	800daa4 <strncpy+0x6>
+ 800dab4:	2100      	movs	r1, #0
+ 800dab6:	441a      	add	r2, r3
+ 800dab8:	4293      	cmp	r3, r2
+ 800daba:	d100      	bne.n	800dabe <strncpy+0x20>
+ 800dabc:	bd10      	pop	{r4, pc}
+ 800dabe:	f803 1b01 	strb.w	r1, [r3], #1
+ 800dac2:	e7f9      	b.n	800dab8 <strncpy+0x1a>
+
+0800dac4 <strstr>:
+ 800dac4:	780a      	ldrb	r2, [r1, #0]
+ 800dac6:	b570      	push	{r4, r5, r6, lr}
+ 800dac8:	b96a      	cbnz	r2, 800dae6 <strstr+0x22>
+ 800daca:	bd70      	pop	{r4, r5, r6, pc}
+ 800dacc:	429a      	cmp	r2, r3
+ 800dace:	d109      	bne.n	800dae4 <strstr+0x20>
+ 800dad0:	460c      	mov	r4, r1
+ 800dad2:	4605      	mov	r5, r0
+ 800dad4:	f814 3f01 	ldrb.w	r3, [r4, #1]!
  800dad8:	2b00      	cmp	r3, #0
- 800dada:	d1ef      	bne.n	800dabc <strstr+0x8>
- 800dadc:	4618      	mov	r0, r3
- 800dade:	e7ec      	b.n	800daba <strstr+0x6>
-
-0800dae0 <memset>:
- 800dae0:	4603      	mov	r3, r0
- 800dae2:	4402      	add	r2, r0
- 800dae4:	4293      	cmp	r3, r2
- 800dae6:	d100      	bne.n	800daea <memset+0xa>
- 800dae8:	4770      	bx	lr
- 800daea:	f803 1b01 	strb.w	r1, [r3], #1
- 800daee:	e7f9      	b.n	800dae4 <memset+0x4>
+ 800dada:	d0f6      	beq.n	800daca <strstr+0x6>
+ 800dadc:	f815 6f01 	ldrb.w	r6, [r5, #1]!
+ 800dae0:	429e      	cmp	r6, r3
+ 800dae2:	d0f7      	beq.n	800dad4 <strstr+0x10>
+ 800dae4:	3001      	adds	r0, #1
+ 800dae6:	7803      	ldrb	r3, [r0, #0]
+ 800dae8:	2b00      	cmp	r3, #0
+ 800daea:	d1ef      	bne.n	800dacc <strstr+0x8>
+ 800daec:	4618      	mov	r0, r3
+ 800daee:	e7ec      	b.n	800daca <strstr+0x6>
 
 0800daf0 <_sbrk_r>:
  800daf0:	b538      	push	{r3, r4, r5, lr}
@@ -32650,7 +32650,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800db06:	b103      	cbz	r3, 800db0a <_sbrk_r+0x1a>
  800db08:	6023      	str	r3, [r4, #0]
  800db0a:	bd38      	pop	{r3, r4, r5, pc}
- 800db0c:	20001b6c 	.word	0x20001b6c
+ 800db0c:	20001b68 	.word	0x20001b68
 
 0800db10 <__errno>:
  800db10:	4b01      	ldr	r3, [pc, #4]	@ (800db18 <__errno+0x8>)
@@ -32805,7 +32805,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dc4e:	b360      	cbz	r0, 800dcaa <__ssputs_r+0xa2>
  800dc50:	464a      	mov	r2, r9
  800dc52:	6921      	ldr	r1, [r4, #16]
- 800dc54:	f000 fb18 	bl	800e288 <memcpy>
+ 800dc54:	f000 faea 	bl	800e22c <memcpy>
  800dc58:	89a3      	ldrh	r3, [r4, #12]
  800dc5a:	f423 6390 	bic.w	r3, r3, #1152	@ 0x480
  800dc5e:	f043 0380 	orr.w	r3, r3, #128	@ 0x80
@@ -32823,7 +32823,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dc7a:	4632      	mov	r2, r6
  800dc7c:	4641      	mov	r1, r8
  800dc7e:	6820      	ldr	r0, [r4, #0]
- 800dc80:	f000 fada 	bl	800e238 <memmove>
+ 800dc80:	f000 faac 	bl	800e1dc <memmove>
  800dc84:	2000      	movs	r0, #0
  800dc86:	68a3      	ldr	r3, [r4, #8]
  800dc88:	1b9b      	subs	r3, r3, r6
@@ -32833,7 +32833,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dc90:	6023      	str	r3, [r4, #0]
  800dc92:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  800dc96:	462a      	mov	r2, r5
- 800dc98:	f000 faa0 	bl	800e1dc <_realloc_r>
+ 800dc98:	f000 fad6 	bl	800e248 <_realloc_r>
  800dc9c:	4606      	mov	r6, r0
  800dc9e:	2800      	cmp	r0, #0
  800dca0:	d1e0      	bne.n	800dc64 <__ssputs_r+0x5c>
@@ -32843,7 +32843,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dcaa:	230c      	movs	r3, #12
  800dcac:	f8ca 3000 	str.w	r3, [sl]
  800dcb0:	89a3      	ldrh	r3, [r4, #12]
- 800dcb2:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 800dcb2:	f04f 30ff 	mov.w	r0, #4294967295
  800dcb6:	f043 0340 	orr.w	r3, r3, #64	@ 0x40
  800dcba:	81a3      	strh	r3, [r4, #12]
  800dcbc:	e7e9      	b.n	800dc92 <__ssputs_r+0x8a>
@@ -32868,7 +32868,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dce2:	b930      	cbnz	r0, 800dcf2 <_svfiprintf_r+0x32>
  800dce4:	230c      	movs	r3, #12
  800dce6:	603b      	str	r3, [r7, #0]
- 800dce8:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 800dce8:	f04f 30ff 	mov.w	r0, #4294967295
  800dcec:	b01d      	add	sp, #116	@ 0x74
  800dcee:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
  800dcf2:	2340      	movs	r3, #64	@ 0x40
@@ -32904,7 +32904,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dd42:	2b00      	cmp	r3, #0
  800dd44:	f000 809f 	beq.w	800de86 <_svfiprintf_r+0x1c6>
  800dd48:	2300      	movs	r3, #0
- 800dd4a:	f04f 32ff 	mov.w	r2, #4294967295	@ 0xffffffff
+ 800dd4a:	f04f 32ff 	mov.w	r2, #4294967295
  800dd4e:	e9cd 2305 	strd	r2, r3, [sp, #20]
  800dd52:	f10a 0a01 	add.w	sl, sl, #1
  800dd56:	9304      	str	r3, [sp, #16]
@@ -32915,7 +32915,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800dd62:	2205      	movs	r2, #5
  800dd64:	f814 1b01 	ldrb.w	r1, [r4], #1
  800dd68:	484e      	ldr	r0, [pc, #312]	@ (800dea4 <_svfiprintf_r+0x1e4>)
- 800dd6a:	f000 fa7f 	bl	800e26c <memchr>
+ 800dd6a:	f000 fa51 	bl	800e210 <memchr>
  800dd6e:	9a04      	ldr	r2, [sp, #16]
  800dd70:	b9d8      	cbnz	r0, 800ddaa <_svfiprintf_r+0xea>
  800dd72:	06d0      	lsls	r0, r2, #27
@@ -32976,7 +32976,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800ddf4:	2203      	movs	r2, #3
  800ddf6:	4650      	mov	r0, sl
  800ddf8:	7821      	ldrb	r1, [r4, #0]
- 800ddfa:	f000 fa37 	bl	800e26c <memchr>
+ 800ddfa:	f000 fa09 	bl	800e210 <memchr>
  800ddfe:	b138      	cbz	r0, 800de10 <_svfiprintf_r+0x150>
  800de00:	2240      	movs	r2, #64	@ 0x40
  800de02:	9b04      	ldr	r3, [sp, #16]
@@ -32989,7 +32989,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800de14:	2206      	movs	r2, #6
  800de16:	4825      	ldr	r0, [pc, #148]	@ (800deac <_svfiprintf_r+0x1ec>)
  800de18:	f88d 1028 	strb.w	r1, [sp, #40]	@ 0x28
- 800de1c:	f000 fa26 	bl	800e26c <memchr>
+ 800de1c:	f000 f9f8 	bl	800e210 <memchr>
  800de20:	2800      	cmp	r0, #0
  800de22:	d036      	beq.n	800de92 <_svfiprintf_r+0x1d2>
  800de24:	4b22      	ldr	r3, [pc, #136]	@ (800deb0 <_svfiprintf_r+0x1f0>)
@@ -33130,7 +33130,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800df60:	47c8      	blx	r9
  800df62:	3001      	adds	r0, #1
  800df64:	d103      	bne.n	800df6e <_printf_common+0xb6>
- 800df66:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 800df66:	f04f 30ff 	mov.w	r0, #4294967295
  800df6a:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  800df6e:	3501      	adds	r5, #1
  800df70:	e7c1      	b.n	800def6 <_printf_common+0x3e>
@@ -33274,7 +33274,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e0d6:	bfde      	ittt	le
  800e0d8:	2330      	movle	r3, #48	@ 0x30
  800e0da:	f806 3c01 	strble.w	r3, [r6, #-1]
- 800e0de:	f106 36ff 	addle.w	r6, r6, #4294967295	@ 0xffffffff
+ 800e0de:	f106 36ff 	addle.w	r6, r6, #4294967295
  800e0e2:	1b92      	subs	r2, r2, r6
  800e0e4:	6122      	str	r2, [r4, #16]
  800e0e6:	464b      	mov	r3, r9
@@ -33285,7 +33285,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e0f2:	f7ff fee1 	bl	800deb8 <_printf_common>
  800e0f6:	3001      	adds	r0, #1
  800e0f8:	d14a      	bne.n	800e190 <_printf_i+0x1f4>
- 800e0fa:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
+ 800e0fa:	f04f 30ff 	mov.w	r0, #4294967295
  800e0fe:	b004      	add	sp, #16
  800e100:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  800e104:	6823      	ldr	r3, [r4, #0]
@@ -33342,7 +33342,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e174:	681e      	ldr	r6, [r3, #0]
  800e176:	6862      	ldr	r2, [r4, #4]
  800e178:	4630      	mov	r0, r6
- 800e17a:	f000 f877 	bl	800e26c <memchr>
+ 800e17a:	f000 f849 	bl	800e210 <memchr>
  800e17e:	b108      	cbz	r0, 800e184 <_printf_i+0x1e8>
  800e180:	1b80      	subs	r0, r0, r6
  800e182:	6060      	str	r0, [r4, #4]
@@ -33387,95 +33387,95 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e1d4:	0800ee3c 	.word	0x0800ee3c
  800e1d8:	0800ee4d 	.word	0x0800ee4d
 
-0800e1dc <_realloc_r>:
- 800e1dc:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
- 800e1e0:	4680      	mov	r8, r0
- 800e1e2:	4615      	mov	r5, r2
- 800e1e4:	460c      	mov	r4, r1
- 800e1e6:	b921      	cbnz	r1, 800e1f2 <_realloc_r+0x16>
- 800e1e8:	4611      	mov	r1, r2
- 800e1ea:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
- 800e1ee:	f7ff bb51 	b.w	800d894 <_malloc_r>
- 800e1f2:	b92a      	cbnz	r2, 800e200 <_realloc_r+0x24>
- 800e1f4:	f7ff fcc0 	bl	800db78 <_free_r>
- 800e1f8:	2400      	movs	r4, #0
- 800e1fa:	4620      	mov	r0, r4
- 800e1fc:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
- 800e200:	f000 f850 	bl	800e2a4 <_malloc_usable_size_r>
- 800e204:	4285      	cmp	r5, r0
- 800e206:	4606      	mov	r6, r0
- 800e208:	d802      	bhi.n	800e210 <_realloc_r+0x34>
- 800e20a:	ebb5 0f50 	cmp.w	r5, r0, lsr #1
- 800e20e:	d8f4      	bhi.n	800e1fa <_realloc_r+0x1e>
- 800e210:	4629      	mov	r1, r5
- 800e212:	4640      	mov	r0, r8
- 800e214:	f7ff fb3e 	bl	800d894 <_malloc_r>
- 800e218:	4607      	mov	r7, r0
- 800e21a:	2800      	cmp	r0, #0
- 800e21c:	d0ec      	beq.n	800e1f8 <_realloc_r+0x1c>
- 800e21e:	42b5      	cmp	r5, r6
- 800e220:	462a      	mov	r2, r5
- 800e222:	4621      	mov	r1, r4
- 800e224:	bf28      	it	cs
- 800e226:	4632      	movcs	r2, r6
- 800e228:	f000 f82e 	bl	800e288 <memcpy>
- 800e22c:	4621      	mov	r1, r4
- 800e22e:	4640      	mov	r0, r8
- 800e230:	f7ff fca2 	bl	800db78 <_free_r>
- 800e234:	463c      	mov	r4, r7
- 800e236:	e7e0      	b.n	800e1fa <_realloc_r+0x1e>
+0800e1dc <memmove>:
+ 800e1dc:	4288      	cmp	r0, r1
+ 800e1de:	b510      	push	{r4, lr}
+ 800e1e0:	eb01 0402 	add.w	r4, r1, r2
+ 800e1e4:	d902      	bls.n	800e1ec <memmove+0x10>
+ 800e1e6:	4284      	cmp	r4, r0
+ 800e1e8:	4623      	mov	r3, r4
+ 800e1ea:	d807      	bhi.n	800e1fc <memmove+0x20>
+ 800e1ec:	1e43      	subs	r3, r0, #1
+ 800e1ee:	42a1      	cmp	r1, r4
+ 800e1f0:	d008      	beq.n	800e204 <memmove+0x28>
+ 800e1f2:	f811 2b01 	ldrb.w	r2, [r1], #1
+ 800e1f6:	f803 2f01 	strb.w	r2, [r3, #1]!
+ 800e1fa:	e7f8      	b.n	800e1ee <memmove+0x12>
+ 800e1fc:	4601      	mov	r1, r0
+ 800e1fe:	4402      	add	r2, r0
+ 800e200:	428a      	cmp	r2, r1
+ 800e202:	d100      	bne.n	800e206 <memmove+0x2a>
+ 800e204:	bd10      	pop	{r4, pc}
+ 800e206:	f813 4d01 	ldrb.w	r4, [r3, #-1]!
+ 800e20a:	f802 4d01 	strb.w	r4, [r2, #-1]!
+ 800e20e:	e7f7      	b.n	800e200 <memmove+0x24>
 
-0800e238 <memmove>:
- 800e238:	4288      	cmp	r0, r1
- 800e23a:	b510      	push	{r4, lr}
- 800e23c:	eb01 0402 	add.w	r4, r1, r2
- 800e240:	d902      	bls.n	800e248 <memmove+0x10>
- 800e242:	4284      	cmp	r4, r0
- 800e244:	4623      	mov	r3, r4
- 800e246:	d807      	bhi.n	800e258 <memmove+0x20>
- 800e248:	1e43      	subs	r3, r0, #1
- 800e24a:	42a1      	cmp	r1, r4
- 800e24c:	d008      	beq.n	800e260 <memmove+0x28>
- 800e24e:	f811 2b01 	ldrb.w	r2, [r1], #1
- 800e252:	f803 2f01 	strb.w	r2, [r3, #1]!
- 800e256:	e7f8      	b.n	800e24a <memmove+0x12>
- 800e258:	4601      	mov	r1, r0
- 800e25a:	4402      	add	r2, r0
- 800e25c:	428a      	cmp	r2, r1
- 800e25e:	d100      	bne.n	800e262 <memmove+0x2a>
- 800e260:	bd10      	pop	{r4, pc}
- 800e262:	f813 4d01 	ldrb.w	r4, [r3, #-1]!
- 800e266:	f802 4d01 	strb.w	r4, [r2, #-1]!
- 800e26a:	e7f7      	b.n	800e25c <memmove+0x24>
+0800e210 <memchr>:
+ 800e210:	4603      	mov	r3, r0
+ 800e212:	b510      	push	{r4, lr}
+ 800e214:	b2c9      	uxtb	r1, r1
+ 800e216:	4402      	add	r2, r0
+ 800e218:	4293      	cmp	r3, r2
+ 800e21a:	4618      	mov	r0, r3
+ 800e21c:	d101      	bne.n	800e222 <memchr+0x12>
+ 800e21e:	2000      	movs	r0, #0
+ 800e220:	e003      	b.n	800e22a <memchr+0x1a>
+ 800e222:	7804      	ldrb	r4, [r0, #0]
+ 800e224:	3301      	adds	r3, #1
+ 800e226:	428c      	cmp	r4, r1
+ 800e228:	d1f6      	bne.n	800e218 <memchr+0x8>
+ 800e22a:	bd10      	pop	{r4, pc}
 
-0800e26c <memchr>:
- 800e26c:	4603      	mov	r3, r0
- 800e26e:	b510      	push	{r4, lr}
- 800e270:	b2c9      	uxtb	r1, r1
- 800e272:	4402      	add	r2, r0
- 800e274:	4293      	cmp	r3, r2
- 800e276:	4618      	mov	r0, r3
- 800e278:	d101      	bne.n	800e27e <memchr+0x12>
- 800e27a:	2000      	movs	r0, #0
- 800e27c:	e003      	b.n	800e286 <memchr+0x1a>
- 800e27e:	7804      	ldrb	r4, [r0, #0]
- 800e280:	3301      	adds	r3, #1
- 800e282:	428c      	cmp	r4, r1
- 800e284:	d1f6      	bne.n	800e274 <memchr+0x8>
- 800e286:	bd10      	pop	{r4, pc}
+0800e22c <memcpy>:
+ 800e22c:	440a      	add	r2, r1
+ 800e22e:	4291      	cmp	r1, r2
+ 800e230:	f100 33ff 	add.w	r3, r0, #4294967295
+ 800e234:	d100      	bne.n	800e238 <memcpy+0xc>
+ 800e236:	4770      	bx	lr
+ 800e238:	b510      	push	{r4, lr}
+ 800e23a:	f811 4b01 	ldrb.w	r4, [r1], #1
+ 800e23e:	4291      	cmp	r1, r2
+ 800e240:	f803 4f01 	strb.w	r4, [r3, #1]!
+ 800e244:	d1f9      	bne.n	800e23a <memcpy+0xe>
+ 800e246:	bd10      	pop	{r4, pc}
 
-0800e288 <memcpy>:
- 800e288:	440a      	add	r2, r1
- 800e28a:	4291      	cmp	r1, r2
- 800e28c:	f100 33ff 	add.w	r3, r0, #4294967295	@ 0xffffffff
- 800e290:	d100      	bne.n	800e294 <memcpy+0xc>
- 800e292:	4770      	bx	lr
- 800e294:	b510      	push	{r4, lr}
- 800e296:	f811 4b01 	ldrb.w	r4, [r1], #1
- 800e29a:	4291      	cmp	r1, r2
- 800e29c:	f803 4f01 	strb.w	r4, [r3, #1]!
- 800e2a0:	d1f9      	bne.n	800e296 <memcpy+0xe>
- 800e2a2:	bd10      	pop	{r4, pc}
+0800e248 <_realloc_r>:
+ 800e248:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+ 800e24c:	4680      	mov	r8, r0
+ 800e24e:	4615      	mov	r5, r2
+ 800e250:	460c      	mov	r4, r1
+ 800e252:	b921      	cbnz	r1, 800e25e <_realloc_r+0x16>
+ 800e254:	4611      	mov	r1, r2
+ 800e256:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
+ 800e25a:	f7ff bb1b 	b.w	800d894 <_malloc_r>
+ 800e25e:	b92a      	cbnz	r2, 800e26c <_realloc_r+0x24>
+ 800e260:	f7ff fc8a 	bl	800db78 <_free_r>
+ 800e264:	2400      	movs	r4, #0
+ 800e266:	4620      	mov	r0, r4
+ 800e268:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+ 800e26c:	f000 f81a 	bl	800e2a4 <_malloc_usable_size_r>
+ 800e270:	4285      	cmp	r5, r0
+ 800e272:	4606      	mov	r6, r0
+ 800e274:	d802      	bhi.n	800e27c <_realloc_r+0x34>
+ 800e276:	ebb5 0f50 	cmp.w	r5, r0, lsr #1
+ 800e27a:	d8f4      	bhi.n	800e266 <_realloc_r+0x1e>
+ 800e27c:	4629      	mov	r1, r5
+ 800e27e:	4640      	mov	r0, r8
+ 800e280:	f7ff fb08 	bl	800d894 <_malloc_r>
+ 800e284:	4607      	mov	r7, r0
+ 800e286:	2800      	cmp	r0, #0
+ 800e288:	d0ec      	beq.n	800e264 <_realloc_r+0x1c>
+ 800e28a:	42b5      	cmp	r5, r6
+ 800e28c:	462a      	mov	r2, r5
+ 800e28e:	4621      	mov	r1, r4
+ 800e290:	bf28      	it	cs
+ 800e292:	4632      	movcs	r2, r6
+ 800e294:	f7ff ffca 	bl	800e22c <memcpy>
+ 800e298:	4621      	mov	r1, r4
+ 800e29a:	4640      	mov	r0, r8
+ 800e29c:	f7ff fc6c 	bl	800db78 <_free_r>
+ 800e2a0:	463c      	mov	r4, r7
+ 800e2a2:	e7e0      	b.n	800e266 <_realloc_r+0x1e>
 
 0800e2a4 <_malloc_usable_size_r>:
  800e2a4:	f851 3c04 	ldr.w	r3, [r1, #-4]
