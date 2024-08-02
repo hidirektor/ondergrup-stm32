@@ -10,7 +10,7 @@
 
 #define machineIDCharacterLimit 12
 #define wifiCharacterLimit 16
-#define lcdBacklightSure  6 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
+#define lcdBacklightSure  60 //Buradaki değer 10 ile çarpılıyor. Maksimum 90 saniyeyi destekler.
 
 #define apSSID "OnderGrup_IoT"
 #define apPassword "ondergrupIoT"

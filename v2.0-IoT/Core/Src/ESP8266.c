@@ -89,7 +89,7 @@ void startWebServer(UART_HandleTypeDef *huart1) {
     HAL_Delay(2000);
 }
 
-void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
 	char local_txA[1500];
 	char local_txB[50];
 	int len;
@@ -122,10 +122,10 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
 	HAL_Delay(3000);
 }
 
-void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
-    char bufferTX[2000];
+void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+    char bufferTX[4000];
     char local_txB[50];
-    char json_data[1300];
+    char json_data[2000];
     int len;
 
     // JSON verisini manuel olarak oluşturma

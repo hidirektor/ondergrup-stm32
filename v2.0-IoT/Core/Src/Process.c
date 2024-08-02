@@ -37,7 +37,7 @@ void lcdUpdate(uint8_t y) {
 }
 
 void checkLCDBacklight() {
-	if(millis - backLightTimer >= lcdBacklightSure*10) {
+	if(millis - backLightTimer >= lcdBacklightSure) {
 		lcd_backlight(0);
 	} else {
 		lcd_backlight(1);
