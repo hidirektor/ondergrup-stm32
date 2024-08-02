@@ -117,13 +117,64 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
 void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
     char bufferTX[500];
     char local_txB[50];
-    char json_data[300];
+    char json_data[1300];
     int len;
 
     // JSON verisini manuel olarak oluşturma
     snprintf(json_data, sizeof(json_data),
-             "{\"machineID\":\"%s\",\"updateData\":%s}",
-             machineID, machineData);
+             "{\"machineID\":\"%s\","
+             "\"updateData\":{"
+             "\"wifiSSID\":\"%s\","
+             "\"wifiPass\":\"%s\","
+             "\"devirmeYuruyusSecim\":\"%d\","
+             "\"calismaSekli\":\"%d\","
+             "\"emniyetCercevesi\":\"%d\","
+             "\"yavaslamaLimit\":\"%d\","
+             "\"altLimit\":\"%d\","
+             "\"kapiTablaAcKonum\":\"%d\","
+             "\"basincSalteri\":\"%d\","
+             "\"kapiSecimleri\":\"%d\","
+             "\"kapiAcTipi\":\"%d\","
+             "\"kapi1Tip\":\"%d\","
+             "\"kapi1AcSure\":\"%d\","
+             "\"kapi2Tip\":\"%d\","
+             "\"kapi2AcSure\":\"%d\","
+             "\"kapitablaTip\":\"%d\","
+             "\"kapiTablaAcSure\":\"%d\","
+             "\"yukariYavasLimit\":\"%d\","
+             "\"devirmeYukariIleriLimit\":\"%d\","
+             "\"devirmeAsagiGeriLimit\":\"%d\","
+             "\"devirmeSilindirTipi\":\"%d\","
+             "\"platformSilindirTipi\":\"%d\","
+             "\"yukariValfTmr\":\"%d\","
+             "\"asagiValfTmr\":\"%d\","
+             "\"devirmeYukariIleriTmr\":\"%d\","
+             "\"devirmeAsagiGeriTmr\":\"%d\","
+             "\"makineCalismaTmr\":\"%d\","
+             "\"buzzer\":\"%d\","
+             "\"demoMode\":\"%d\","
+             "\"calismaSayisi\":\"%d\","
+             "\"calismaSayisiDemo\":\"%d\","
+             "\"dilSecim\":\"%d\","
+             "\"eepromData38\":\"%d\","
+             "\"eepromData39\":\"%d\","
+             "\"eepromData40\":\"%d\","
+             "\"eepromData41\":\"%d\","
+             "\"eepromData42\":\"%d\","
+             "\"eepromData43\":\"%d\","
+             "\"eepromData44\":\"%d\","
+             "\"eepromData45\":\"%d\","
+             "\"eepromData46\":\"%d\","
+             "\"eepromData47\":\"%d\","
+             "\"lcdBacklightSure\":\"%d\""
+             "}}",
+             machineID, wifiSSID, wifiPass, devirmeYuruyusSecim, calismaSekli, emniyetCercevesi, yavaslamaLimit, altLimit,
+             kapiTablaAcKonum, basincSalteri, kapiSecimleri, kapiAcTipi, kapi1Tip, kapi1AcSure, kapi2Tip, kapi2AcSure,
+             kapitablaTip, kapiTablaAcSure, yukariYavasLimit, devirmeYukariIleriLimit, devirmeAsagiGeriLimit,
+             devirmeSilindirTipi, platformSilindirTipi, yukariValfTmr, asagiValfTmr, devirmeYukariIleriTmr,
+             devirmeAsagiGeriTmr, makineCalismaTmr, buzzer, demoMode, calismaSayisi, calismaSayisiDemo, dilSecim,
+             eepromData[38], eepromData[39], eepromData[40], eepromData[41], eepromData[42], eepromData[43], eepromData[44], eepromData[45],
+             eepromData[46], eepromData[47], lcdBacklightSure);
 
     sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
     HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
