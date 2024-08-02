@@ -89,8 +89,8 @@ void startWebServer(UART_HandleTypeDef *huart1) {
     HAL_Delay(2000);
 }
 
-void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
-	char local_txA[500];
+void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+	char local_txA[1500];
 	char local_txB[50];
 	int len;
 
@@ -103,7 +103,15 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
 	HAL_Delay(4000);
 
 	sprintf(local_txA,
-			"GET /api/v2/machine/updateMachineDataRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&machineData=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, wifiSSID, wifiPass, machineData, mainServerWithPort);
+	    "GET /api/v2/machine/updateMachineRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&devirmeYuruyusSecim=%d&calismaSekli=%d&emniyetCercevesi=%d&yavaslamaLimit=%d&altLimit=%d&kapiTablaAcKonum=%d&basincSalteri=%d&kapiSecimleri=%d&kapiAcTipi=%d&kapi1Tip=%d&kapi1AcSure=%d&kapi2Tip=%d&kapi2AcSure=%d&kapitablaTip=%d&kapiTablaAcSure=%d&yukariYavasLimit=%d&devirmeYukariIleriLimit=%d&devirmeAsagiGeriLimit=%d&devirmeSilindirTipi=%d&platformSilindirTipi=%d&yukariValfTmr=%d&asagiValfTmr=%d&devirmeYukariIleriTmr=%d&devirmeAsagiGeriTmr=%d&makineCalismaTmr=%d&buzzer=%d&demoMode=%d&calismaSayisi=%d&calismaSayisiDemo=%d&dilSecim=%d&eepromData38=%d&eepromData39=%d&eepromData40=%d&eepromData41=%d&eepromData42=%d&eepromData43=%d&eepromData44=%d&eepromData45=%d&eepromData46=%d&eepromData47=%d&lcdBacklightSure=%d HTTP/1.0\r\nHost: %s\r\n\r\n",
+	    subMachineID, wifiSSID, wifiPass, devirmeYuruyusSecim, calismaSekli, emniyetCercevesi,
+	    yavaslamaLimit, altLimit, kapiTablaAcKonum, basincSalteri, kapiSecimleri, kapiAcTipi, kapi1Tip, kapi1AcSure,
+	    kapi2Tip, kapi2AcSure, kapitablaTip, kapiTablaAcSure, yukariYavasLimit, devirmeYukariIleriLimit, devirmeAsagiGeriLimit,
+	    devirmeSilindirTipi, platformSilindirTipi, yukariValfTmr, asagiValfTmr, devirmeYukariIleriTmr, devirmeAsagiGeriTmr,
+	    makineCalismaTmr, buzzer, demoMode, calismaSayisi, calismaSayisiDemo, dilSecim, eepromData[38], eepromData[39],
+	    eepromData[40], eepromData[41], eepromData[42], eepromData[43], eepromData[44], eepromData[45],
+	    eepromData[46], eepromData[47], lcdBacklightSure, mainServerWithPort);
+
 	len = strlen(local_txA);
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
@@ -114,7 +122,7 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
 	HAL_Delay(3000);
 }
 
-void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
     char bufferTX[500];
     char local_txB[50];
     char json_data[1300];
