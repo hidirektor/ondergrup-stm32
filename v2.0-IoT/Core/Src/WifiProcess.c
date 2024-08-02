@@ -64,7 +64,12 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	if(checkMachineID(&huart1, machineID) == 1) {
+        	int machineIDControl = 0;
+        	for(int i=0; i<2; i++) {
+        		machineIDControl = checkMachineID(&huart1, machineID);
+        	}
+
+        	if(machineIDControl == 1) {
         		saveEEPROM(1);
         	} else {
         		lcd_print(1, 1, mustBeUniqueText);
