@@ -100,7 +100,7 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 
 	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
-	HAL_Delay(4000);
+	HAL_Delay(1000);
 
 	sprintf(local_txA,
 	    "GET /api/v2/machine/updateMachineRaw?machineID=%s&wifiSSID=%s&wifiPass=%s&devirmeYuruyusSecim=%d&calismaSekli=%d&emniyetCercevesi=%d&yavaslamaLimit=%d&altLimit=%d&kapiTablaAcKonum=%d&basincSalteri=%d&kapiSecimleri=%d&kapiAcTipi=%d&kapi1Tip=%d&kapi1AcSure=%d&kapi2Tip=%d&kapi2AcSure=%d&kapitablaTip=%d&kapiTablaAcSure=%d&yukariYavasLimit=%d&devirmeYukariIleriLimit=%d&devirmeAsagiGeriLimit=%d&devirmeSilindirTipi=%d&platformSilindirTipi=%d&yukariValfTmr=%d&asagiValfTmr=%d&devirmeYukariIleriTmr=%d&devirmeAsagiGeriTmr=%d&makineCalismaTmr=%d&buzzer=%d&demoMode=%d&calismaSayisi=%d&calismaSayisiDemo=%d&dilSecim=%d&eepromData38=%d&eepromData39=%d&eepromData40=%d&eepromData41=%d&eepromData42=%d&eepromData43=%d&eepromData44=%d&eepromData45=%d&eepromData46=%d&eepromData47=%d&lcdBacklightSure=%d HTTP/1.0\r\nHost: %s\r\n\r\n",
@@ -116,13 +116,13 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
 	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
-	HAL_Delay(4000);
+	HAL_Delay(2000);
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
-	HAL_Delay(3000);
+	HAL_Delay(2000);
 }
 
-void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
+void sendMachineDataDemo(UART_HandleTypeDef *huart1, const char *machineID, const char *wifiSSID, const char *wifiPass, const char *machineData) {
     char bufferTX[4000];
     char local_txB[50];
     char json_data[2000];
@@ -202,7 +202,7 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
     HAL_Delay(4000);
 
     HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
-    HAL_Delay(3000);
+    HAL_Delay(15000);
 }
 
 

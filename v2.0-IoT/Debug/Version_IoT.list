@@ -39,9 +39,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   0001d694  00000000  00000000  0004c362  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000a05f0  00000000  00000000  000699f6  2**0
+ 18 .debug_str    000a05f3  00000000  00000000  000699f6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00109fe6  2**0
+ 19 .comment      00000043  00000000  00000000  00109fe9  2**0
                   CONTENTS, READONLY
  20 .debug_frame  000054c4  00000000  00000000  0010a02c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -1463,8 +1463,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000b7c:	4998      	ldr	r1, [pc, #608]	@ (8000de0 <sendMachineData+0x2d0>)
  8000b7e:	6818      	ldr	r0, [r3, #0]
  8000b80:	f00c f810 	bl	800cba4 <HAL_UART_Transmit_IT>
-	HAL_Delay(4000);
- 8000b84:	f44f 607a 	mov.w	r0, #4000	@ 0xfa0
+	HAL_Delay(1000);
+ 8000b84:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
  8000b88:	f008 ff40 	bl	8009a0c <HAL_Delay>
 
 	sprintf(local_txA,
@@ -1731,8 +1731,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000d9e:	f2a3 632c 	subw	r3, r3, #1580	@ 0x62c
  8000da2:	6818      	ldr	r0, [r3, #0]
  8000da4:	f00b fefe 	bl	800cba4 <HAL_UART_Transmit_IT>
-	HAL_Delay(4000);
- 8000da8:	f44f 607a 	mov.w	r0, #4000	@ 0xfa0
+	HAL_Delay(2000);
+ 8000da8:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8000dac:	f008 fe2e 	bl	8009a0c <HAL_Delay>
 
 	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
@@ -1746,8 +1746,8 @@ void sendMachineData(UART_HandleTypeDef *huart1, const char *machineID, const ch
  8000dc6:	f2a3 632c 	subw	r3, r3, #1580	@ 0x62c
  8000dca:	6818      	ldr	r0, [r3, #0]
  8000dcc:	f00b feea 	bl	800cba4 <HAL_UART_Transmit_IT>
-	HAL_Delay(3000);
- 8000dd0:	f640 30b8 	movw	r0, #3000	@ 0xbb8
+	HAL_Delay(2000);
+ 8000dd0:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8000dd4:	e04a      	b.n	8000e6c <sendMachineData+0x35c>
  8000dd6:	bf00      	nop
  8000dd8:	0800e1cc 	.word	0x0800e1cc
