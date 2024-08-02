@@ -53,6 +53,9 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
 
+        	lcd_print(1, 1, "   MACHINE ID   ");
+        	lcd_print(2, 1, "KONTROL EDILIYOR");
+
         	if(checkEEPROM4ID() != 1) {
         		lcd_print(1, 1, mustBe12Text);
         		lcd_print(2, 1, mustBe122Text);
@@ -67,7 +70,7 @@ void takeMachineID() {
         		lcd_print(1, 1, mustBeUniqueText);
         		lcd_print(2, 1, mustBeUnique2Text);
 
-        		HAL_Delay(1250);
+        		HAL_Delay(500);
 
         		goto mainSection;
         	}

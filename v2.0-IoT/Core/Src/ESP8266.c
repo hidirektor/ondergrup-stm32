@@ -207,11 +207,11 @@ void sendMachineDataDemo(UART_HandleTypeDef *huart1, const char *machineID, cons
 
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
-    char local_txA[500];
+    char local_txA[1000];
     char local_txB[50];
     int len;
 
-    char bufferRX[2000];
+    char bufferRX[2500];
 
     char subMachineID[13];
     strncpy(subMachineID, machineID, 12);
