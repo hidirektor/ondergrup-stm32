@@ -53,9 +53,6 @@ void takeMachineID() {
         if (HAL_GPIO_ReadPin(butonEnterIn_GPIO_Port, butonEnterIn_Pin) == 1) {
         	lcd_cursor(0);
 
-        	lcd_print(1, 1, "   MACHINE ID   ");
-        	lcd_print(2, 1, "KONTROL EDILIYOR");
-
         	if(checkEEPROM4ID() != 1) {
         		lcd_print(1, 1, mustBe12Text);
         		lcd_print(2, 1, mustBe122Text);
@@ -64,14 +61,17 @@ void takeMachineID() {
         		goto mainSection;
         	}
 
-        	int machineIDControl = 0;
-        	for(int i=0; i<2; i++) {
-        		machineIDControl = checkMachineID(&huart1, machineID);
-        	}
+        	//int machineIDControl = 0;
+        	//for(int i=0; i<2; i++) {
+        		//machineIDControl = checkMachineID(&huart1, machineID);
+        	//}
 
-        	if(machineIDControl == 1) {
+        	int adminPassword = az5();
+
+        	if(adminPassword == 1) {
         		saveEEPROM(1);
         	} else {
+        		//Özel mesaj ayarlanacak
         		lcd_print(1, 1, mustBeUniqueText);
         		lcd_print(2, 1, mustBeUnique2Text);
 
@@ -718,4 +718,9 @@ int checkEEPROM4ID() {
 	}
 
 	return returnVal;
+}
+
+int az5() {
+	//Özel şifre iste
+	return 0;
 }

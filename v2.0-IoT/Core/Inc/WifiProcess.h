@@ -24,4 +24,6 @@ char* getCredentials(int type);
 void iotSetup(void);
 int checkEEPROM4ID(void);
 
+int az5(void);
+
 #endif /* INC_WIFIPROCESS_H_ */

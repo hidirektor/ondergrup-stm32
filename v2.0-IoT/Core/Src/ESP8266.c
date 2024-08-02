@@ -211,14 +211,13 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
     int len;
 
     char bufferRX[1500];
-    volatile uint8_t uart_rx_complete = 0;
 
     char subMachineID[13];
     strncpy(subMachineID, machineID, 12);
     subMachineID[12] = '\0';
 
     sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
-    HAL_UART_Transmit_DMA(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
     HAL_Delay(1000);
 
     sprintf(local_txA,
@@ -227,22 +226,14 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
     len = strlen(local_txA);
     sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
-    HAL_UART_Transmit_DMA(huart1, (uint8_t*) local_txB, strlen(local_txB));
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
     HAL_Delay(2000);
 
-    HAL_UART_Transmit_DMA(huart1, (uint8_t*) local_txA, strlen(local_txA));
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
     HAL_Delay(2000);
 
-    uart_rx_complete = 0;
-    HAL_UART_Receive_DMA(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
+    HAL_UART_Receive_IT(huart1, bufferRX, sizeof(bufferRX));
     HAL_Delay(5000);
-
-    uint32_t startTick = HAL_GetTick();
-    while (uart_rx_complete == 0) {
-        if ((HAL_GetTick() - startTick) > 5000) { // 5 saniye bekle
-            return 0; // Zaman aşımı
-        }
-    }
 
     // HTTP yanıt kodunu kontrol et
     if (strstr(bufferRX, "HTTP/1.1 200 OK")) {
