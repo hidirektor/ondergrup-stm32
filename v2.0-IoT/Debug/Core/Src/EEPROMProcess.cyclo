@@ -1,7 +1,7 @@
 ../Core/Src/EEPROMProcess.c:14:6:eepromKontrol	31
-../Core/Src/EEPROMProcess.c:205:6:firstSetup	2
-../Core/Src/EEPROMProcess.c:224:6:resetEEPROM	1
-../Core/Src/EEPROMProcess.c:231:6:saveEEPROM	2
-../Core/Src/EEPROMProcess.c:243:6:EEPROM_Write	5
-../Core/Src/EEPROMProcess.c:276:6:EEPROM_Read	5
-../Core/Src/EEPROMProcess.c:307:6:convertArrays	8
+../Core/Src/EEPROMProcess.c:204:6:firstSetup	2
+../Core/Src/EEPROMProcess.c:223:6:resetEEPROM	1
+../Core/Src/EEPROMProcess.c:230:6:saveEEPROM	2
+../Core/Src/EEPROMProcess.c:242:6:EEPROM_Write	5
+../Core/Src/EEPROMProcess.c:275:6:EEPROM_Read	5
+../Core/Src/EEPROMProcess.c:306:6:convertArrays	8

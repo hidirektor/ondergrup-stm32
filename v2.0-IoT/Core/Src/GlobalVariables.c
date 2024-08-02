@@ -87,7 +87,6 @@ uint8_t hataKayit9 = 0;
 uint8_t hataKayit10 = 0;
 
 uint8_t iotMode = 0;
-uint8_t idVerifyVal = 0;
 
 bool hafizaYaz = 0;
 bool hafizaOku = 0;

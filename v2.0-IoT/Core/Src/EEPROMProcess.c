@@ -19,7 +19,6 @@ void eepromKontrol() {
 
 	setupCompleted = eepromData[0];
 	iotMode = eepromData[48];
-	idVerifyVal = eepromData[49];
 
 	kaydedilenDeger = eepromData[3];
 	calismaSekli = eepromData[1];

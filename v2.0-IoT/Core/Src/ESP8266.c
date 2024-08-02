@@ -207,37 +207,39 @@ void sendMachineData2(UART_HandleTypeDef *huart1, const char *machineID, const c
 
 
 int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID) {
-	char local_txA[500];
-	char local_txB[50];
-	int len;
+    char local_txA[500];
+    char local_txB[50];
+    int len;
 
-	char bufferRX[2000];
+    char bufferRX[2000];
 
-	char subMachineID[13];
-	strncpy(subMachineID, machineID, 12);
-	subMachineID[12] = '\0';
+    char subMachineID[13];
+    strncpy(subMachineID, machineID, 12);
+    subMachineID[12] = '\0';
 
-	sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
-	HAL_Delay(2000);
+    sprintf(bufferTX, "AT+CIPSTART=\"TCP\",\"%s\",3000\r\n", mainServer);
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) bufferTX, strlen(bufferTX));
+    HAL_Delay(2000);
 
-	sprintf(local_txA,
-			"GET /api/machine/checkMachineID?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, mainServerWithPort);
-	len = strlen(local_txA);
-	sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
+    sprintf(local_txA,
+            "GET /api/v2/machine/checkMachineIDRaw?machineID=%s HTTP/1.0\r\nHost: %s\r\n\r\n", subMachineID, mainServerWithPort);
+    len = strlen(local_txA);
+    sprintf(local_txB, "AT+CIPSEND=%d\r\n", len);
 
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
-	HAL_Delay(4000);
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txB, strlen(local_txB));
+    HAL_Delay(4000);
 
-	HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
-	HAL_Delay(6000);
+    HAL_UART_Transmit_IT(huart1, (uint8_t*) local_txA, strlen(local_txA));
+    HAL_Delay(6000);
 
-	HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
-	HAL_Delay(5000);
+    HAL_UART_Receive_IT(huart1, (uint8_t*) bufferRX, sizeof(bufferRX));
+    HAL_Delay(5000);
 
-	if (strstr(bufferRX, "HTTP/1.1 200 OK") || strstr(bufferRX, "HTTP/1.0 200 OK")) {
-	    return 1; // Başarılı yanıt
-	}
+    if (strstr(bufferRX, "exists\": true")) {
+        return 0;
+    } else if (strstr(bufferRX, "exists\": false")) {
+        return 1;
+    }
 
-	return 0; // Yanıt başarısız
+    return -1;
 }

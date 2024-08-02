@@ -59,11 +59,18 @@ void takeMachineID() {
         		HAL_Delay(1250);
 
         		goto mainSection;
-        	} else {
-        		saveEEPROM(1);
+        	}
 
-            	break;
-            }
+        	if(checkMachineID(&huart1, machineID) == 1) {
+        		saveEEPROM(1);
+        	} else {
+        		lcd_print(1, 1, mustBeUniqueText);
+        		lcd_print(2, 1, mustBeUnique2Text);
+
+        		HAL_Delay(1250);
+
+        		goto mainSection;
+        	}
         }
 
         if (HAL_GPIO_ReadPin(butonIleriIn_GPIO_Port, butonIleriIn_Pin) == 1) {
@@ -673,25 +680,6 @@ void convertAndSendData() {
 
 void iotSetup() {
 	if(iotMode != 0) {
-		/*takeIDSection:
-		if(idVerifyVal != 1) {
-			if(checkMachineID(&huart1, machineID) == 1) {
-				idVerifyVal = 1;
-				eepromData[49] = idVerifyVal;
-				//EEPROMA yazma işlemini başlat
-			    saveEEPROM(0);
-			} else {
-				lcd_print(1, 1, mustBeUniqueText);
-				lcd_print(2, 1, mustBeUnique2Text);
-
-				HAL_Delay(1250);
-				//Tekrar id alma işlemi
-				takeMachineID();
-				HAL_Delay(200);
-				goto takeIDSection;
-			}
-		}*/
-
 		if(checkEEPROM4ID() != 1) {
 			takeMachineID();
 		}

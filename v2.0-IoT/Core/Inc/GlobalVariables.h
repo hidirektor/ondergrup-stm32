@@ -95,7 +95,6 @@ extern uint8_t hataKayit9;
 extern uint8_t hataKayit10;
 
 extern uint8_t iotMode;
-extern uint8_t idVerifyVal;
 
 extern bool hafizaYaz;
 extern bool hafizaOku;
