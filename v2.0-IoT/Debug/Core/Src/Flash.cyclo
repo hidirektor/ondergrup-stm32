@@ -1,1 +1,2 @@
 ../Core/Src/Flash.c:13:6:writeFlash	7
+../Core/Src/Flash.c:61:6:parseHexDataToBuffer	7

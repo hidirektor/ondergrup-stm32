@@ -1,5 +1,12 @@
-#ifndef INC_ESPDATALOGGER_H_
-#define INC_ESPDATALOGGER_H_
+/*
+ * WifiCommands.h
+ *
+ *  Created on: Aug 10, 2024
+ *      Author: hidirektor
+ */
+
+#ifndef INC_WIFICOMMANDS_H_
+#define INC_WIFICOMMANDS_H_
 
 #include "stm32f1xx_hal.h"
 
@@ -16,7 +23,5 @@ int checkMachineID(UART_HandleTypeDef *huart1, const char *machineID);
 
 void checkForUpdates(UART_HandleTypeDef *huart, const char *currentVersion);
 void downloadNewVersion(UART_HandleTypeDef *huart, const char *versionCode);
-void parseHexDataToBuffer(char *bufferRX, uint32_t *receivedData, int *dataSize);
-void writeFlash(uint32_t* data, uint32_t dataSize);
 
-#endif /* INC_ESPDATALOGGER_H_ */
+#endif /* INC_WIFICOMMANDS_H_ */

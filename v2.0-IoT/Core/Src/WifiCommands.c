@@ -1,3 +1,12 @@
+/*
+ * WifiCommands.c
+ *
+ *  Created on: Aug 10, 2024
+ *      Author: hidirektor
+ */
+
+#include "WifiCommands.h"
+
 #include "ESPDriver.h"
 #include "SystemDefaults.h"
 #include "GlobalVariables.h"
@@ -271,40 +280,4 @@ void downloadNewVersion(UART_HandleTypeDef *huart, const char *versionCode) {
     HAL_Delay(2000);
 
     writeFlash(receivedData, dataSize);
-}
-
-// .hex verisini buffer'a parse eden fonksiyon
-void parseHexDataToBuffer(char *bufferRX, uint32_t *receivedData, int *dataSize) {
-    char *line = strtok(bufferRX, "\r\n");
-    *dataSize = 0;
-
-    while (line != NULL) {
-        if (line[0] == ':') {
-            int byteCount = strtol(&line[1], NULL, 16);
-            int address = strtol(&line[3], NULL, 16);
-            int recordType = strtol(&line[7], NULL, 16);
-
-            if (recordType == 0) {
-                for (int i = 0; i < byteCount; i++) {
-                    char byteStr[3];
-                    byteStr[0] = line[9 + i * 2];
-                    byteStr[1] = line[9 + i * 2 + 1];
-                    byteStr[2] = '\0';
-
-                    uint32_t dataByte = strtol(byteStr, NULL, 16);
-
-                    if (i % 4 == 0) {
-                        receivedData[*dataSize] = 0;
-                    }
-
-                    receivedData[*dataSize] |= dataByte << ((i % 4) * 8);
-
-                    if (i % 4 == 3) {
-                        (*dataSize)++;
-                    }
-                }
-            }
-        }
-        line = strtok(NULL, "\r\n");
-    }
 }

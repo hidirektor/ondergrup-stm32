@@ -1,0 +1,9 @@
+../Core/Src/WifiCommands.c:16:6:ESP8266_Init	1
+../Core/Src/WifiCommands.c:34:6:ESP8266_Init_AP	1
+../Core/Src/WifiCommands.c:52:6:connectWifiNetwork	1
+../Core/Src/WifiCommands.c:58:6:startWebServer	1
+../Core/Src/WifiCommands.c:78:6:sendMachineData	1
+../Core/Src/WifiCommands.c:106:6:sendMachineDataDemo	1
+../Core/Src/WifiCommands.c:190:5:checkMachineID	2
+../Core/Src/WifiCommands.c:230:6:checkForUpdates	3
+../Core/Src/WifiCommands.c:261:6:downloadNewVersion	1

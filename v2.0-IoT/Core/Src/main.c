@@ -5,7 +5,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ESP8266.h"
+#include "WifiCommands.h"
 #include "GlobalVariables.h"
 #include "Process.h"
 #include "HardwareTest.h"

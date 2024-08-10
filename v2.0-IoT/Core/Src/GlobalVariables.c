@@ -18,6 +18,8 @@ uint8_t setupCompleted = 0;
 uint8_t kaydedilenDeger = 0;
 
 char esp8266_rx_buffer[1024];
+uint8_t Wifi_RxBuffer[WIFI_RX_BUFFER_SIZE];
+uint16_t Wifi_RxBufferIndex = 0;
 
 unsigned long millis = 0;
 unsigned long timer = 0;

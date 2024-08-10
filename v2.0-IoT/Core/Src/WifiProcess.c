@@ -8,7 +8,7 @@
 #include "WifiProcess.h"
 #include "main.h"
 #include "GlobalVariables.h"
-#include "ESP8266.h"
+#include "WifiCommands.h"
 #include "i2c-lcd.h"
 #include "IoTMenu.h"
 #include "EEPROMProcess.h"

@@ -23,6 +23,10 @@ extern uint8_t setupCompleted;
 extern uint8_t kaydedilenDeger;
 
 extern char esp8266_rx_buffer[1024];
+// RX buffer ve buffer indexi
+#define WIFI_RX_BUFFER_SIZE 512
+extern uint8_t Wifi_RxBuffer[WIFI_RX_BUFFER_SIZE];
+extern uint16_t Wifi_RxBufferIndex;
 
 extern unsigned long millis;
 extern unsigned long timer;
