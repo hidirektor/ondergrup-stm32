@@ -10,6 +10,7 @@
 
 void Wifi_RxClear(void) {
     memset(esp8266_rx_buffer, 0, sizeof(esp8266_rx_buffer));
+    Wifi_RxBufferIndex = 0;  // Ayrıca buffer indexi sıfırlayın
 }
 
 bool Wifi_SendString(UART_HandleTypeDef *huart, char *data) {
@@ -35,54 +36,63 @@ bool Wifi_WaitForString(UART_HandleTypeDef *huart, uint32_t TimeOut_ms, uint8_t 
                 }
             }
             index++;
+        } else {
+            // Eğer UART alımında hata oluşursa bu durumu yönetin.
+            HAL_UART_AbortReceive(huart);  // Hatalı durumu temizle
+            HAL_UART_Receive_IT(huart, (uint8_t *)&esp8266_rx_buffer[index], 1); // Tekrar başlat
         }
     }
+    *result = 0xFF;
     va_end(args);
     return false;
 }
 
 void Wifi_RxCallBack(UART_HandleTypeDef *huart) {
-    // Gelen byte'ı okuyun
     uint8_t receivedByte;
 
-    // Gelen byte'ı UART'tan okuyun (örneğin, HAL_UART_Receive_IT ile)
-    if (HAL_UART_Receive_IT(&huart, &receivedByte, 1) == HAL_OK) {
-        // RX buffer doluysa, başa sarın
+    if (HAL_UART_Receive_IT(huart, &receivedByte, 1) == HAL_OK) {
         if (Wifi_RxBufferIndex >= WIFI_RX_BUFFER_SIZE) {
-            Wifi_RxBufferIndex = 0;
+            Wifi_RxBufferIndex = 0;  // Bu aşamada veriyi yeniden başlatmak yerine işleyin
         }
 
-        // Gelen byte'ı buffer'a ekleyin
         Wifi_RxBuffer[Wifi_RxBufferIndex++] = receivedByte;
 
-        // Gelen byte yeni bir satır başlatıyorsa veya sonlandırıyorsa, buffer'ı işleme alınabilir
         if (receivedByte == '\n' || receivedByte == '\r') {
-            // Gelen veriyi işlemek için fonksiyonu çağırın
             Wifi_ProcessReceivedData(Wifi_RxBuffer, Wifi_RxBufferIndex);
-
-            // Buffer'ı temizleyin
             Wifi_RxBufferIndex = 0;
             memset(Wifi_RxBuffer, 0, WIFI_RX_BUFFER_SIZE);
         }
+    } else {
+        // Hatalı alım durumunu işleyin, belki bir hata sayacı ekleyin
     }
 }
 
 void Wifi_ProcessReceivedData(uint8_t* buffer, uint16_t length) {
-    // Gelen veriyi işleyin
-    // Örneğin, belirli bir komutu veya cevabı kontrol edebilir ve işlem yapabilirsiniz
-
-    // Gelen veriyi global değişkene aktaralım
     memcpy(esp8266_rx_buffer, buffer, length);
 
-    // Belirli bir stringi aramak için kullanabilirsiniz (örneğin, "OK" yanıtı)
     if (strstr((char*)buffer, "OK") != NULL) {
-        // "OK" yanıtı bulundu, işlem yapabilirsiniz
+        // "OK" yanıtı bulundu, diğer işlemler yapılabilir
     }
+
+    // Daha fazla işleme gerek duyuluyorsa buraya ekleyin
 }
 
 bool Wifi_Init(UART_HandleTypeDef *huart) {
-    return Wifi_SendString(huart, "AT\r\n") &&
-           Wifi_WaitForString(huart, 1000, NULL, 1, "OK");
+    if (!Wifi_SendString(huart, "AT\r\n")) {
+        return false;
+    }
+
+    uint8_t result;
+    if (!Wifi_WaitForString(huart, 2000, &result, 2, "OK", "ERROR")) {
+        return false;  // Yanıt alınmadıysa false döndürün
+    }
+
+    if (result == 1) {
+        // "ERROR" yanıtı alındı
+        return false;
+    }
+
+    return true;  // "OK" yanıtı alındıysa true döndürün
 }
 
 void Wifi_Enable(void) {
@@ -142,8 +152,26 @@ bool Wifi_GetMyIp(UART_HandleTypeDef *huart) {
 bool Wifi_Station_ConnectToAp(UART_HandleTypeDef *huart, char *SSID, char *Pass, char *MAC) {
     char cmd[256];
     sprintf(cmd, "AT+CWJAP=\"%s\",\"%s\"\r\n", SSID, Pass);
-    return Wifi_SendString(huart, cmd) &&
-           Wifi_WaitForString(huart, 10000, NULL, 1, "OK");
+
+    // Gönderme başarılı olduysa yanıt bekleyin
+    if (Wifi_SendString(huart, cmd)) {
+        uint8_t result;
+        if (Wifi_WaitForString(huart, 20000, &result, 2, "OK", "FAIL")) {
+            if (result == 0) {
+                // "OK" yanıtı alındı
+                return true;
+            } else {
+                // "FAIL" yanıtı alındı
+                return false;
+            }
+        } else {
+            // Zaman aşımına uğradı
+            return false;
+        }
+    }
+
+    // Gönderme başarısız olduysa false döndürün
+    return false;
 }
 
 bool Wifi_Station_Disconnect(UART_HandleTypeDef *huart) {
