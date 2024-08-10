@@ -12,8 +12,8 @@
 #include "i2c-lcd.h"
 #include "requestHeaders.h"
 
-#define SHORT_DELAY_MS 1000
-#define LONG_DELAY_MS 2000
+#define SHORT_DELAY_MS 2000
+#define LONG_DELAY_MS 3000
 
 // Temel WiFi İşlemleri için Yardımcı Fonksiyon
 static void BasicWifiSetup(UART_HandleTypeDef *huart) {
