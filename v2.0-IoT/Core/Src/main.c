@@ -55,6 +55,14 @@ static void MX_USART1_UART_Init(void);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesmesinde islem yapmak için */
 	millis=millis+1;
 }
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART1) {
+        // UART1 RX Callback işlemleri
+        Wifi_RxCallBack();
+        HAL_UART_Receive_IT(&huart1, (uint8_t *)esp8266_rx_buffer, 1);  // Sürekli veri alımı için interruptı tekrar aktif hale getir
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -128,9 +136,7 @@ int main(void)
   //IoT Section:
   iotSetup();
 
-  for(int i=0; i<2; i++) {
-	  checkForUpdates(&huart1, "1.0.0");
-  }
+  //checkForUpdates(&huart1, "1.0.0");
 
   /* USER CODE END 2 */
 

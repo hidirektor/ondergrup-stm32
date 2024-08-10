@@ -22,6 +22,8 @@ extern char wifiPass[wifiCharacterLimit];
 extern uint8_t setupCompleted;
 extern uint8_t kaydedilenDeger;
 
+extern char esp8266_rx_buffer[1024];
+
 extern unsigned long millis;
 extern unsigned long timer;
 extern unsigned long timer1;

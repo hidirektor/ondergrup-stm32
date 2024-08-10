@@ -702,7 +702,7 @@ void iotSetup() {
 
 		ESP8266_Init(&huart1, demoWifiSSIDEv, demoWifiPassEv);
 		HAL_Delay(500);
-		//convertAndSendData();
+		convertAndSendData();
 	}
 }
 
