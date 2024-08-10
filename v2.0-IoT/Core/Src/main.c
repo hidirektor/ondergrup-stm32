@@ -59,14 +59,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesm
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART1) {
-        // RX işlemine başlamadan önce veri alımını durdurun (güvenlik için)
-        HAL_UART_AbortReceive_IT(&huart1);
-
-        // Gelen byte'ı işleme koyun
-        Wifi_RxCallBack(&huart1);
-
-        // Sonraki veri alımına devam edin
-        HAL_UART_Receive_IT(&huart1, (uint8_t *)esp8266_rx_buffer, 1);
+        HAL_UART_AbortReceive_IT(&huart1);  // Güvenlik için veri alımını durdurun
+        Wifi_RxCallBack(&huart1);  // Gelen veriyi işleyin
+        HAL_UART_Receive_IT(&huart1, (uint8_t *)esp8266_rx_buffer, 1);  // Yeni veri alımına devam edin
     }
 }
 /* USER CODE END 0 */
