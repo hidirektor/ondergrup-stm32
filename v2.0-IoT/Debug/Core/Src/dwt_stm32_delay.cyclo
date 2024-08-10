@@ -1,0 +1,2 @@
+../Core/Src/dwt_stm32_delay.c:18:10:DWT_Delay_Init	2
+../Core/Src/dwt_stm32_delay.c:49:6:DWT_Delay_us	2
