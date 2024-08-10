@@ -14,6 +14,7 @@
 #include "TextVariables.h"
 #include "Translation.h"
 #include "i2c-lcd.h"
+#include "ESPDriver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,7 +60,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { /*------timer kesm
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART1) {
         // UART1 RX Callback işlemleri
-        Wifi_RxCallBack();
+        Wifi_RxCallBack(&huart1);
         HAL_UART_Receive_IT(&huart1, (uint8_t *)esp8266_rx_buffer, 1);  // Sürekli veri alımı için interruptı tekrar aktif hale getir
     }
 }

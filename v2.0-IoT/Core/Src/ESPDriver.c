@@ -41,13 +41,48 @@ bool Wifi_WaitForString(UART_HandleTypeDef *huart, uint32_t TimeOut_ms, uint8_t 
     return false;
 }
 
-void Wifi_RxCallBack(void) {
-    // Callback işlemleri buraya eklenecek
+void Wifi_RxCallBack(UART_HandleTypeDef *huart) {
+    // Gelen byte'ı okuyun
+    uint8_t receivedByte;
+
+    // Gelen byte'ı UART'tan okuyun (örneğin, HAL_UART_Receive_IT ile)
+    if (HAL_UART_Receive_IT(&huart, &receivedByte, 1) == HAL_OK) {
+        // RX buffer doluysa, başa sarın
+        if (Wifi_RxBufferIndex >= WIFI_RX_BUFFER_SIZE) {
+            Wifi_RxBufferIndex = 0;
+        }
+
+        // Gelen byte'ı buffer'a ekleyin
+        Wifi_RxBuffer[Wifi_RxBufferIndex++] = receivedByte;
+
+        // Gelen byte yeni bir satır başlatıyorsa veya sonlandırıyorsa, buffer'ı işleme alınabilir
+        if (receivedByte == '\n' || receivedByte == '\r') {
+            // Gelen veriyi işlemek için fonksiyonu çağırın
+            Wifi_ProcessReceivedData(Wifi_RxBuffer, Wifi_RxBufferIndex);
+
+            // Buffer'ı temizleyin
+            Wifi_RxBufferIndex = 0;
+            memset(Wifi_RxBuffer, 0, WIFI_RX_BUFFER_SIZE);
+        }
+    }
+}
+
+void Wifi_ProcessReceivedData(uint8_t* buffer, uint16_t length) {
+    // Gelen veriyi işleyin
+    // Örneğin, belirli bir komutu veya cevabı kontrol edebilir ve işlem yapabilirsiniz
+
+    // Gelen veriyi global değişkene aktaralım
+    memcpy(esp8266_rx_buffer, buffer, length);
+
+    // Belirli bir stringi aramak için kullanabilirsiniz (örneğin, "OK" yanıtı)
+    if (strstr((char*)buffer, "OK") != NULL) {
+        // "OK" yanıtı bulundu, işlem yapabilirsiniz
+    }
 }
 
 bool Wifi_Init(UART_HandleTypeDef *huart) {
-    return Wifi_SendString(huart, "AT\r\n"); //&&
-           //Wifi_WaitForString(huart, 1000, NULL, 1, "OK");
+    return Wifi_SendString(huart, "AT\r\n") &&
+           Wifi_WaitForString(huart, 1000, NULL, 1, "OK");
 }
 
 void Wifi_Enable(void) {
@@ -59,8 +94,8 @@ void Wifi_Disable(void) {
 }
 
 bool Wifi_Restart(UART_HandleTypeDef *huart) {
-    return Wifi_SendString(huart, "AT+RST\r\n"); //&&
-           //Wifi_WaitForString(huart, 5000, NULL, 1, "OK");
+    return Wifi_SendString(huart, "AT+RST\r\n") &&
+           Wifi_WaitForString(huart, 5000, NULL, 1, "OK");
 }
 
 bool Wifi_DeepSleep(UART_HandleTypeDef *huart, uint16_t DelayMs) {
@@ -71,8 +106,8 @@ bool Wifi_DeepSleep(UART_HandleTypeDef *huart, uint16_t DelayMs) {
 }
 
 bool Wifi_FactoryReset(UART_HandleTypeDef *huart) {
-    return Wifi_SendString(huart, "AT+RESTORE\r\n"); //&&
-           //Wifi_WaitForString(huart, 5000, NULL, 1, "OK");
+    return Wifi_SendString(huart, "AT+RESTORE\r\n") &&
+           Wifi_WaitForString(huart, 5000, NULL, 1, "OK");
 }
 
 bool Wifi_Update(UART_HandleTypeDef *huart) {
@@ -90,8 +125,8 @@ bool Wifi_SetRfPower(UART_HandleTypeDef *huart, uint8_t Power_0_to_82) {
 bool Wifi_SetMode(UART_HandleTypeDef *huart, WifiMode_t WifiMode_) {
     char cmd[32];
     sprintf(cmd, "AT+CWMODE=%d\r\n", WifiMode_);
-    return Wifi_SendString(huart, cmd); //&&
-           //Wifi_WaitForString(huart, 1000, NULL, 1, "OK");
+    return Wifi_SendString(huart, cmd) &&
+           Wifi_WaitForString(huart, 1000, NULL, 1, "OK");
 }
 
 bool Wifi_GetMode(UART_HandleTypeDef *huart) {
@@ -107,8 +142,8 @@ bool Wifi_GetMyIp(UART_HandleTypeDef *huart) {
 bool Wifi_Station_ConnectToAp(UART_HandleTypeDef *huart, char *SSID, char *Pass, char *MAC) {
     char cmd[256];
     sprintf(cmd, "AT+CWJAP=\"%s\",\"%s\"\r\n", SSID, Pass);
-    return Wifi_SendString(huart, cmd); //&&
-           //Wifi_WaitForString(huart, 10000, NULL, 1, "OK");
+    return Wifi_SendString(huart, cmd) &&
+           Wifi_WaitForString(huart, 10000, NULL, 1, "OK");
 }
 
 bool Wifi_Station_Disconnect(UART_HandleTypeDef *huart) {

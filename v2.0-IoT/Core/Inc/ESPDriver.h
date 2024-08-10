@@ -16,6 +16,12 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+#define WIFI_RX_BUFFER_SIZE 512
+
+// RX buffer ve buffer indexi
+static uint8_t Wifi_RxBuffer[WIFI_RX_BUFFER_SIZE];
+static uint16_t Wifi_RxBufferIndex = 0;
+
 // Wifi Modları
 typedef enum {
     WifiMode_Station = 1,
@@ -41,7 +47,8 @@ bool Wifi_SendString(UART_HandleTypeDef *huart, char *data);
 bool Wifi_WaitForString(UART_HandleTypeDef *huart, uint32_t TimeOut_ms, uint8_t *result, uint8_t CountOfParameter, ...);
 
 // Wifi Rx Callback
-void Wifi_RxCallBack(void);
+void Wifi_RxCallBack(UART_HandleTypeDef *huart);
+void Wifi_ProcessReceivedData(uint8_t* buffer, uint16_t length);
 
 // ESP8266'nın Temel Fonksiyonları
 bool Wifi_Init(UART_HandleTypeDef *huart);
