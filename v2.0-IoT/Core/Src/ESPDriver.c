@@ -27,7 +27,7 @@ int Wifi_WaitForString(UART_HandleTypeDef *huart, uint32_t TimeOut_ms, uint8_t *
 
     while ((HAL_GetTick() - tickstart) < TimeOut_ms) {
         if (HAL_UART_Receive(huart, (uint8_t *)&esp8266_rx_buffer[index], 1, 100) == HAL_OK) {
-            if (esp8266_rx_buffer[index] == '\n') {
+            if (esp8266_rx_buffer[index] == '\n' || esp8266_rx_buffer[index] == '\r') {
                 for (uint8_t i = 0; i < CountOfParameter; i++) {
                     if (strstr(esp8266_rx_buffer, va_arg(args, char *)) != NULL) {
                         *result = i;
@@ -38,7 +38,8 @@ int Wifi_WaitForString(UART_HandleTypeDef *huart, uint32_t TimeOut_ms, uint8_t *
             }
             index++;
         } else {
-            HAL_UART_AbortReceive(huart);  // Hatalı durumu temizle
+            HAL_UART_DeInit(huart);
+            HAL_UART_Init(huart);
             HAL_UART_Receive_IT(huart, (uint8_t *)&esp8266_rx_buffer[index], 1); // Tekrar başlat
         }
     }
@@ -57,11 +58,17 @@ void Wifi_RxCallBack(UART_HandleTypeDef *huart) {
 
         Wifi_RxBuffer[Wifi_RxBufferIndex++] = receivedByte;
 
+        // Yanıtın sonu olduğunu düşündüğümüz \n veya \r karakterlerine göre veri işleme
         if (receivedByte == '\n' || receivedByte == '\r') {
             Wifi_ProcessReceivedData(Wifi_RxBuffer, Wifi_RxBufferIndex);
             Wifi_RxBufferIndex = 0;
             memset(Wifi_RxBuffer, 0, WIFI_RX_BUFFER_SIZE);
         }
+    } else {
+        // UART'ı yeniden başlatın
+        HAL_UART_DeInit(huart);
+        HAL_UART_Init(huart);
+        HAL_UART_Receive_IT(huart, &receivedByte, 1); // Tekrar başlat
     }
 }
 
