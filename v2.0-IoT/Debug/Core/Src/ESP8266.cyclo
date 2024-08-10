@@ -1,7 +1,10 @@
-../Core/Src/ESP8266.c:6:6:ESP8266_Init	1
-../Core/Src/ESP8266.c:34:6:ESP8266_Init_AP	1
-../Core/Src/ESP8266.c:58:6:connectWifiNetwork	1
-../Core/Src/ESP8266.c:70:6:startWebServer	1
-../Core/Src/ESP8266.c:92:6:sendMachineData	1
-../Core/Src/ESP8266.c:125:6:sendMachineDataDemo	1
-../Core/Src/ESP8266.c:208:5:checkMachineID	2
+../Core/Src/ESP8266.c:7:6:ESP8266_Init	1
+../Core/Src/ESP8266.c:35:6:ESP8266_Init_AP	1
+../Core/Src/ESP8266.c:59:6:connectWifiNetwork	1
+../Core/Src/ESP8266.c:71:6:startWebServer	1
+../Core/Src/ESP8266.c:93:6:sendMachineData	1
+../Core/Src/ESP8266.c:126:6:sendMachineDataDemo	1
+../Core/Src/ESP8266.c:209:5:checkMachineID	2
+../Core/Src/ESP8266.c:247:6:checkForUpdates	3
+../Core/Src/ESP8266.c:288:6:downloadNewVersion	1
+../Core/Src/ESP8266.c:323:6:parseHexDataToBuffer	7

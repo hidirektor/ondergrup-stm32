@@ -128,6 +128,10 @@ int main(void)
   //IoT Section:
   iotSetup();
 
+  for(int i=0; i<2; i++) {
+	  checkForUpdates(&huart1, "1.0.0");
+  }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

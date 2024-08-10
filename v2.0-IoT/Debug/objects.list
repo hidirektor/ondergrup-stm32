@@ -1,6 +1,7 @@
 "./Core/Src/EEPROMProcess.o"
 "./Core/Src/ESP8266.o"
 "./Core/Src/ErrorProcess.o"
+"./Core/Src/Flash.o"
 "./Core/Src/GlobalVariables.o"
 "./Core/Src/HardwareTest.o"
 "./Core/Src/IoTMenu.o"
